@@ -213,6 +213,7 @@ class CUDAGraphMoE:
             routing_method_type=self.config["routing_method_type"],
             activation_type=self.config["activation_type"],
             do_finalize=True,
+            return_topk_ids=self.config["return_topk_ids"],
             tune_max_num_tokens=TUNE_MAX_NUM_TOKENS,
         )
         return output  # Extract tensor from tuple
@@ -570,6 +571,7 @@ class FP4Moe(Moe):
         activation_type = kwargs["activation_type"]
         routing_method_type = kwargs["routing_method_type"]
         enable_autotune = kwargs.get("enable_autotune", True)
+        return_topk_ids = kwargs.get("return_topk_ids", False)
         gemm1_bias = kwargs["gemm1_bias"]
         gemm2_bias = kwargs["gemm2_bias"]
 
@@ -585,6 +587,7 @@ class FP4Moe(Moe):
             "activation_type": activation_type,
             "routing_method_type": routing_method_type,
             "enable_autotune": enable_autotune,
+            "return_topk_ids": return_topk_ids,
             "gemm1_bias": gemm1_bias,
             "gemm2_bias": gemm2_bias,
         }
@@ -599,6 +602,8 @@ class FP4Moe(Moe):
         try:
             cuda_graph.capture(hidden_states_orig, **runtime_args)
             output = cuda_graph.launch(hidden_states_orig)
+            if return_topk_ids:
+                return output[0].to(torch.float), output[1]
             return output[0].to(torch.float)
         finally:
             cuda_graph.cleanup()
@@ -816,8 +821,11 @@ class MxInt4BlockScaleMoe(Moe):
                 num_experts,
                 routed_scaling,
                 routing_method_type=routing_method_type,
+                return_topk_ids=kwargs.get("return_topk_ids", False),
                 tune_max_num_tokens=TUNE_MAX_NUM_TOKENS,
             )
+        if kwargs.get("return_topk_ids", False):
+            return output[0].to(torch.float), output[1]
         return output[0].to(torch.float)
 
     def compute_reference(self, args):
@@ -1111,6 +1119,7 @@ class FP8BlockScaleMoe(Moe):
         routing_method_type = kwargs["routing_method_type"]
         enable_autotune = kwargs.get("enable_autotune", True)
         enable_pdl = kwargs.get("enable_pdl")
+        return_topk_ids = kwargs.get("return_topk_ids", False)
         hidden_states_scale = kwargs["hidden_states_scale"]
         hidden_states_quant = kwargs["hidden_states_quant"]
 
@@ -1154,7 +1163,10 @@ class FP8BlockScaleMoe(Moe):
                 enable_pdl=enable_pdl,
                 tune_max_num_tokens=TUNE_MAX_NUM_TOKENS,
                 fp8_quantization_type=quantization_mode,
+                return_topk_ids=return_topk_ids,
             )
+        if return_topk_ids:
+            return output[0].to(torch.float), output[1]
         return output.to(torch.float)
 
     def compute_reference(self, args):
@@ -1320,6 +1332,7 @@ class FP8PerTensorMoe(Moe):
         routing_method_type = kwargs["routing_method_type"]
         enable_autotune = kwargs.get("enable_autotune", True)
         activation_type = kwargs["activation_type"]
+        return_topk_ids = kwargs.get("return_topk_ids", False)
 
         # Quantize to FP8 per-tensor using pre-computed global scale factor
         hidden_states_fp8, _ = quant_fp8_per_tensor(
@@ -1354,8 +1367,11 @@ class FP8PerTensorMoe(Moe):
                 routing_method_type,
                 tune_max_num_tokens=TUNE_MAX_NUM_TOKENS,
                 activation_type=activation_type,
+                return_topk_ids=return_topk_ids,
             )
 
+        if return_topk_ids:
+            return output[0].to(torch.float), output[1]
         return output.to(torch.float)
 
     def compute_reference(self, args):
@@ -1491,6 +1507,7 @@ class BF16Moe(Moe):
         routed_scaling = kwargs["routed_scaling"]
         routing_method_type = kwargs["routing_method_type"]
         enable_autotune = kwargs.get("enable_autotune", True)
+        return_topk_ids = kwargs.get("return_topk_ids", False)
 
         # Use autotuner for optimal kernel selection
         with autotune(enable_autotune):
@@ -1512,7 +1529,10 @@ class BF16Moe(Moe):
                 weight_layout=static_data["weight_layout"],
                 routing_method_type=routing_method_type,
                 tune_max_num_tokens=TUNE_MAX_NUM_TOKENS,
+                return_topk_ids=return_topk_ids,
             )
+        if return_topk_ids:
+            return output[0].to(torch.float), output[1]
         return output.to(torch.float)
 
     def compute_reference(self, args):
@@ -2549,6 +2569,7 @@ def _compute_moe_actual_unified(moe_impl, args_dequant, args, **kwargs):
         "hidden_states_scale": args.hidden_states_scale,
         "hidden_states_quant": kwargs["hidden_states_quant"],
         "enable_autotune": kwargs.get("enable_autotune", True),
+        "return_topk_ids": kwargs.get("return_topk_ids", False),
         "gemm1_bias": args.gemm1_bias,
         "gemm2_bias": args.gemm2_bias,
     }
@@ -2568,6 +2589,14 @@ def cache_permute_indices():
     return _cache_permute_indices
 
 
+def _expected_packed_topk_ids(permute_info, scores, num_tokens, num_experts):
+    topk_ids = permute_info["topKIndices"].to(torch.int32)
+    selected_weights = scores.view(num_tokens, num_experts)[
+        torch.arange(num_tokens, device=scores.device).unsqueeze(1), topk_ids
+    ].to(torch.bfloat16)
+    return (topk_ids << 16) | selected_weights.view(torch.int16).to(torch.int32)
+
+
 def run_moe_test(
     num_tokens,
     hidden_size,
@@ -2580,6 +2609,7 @@ def run_moe_test(
     zero_hidden_states=False,
     gemm1_bias=None,
     gemm2_bias=None,
+    check_return_topk_ids=False,
 ):
     """Common test logic for all routing methods."""
     skip_checks(
@@ -2741,8 +2771,7 @@ def run_moe_test(
 
     # Compute actual output
     enable_autotune = routing_config.get("enable_autotune", True)
-
-    output_dequant_actual = moe_impl.compute_production(
+    output = moe_impl.compute_production(
         args_dequant,
         args,
         expert_logits=expert_logits,
@@ -2758,17 +2787,48 @@ def run_moe_test(
         enable_pdl=True,
         hidden_states_quant=inputs_data["hidden_states"],
         enable_autotune=enable_autotune,
+        return_topk_ids=check_return_topk_ids,
     )
 
-    # Compare outputs
-    tolerances = moe_impl.get_tolerances()
-    check_accuracy(
-        output_dequant_reference,
-        output_dequant_actual,
-        atol=tolerances["atol"],
-        rtol=tolerances["rtol"],
-        percent=tolerances["percent"],
-    )
+    if check_return_topk_ids:
+        output_dequant_actual, packed_topk_ids = output
+        expected_packed = _expected_packed_topk_ids(
+            permute_info, scores, num_tokens, num_experts
+        )
+        assert packed_topk_ids.dtype == torch.int32
+        assert packed_topk_ids.shape == expected_packed.shape
+        actual_topk_ids = torch.bitwise_right_shift(packed_topk_ids, 16)
+        expected_topk_ids = torch.bitwise_right_shift(expected_packed, 16)
+        actual_weight_bits = torch.bitwise_and(packed_topk_ids, 0xFFFF).to(torch.int16)
+        expected_weight_bits = torch.bitwise_and(expected_packed, 0xFFFF).to(
+            torch.int16
+        )
+        actual_weights = actual_weight_bits.view(torch.bfloat16).to(torch.float32)
+        expected_weights = expected_weight_bits.view(torch.bfloat16).to(torch.float32)
+
+        # Routing output may differ by tie-breaking order, so compare after sorting by expert id.
+        actual_sort_idx = torch.argsort(actual_topk_ids, dim=1)
+        expected_sort_idx = torch.argsort(expected_topk_ids, dim=1)
+        actual_topk_ids_sorted = torch.gather(actual_topk_ids, 1, actual_sort_idx)
+        expected_topk_ids_sorted = torch.gather(expected_topk_ids, 1, expected_sort_idx)
+        assert torch.equal(actual_topk_ids_sorted, expected_topk_ids_sorted)
+
+        actual_weights_sorted = torch.gather(actual_weights, 1, actual_sort_idx)
+        expected_weights_sorted = torch.gather(expected_weights, 1, expected_sort_idx)
+        assert torch.allclose(
+            actual_weights_sorted, expected_weights_sorted, atol=1e-2, rtol=1e-2
+        )
+    else:
+        output_dequant_actual = output
+        # Compare outputs
+        tolerances = moe_impl.get_tolerances()
+        check_accuracy(
+            output_dequant_reference,
+            output_dequant_actual,
+            atol=tolerances["atol"],
+            rtol=tolerances["rtol"],
+            percent=tolerances["percent"],
+        )
 
 
 # Test: Renormalize routing
@@ -2912,6 +2972,13 @@ def run_moe_test(
         pytest.param(ActivationType.Geglu.value, id="Geglu"),
     ],
 )
+@pytest.mark.parametrize(
+    "check_return_topk_ids",
+    [
+        pytest.param(True, id="CheckTopkIds"),
+        pytest.param(False, id="NoCheckTopkIds"),
+    ],
+)
 def test_renormalize_routing(
     num_tokens,
     hidden_size,
@@ -2922,6 +2989,7 @@ def test_renormalize_routing(
     activation_type,
     cache_permute_indices,
     zero_hidden_states,
+    check_return_topk_ids,
 ):
     """Test Renormalize routing configurations."""
     run_moe_test(
@@ -2934,6 +3002,7 @@ def test_renormalize_routing(
         activation_type,
         cache_permute_indices,
         zero_hidden_states=zero_hidden_states,
+        check_return_topk_ids=check_return_topk_ids,
     )
 
 
@@ -3108,6 +3177,13 @@ def test_renormalize_routing(
         pytest.param(ActivationType.Relu2.value, id="Relu2"),
     ],
 )
+@pytest.mark.parametrize(
+    "check_return_topk_ids",
+    [
+        pytest.param(True, id="CheckTopkIds"),
+        pytest.param(False, id="NoCheckTopkIds"),
+    ],
+)
 def test_deepseekv3_routing(
     num_tokens,
     hidden_size,
@@ -3117,6 +3193,7 @@ def test_deepseekv3_routing(
     weight_processing,
     activation_type,
     cache_permute_indices,
+    check_return_topk_ids,
 ):
     """Test DeepSeekV3 routing configurations."""
     run_moe_test(
@@ -3128,6 +3205,7 @@ def test_deepseekv3_routing(
         weight_processing,
         activation_type,
         cache_permute_indices,
+        check_return_topk_ids=check_return_topk_ids,
     )
 
 
@@ -3183,6 +3261,13 @@ def test_deepseekv3_routing(
         pytest.param(ActivationType.Geglu.value, id="Geglu"),
     ],
 )
+@pytest.mark.parametrize(
+    "check_return_topk_ids",
+    [
+        pytest.param(True, id="CheckTopkIds"),
+        pytest.param(False, id="NoCheckTopkIds"),
+    ],
+)
 def test_topk_routing(
     num_tokens,
     hidden_size,
@@ -3192,6 +3277,7 @@ def test_topk_routing(
     weight_processing,
     activation_type,
     cache_permute_indices,
+    check_return_topk_ids,
 ):
     """Test TopK routing configuration."""
     run_moe_test(
@@ -3203,6 +3289,7 @@ def test_topk_routing(
         weight_processing,
         activation_type,
         cache_permute_indices,
+        check_return_topk_ids=check_return_topk_ids,
     )
 
 
@@ -3256,6 +3343,13 @@ def test_topk_routing(
         pytest.param(ActivationType.Swiglu.value, id="Swiglu"),
     ],
 )
+@pytest.mark.parametrize(
+    "check_return_topk_ids",
+    [
+        pytest.param(True, id="CheckTopkIds"),
+        pytest.param(False, id="NoCheckTopkIds"),
+    ],
+)
 def test_llama4_routing(
     num_tokens,
     hidden_size,
@@ -3265,6 +3359,7 @@ def test_llama4_routing(
     weight_processing,
     activation_type,
     cache_permute_indices,
+    check_return_topk_ids,
 ):
     """Test Llama4 routing configuration with FP8 per-tensor."""
     run_moe_test(
@@ -3276,6 +3371,7 @@ def test_llama4_routing(
         weight_processing,
         activation_type,
         cache_permute_indices,
+        check_return_topk_ids=check_return_topk_ids,
     )
 
 

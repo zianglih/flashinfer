@@ -137,6 +137,11 @@ __global__ void __launch_bounds__(KernelParams::MaxNumExperts)
       if (laneIdx < params.mTopK) {
         int offset = warpIdx * MaxNumExperts + warpTopKExpertIdx[laneIdx];
         smemKIdx[offset] = static_cast<int8_t>(laneIdx);
+        if (params.mPtrTopKPacked != nullptr) {
+          params.mPtrTopKPacked[warpIdx * params.mTopK + laneIdx] =
+              PackedScoreIdx<OutputT>{static_cast<OutputT>(warpTopKScore[laneIdx]),
+                                      static_cast<int16_t>(warpTopKExpertIdx[laneIdx])};
+        }
         if (params.mPtrTopKWeights != nullptr) {
           params.mPtrTopKWeights[warpIdx * params.mTopK + laneIdx] =
               OutputT{warpTopKScore[laneIdx]};
@@ -303,6 +308,11 @@ __global__ void __cluster_dims__(NumBlocksPerCluster, 1, 1) __launch_bounds__(Nu
       if (laneIdx < params.mTopK) {
         smemPackedScoreIdx[warpIdx * params.mTopK + laneIdx] =
             TypePacked{warpTopKScore[laneIdx], static_cast<int16_t>(warpTopKExpertIdx[laneIdx])};
+        if (params.mPtrTopKPacked != nullptr) {
+          params.mPtrTopKPacked[warpTokenIdx * params.mTopK + laneIdx] =
+              PackedScoreIdx<OutputT>{static_cast<OutputT>(warpTopKScore[laneIdx]),
+                                      static_cast<int16_t>(warpTopKExpertIdx[laneIdx])};
+        }
       }
     }  // end if (validToken)
   }

@@ -367,7 +367,7 @@ class FusedMoeLauncher {
   // fp4. The executions are non-blocking by default.
   virtual Array<Tensor> run(int64_t moe_tactic, bool enable_pdl = true,
                             bool use_routing_scales_on_input = false,
-                            bool use_deep_seek_fp8 = false) {
+                            bool use_deep_seek_fp8 = false, bool return_topk_ids = false) {
     check_routing();
     prepare_routing();
 
@@ -391,15 +391,34 @@ class FusedMoeLauncher {
         use_routing_scales_on_input, use_deep_seek_fp8,
         static_cast<RoutingMethodType>(routing_method_type), routing_stream);
 
+    Tensor topk_ids_snapshot;
+    if (return_topk_ids) {
+      topk_ids_snapshot =
+          alloc_tensor({args->num_tokens, args->top_k}, dl_int32, hidden_states.device());
+      size_t copy_bytes = static_cast<size_t>(args->num_tokens) * args->top_k * sizeof(int32_t);
+      auto copy_err = cudaMemcpyAsync(topk_ids_snapshot.data_ptr(), expert_indexes.data_ptr(),
+                                      copy_bytes, cudaMemcpyDeviceToDevice, routing_stream);
+      FLASHINFER_CHECK(copy_err == cudaSuccess, "Failed to snapshot packed topk ids");
+    }
+
     check_moe();
     prepare_moe(moe_tactic);
 
     cudaStream_t moe_stream = get_stream(hidden_states.device());
+    // // Keep routing and MoE launches on the same stream to preserve ordering guarantees.
+    // cudaStream_t moe_stream = routing_stream;
     moe_runner->run(*args, workspace, hidden_states.device().device_id, moe_stream, moe_tactic,
                     enable_pdl);
 
     if (args->do_finalize) {
+      if (return_topk_ids) {
+        return {output, topk_ids_snapshot};
+      }
       return {output};
+    }
+    if (return_topk_ids) {
+      return {gemm2_output, FusedMoeLauncher::expert_weights, expanded_idx_to_permuted_idx,
+              topk_ids_snapshot};
     }
     return {gemm2_output, FusedMoeLauncher::expert_weights, expanded_idx_to_permuted_idx};
   }
@@ -1068,8 +1087,8 @@ class Fp8BlockScaleLauncher : public FusedMoeLauncher {
  public:
   // Override to handle pre-computed routing
   Array<Tensor> run(int64_t moe_tactic, bool enable_pdl = true,
-                    bool use_routing_scales_on_input = false,
-                    bool use_deep_seek_fp8 = false) override {
+                    bool use_routing_scales_on_input = false, bool use_deep_seek_fp8 = false,
+                    bool return_topk_ids = false) override {
     check_routing();
     prepare_routing();
 
@@ -1078,6 +1097,9 @@ class Fp8BlockScaleLauncher : public FusedMoeLauncher {
 
     // Check ndim==2 and size>0 because empty placeholder tensors may have non-null data_ptr
     bool use_precomputed = expert_indices.ndim() == 2 && expert_indices.size(0) > 0;
+    TVM_FFI_ICHECK(!return_topk_ids || !use_precomputed)
+        << "return_topk_ids is only supported with routing_logits input "
+           "(trtllm_fp8_block_scale_moe).";
     // When using pre-computed routing, pass nullptr as routing_logits to tell the
     // routing runner to use the pre-computed expert indices from workspace.routing_expert_indexes
     routing_runner.run(
@@ -1096,15 +1118,34 @@ class Fp8BlockScaleLauncher : public FusedMoeLauncher {
         use_routing_scales_on_input, use_deep_seek_fp8,
         static_cast<RoutingMethodType>(routing_method_type), routing_stream);
 
+    Tensor topk_ids_snapshot;
+    if (return_topk_ids) {
+      topk_ids_snapshot =
+          alloc_tensor({args->num_tokens, args->top_k}, dl_int32, hidden_states.device());
+      size_t copy_bytes = static_cast<size_t>(args->num_tokens) * args->top_k * sizeof(int32_t);
+      auto copy_err = cudaMemcpyAsync(topk_ids_snapshot.data_ptr(), expert_indexes.data_ptr(),
+                                      copy_bytes, cudaMemcpyDeviceToDevice, routing_stream);
+      FLASHINFER_CHECK(copy_err == cudaSuccess, "Failed to snapshot packed topk ids");
+    }
+
     check_moe();
     prepare_moe(moe_tactic);
 
     cudaStream_t moe_stream = get_stream(hidden_states.device());
+    // cudaStream_t moe_stream = routing_stream;
+
     moe_runner->run(*args, workspace, hidden_states.device().device_id, moe_stream, moe_tactic,
                     enable_pdl);
 
     if (args->do_finalize) {
+      if (return_topk_ids) {
+        return {output, topk_ids_snapshot};
+      }
       return {output};
+    }
+    if (return_topk_ids) {
+      return {gemm2_output, FusedMoeLauncher::expert_weights, expanded_idx_to_permuted_idx,
+              topk_ids_snapshot};
     }
     return {gemm2_output, FusedMoeLauncher::expert_weights, expanded_idx_to_permuted_idx};
   }
@@ -1388,9 +1429,24 @@ class FP4BlockScaleLauncher : public FusedMoeLauncher {
     workspace.total_num_padded_tokens = static_cast<int*>(total_num_padded_tokens.data_ptr());
     workspace.total_max_padded_tokens = max_num_padded_tokens;
     workspace.ProjUpTileN = tile_tokens_dim;
-    workspace.routing_expert_indexes =
-        static_cast<int*>(const_cast<void*>(expert_indices.data_ptr()));
-    workspace.expert_weights = const_cast<void*>(expert_weights.data_ptr());
+    bool has_precomputed_indices = expert_indices.ndim() == 2 && expert_indices.size(0) > 0;
+    if (has_precomputed_indices) {
+      workspace.routing_expert_indexes =
+          static_cast<int*>(const_cast<void*>(expert_indices.data_ptr()));
+    } else {
+      expert_indexes =
+          alloc_tensor({args->num_tokens, args->top_k}, dl_int32, hidden_states.device());
+      workspace.routing_expert_indexes = static_cast<int*>(expert_indexes.data_ptr());
+    }
+
+    bool has_precomputed_weights = expert_weights.ndim() == 2 && expert_weights.size(0) > 0;
+    if (has_precomputed_weights) {
+      workspace.expert_weights = const_cast<void*>(expert_weights.data_ptr());
+    } else {
+      FusedMoeLauncher::expert_weights =
+          alloc_tensor({args->num_tokens, args->top_k}, dl_bfloat16, hidden_states.device());
+      workspace.expert_weights = FusedMoeLauncher::expert_weights.data_ptr();
+    }
     workspace.permuted_idx_size = static_cast<int*>(total_num_padded_tokens.data_ptr());
     workspace.expanded_idx_to_permuted_idx =
         static_cast<int*>(expanded_idx_to_permuted_idx.data_ptr());
@@ -1534,10 +1590,15 @@ class FP4BlockScaleLauncher : public FusedMoeLauncher {
 
  public:
   Array<Tensor> run(int64_t moe_tactic, bool enable_pdl = true,
-                    bool use_routing_scales_on_input = false,
-                    bool use_deep_seek_fp8 = false) override {
+                    bool use_routing_scales_on_input = false, bool use_deep_seek_fp8 = false,
+                    bool return_topk_ids = false) override {
     check_routing();
     prepare_routing();
+
+    bool use_precomputed = expert_indices.ndim() == 2 && expert_indices.size(0) > 0;
+    TVM_FFI_ICHECK(!return_topk_ids || !use_precomputed)
+        << "return_topk_ids is only supported with routing_logits input "
+           "(trtllm_fp4_block_scale_moe).";
 
     // Execute routing
     tensorrt_llm::kernels::trtllmgen_moe::Routing::Runner routing_runner(tile_tokens_dim);
@@ -1546,12 +1607,12 @@ class FP4BlockScaleLauncher : public FusedMoeLauncher {
     routing_runner.run(
         args->routing_logits, args->routing_bias, args->num_tokens, args->num_experts, args->top_k,
         args->n_group, args->topk_group, args->local_expert_offset, args->local_num_experts,
-        args->routed_scaling_factor, static_cast<int*>(expert_indices.data_ptr()),
+        args->routed_scaling_factor, workspace.routing_expert_indexes,
         static_cast<int*>(expert_count_histogram.data_ptr()),
         static_cast<int*>(total_num_padded_tokens.data_ptr()),
         static_cast<int*>(expanded_idx_to_permuted_idx.data_ptr()),
         nullptr /*permuted_idx_to_expanded_idx.data_ptr()*/,
-        static_cast<int*>(permuted_idx_to_token_idx.data_ptr()), expert_weights.data_ptr(),
+        static_cast<int*>(permuted_idx_to_token_idx.data_ptr()), workspace.expert_weights,
         static_cast<int*>(num_tokens_per_expert.data_ptr()),
         static_cast<int*>(cta_idx_xy_to_batch_idx.data_ptr()),
         static_cast<int*>(cta_idx_xy_to_mn_limit.data_ptr()),
@@ -1559,16 +1620,33 @@ class FP4BlockScaleLauncher : public FusedMoeLauncher {
         use_routing_scales_on_input, use_deep_seek_fp8,
         static_cast<RoutingMethodType>(routing_method_type), routing_stream);
 
+    Tensor topk_ids_snapshot;
+    if (return_topk_ids) {
+      topk_ids_snapshot =
+          alloc_tensor({args->num_tokens, args->top_k}, dl_int32, hidden_states.device());
+      size_t copy_bytes = static_cast<size_t>(args->num_tokens) * args->top_k * sizeof(int32_t);
+      auto copy_err = cudaMemcpyAsync(topk_ids_snapshot.data_ptr(), expert_indexes.data_ptr(),
+                                      copy_bytes, cudaMemcpyDeviceToDevice, routing_stream);
+      FLASHINFER_CHECK(copy_err == cudaSuccess, "Failed to snapshot packed topk ids");
+    }
+
     check_moe();
     prepare_moe(moe_tactic);
 
-    cudaStream_t moe_stream = get_stream(hidden_states.device());
+    cudaStream_t moe_stream = routing_stream;
     moe_runner->run(*args, workspace, hidden_states.device().device_id, moe_stream, moe_tactic,
                     enable_pdl);
 
     // Match original FP4 behavior for return values
     if (args->do_finalize) {
+      if (return_topk_ids) {
+        return {output, topk_ids_snapshot};
+      }
       return {output};
+    }
+    if (return_topk_ids) {
+      return {gemm2_output, FusedMoeLauncher::expert_weights, expanded_idx_to_permuted_idx,
+              topk_ids_snapshot};
     }
     return {gemm2_output, FusedMoeLauncher::expert_weights, expanded_idx_to_permuted_idx};
   }
@@ -1612,7 +1690,7 @@ Array<Tensor> trtllm_bf16_moe(Optional<TensorView> const& routing_logits,
                               int64_t local_expert_offset, int64_t local_num_experts,
                               Optional<double> routed_scaling_factor, int64_t routing_method_type,
                               bool use_shuffled_weight, int64_t weight_layout, bool do_finalize,
-                              bool enable_pdl, Array<int64_t> moe_tactic) {
+                              bool enable_pdl, bool return_topk_ids, Array<int64_t> moe_tactic) {
   // Just some basic type validation first and leave more checks to the launcher
   if (routing_logits.has_value()) {
     TVM_FFI_ICHECK(routing_logits.value().dtype() == dl_float32 ||
@@ -1628,6 +1706,10 @@ Array<Tensor> trtllm_bf16_moe(Optional<TensorView> const& routing_logits,
 
   auto const num_tokens = hidden_states.size(0);
   auto const hidden_size = hidden_states.size(1);
+  bool use_precomputed_routing = expert_indices.ndim() == 2 && expert_indices.size(0) > 0;
+  TVM_FFI_ICHECK(!return_topk_ids || !use_precomputed_routing)
+      << "return_topk_ids is only supported with routing_logits input "
+         "(trtllm_bf16_moe).";
 
   // Calculate supported tile sizes
   std::vector<int32_t> mSupportedTileN(Bf16MoeLauncher::mSupportedTileNums.begin(),
@@ -1679,7 +1761,7 @@ Array<Tensor> trtllm_bf16_moe(Optional<TensorView> const& routing_logits,
   auto& selected_launcher = launchers_map.at(tile_N);
 
   // Run the launcher - it will create its own runner internally
-  return selected_launcher->run(config, enable_pdl);
+  return selected_launcher->run(config, enable_pdl, false, false, return_topk_ids);
 }
 
 Array<Tensor> trtllm_fp8_per_tensor_scale_moe(
@@ -1690,7 +1772,7 @@ Array<Tensor> trtllm_fp8_per_tensor_scale_moe(
     Optional<int64_t> n_group, Optional<int64_t> topk_group, int64_t intermediate_size,
     int64_t local_expert_offset, int64_t local_num_experts, Optional<double> routed_scaling_factor,
     bool use_routing_scales_on_input, int64_t routing_method_type, bool do_finalize,
-    bool enable_pdl, Array<int64_t> config_index, int64_t activation_type) {
+    bool enable_pdl, bool return_topk_ids, Array<int64_t> config_index, int64_t activation_type) {
   // Basic type validation
   auto dtype = hidden_states.dtype();
   auto activation = static_cast<ActivationType>(activation_type);
@@ -1771,7 +1853,8 @@ Array<Tensor> trtllm_fp8_per_tensor_scale_moe(
   auto& selected_launcher = launchers_map.at(tile_N);
 
   // Run the launcher - it will create its own runner internally
-  return selected_launcher->run(config, enable_pdl, use_routing_scales_on_input);
+  return selected_launcher->run(config, enable_pdl, use_routing_scales_on_input, false,
+                                return_topk_ids);
 }
 
 Array<Tensor> trtllm_fp8_block_scale_moe(
@@ -1782,7 +1865,8 @@ Array<Tensor> trtllm_fp8_block_scale_moe(
     Optional<int64_t> n_group, Optional<int64_t> topk_group, int64_t intermediate_size,
     int64_t local_expert_offset, int64_t local_num_experts, Optional<double> routed_scaling_factor,
     int64_t routing_method_type, bool use_shuffled_weight, int64_t weight_layout, bool do_finalize,
-    bool enable_pdl, Array<int64_t> config_index, Fp8QuantizationType quantization_type) {
+    bool enable_pdl, bool return_topk_ids, Array<int64_t> config_index,
+    Fp8QuantizationType quantization_type) {
   // Basic type validation
   auto dtype = hidden_states.dtype();
 
@@ -1894,7 +1978,8 @@ Array<Tensor> trtllm_fp8_block_scale_moe(
   // Run the launcher with DeepSeek FP8 enabled - it will create its own runner internally
   return selected_launcher->run(
       config, enable_pdl, false /* use_routing_scales_on_input */,
-      quantization_type == Fp8QuantizationType::DeepSeekFp8 /* use_deep_seek_fp8 */);
+      quantization_type == Fp8QuantizationType::DeepSeekFp8 /* use_deep_seek_fp8 */,
+      return_topk_ids);
 }
 
 Array<Tensor> trtllm_fp4_block_scale_moe(
@@ -1909,8 +1994,8 @@ Array<Tensor> trtllm_fp4_block_scale_moe(
     Optional<TensorView> output2_scales_scalar, int64_t num_experts, int64_t top_k,
     Optional<int64_t> n_group, Optional<int64_t> topk_group, int64_t intermediate_size,
     int64_t local_expert_offset, int64_t local_num_experts, Optional<double> routed_scaling_factor,
-    int64_t routing_method_type, bool do_finalize, bool enable_pdl, int64_t act_type,
-    TensorView output, Array<int64_t> config_index) {
+    int64_t routing_method_type, bool do_finalize, bool enable_pdl, bool return_topk_ids,
+    int64_t act_type, TensorView output, Array<int64_t> config_index) {
   // Determine data types based on input format
   int const num_tokens = hidden_states.size(0);
   int hidden_size = hidden_states.size(1);
@@ -2037,7 +2122,7 @@ Array<Tensor> trtllm_fp4_block_scale_moe(
   auto& selected_launcher = launchers_map.at(tile_N);
 
   // Run the launcher - it will create its own runner internally
-  return selected_launcher->run(config, enable_pdl);
+  return selected_launcher->run(config, enable_pdl, false, false, return_topk_ids);
 }
 
 Array<Tensor> trtllm_mxint4_block_scale_moe(
@@ -2047,8 +2132,8 @@ Array<Tensor> trtllm_mxint4_block_scale_moe(
     TensorView gemm2_weights, TensorView gemm2_weights_scale, int64_t num_experts, int64_t top_k,
     Optional<int64_t> n_group, Optional<int64_t> topk_group, int64_t intermediate_size,
     int64_t local_expert_offset, int64_t local_num_experts, Optional<double> routed_scaling_factor,
-    int64_t routing_method_type, bool do_finalize, bool enable_pdl, TensorView output,
-    Array<int64_t> config_index) {
+    int64_t routing_method_type, bool do_finalize, bool enable_pdl, bool return_topk_ids,
+    TensorView output, Array<int64_t> config_index) {
   // Determine data types based on input format
   int const num_tokens = hidden_states.size(0);
   int hidden_size = hidden_states.size(1);
@@ -2126,7 +2211,7 @@ Array<Tensor> trtllm_mxint4_block_scale_moe(
   auto& selected_launcher = launchers_map.at(tile_N);
 
   // Run the launcher - it will create its own runner internally
-  return selected_launcher->run(config, enable_pdl);
+  return selected_launcher->run(config, enable_pdl, false, false, return_topk_ids);
 }
 
 Array<Array<int64_t>> trtllm_get_valid_moe_configs(

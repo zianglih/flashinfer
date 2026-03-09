@@ -128,6 +128,10 @@ __global__ void __launch_bounds__(WarpSize) routingIndicesWarpKernel(KernelParam
             expertTokenCount;
         // we also compute the final score here and write it out if required
         auto finalScore = OutputT{sigmoid_accurate(float{warpMaxScore[0]})};
+        if (params.mPtrTopKPacked != nullptr) {
+          params.mPtrTopKPacked[tokenIdx] =
+              TypePacked{finalScore, static_cast<int16_t>(warpMaxExpertIdx[0])};
+        }
         if (params.mPtrTopKWeights != nullptr) {
           params.mPtrTopKWeights[tokenIdx] = finalScore;
         }
@@ -347,6 +351,9 @@ __global__ void __cluster_dims__(NumBlocksPerCluster, 1, 1) __launch_bounds__(Nu
       TypePacked packedScore{static_cast<OutputT>(params.mPtrTopKWeights[warpTokenIdx]),
                              static_cast<int16_t>(params.mPtrTopKIds[warpTokenIdx])};
       smemPackedScoreIdx[warpIdx] = packedScore;
+      if (params.mPtrTopKPacked != nullptr) {
+        params.mPtrTopKPacked[warpTokenIdx] = packedScore;
+      }
     }
   } else if (params.mPtrScores != nullptr) {
     // in this case, each warp represents a token
@@ -363,6 +370,9 @@ __global__ void __cluster_dims__(NumBlocksPerCluster, 1, 1) __launch_bounds__(Nu
         auto finalScore = OutputT{sigmoid_accurate(float{warpMaxScore[0]})};
         TypePacked packedScore{finalScore, static_cast<int16_t>(warpMaxExpertIdx[0])};
         smemPackedScoreIdx[warpIdx] = packedScore;
+        if (params.mPtrTopKPacked != nullptr) {
+          params.mPtrTopKPacked[warpTokenIdx] = packedScore;
+        }
       }
     }
   } else {
