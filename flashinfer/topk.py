@@ -15,6 +15,7 @@ limitations under the License.
 """
 
 import functools
+from enum import IntEnum
 from types import SimpleNamespace
 from typing import Optional, Tuple
 
@@ -23,6 +24,30 @@ import torch
 from .api_logging import flashinfer_api
 from .jit.topk import gen_topk_module
 from .utils import _get_cache_buf, register_custom_op, register_fake_op
+
+
+class TopKTieBreak(IntEnum):
+    """Top-k tie-break mode.
+
+    This mirrors an enum-class style API while keeping int-compatible values
+    for FFI dispatch:
+      - NONE  = 0 (legacy behavior)
+      - SMALL = 1 (prefer smaller indices)
+      - LARGE = 2 (prefer larger indices)
+    """
+
+    NONE = 0
+    SMALL = 1
+    LARGE = 2
+
+    def __str__(self) -> str:
+        return self.name.lower()
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}.{self.name}"
+
+    def __format__(self, format_spec: str) -> str:
+        return format(str(self), format_spec)
 
 
 @functools.cache
@@ -37,6 +62,7 @@ def get_topk_module():
         top_k: int,
         sorted_output: bool,
         deterministic: bool,
+        tie_break: int,
         row_states_buffer: Optional[torch.Tensor],
         output_values: torch.Tensor,
     ) -> torch.Tensor:
@@ -57,6 +83,7 @@ def get_topk_module():
             top_k,
             sorted_output,
             deterministic,
+            tie_break,
         )
         return output_indices
 
@@ -66,6 +93,7 @@ def get_topk_module():
         top_k: int,
         sorted_output: bool,
         deterministic: bool,
+        tie_break: int,
         row_states_buffer: Optional[torch.Tensor],
         output_values: torch.Tensor,
     ) -> torch.Tensor:
@@ -85,6 +113,7 @@ def get_topk_module():
         row_states_buffer: Optional[torch.Tensor],
         top_k: int,
         deterministic: bool,
+        tie_break: int,
     ) -> None:
         assert input.dtype in [torch.float32, torch.float16, torch.bfloat16], (
             f"Unsupported dtype {input.dtype}, expected float32, float16, or bfloat16"
@@ -98,6 +127,7 @@ def get_topk_module():
             row_states_buffer,
             top_k,
             deterministic,
+            tie_break,
         )
 
     @register_fake_op("flashinfer::radix_topk_page_table_transform")
@@ -110,6 +140,7 @@ def get_topk_module():
         row_states_buffer: Optional[torch.Tensor],
         top_k: int,
         deterministic: bool,
+        tie_break: int,
     ) -> None:
         pass
 
@@ -125,6 +156,7 @@ def get_topk_module():
         row_states_buffer: Optional[torch.Tensor],
         top_k: int,
         deterministic: bool,
+        tie_break: int,
     ) -> None:
         assert input.dtype in [torch.float32, torch.float16, torch.bfloat16], (
             f"Unsupported dtype {input.dtype}, expected float32, float16, or bfloat16"
@@ -137,6 +169,7 @@ def get_topk_module():
             row_states_buffer,
             top_k,
             deterministic,
+            tie_break,
         )
 
     @register_fake_op("flashinfer::radix_topk_ragged_transform")
@@ -148,6 +181,7 @@ def get_topk_module():
         row_states_buffer: Optional[torch.Tensor],
         top_k: int,
         deterministic: bool,
+        tie_break: int,
     ) -> None:
         pass
 
@@ -179,6 +213,7 @@ def top_k(
     k: int,
     sorted: bool = False,
     deterministic: bool = False,
+    tie_break: int = TopKTieBreak.NONE,
 ) -> Tuple[torch.Tensor, torch.Tensor]:
     r"""Radix-based Top-K selection.
 
@@ -205,6 +240,15 @@ def top_k(
 
         Deterministic mode guarantees repeatable FlashInfer output ordering for
         the selected top-k set on a fixed input and system.
+    tie_break : int, optional
+        Tie-breaking mode for equal values at the selection boundary.
+        Supported modes are (or use ``TopKTieBreak`` enum values):
+
+        - ``0``: no explicit index tie-break
+        - ``1``: prefer smaller indices
+        - ``2``: prefer larger indices
+
+        Default is ``0``.
 
     Returns
     -------
@@ -267,10 +311,19 @@ def top_k(
     # Allocate output_values for kernel to write directly
     output_values = torch.empty(batch_size, k, dtype=input.dtype, device=device)
 
+    # tie_break modes 1/2 imply deterministic behavior for selection.
+    deterministic_for_sort = deterministic or tie_break != TopKTieBreak.NONE
+
     # For deterministic + sorted + k <= 2048: CUDA handles the stable value sort on device.
-    sorted_cuda = sorted and deterministic and k <= 2048
+    sorted_cuda = sorted and deterministic_for_sort and k <= 2048
     indices_int32 = get_topk_module().radix_topk(
-        input, k, sorted_cuda, deterministic, row_states_buffer, output_values
+        input,
+        k,
+        sorted_cuda,
+        deterministic,
+        tie_break,
+        row_states_buffer,
+        output_values,
     )
 
     # Convert to int64 for compatibility
@@ -279,7 +332,7 @@ def top_k(
     if sorted and not sorted_cuda:
         # Sort within each row by value (descending)
         sorted_values, sort_indices = torch.sort(
-            output_values, dim=-1, descending=True, stable=deterministic
+            output_values, dim=-1, descending=True, stable=deterministic_for_sort
         )
         sorted_indices = torch.gather(indices, dim=-1, index=sort_indices)
         return sorted_values, sorted_indices
@@ -299,6 +352,7 @@ def top_k_page_table_transform(
     k: int,
     row_to_batch: Optional[torch.Tensor] = None,
     deterministic: bool = False,
+    tie_break: int = TopKTieBreak.NONE,
 ) -> torch.Tensor:
     r"""Fused Top-K selection + Page Table Transform for sparse attention.
 
@@ -330,6 +384,16 @@ def top_k_page_table_transform(
     deterministic : bool, optional
         If True, uses deterministic mode.
         Default is False (non-deterministic, which is faster).
+    tie_break : int, optional
+        Tie-breaking mode for equal values at the selection boundary.
+        Supported modes are (or use ``TopKTieBreak`` enum values):
+
+        - ``0``: no explicit index tie-break
+        - ``1``: prefer smaller indices
+        - ``2``: prefer larger indices
+
+        Default is ``0``.
+
 
     Returns
     -------
@@ -381,6 +445,7 @@ def top_k_page_table_transform(
         row_states_buffer,
         k,
         deterministic,
+        tie_break,
     )
 
     return output_page_table
@@ -393,6 +458,7 @@ def top_k_ragged_transform(
     lengths: torch.Tensor,
     k: int,
     deterministic: bool = False,
+    tie_break: int = TopKTieBreak.NONE,
 ) -> torch.Tensor:
     r"""Fused Top-K selection + Ragged Index Transform for sparse attention.
 
@@ -417,6 +483,16 @@ def top_k_ragged_transform(
     deterministic : bool, optional
         If True, uses deterministic mode.
         Default is False (non-deterministic, which is faster).
+    tie_break : int, optional
+        Tie-breaking mode for equal values at the selection boundary.
+        Supported modes are (or use ``TopKTieBreak`` enum values):
+
+        - ``0``: no explicit index tie-break
+        - ``1``: prefer smaller indices
+        - ``2``: prefer larger indices
+
+        Default is ``0``.
+
 
     Returns
     -------
@@ -468,6 +544,7 @@ def top_k_ragged_transform(
         row_states_buffer,
         k,
         deterministic,
+        tie_break,
     )
 
     return output_indices
