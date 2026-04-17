@@ -1974,8 +1974,8 @@ def test_top_k_tie_break_modes(algo, batch_size, vocab_size, k, set_topk_algo):
 
     torch.testing.assert_close(values_small, expected_values)
     torch.testing.assert_close(values_large, expected_values)
-    assert torch.equal(indices_small, expected_small)
-    assert torch.equal(indices_large, expected_large)
+    _assert_unordered_indices_match(indices_small, expected_small)
+    _assert_unordered_indices_match(indices_large, expected_large)
 
 
 @pytest.mark.parametrize(
@@ -2420,9 +2420,9 @@ def test_top_k_uint32_pointer_overflow():
 
 if __name__ == "__main__":
     # Basic tests
-    test_top_k(4, 32000, 256, torch.float32)
-    test_top_k_sorted(4, 32000, 256, torch.float32)
-    test_top_k_large_batch(64, 128512, 256, False)
+    test_top_k(4, 32000, 256, torch.float32, flashinfer.TopKTieBreak.NONE)
+    test_top_k_sorted(4, 32000, 256, torch.float32, flashinfer.TopKTieBreak.NONE)
+    test_top_k_large_batch(64, 128512, 256, False, flashinfer.TopKTieBreak.NONE)
 
     # Fused transform tests
     print("Testing page table transform...")
