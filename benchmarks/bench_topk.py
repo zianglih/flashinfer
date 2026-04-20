@@ -10,12 +10,13 @@ Optional comparison with SGLang's sgl_kernel implementation.
 import argparse
 import os
 from contextlib import contextmanager
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 
 import numpy as np
 import torch
 
 import flashinfer
+from flashinfer.topk import TopKTieBreak
 from flashinfer.testing.utils import bench_gpu_time
 
 
@@ -70,11 +71,15 @@ def bench_median_ms(fn) -> float:
 
 
 def bench_flashinfer_modes(
-    run_flashinfer, deterministic: bool
+    run_flashinfer,
+    selected_deterministic: bool,
+    compare_to_nondeterministic: bool = False,
 ) -> tuple[float, float | None]:
-    selected_ms = bench_median_ms(lambda: run_flashinfer(deterministic))
+    selected_ms = bench_median_ms(lambda: run_flashinfer(selected_deterministic))
     nondeterministic_ms = (
-        bench_median_ms(lambda: run_flashinfer(False)) if deterministic else None
+        bench_median_ms(lambda: run_flashinfer(False))
+        if compare_to_nondeterministic
+        else None
     )
     return selected_ms, nondeterministic_ms
 
@@ -83,6 +88,7 @@ def bench_top_k_from_scores(
     scores: torch.Tensor,
     k: int,
     deterministic: bool = False,
+    tie_break: TopKTieBreak = TopKTieBreak.NONE,
     compare_torch_deterministic: bool = False,
     compare_sglang: bool = False,
 ) -> dict:
@@ -90,13 +96,16 @@ def bench_top_k_from_scores(
     batch_size, seq_len = scores.shape
 
     set_topk_algo("default")
+    compare_to_nondeterministic = deterministic and tie_break == TopKTieBreak.NONE
     fi_ms, fi_nondeterministic_ms = bench_flashinfer_modes(
         lambda deterministic_mode: flashinfer.top_k(
             scores,
             k,
             deterministic=deterministic_mode,
+            tie_break=tie_break,
         ),
         deterministic,
+        compare_to_nondeterministic=compare_to_nondeterministic,
     )
 
     result = {
@@ -104,6 +113,7 @@ def bench_top_k_from_scores(
         "seq_len": seq_len,
         "k": k,
         "dtype": str(scores.dtype),
+        "tie_break": tie_break,
         "flashinfer_us": fi_ms * 1e3,
     }
     if fi_nondeterministic_ms is not None:
@@ -239,6 +249,7 @@ class DSATopKCase:
     q_len: int
     seq_len: int
     causal_chunk: bool
+    tie_break: TopKTieBreak = TopKTieBreak.NONE
 
 
 @dataclass(frozen=True)
@@ -247,36 +258,52 @@ class TopKCase:
     batch_size: int
     seq_len: int
     k: int
+    tie_break: TopKTieBreak = TopKTieBreak.NONE
 
 
 def build_top_k_cases(
     batch_sizes: list[int],
     seq_lens: list[int],
     k_values: list[int],
+    tie_break_modes: list[TopKTieBreak],
 ) -> list[TopKCase]:
     cases: list[TopKCase] = []
 
-    for batch_size in batch_sizes:
-        for seq_len in seq_lens:
-            for k in k_values:
-                if k <= seq_len:
-                    cases.append(
-                        TopKCase(
-                            name=f"grid_b{batch_size}_l{seq_len}_k{k}",
-                            batch_size=batch_size,
-                            seq_len=seq_len,
-                            k=k,
+    for tie_break in tie_break_modes:
+        for batch_size in batch_sizes:
+            for seq_len in seq_lens:
+                for k in k_values:
+                    if k <= seq_len:
+                        cases.append(
+                            TopKCase(
+                                name=f"grid_b{batch_size}_l{seq_len}_k{k}",
+                                batch_size=batch_size,
+                                seq_len=seq_len,
+                                k=k,
+                                tie_break=tie_break,
+                            )
                         )
-                    )
 
-    # These deterministic large-batch/long-vocab cases are not covered by the
-    # original grid but surfaced real correctness/performance differences.
-    cases.extend(
-        [
-            TopKCase("stress_b2048_l131072_k1024", 2048, 131072, 1024),
-            TopKCase("stress_b4096_l200000_k1024", 4096, 200000, 1024),
-        ]
-    )
+        # These deterministic large-batch/long-vocab cases are not covered by the
+        # original grid but surfaced real correctness/performance differences.
+        cases.extend(
+            [
+                TopKCase(
+                    "stress_b2048_l131072_k1024",
+                    2048,
+                    131072,
+                    1024,
+                    tie_break=tie_break,
+                ),
+                TopKCase(
+                    "stress_b4096_l200000_k1024",
+                    4096,
+                    200000,
+                    1024,
+                    tie_break=tie_break,
+                ),
+            ]
+        )
 
     return cases
 
@@ -289,6 +316,7 @@ def bench_dsa_top_k(
     dtype: torch.dtype = torch.bfloat16,
     input_pattern: str = "dsa_relu",
     deterministic: bool = False,
+    tie_break: TopKTieBreak = TopKTieBreak.NONE,
     compare_torch_deterministic: bool = False,
     compare_sglang: bool = False,
     causal_chunk: bool = False,
@@ -305,6 +333,7 @@ def bench_dsa_top_k(
         scores=scores,
         k=k,
         deterministic=deterministic,
+        tie_break=tie_break,
         compare_torch_deterministic=compare_torch_deterministic,
         compare_sglang=compare_sglang,
     )
@@ -321,6 +350,7 @@ def bench_top_k(
     dtype: torch.dtype = torch.float32,
     input_pattern: str = "random",
     deterministic: bool = False,
+    tie_break: TopKTieBreak = TopKTieBreak.NONE,
     compare_torch_deterministic: bool = False,
     compare_sglang: bool = False,
 ) -> dict:
@@ -330,6 +360,7 @@ def bench_top_k(
         scores=scores,
         k=k,
         deterministic=deterministic,
+        tie_break=tie_break,
         compare_torch_deterministic=compare_torch_deterministic,
         compare_sglang=compare_sglang,
     )
@@ -342,6 +373,7 @@ def bench_page_table_transform(
     dtype: torch.dtype = torch.float32,
     input_pattern: str = "random",
     deterministic: bool = False,
+    tie_break: TopKTieBreak = TopKTieBreak.NONE,
     compare_sglang: bool = False,
 ) -> dict:
     """Benchmark fused top_k + page table transform."""
@@ -357,6 +389,7 @@ def bench_page_table_transform(
     enable_cupti = True
 
     set_topk_algo("default")
+    compare_to_nondeterministic = deterministic and tie_break == TopKTieBreak.NONE
     fi_ms, fi_nondeterministic_ms = bench_flashinfer_modes(
         lambda deterministic_mode: flashinfer.top_k_page_table_transform(
             scores,
@@ -364,8 +397,10 @@ def bench_page_table_transform(
             lengths,
             k,
             deterministic=deterministic_mode,
+            tie_break=tie_break,
         ),
         deterministic,
+        compare_to_nondeterministic=compare_to_nondeterministic,
     )
 
     result = {
@@ -373,6 +408,7 @@ def bench_page_table_transform(
         "seq_len": seq_len,
         "k": k,
         "dtype": str(dtype),
+        "tie_break": tie_break,
         "flashinfer_us": fi_ms * 1e3,
     }
     if fi_nondeterministic_ms is not None:
@@ -418,6 +454,7 @@ def bench_ragged_transform(
     dtype: torch.dtype = torch.float32,
     input_pattern: str = "random",
     deterministic: bool = False,
+    tie_break: TopKTieBreak = TopKTieBreak.NONE,
     compare_sglang: bool = False,
 ) -> dict:
     """Benchmark fused top_k + ragged index transform."""
@@ -430,6 +467,7 @@ def bench_ragged_transform(
     enable_cupti = True
 
     set_topk_algo("default")
+    compare_to_nondeterministic = deterministic and tie_break == TopKTieBreak.NONE
     fi_ms, fi_nondeterministic_ms = bench_flashinfer_modes(
         lambda deterministic_mode: flashinfer.top_k_ragged_transform(
             scores,
@@ -437,8 +475,10 @@ def bench_ragged_transform(
             lengths,
             k,
             deterministic=deterministic_mode,
+            tie_break=tie_break,
         ),
         deterministic,
+        compare_to_nondeterministic=compare_to_nondeterministic,
     )
 
     result = {
@@ -446,6 +486,7 @@ def bench_ragged_transform(
         "seq_len": seq_len,
         "k": k,
         "dtype": str(dtype),
+        "tie_break": tie_break,
         "flashinfer_us": fi_ms * 1e3,
     }
     if fi_nondeterministic_ms is not None:
@@ -495,6 +536,16 @@ def parse_dtype(dtype_str: str) -> torch.dtype:
     return dtype_map[dtype_str.lower()]
 
 
+def parse_tie_break_mode(mode_str: str) -> TopKTieBreak:
+    """Parse CLI tie-break mode into TopKTieBreak enum."""
+    try:
+        return TopKTieBreak(int(mode_str))
+    except ValueError as e:
+        raise argparse.ArgumentTypeError(
+            "tie_break mode must be one of: 0 (none), 1 (small), 2 (large)"
+        ) from e
+
+
 @torch.inference_mode()
 def main():
     parser = argparse.ArgumentParser(description="Benchmark Top-K operations")
@@ -524,6 +575,18 @@ def main():
         "--deterministic",
         action="store_true",
         help="Enable deterministic mode for FlashInfer top-k kernels",
+    )
+    parser.add_argument(
+        "--tie-break-modes",
+        type=parse_tie_break_mode,
+        nargs="+",
+        choices=list(TopKTieBreak),
+        default=[TopKTieBreak.NONE],
+        help=(
+            "Tie-break modes to benchmark. "
+            "Use one or more of: 0 (none), 1 (prefer small indices), 2 (prefer large indices). "
+            "Default: 0"
+        ),
     )
     parser.add_argument(
         "--compare-torch-deterministic",
@@ -566,6 +629,7 @@ def main():
     args = parser.parse_args()
 
     dtype = parse_dtype(args.dtype)
+    tie_break_modes = list(dict.fromkeys(args.tie_break_modes))
 
     if args.compare_sglang and not HAS_SGL_KERNEL:
         print("WARNING: sgl_kernel not found, skipping SGLang comparison")
@@ -579,6 +643,7 @@ def main():
         batch_sizes=batch_sizes,
         seq_lens=seq_lens,
         k_values=k_values,
+        tie_break_modes=tie_break_modes,
     )
 
     dtype_str = args.dtype.upper()
@@ -588,6 +653,12 @@ def main():
         if args.deterministic:
             print(
                 "ERROR: --compare-algorithms is only meaningful with non-deterministic mode"
+            )
+            return
+        if any(mode != TopKTieBreak.NONE for mode in tie_break_modes):
+            print(
+                "ERROR: --compare-algorithms only supports --tie-break-modes 0 "
+                "(tie-break modes force the filtered path)"
             )
             return
         print("=" * 100)
@@ -647,14 +718,14 @@ def main():
         print(
             "top_k: Basic radix-based top-k selection "
             f"(dtype={dtype_str}, deterministic={args.deterministic}, "
-            f"pattern={args.input_pattern})"
+            f"pattern={args.input_pattern}, tie_break_modes={','.join(map(str, tie_break_modes))})"
         )
         if args.compare_sglang:
             print("NOTE: SGLang only supports k=2048 and float32")
         if args.deterministic:
             print(
                 "NOTE: deterministic mode also benchmarks FlashInfer(non-det) "
-                "for direct comparison"
+                "for direct comparison when tie_break=0"
             )
         if args.compare_torch_deterministic:
             print(
@@ -673,13 +744,13 @@ def main():
 
         if args.deterministic:
             header = (
-                f"{'batch':>6} {'seq_len':>10} {'k':>6} | "
+                f"{'batch':>6} {'seq_len':>10} {'k':>6} {'tie':>7} | "
                 f"{'FlashInfer':>12} {'FlashInfer(det)':>14} {'DetSlowdown':>11} "
                 f"{'torch.det':>12} {'Speedup':>10}"
             )
         else:
             header = (
-                f"{'batch':>6} {'seq_len':>10} {'k':>6} | "
+                f"{'batch':>6} {'seq_len':>10} {'k':>6} {'tie':>7} | "
                 f"{'FlashInfer':>12} {'torch.topk':>12} {'Speedup':>10}"
                 f" {'Clusters':>12} {'Speedup Clusters vs. Default':>29}"
             )
@@ -688,12 +759,7 @@ def main():
         if args.compare_sglang:
             header += f" {'SGLang':>12} {'Speedup':>10}"
         print(header)
-        divider_len = 96 if args.deterministic else 115
-        if args.compare_torch_deterministic and not args.deterministic:
-            divider_len += 24
-        if args.compare_sglang:
-            divider_len += 24
-        print("-" * divider_len)
+        print("-" * len(header))
 
         for case in top_k_cases:
             try:
@@ -704,21 +770,34 @@ def main():
                     dtype,
                     input_pattern=args.input_pattern,
                     deterministic=args.deterministic,
+                    tie_break=case.tie_break,
                     compare_torch_deterministic=args.compare_torch_deterministic,
                     compare_sglang=args.compare_sglang,
                 )
                 if args.deterministic:
+                    nondet_us = result.get("flashinfer_nondeterministic_us")
+                    slowdown = result.get("deterministic_slowdown_vs_nondeterministic")
+                    nondet_str = (
+                        f"{nondet_us:>10.2f}us"
+                        if nondet_us is not None
+                        else f"{'n/a':>12}"
+                    )
+                    slowdown_str = (
+                        f"{slowdown:>10.2f}x"
+                        if slowdown is not None
+                        else f"{'n/a':>11}"
+                    )
                     line = (
-                        f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} | "
-                        f"{result['flashinfer_nondeterministic_us']:>10.2f}us "
+                        f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} {case.tie_break:>7} | "
+                        f"{nondet_str} "
                         f"{result['flashinfer_us']:>12.2f}us "
-                        f"{result['deterministic_slowdown_vs_nondeterministic']:>10.2f}x "
+                        f"{slowdown_str} "
                         f"{result['torch_us']:>10.2f}us "
                         f"{result['speedup_vs_torch']:>9.2f}x"
                     )
                 else:
                     line = (
-                        f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} | "
+                        f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} {case.tie_break:>7} | "
                         f"{result['flashinfer_us']:>12.2f}us {result['torch_us']:>10.2f}us "
                         f"{result['speedup_vs_torch']:>9.2f}x"
                     )
@@ -741,7 +820,7 @@ def main():
                 error_label = classify_benchmark_runtime_error(e)
                 if error_label is not None:
                     print(
-                        f"{case.batch_size:>6} {case.seq_len:>10} {case.k:>6} | {error_label}"
+                        f"{case.batch_size:>6} {case.seq_len:>10} {case.k:>6} {case.tie_break:>7} | {error_label}"
                     )
                     torch.cuda.empty_cache()
                 else:
@@ -752,12 +831,13 @@ def main():
         print(
             "dsa_topk: DeepSeek DSA-like indexer top-k workload "
             f"(dtype={dtype_str}, deterministic={args.deterministic}, "
-            f"dsa_pattern={args.dsa_input_pattern}, k={args.dsa_topk})"
+            f"dsa_pattern={args.dsa_input_pattern}, k={args.dsa_topk}, "
+            f"tie_break_modes={','.join(map(str, tie_break_modes))})"
         )
         if args.deterministic:
             print(
                 "NOTE: deterministic mode also benchmarks FlashInfer(non-det) "
-                "for direct comparison"
+                "for direct comparison when tie_break=0"
             )
         if args.compare_torch_deterministic:
             print(
@@ -772,23 +852,20 @@ def main():
 
         if args.deterministic:
             header = (
-                f"{'case':>24} {'rows':>8} {'seq_len':>10} {'k':>6} | "
+                f"{'case':>24} {'rows':>8} {'seq_len':>10} {'k':>6} {'tie':>7} | "
                 f"{'FlashInfer':>12} {'FlashInfer(det)':>14} {'DetSlowdown':>11} "
                 f"{'torch.det':>12} {'Speedup':>10}"
             )
         else:
             header = (
-                f"{'case':>24} {'rows':>8} {'seq_len':>10} {'k':>6} | "
+                f"{'case':>24} {'rows':>8} {'seq_len':>10} {'k':>6} {'tie':>7} | "
                 f"{'FlashInfer':>12} {'torch.topk':>12} {'Speedup':>10}"
                 f" {'Clusters':>12} {'Speedup Clusters vs. Default':>29}"
             )
         if args.compare_torch_deterministic and not args.deterministic:
             header += f" {'torch.det':>12} {'Speedup':>10}"
         print(header)
-        divider_len = 110 if args.deterministic else 129
-        if args.compare_torch_deterministic and not args.deterministic:
-            divider_len += 24
-        print("-" * divider_len)
+        print("-" * len(header))
 
         dsa_cases = [
             # DeepSeek Sparse Attention proxy cases:
@@ -799,6 +876,11 @@ def main():
             DSATopKCase("decode_b8_q1_l64k", 8, 1, 65536, False),
             DSATopKCase("decode_b32_q1_l128k", 32, 1, 131072, False),
             DSATopKCase("prefill_b1_q128_l128k", 1, 128, 131072, True),
+        ]
+        dsa_cases = [
+            replace(case, tie_break=tie_break)
+            for case in dsa_cases
+            for tie_break in tie_break_modes
         ]
 
         for case in dsa_cases:
@@ -817,22 +899,35 @@ def main():
                     dtype=dtype,
                     input_pattern=args.dsa_input_pattern,
                     deterministic=args.deterministic,
+                    tie_break=case.tie_break,
                     compare_torch_deterministic=args.compare_torch_deterministic,
                     compare_sglang=False,
                     causal_chunk=case.causal_chunk,
                 )
                 if args.deterministic:
+                    nondet_us = result.get("flashinfer_nondeterministic_us")
+                    slowdown = result.get("deterministic_slowdown_vs_nondeterministic")
+                    nondet_str = (
+                        f"{nondet_us:>10.2f}us"
+                        if nondet_us is not None
+                        else f"{'n/a':>12}"
+                    )
+                    slowdown_str = (
+                        f"{slowdown:>10.2f}x"
+                        if slowdown is not None
+                        else f"{'n/a':>11}"
+                    )
                     line = (
-                        f"{case.name:>24} {result['rows']:>8} {result['seq_len']:>10} {result['k']:>6} | "
-                        f"{result['flashinfer_nondeterministic_us']:>10.2f}us "
+                        f"{case.name:>24} {result['rows']:>8} {result['seq_len']:>10} {result['k']:>6} {case.tie_break:>7} | "
+                        f"{nondet_str} "
                         f"{result['flashinfer_us']:>12.2f}us "
-                        f"{result['deterministic_slowdown_vs_nondeterministic']:>10.2f}x "
+                        f"{slowdown_str} "
                         f"{result['torch_us']:>10.2f}us "
                         f"{result['speedup_vs_torch']:>9.2f}x"
                     )
                 else:
                     line = (
-                        f"{case.name:>24} {result['rows']:>8} {result['seq_len']:>10} {result['k']:>6} | "
+                        f"{case.name:>24} {result['rows']:>8} {result['seq_len']:>10} {result['k']:>6} {case.tie_break:>7} | "
                         f"{result['flashinfer_us']:>10.2f}us {result['torch_us']:>10.2f}us "
                         f"{result['speedup_vs_torch']:>9.2f}x"
                     )
@@ -849,7 +944,7 @@ def main():
                 if error_label is not None:
                     print(
                         f"{case.name:>24} {case.batch_size * case.q_len:>8} {case.seq_len:>10} "
-                        f"{args.dsa_topk:>6} | {error_label}"
+                        f"{args.dsa_topk:>6} {case.tie_break:>7} | {error_label}"
                     )
                     torch.cuda.empty_cache()
                 else:
@@ -859,155 +954,195 @@ def main():
         print("\n" + "=" * 100)
         print(
             "top_k_page_table_transform: Fused top-k + page table gather "
-            f"(dtype={dtype_str}, deterministic={args.deterministic}, pattern={args.input_pattern})"
+            f"(dtype={dtype_str}, deterministic={args.deterministic}, "
+            f"pattern={args.input_pattern}, tie_break_modes={','.join(map(str, tie_break_modes))})"
         )
         if args.compare_sglang:
             print("NOTE: SGLang only supports k=2048 and float32")
         if args.deterministic:
             print(
                 "NOTE: deterministic mode also benchmarks FlashInfer(non-det) "
-                "for direct comparison"
+                "for direct comparison when tie_break=0"
             )
         print("=" * 100)
 
         if args.deterministic:
             header = (
-                f"{'batch':>6} {'seq_len':>10} {'k':>6} | "
+                f"{'batch':>6} {'seq_len':>10} {'k':>6} {'tie':>7} | "
                 f"{'FlashInfer':>12} {'FlashInfer(det)':>14} {'DetSlowdown':>11}"
             )
         else:
-            header = f"{'batch':>6} {'seq_len':>10} {'k':>6} | {'FlashInfer':>12} {'Clusters':>12} {'Speedup Clusters vs. Default':>29}"
+            header = (
+                f"{'batch':>6} {'seq_len':>10} {'k':>6} {'tie':>7} | {'FlashInfer':>12}"
+                f" {'Clusters':>12} {'Speedup Clusters vs. Default':>29}"
+            )
         if args.compare_sglang:
             header += f" {'SGLang':>12} {'Speedup':>10}"
         print(header)
-        divider_len = 87 if args.deterministic else 109
-        if args.compare_sglang:
-            divider_len += 24
-        print("-" * divider_len)
+        print("-" * len(header))
 
-        for batch_size in batch_sizes:
-            for seq_len in seq_lens:
-                for k in k_values:
-                    if k > seq_len:
-                        continue
-                    try:
-                        result = bench_page_table_transform(
-                            batch_size,
-                            seq_len,
-                            k,
-                            dtype,
-                            input_pattern=args.input_pattern,
-                            deterministic=args.deterministic,
-                            compare_sglang=args.compare_sglang,
-                        )
-                        if args.deterministic:
-                            line = (
-                                f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} | "
-                                f"{result['flashinfer_nondeterministic_us']:>10.2f}us "
-                                f"{result['flashinfer_us']:>12.2f}us "
-                                f"{result['deterministic_slowdown_vs_nondeterministic']:>10.2f}x"
+        for tie_break in tie_break_modes:
+            for batch_size in batch_sizes:
+                for seq_len in seq_lens:
+                    for k in k_values:
+                        if k > seq_len:
+                            continue
+                        try:
+                            result = bench_page_table_transform(
+                                batch_size,
+                                seq_len,
+                                k,
+                                dtype,
+                                input_pattern=args.input_pattern,
+                                deterministic=args.deterministic,
+                                tie_break=tie_break,
+                                compare_sglang=args.compare_sglang,
                             )
-                        else:
-                            line = (
-                                f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} | "
-                                f"{result['flashinfer_us']:>10.2f}us"
-                            )
-                            if "fast_topk_us" in result:
-                                line += f" {result['fast_topk_us']:>10.2f}us {result['speedup_vs_flashinfer']:>28.2f}x"
-                        if "sglang_us" in result:
-                            line += (
-                                f" {result['sglang_us']:>10.2f}us "
-                                f"{result['speedup_vs_sglang']:>9.2f}x"
-                            )
-                        elif args.compare_sglang and k == 2048:
-                            line += " (SGLang error)"
-                        print(line)
-                    except RuntimeError as e:
-                        error_label = classify_benchmark_runtime_error(e)
-                        if error_label is not None:
-                            print(
-                                f"{batch_size:>6} {seq_len:>10} {k:>6} | {error_label}"
-                            )
-                            torch.cuda.empty_cache()
-                        else:
-                            raise
+                            if args.deterministic:
+                                nondet_us = result.get("flashinfer_nondeterministic_us")
+                                slowdown = result.get(
+                                    "deterministic_slowdown_vs_nondeterministic"
+                                )
+                                nondet_str = (
+                                    f"{nondet_us:>10.2f}us"
+                                    if nondet_us is not None
+                                    else f"{'n/a':>12}"
+                                )
+                                slowdown_str = (
+                                    f"{slowdown:>10.2f}x"
+                                    if slowdown is not None
+                                    else f"{'n/a':>11}"
+                                )
+                                line = (
+                                    f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} {tie_break:>7} | "
+                                    f"{nondet_str} "
+                                    f"{result['flashinfer_us']:>12.2f}us "
+                                    f"{slowdown_str}"
+                                )
+                            else:
+                                line = (
+                                    f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} {tie_break:>7} | "
+                                    f"{result['flashinfer_us']:>10.2f}us"
+                                )
+                                if "fast_topk_us" in result:
+                                    line += (
+                                        f" {result['fast_topk_us']:>10.2f}us "
+                                        f"{result['speedup_vs_flashinfer']:>28.2f}x"
+                                    )
+                            if "sglang_us" in result:
+                                line += (
+                                    f" {result['sglang_us']:>10.2f}us "
+                                    f"{result['speedup_vs_sglang']:>9.2f}x"
+                                )
+                            elif args.compare_sglang and k == 2048:
+                                line += " (SGLang error)"
+                            print(line)
+                        except RuntimeError as e:
+                            error_label = classify_benchmark_runtime_error(e)
+                            if error_label is not None:
+                                print(
+                                    f"{batch_size:>6} {seq_len:>10} {k:>6} {tie_break:>7} | {error_label}"
+                                )
+                                torch.cuda.empty_cache()
+                            else:
+                                raise
 
     if args.op in ["all", "ragged"]:
         print("\n" + "=" * 100)
         print(
             "top_k_ragged_transform: Fused top-k + ragged index transform "
-            f"(dtype={dtype_str}, deterministic={args.deterministic}, pattern={args.input_pattern})"
+            f"(dtype={dtype_str}, deterministic={args.deterministic}, "
+            f"pattern={args.input_pattern}, tie_break_modes={','.join(map(str, tie_break_modes))})"
         )
         if args.compare_sglang:
             print("NOTE: SGLang only supports k=2048 and float32")
         if args.deterministic:
             print(
                 "NOTE: deterministic mode also benchmarks FlashInfer(non-det) "
-                "for direct comparison"
+                "for direct comparison when tie_break=0"
             )
         print("=" * 100)
 
         if args.deterministic:
             header = (
-                f"{'batch':>6} {'seq_len':>10} {'k':>6} | "
+                f"{'batch':>6} {'seq_len':>10} {'k':>6} {'tie':>7} | "
                 f"{'FlashInfer':>12} {'FlashInfer(det)':>14} {'DetSlowdown':>11}"
             )
         else:
-            header = f"{'batch':>6} {'seq_len':>10} {'k':>6} | {'FlashInfer':>12} {'Clusters':>12} {'Speedup Clusters vs. Default':>29}"
+            header = (
+                f"{'batch':>6} {'seq_len':>10} {'k':>6} {'tie':>7} | {'FlashInfer':>12}"
+                f" {'Clusters':>12} {'Speedup Clusters vs. Default':>29}"
+            )
         if args.compare_sglang:
             header += f" {'SGLang':>12} {'Speedup':>10}"
         print(header)
-        divider_len = 87 if args.deterministic else 109
-        if args.compare_sglang:
-            divider_len += 24
-        print("-" * divider_len)
+        print("-" * len(header))
 
-        for batch_size in batch_sizes:
-            for seq_len in seq_lens:
-                for k in k_values:
-                    if k > seq_len:
-                        continue
-                    try:
-                        result = bench_ragged_transform(
-                            batch_size,
-                            seq_len,
-                            k,
-                            dtype,
-                            input_pattern=args.input_pattern,
-                            deterministic=args.deterministic,
-                            compare_sglang=args.compare_sglang,
-                        )
-                        if args.deterministic:
-                            line = (
-                                f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} | "
-                                f"{result['flashinfer_nondeterministic_us']:>10.2f}us "
-                                f"{result['flashinfer_us']:>12.2f}us "
-                                f"{result['deterministic_slowdown_vs_nondeterministic']:>10.2f}x"
+        for tie_break in tie_break_modes:
+            for batch_size in batch_sizes:
+                for seq_len in seq_lens:
+                    for k in k_values:
+                        if k > seq_len:
+                            continue
+                        try:
+                            result = bench_ragged_transform(
+                                batch_size,
+                                seq_len,
+                                k,
+                                dtype,
+                                input_pattern=args.input_pattern,
+                                deterministic=args.deterministic,
+                                tie_break=tie_break,
+                                compare_sglang=args.compare_sglang,
                             )
-                        else:
-                            line = (
-                                f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} | "
-                                f"{result['flashinfer_us']:>10.2f}us"
-                            )
-                            if "fast_topk_us" in result:
-                                line += f" {result['fast_topk_us']:>10.2f}us {result['speedup_vs_flashinfer']:>28.2f}x"
-                        if "sglang_us" in result:
-                            line += (
-                                f" {result['sglang_us']:>10.2f}us "
-                                f"{result['speedup_vs_sglang']:>9.2f}x"
-                            )
-                        elif args.compare_sglang and k == 2048:
-                            line += " (SGLang error)"
-                        print(line)
-                    except RuntimeError as e:
-                        error_label = classify_benchmark_runtime_error(e)
-                        if error_label is not None:
-                            print(
-                                f"{batch_size:>6} {seq_len:>10} {k:>6} | {error_label}"
-                            )
-                            torch.cuda.empty_cache()
-                        else:
-                            raise
+                            if args.deterministic:
+                                nondet_us = result.get("flashinfer_nondeterministic_us")
+                                slowdown = result.get(
+                                    "deterministic_slowdown_vs_nondeterministic"
+                                )
+                                nondet_str = (
+                                    f"{nondet_us:>10.2f}us"
+                                    if nondet_us is not None
+                                    else f"{'n/a':>12}"
+                                )
+                                slowdown_str = (
+                                    f"{slowdown:>10.2f}x"
+                                    if slowdown is not None
+                                    else f"{'n/a':>11}"
+                                )
+                                line = (
+                                    f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} {tie_break:>7} | "
+                                    f"{nondet_str} "
+                                    f"{result['flashinfer_us']:>12.2f}us "
+                                    f"{slowdown_str}"
+                                )
+                            else:
+                                line = (
+                                    f"{result['batch_size']:>6} {result['seq_len']:>10} {result['k']:>6} {tie_break:>7} | "
+                                    f"{result['flashinfer_us']:>10.2f}us"
+                                )
+                                if "fast_topk_us" in result:
+                                    line += (
+                                        f" {result['fast_topk_us']:>10.2f}us "
+                                        f"{result['speedup_vs_flashinfer']:>28.2f}x"
+                                    )
+                            if "sglang_us" in result:
+                                line += (
+                                    f" {result['sglang_us']:>10.2f}us "
+                                    f"{result['speedup_vs_sglang']:>9.2f}x"
+                                )
+                            elif args.compare_sglang and k == 2048:
+                                line += " (SGLang error)"
+                            print(line)
+                        except RuntimeError as e:
+                            error_label = classify_benchmark_runtime_error(e)
+                            if error_label is not None:
+                                print(
+                                    f"{batch_size:>6} {seq_len:>10} {k:>6} {tie_break:>7} | {error_label}"
+                                )
+                                torch.cuda.empty_cache()
+                            else:
+                                raise
 
 
 if __name__ == "__main__":
