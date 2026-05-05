@@ -207,8 +207,10 @@ def _run_per_token_nvfp4_moe(
     )
 
 
-def _run_tensorwise_nvfp4_per_route_moe_reference(
-    hidden_states_bf16: torch.Tensor,
+def _run_tensorwise_nvfp4_identity_scale_moe_reference(
+    hidden_states: torch.Tensor,
+    hidden_states_scale: torch.Tensor,
+    per_token_scale_inv: torch.Tensor,
     w13: torch.Tensor,
     w13_scale: torch.Tensor,
     w13_global_scale_inv: torch.Tensor,
@@ -222,54 +224,33 @@ def _run_tensorwise_nvfp4_per_route_moe_reference(
     top_k: int,
     enable_pdl: bool,
 ) -> torch.Tensor:
-    """Emulate per-token scaling with the original tensorwise NVFP4 MoE path."""
-    num_tokens, hidden_size = hidden_states_bf16.shape
+    """Run final GEMM with identity scale, then apply W2 scale in FP32."""
+    num_tokens, hidden_size = hidden_states.shape[0], w2.shape[1]
     reference = torch.zeros(
         num_tokens,
         hidden_size,
-        device=hidden_states_bf16.device,
-        dtype=torch.bfloat16,
+        device=hidden_states.device,
+        dtype=torch.float32,
+    )
+    identity_scale = torch.ones(
+        num_experts, device=hidden_states.device, dtype=torch.float32
     )
 
     for token_idx in range(num_tokens):
-        token = hidden_states_bf16[token_idx : token_idx + 1]
-        token_amax = token.abs().amax().to(torch.float32)
-        token_scale_inv = nvfp4_global_decode_scale_te(token_amax)
-        token_global_scale = torch.where(
-            token_scale_inv == 0,
-            torch.ones_like(token_scale_inv),
-            torch.reciprocal(token_scale_inv),
+        output1_scale = torch.stack(
+            [per_token_scale_inv[token_idx] * w13_global_scale_inv] * num_experts
         )
-        hidden_states, hidden_states_scale = nvfp4_quantize(
-            token,
-            token_global_scale,
-            sfLayout=SfLayout.layout_linear,
-        )
-        hidden_states_scale = hidden_states_scale.view(torch.float8_e4m3fn).reshape(
-            1,
-            -1,
-        )
-
         for route_idx in range(top_k):
-            output1_scale_scalar = torch.stack(
-                [token_scale_inv * w13_global_scale_inv] * num_experts
-            )
-            output1_scale_gate_scalar = torch.stack(
-                [token_scale_inv * w13_global_scale_inv] * num_experts
-            )
-            output2_scale_scalar = torch.stack(
-                [token_scale_inv * w2_global_scale_inv] * num_experts
-            )
-            reference[token_idx : token_idx + 1] += _run_nvfp4_moe(
-                hidden_states,
-                hidden_states_scale,
+            route_output = _run_nvfp4_moe(
+                hidden_states[token_idx : token_idx + 1],
+                hidden_states_scale[token_idx : token_idx + 1],
                 w13,
                 w13_scale,
                 w2,
                 w2_scale,
-                output1_scale_scalar,
-                output1_scale_gate_scalar,
-                output2_scale_scalar,
+                output1_scale,
+                output1_scale,
+                identity_scale,
                 topk_ids[token_idx : token_idx + 1, route_idx : route_idx + 1],
                 expert_weights[token_idx : token_idx + 1, route_idx : route_idx + 1],
                 intermediate_size,
@@ -277,6 +258,9 @@ def _run_tensorwise_nvfp4_per_route_moe_reference(
                 1,
                 enable_pdl,
                 per_token_scale=None,
+            )
+            reference[token_idx : token_idx + 1] += (
+                route_output.to(torch.float32) * w2_global_scale_inv
             )
     return reference
 
@@ -629,8 +613,10 @@ def test_routed_fused_moe_matches_te_style_tensorwise_nvfp4(
     )
     w2_scale = w2_scale.view(torch.float8_e4m3fn).reshape(num_experts, hidden_size, -1)
 
-    reference = _run_tensorwise_nvfp4_per_route_moe_reference(
-        hidden_states_bf16,
+    reference = _run_tensorwise_nvfp4_identity_scale_moe_reference(
+        hidden_states,
+        hidden_states_scale,
+        per_token_scale_inv,
         w13,
         w13_scale,
         w13_global_scale_inv,
