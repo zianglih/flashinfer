@@ -16,6 +16,8 @@
 
 #pragma once
 
+#include <float.h>
+
 #include <optional>
 
 #include "tensorrt_llm/common/cudaTypeUtils.cuh"
@@ -290,12 +292,14 @@ struct PackedVec<__nv_fp8_e4m3, NUM_ELTS> {
 
 // Quantizes the provided PackedVec into the uint32_t or uint64_t output
 template <class Type, int SF_VEC_SIZE, int CVT_ELTS_PER_THREAD, bool UE8M0_SF,
-          bool TE_EXACT_NVFP4 = false>
+          bool TE_EXACT_NVFP4 = false, bool FOUR_OVER_SIX = false>
 __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t> cvt_warp_fp16_to_fp4(
     PackedVec<Type, CVT_ELTS_PER_THREAD>& vec, float SFScaleVal, uint8_t* SFout) {
 #if defined(__CUDA_ARCH__) && (__CUDA_ARCH__ >= 1000)
   static_assert(CVT_ELTS_PER_THREAD == 8 || CVT_ELTS_PER_THREAD == 16,
                 "CVT_ELTS_PER_THREAD must be 8 or 16");
+  static_assert(!FOUR_OVER_SIX || (!UE8M0_SF && TE_EXACT_NVFP4),
+                "FOUR_OVER_SIX requires TE-exact NVFP4 with E4M3 scale factors");
 
   using ReturnType = std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t>;
 
@@ -331,7 +335,7 @@ __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t> cvt
 
     fp8SFVal = tmp.__x;
     outputScale = vecMax != 0 ? exp2f_rcp(fp8SFVal) : 0.0f;
-  } else if constexpr (TE_EXACT_NVFP4) {
+  } else if constexpr (TE_EXACT_NVFP4 && !FOUR_OVER_SIX) {
     // Get the SF (max value of the vector / max value of e2m1).
     // maximum value of e2m1 = 6.0.
     constexpr float fp4_max_inv = 1.0f / 6.0f;
@@ -343,7 +347,7 @@ __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t> cvt
     SFValue = static_cast<float>(tmp);
     // Match TE's encode scale: 1 / (fp32(fp8(SFValue)) * (1 / SFScaleVal)).
     outputScale = vecMax != 0 ? __fdiv_rn(1.0f, SFValue * __fdiv_rn(1.0f, SFScaleVal)) : 0.0f;
-  } else {
+  } else if constexpr (!FOUR_OVER_SIX) {
     // Get the SF (max value of the vector / max value of e2m1).
     // maximum value of e2m1 = 6.0.
     // TODO: use half as compute data type.
@@ -358,6 +362,153 @@ __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t> cvt
     outputScale = vecMax != 0
                       ? reciprocal_approximate_ftz(SFValue * reciprocal_approximate_ftz(SFScaleVal))
                       : 0.0f;
+  }
+
+  if constexpr (!UE8M0_SF && TE_EXACT_NVFP4 && FOUR_OVER_SIX) {
+    if (vecMax == 0.0f) {
+      if (SFout) {
+        *SFout = 0;
+      }
+      return ReturnType{0};
+    }
+
+    constexpr float E2M1_MAX_VALUE = 6.0f;
+    float sfHighPrecision6 = __fmul_rn(vecMax, __fdiv_rn(SFScaleVal, E2M1_MAX_VALUE));
+    float sfHighPrecision4 = __fmul_rn(sfHighPrecision6, 1.5f);
+
+    __nv_fp8_e4m3 tmp4 = __nv_fp8_e4m3(sfHighPrecision4);
+    __nv_fp8_e4m3 tmp6 = __nv_fp8_e4m3(sfHighPrecision6);
+    uint8_t fp8SFVal4 = tmp4.__x;
+    uint8_t fp8SFVal6 = tmp6.__x;
+    float sfValue4 = static_cast<float>(tmp4);
+    float sfValue6 = static_cast<float>(tmp6);
+    float globalDecodeScale = __fdiv_rn(1.0f, SFScaleVal);
+    float outputScale4 = fminf(__fdiv_rn(1.0f, __fmul_rn(sfValue4, globalDecodeScale)), FLT_MAX);
+    float outputScale6 = fminf(__fdiv_rn(1.0f, __fmul_rn(sfValue6, globalDecodeScale)), FLT_MAX);
+
+    float2 fp2Vals[CVT_ELTS_PER_THREAD / 2];
+    float2 fp2Vals4[CVT_ELTS_PER_THREAD / 2];
+    float2 fp2Vals6[CVT_ELTS_PER_THREAD / 2];
+
+#pragma unroll
+    for (int i = 0; i < CVT_ELTS_PER_THREAD / 2; i++) {
+      if constexpr (std::is_same_v<Type, half>) {
+        fp2Vals[i] = __half22float2(vec.elts[i]);
+      } else {
+        fp2Vals[i] = __bfloat1622float2(vec.elts[i]);
+      }
+      fp2Vals4[i].x = __fmul_rn(fp2Vals[i].x, outputScale4);
+      fp2Vals4[i].y = __fmul_rn(fp2Vals[i].y, outputScale4);
+      fp2Vals6[i].x = __fmul_rn(fp2Vals[i].x, outputScale6);
+      fp2Vals6[i].y = __fmul_rn(fp2Vals[i].y, outputScale6);
+    }
+
+    ReturnType e2m1Vec4 = fp32_vec_to_e2m1(fp2Vals4);
+    ReturnType e2m1Vec6 = fp32_vec_to_e2m1(fp2Vals6);
+    uint64_t e2m1Bits4 = static_cast<uint64_t>(e2m1Vec4);
+    uint64_t e2m1Bits6 = static_cast<uint64_t>(e2m1Vec6);
+    float error4 = 0.0f;
+    float error6 = 0.0f;
+
+#pragma unroll
+    for (int i = 0; i < CVT_ELTS_PER_THREAD; i++) {
+      float inputVal = fp2Vals[i / 2].x;
+      if ((i & 1) != 0) {
+        inputVal = fp2Vals[i / 2].y;
+      }
+
+      uint8_t code4 = static_cast<uint8_t>((e2m1Bits4 >> (4 * i)) & 0xF);
+      uint8_t magnitude4 = code4 & 0x7;
+      float e2m1Val4 = 0.0f;
+      switch (magnitude4) {
+        case 1:
+          e2m1Val4 = 0.5f;
+          break;
+        case 2:
+          e2m1Val4 = 1.0f;
+          break;
+        case 3:
+          e2m1Val4 = 1.5f;
+          break;
+        case 4:
+          e2m1Val4 = 2.0f;
+          break;
+        case 5:
+          e2m1Val4 = 3.0f;
+          break;
+        case 6:
+          e2m1Val4 = 4.0f;
+          break;
+        case 7:
+          e2m1Val4 = 6.0f;
+          break;
+        default:
+          e2m1Val4 = 0.0f;
+          break;
+      }
+      if ((code4 & 0x8) != 0) {
+        e2m1Val4 = -e2m1Val4;
+      }
+      float dequant4 = __fmul_rn(__fmul_rn(e2m1Val4, sfValue4), globalDecodeScale);
+      float diff4 = __fsub_rn(dequant4, inputVal);
+      error4 = __fadd_rn(error4, __fmul_rn(diff4, diff4));
+
+      uint8_t code6 = static_cast<uint8_t>((e2m1Bits6 >> (4 * i)) & 0xF);
+      uint8_t magnitude6 = code6 & 0x7;
+      float e2m1Val6 = 0.0f;
+      switch (magnitude6) {
+        case 1:
+          e2m1Val6 = 0.5f;
+          break;
+        case 2:
+          e2m1Val6 = 1.0f;
+          break;
+        case 3:
+          e2m1Val6 = 1.5f;
+          break;
+        case 4:
+          e2m1Val6 = 2.0f;
+          break;
+        case 5:
+          e2m1Val6 = 3.0f;
+          break;
+        case 6:
+          e2m1Val6 = 4.0f;
+          break;
+        case 7:
+          e2m1Val6 = 6.0f;
+          break;
+        default:
+          e2m1Val6 = 0.0f;
+          break;
+      }
+      if ((code6 & 0x8) != 0) {
+        e2m1Val6 = -e2m1Val6;
+      }
+      float dequant6 = __fmul_rn(__fmul_rn(e2m1Val6, sfValue6), globalDecodeScale);
+      float diff6 = __fsub_rn(dequant6, inputVal);
+      error6 = __fadd_rn(error6, __fmul_rn(diff6, diff6));
+    }
+
+    if constexpr (CVT_NUM_THREADS_PER_SF >= 2) {
+      error4 = __fadd_rn(error4, __shfl_xor_sync(uint32_t(-1), error4, 1));
+      error6 = __fadd_rn(error6, __shfl_xor_sync(uint32_t(-1), error6, 1));
+    }
+    if constexpr (CVT_NUM_THREADS_PER_SF == 4) {
+      error4 = __fadd_rn(error4, __shfl_xor_sync(uint32_t(-1), error4, 2));
+      error6 = __fadd_rn(error6, __shfl_xor_sync(uint32_t(-1), error6, 2));
+    }
+
+    if (error4 < error6) {
+      if (SFout) {
+        *SFout = fp8SFVal4;
+      }
+      return e2m1Vec4;
+    }
+    if (SFout) {
+      *SFout = fp8SFVal6;
+    }
+    return e2m1Vec6;
   }
 
   if (SFout) {
@@ -390,13 +541,15 @@ __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t> cvt
 }
 
 template <class Type, int SF_VEC_SIZE, int CVT_ELTS_PER_THREAD, bool UE8M0_SF,
-          bool TE_EXACT_NVFP4 = false>
+          bool TE_EXACT_NVFP4 = false, bool FOUR_OVER_SIX = false>
 __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t>
 cvt_warp_fp16_to_fp4_with_vec_max(PackedVec<Type, CVT_ELTS_PER_THREAD>& vec, float SFScaleVal,
                                   float reciprocalSFScaleVal, float vecMax, uint8_t* SFout) {
 #if defined(__CUDA_ARCH__) && (__CUDA_ARCH__ >= 1000)
   static_assert(CVT_ELTS_PER_THREAD == 8 || CVT_ELTS_PER_THREAD == 16,
                 "CVT_ELTS_PER_THREAD must be 8 or 16");
+  static_assert(!FOUR_OVER_SIX || (!UE8M0_SF && TE_EXACT_NVFP4),
+                "FOUR_OVER_SIX requires TE-exact NVFP4 with E4M3 scale factors");
 
   using ReturnType = std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t>;
 
@@ -412,7 +565,7 @@ cvt_warp_fp16_to_fp4_with_vec_max(PackedVec<Type, CVT_ELTS_PER_THREAD>& vec, flo
 
     fp8SFVal = tmp.__x;
     outputScale = vecMax != 0 ? exp2f_rcp(fp8SFVal) : 0.0f;
-  } else if constexpr (TE_EXACT_NVFP4) {
+  } else if constexpr (TE_EXACT_NVFP4 && !FOUR_OVER_SIX) {
     // Get the SF (max value of the vector / max value of e2m1).
     // maximum value of e2m1 = 6.0.
     constexpr float fp4_max_inv = 1.0f / 6.0f;
@@ -424,7 +577,7 @@ cvt_warp_fp16_to_fp4_with_vec_max(PackedVec<Type, CVT_ELTS_PER_THREAD>& vec, flo
     SFValue = static_cast<float>(tmp);
     // Match TE's encode scale: 1 / (fp32(fp8(SFValue)) * reciprocalSFScaleVal).
     outputScale = vecMax != 0 ? __fdiv_rn(1.0f, SFValue * reciprocalSFScaleVal) : 0.0f;
-  } else {
+  } else if constexpr (!FOUR_OVER_SIX) {
     // Get the SF (max value of the vector / max value of e2m1).
     // maximum value of e2m1 = 6.0.
     // TODO: use half as compute data type.
@@ -435,6 +588,152 @@ cvt_warp_fp16_to_fp4_with_vec_max(PackedVec<Type, CVT_ELTS_PER_THREAD>& vec, flo
     fp8SFVal = tmp.__x;
     SFValue = static_cast<float>(tmp);
     outputScale = vecMax != 0 ? reciprocal_approximate_ftz(SFValue * reciprocalSFScaleVal) : 0.0f;
+  }
+
+  if constexpr (!UE8M0_SF && TE_EXACT_NVFP4 && FOUR_OVER_SIX) {
+    if (vecMax == 0.0f) {
+      if (SFout) {
+        *SFout = 0;
+      }
+      return ReturnType{0};
+    }
+
+    constexpr float E2M1_MAX_VALUE = 6.0f;
+    float sfHighPrecision6 = __fmul_rn(vecMax, __fdiv_rn(SFScaleVal, E2M1_MAX_VALUE));
+    float sfHighPrecision4 = __fmul_rn(sfHighPrecision6, 1.5f);
+
+    __nv_fp8_e4m3 tmp4 = __nv_fp8_e4m3(sfHighPrecision4);
+    __nv_fp8_e4m3 tmp6 = __nv_fp8_e4m3(sfHighPrecision6);
+    uint8_t fp8SFVal4 = tmp4.__x;
+    uint8_t fp8SFVal6 = tmp6.__x;
+    float sfValue4 = static_cast<float>(tmp4);
+    float sfValue6 = static_cast<float>(tmp6);
+    float outputScale4 = fminf(__fdiv_rn(1.0f, __fmul_rn(sfValue4, reciprocalSFScaleVal)), FLT_MAX);
+    float outputScale6 = fminf(__fdiv_rn(1.0f, __fmul_rn(sfValue6, reciprocalSFScaleVal)), FLT_MAX);
+
+    float2 fp2Vals[CVT_ELTS_PER_THREAD / 2];
+    float2 fp2Vals4[CVT_ELTS_PER_THREAD / 2];
+    float2 fp2Vals6[CVT_ELTS_PER_THREAD / 2];
+
+#pragma unroll
+    for (int i = 0; i < CVT_ELTS_PER_THREAD / 2; i++) {
+      if constexpr (std::is_same_v<Type, half>) {
+        fp2Vals[i] = __half22float2(vec.elts[i]);
+      } else {
+        fp2Vals[i] = __bfloat1622float2(vec.elts[i]);
+      }
+      fp2Vals4[i].x = __fmul_rn(fp2Vals[i].x, outputScale4);
+      fp2Vals4[i].y = __fmul_rn(fp2Vals[i].y, outputScale4);
+      fp2Vals6[i].x = __fmul_rn(fp2Vals[i].x, outputScale6);
+      fp2Vals6[i].y = __fmul_rn(fp2Vals[i].y, outputScale6);
+    }
+
+    ReturnType e2m1Vec4 = fp32_vec_to_e2m1(fp2Vals4);
+    ReturnType e2m1Vec6 = fp32_vec_to_e2m1(fp2Vals6);
+    uint64_t e2m1Bits4 = static_cast<uint64_t>(e2m1Vec4);
+    uint64_t e2m1Bits6 = static_cast<uint64_t>(e2m1Vec6);
+    float error4 = 0.0f;
+    float error6 = 0.0f;
+
+#pragma unroll
+    for (int i = 0; i < CVT_ELTS_PER_THREAD; i++) {
+      float inputVal = fp2Vals[i / 2].x;
+      if ((i & 1) != 0) {
+        inputVal = fp2Vals[i / 2].y;
+      }
+
+      uint8_t code4 = static_cast<uint8_t>((e2m1Bits4 >> (4 * i)) & 0xF);
+      uint8_t magnitude4 = code4 & 0x7;
+      float e2m1Val4 = 0.0f;
+      switch (magnitude4) {
+        case 1:
+          e2m1Val4 = 0.5f;
+          break;
+        case 2:
+          e2m1Val4 = 1.0f;
+          break;
+        case 3:
+          e2m1Val4 = 1.5f;
+          break;
+        case 4:
+          e2m1Val4 = 2.0f;
+          break;
+        case 5:
+          e2m1Val4 = 3.0f;
+          break;
+        case 6:
+          e2m1Val4 = 4.0f;
+          break;
+        case 7:
+          e2m1Val4 = 6.0f;
+          break;
+        default:
+          e2m1Val4 = 0.0f;
+          break;
+      }
+      if ((code4 & 0x8) != 0) {
+        e2m1Val4 = -e2m1Val4;
+      }
+      float dequant4 = __fmul_rn(__fmul_rn(e2m1Val4, sfValue4), reciprocalSFScaleVal);
+      float diff4 = __fsub_rn(dequant4, inputVal);
+      error4 = __fadd_rn(error4, __fmul_rn(diff4, diff4));
+
+      uint8_t code6 = static_cast<uint8_t>((e2m1Bits6 >> (4 * i)) & 0xF);
+      uint8_t magnitude6 = code6 & 0x7;
+      float e2m1Val6 = 0.0f;
+      switch (magnitude6) {
+        case 1:
+          e2m1Val6 = 0.5f;
+          break;
+        case 2:
+          e2m1Val6 = 1.0f;
+          break;
+        case 3:
+          e2m1Val6 = 1.5f;
+          break;
+        case 4:
+          e2m1Val6 = 2.0f;
+          break;
+        case 5:
+          e2m1Val6 = 3.0f;
+          break;
+        case 6:
+          e2m1Val6 = 4.0f;
+          break;
+        case 7:
+          e2m1Val6 = 6.0f;
+          break;
+        default:
+          e2m1Val6 = 0.0f;
+          break;
+      }
+      if ((code6 & 0x8) != 0) {
+        e2m1Val6 = -e2m1Val6;
+      }
+      float dequant6 = __fmul_rn(__fmul_rn(e2m1Val6, sfValue6), reciprocalSFScaleVal);
+      float diff6 = __fsub_rn(dequant6, inputVal);
+      error6 = __fadd_rn(error6, __fmul_rn(diff6, diff6));
+    }
+
+    if constexpr (CVT_NUM_THREADS_PER_SF >= 2) {
+      error4 = __fadd_rn(error4, __shfl_xor_sync(uint32_t(-1), error4, 1));
+      error6 = __fadd_rn(error6, __shfl_xor_sync(uint32_t(-1), error6, 1));
+    }
+    if constexpr (CVT_NUM_THREADS_PER_SF == 4) {
+      error4 = __fadd_rn(error4, __shfl_xor_sync(uint32_t(-1), error4, 2));
+      error6 = __fadd_rn(error6, __shfl_xor_sync(uint32_t(-1), error6, 2));
+    }
+
+    if (error4 < error6) {
+      if (SFout) {
+        *SFout = fp8SFVal4;
+      }
+      return e2m1Vec4;
+    }
+    if (SFout) {
+      *SFout = fp8SFVal6;
+    }
+    return e2m1Vec6;
   }
 
   if (SFout) {

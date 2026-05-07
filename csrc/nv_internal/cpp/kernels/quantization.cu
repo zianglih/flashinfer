@@ -237,16 +237,30 @@ CUtensorMap make_3d_tma_copy_desc(T* global_address, uint64_t gmem_dim[3],
 // Per-token Nvfp4 kernel
 
 #define DISPATCH_NVP4_QUANT_AND_PER_TOKEN_SCALE_KERNEL(SF_LAYOUT)                                 \
-  if constexpr (std::is_same_v<T, float>)                                                         \
-    nvfp4QuantAndPerTokenScaleFP32Kernel<BLOCK_SIZE, QuantizationSFLayout::SF_LAYOUT,             \
-                                         CACHE_LOCAL_AMAX><<<grid, block, smem_size, stream>>>(   \
-        m, n, input, globalScaleInv, expandedIdxToPermutedIdx, weightOutput, scaleOutput,         \
-        perTokenScaleOutput);                                                                     \
-  else                                                                                            \
-    nvfp4QuantAndPerTokenScaleKernel<T, BLOCK_SIZE, QuantizationSFLayout::SF_LAYOUT,              \
-                                     CACHE_LOCAL_AMAX, true><<<grid, block, smem_size, stream>>>( \
-        m, n, input, globalScaleInv, expandedIdxToPermutedIdx, weightOutput, scaleOutput,         \
-        perTokenScaleOutput);
+  do {                                                                                            \
+    if constexpr (std::is_same_v<T, float>) {                                                     \
+      TLLM_CHECK_WITH_INFO(!useFourOverSix,                                                       \
+                           "FLASHINFER_NVFP4_FOUR_OVER_SIX requires fp16 or bf16 input");         \
+      nvfp4QuantAndPerTokenScaleFP32Kernel<BLOCK_SIZE, QuantizationSFLayout::SF_LAYOUT,           \
+                                           CACHE_LOCAL_AMAX><<<grid, block, smem_size, stream>>>( \
+          m, n, input, globalScaleInv, expandedIdxToPermutedIdx, weightOutput, scaleOutput,       \
+          perTokenScaleOutput);                                                                   \
+    } else {                                                                                      \
+      if (useFourOverSix) {                                                                       \
+        nvfp4QuantAndPerTokenScaleKernel<T, BLOCK_SIZE, QuantizationSFLayout::SF_LAYOUT,          \
+                                         CACHE_LOCAL_AMAX, true, true>                            \
+            <<<grid, block, smem_size, stream>>>(m, n, input, globalScaleInv,                     \
+                                                 expandedIdxToPermutedIdx, weightOutput,          \
+                                                 scaleOutput, perTokenScaleOutput);               \
+      } else {                                                                                    \
+        nvfp4QuantAndPerTokenScaleKernel<T, BLOCK_SIZE, QuantizationSFLayout::SF_LAYOUT,          \
+                                         CACHE_LOCAL_AMAX, true, false>                           \
+            <<<grid, block, smem_size, stream>>>(m, n, input, globalScaleInv,                     \
+                                                 expandedIdxToPermutedIdx, weightOutput,          \
+                                                 scaleOutput, perTokenScaleOutput);               \
+      }                                                                                           \
+    }                                                                                             \
+  } while (0)
 
 template <typename T>
 void invokeNvfp4QuantAndPerTokenScale(uint32_t m, uint32_t n, T const* input, float globalScaleInv,
@@ -266,6 +280,8 @@ void invokeNvfp4QuantAndPerTokenScale(uint32_t m, uint32_t n, T const* input, fl
       CACHE_LOCAL_AMAX ? n / ELTS_PER_THREAD * sizeof(float) : 0;  // for caching the local amax
   dim3 block(BLOCK_SIZE);
   dim3 grid(m);
+  auto const useFourOverSixEnv = tensorrt_llm::common::getIntEnv("FLASHINFER_NVFP4_FOUR_OVER_SIX");
+  bool const useFourOverSix = useFourOverSixEnv.value_or(0) != 0;
   switch (sfLayout) {
     case QuantizationSFLayout::LINEAR:
       DISPATCH_NVP4_QUANT_AND_PER_TOKEN_SCALE_KERNEL(LINEAR);

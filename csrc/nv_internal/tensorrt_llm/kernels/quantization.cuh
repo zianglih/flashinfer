@@ -687,7 +687,7 @@ __global__ void block_scale_interleave_kernel(int numbatches, int numRows, int n
                                               uint8_t const* SFIn, uint8_t* SFOutput);
 
 template <typename T, uint32_t BLOCK_SIZE, QuantizationSFLayout SF_LAYOUT, bool CACHE_LOCAL_AMAX,
-          bool TE_EXACT_NVFP4 = false>
+          bool TE_EXACT_NVFP4 = false, bool FOUR_OVER_SIX = false>
 __global__ void nvfp4QuantAndPerTokenScaleKernel(
     // input
     uint32_t m, uint32_t n, T const* input, float globalScaleInv, int32_t* expandedIdxToPermutedIdx,
@@ -740,13 +740,42 @@ __global__ void nvfp4QuantAndPerTokenScaleKernel(
   if constexpr (TE_EXACT_NVFP4) {
     if (threadIdx.x == 0) {
       float const globalScale = __fdiv_rn(1.0f, globalScaleInv);
-      float const rowEncodeScale =
-          globalAmax != 0.0f ? fminf(__fdiv_rn(globalScale, globalAmax), FLT_MAX) : FLT_MAX;
-      perTokenScaleOutput[rowIdx] = rowEncodeScale != 0.0f ? rowEncodeScale : 1.0f;
+      if constexpr (FOUR_OVER_SIX) {
+        constexpr float E4M3_MAX_VALUE = 448.0f;
+        constexpr float E4M3_MAX_FOUR_OVER_SIX = 256.0f;
+        float const fourOverSixGlobalScale =
+            __fdiv_rn(__fmul_rn(globalScale, E4M3_MAX_FOUR_OVER_SIX), E4M3_MAX_VALUE);
+        if (globalAmax != 0.0f) {
+          float const rowEncodeScale =
+              fminf(__fdiv_rn(fourOverSixGlobalScale, globalAmax), FLT_MAX);
+          if (rowEncodeScale != 0.0f) {
+            perTokenScaleOutput[rowIdx] = rowEncodeScale;
+          } else {
+            perTokenScaleOutput[rowIdx] = 1.0f;
+          }
+        } else {
+          perTokenScaleOutput[rowIdx] = 0.0f;
+        }
+      } else {
+        if (globalAmax != 0.0f) {
+          float const rowEncodeScale = fminf(__fdiv_rn(globalScale, globalAmax), FLT_MAX);
+          if (rowEncodeScale != 0.0f) {
+            perTokenScaleOutput[rowIdx] = rowEncodeScale;
+          } else {
+            perTokenScaleOutput[rowIdx] = 1.0f;
+          }
+        } else {
+          perTokenScaleOutput[rowIdx] = 0.0f;
+        }
+      }
     }
     __syncthreads();
     globalEncodeScale = perTokenScaleOutput[rowIdx];
-    perTokenScale = __fdiv_rn(1.0f, globalEncodeScale);
+    if (globalEncodeScale != 0.0f) {
+      perTokenScale = __fdiv_rn(1.0f, globalEncodeScale);
+    } else {
+      perTokenScale = 0.0f;
+    }
     __syncthreads();
     if (threadIdx.x == 0) {
       perTokenScaleOutput[rowIdx] = perTokenScale;
@@ -768,12 +797,12 @@ __global__ void nvfp4QuantAndPerTokenScaleKernel(
 
     if constexpr (CACHE_LOCAL_AMAX) {
       localAmax = localAmaxSmem[vecIdx];
-      fp4Vals =
-          cvt_warp_fp16_to_fp4_with_vec_max<T, SF_VEC_SIZE, ELTS_PER_THREAD, false, TE_EXACT_NVFP4>(
-              vec, globalEncodeScale, perTokenScale, localAmax, &fp8Scale);
+      fp4Vals = cvt_warp_fp16_to_fp4_with_vec_max<T, SF_VEC_SIZE, ELTS_PER_THREAD, false,
+                                                  TE_EXACT_NVFP4, FOUR_OVER_SIX>(
+          vec, globalEncodeScale, perTokenScale, localAmax, &fp8Scale);
     } else {
-      fp4Vals = cvt_warp_fp16_to_fp4<T, SF_VEC_SIZE, ELTS_PER_THREAD, false, TE_EXACT_NVFP4>(
-          vec, globalEncodeScale, &fp8Scale);
+      fp4Vals = cvt_warp_fp16_to_fp4<T, SF_VEC_SIZE, ELTS_PER_THREAD, false, TE_EXACT_NVFP4,
+                                     FOUR_OVER_SIX>(vec, globalEncodeScale, &fp8Scale);
     }
     reinterpret_cast<PackedFp4Type*>(weightOutput)[vecOffset] = fp4Vals;
 

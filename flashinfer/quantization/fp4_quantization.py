@@ -1106,7 +1106,9 @@ def nvfp4_quantize(
         per_token_activation (bool, optional): Whether to use per-token NVFP4
             activation scaling. In this mode, `a_global_sf` is the inverse base
             scale multiplier, typically `1 / (448 * 6)`, and the function also
-            returns per-token FP32 scales.
+            returns per-token FP32 scales. Set `FLASHINFER_NVFP4_FOUR_OVER_SIX=1`
+            to use the 4/6 MSE scale-candidate mode for fp16/bf16 per-token
+            activation quantization.
         expanded_idx_to_permuted_idx (torch.Tensor, optional): Optional row remapping
             buffer for per-token activation quantization.
 
