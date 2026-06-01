@@ -51,66 +51,6 @@ def cast_from_fp4(x):
     return out
 
 
-def _e2m1_value_to_code(q: torch.Tensor) -> torch.Tensor:
-    values = torch.tensor(E2M1_TO_FLOAT32, device=q.device, dtype=torch.float32)
-    return torch.argmin((q.to(torch.float32).unsqueeze(-1) - values).abs(), dim=-1)
-
-
-def _e2m1_e4m3_product_to_fp16_bits(
-    q_code: torch.Tensor,
-    scale_code: torch.Tensor,
-) -> torch.Tensor:
-    q_code = q_code.to(torch.int32)
-    scale_code = scale_code.to(torch.int32)
-
-    q_mag = q_code & 0x7
-    q_sig = q_mag + (q_mag >= 5).to(torch.int32) + (q_mag >= 6).to(torch.int32)
-    q_sig = q_sig + 3 * (q_mag == 7).to(torch.int32)
-
-    scale_exp = (scale_code >> 3) & 0xF
-    scale_mant = scale_code & 0x7
-    scale_sig = torch.where(scale_exp == 0, scale_mant, scale_mant + 8)
-    scale_exp2 = torch.where(scale_exp == 0, scale_exp - 9, scale_exp - 10)
-
-    sig = q_sig * scale_sig
-    sign = ((q_code >> 3) ^ (scale_code >> 7)) & 1
-    log2_sig = (sig >= 2).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 4).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 8).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 16).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 32).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 64).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 128).to(torch.int32)
-
-    exp2 = scale_exp2 - 1
-    floor_exp = log2_sig + exp2
-    normal = ((floor_exp + 15) << 10) | (
-        torch.bitwise_left_shift(sig, 10 - log2_sig) - 1024
-    )
-    subnormal = torch.bitwise_left_shift(sig, exp2 + 24)
-    bits = (sign << 15) | torch.where(floor_exp < -14, subnormal, normal)
-    bits = torch.where(sig == 0, sign << 15, bits)
-    return torch.where(
-        (scale_code & 0x7F) == 0x7F,
-        torch.full_like(bits, 0x7E00),
-        bits,
-    )
-
-
-def _fp16_bits_to_fp32(bits: torch.Tensor) -> torch.Tensor:
-    bits = bits.to(torch.int32)
-    sign = torch.where(
-        (bits & 0x8000) != 0,
-        torch.tensor(-1.0, device=bits.device, dtype=torch.float32),
-        torch.tensor(1.0, device=bits.device, dtype=torch.float32),
-    )
-    exp = (bits >> 10) & 0x1F
-    frac = bits & 0x3FF
-    normal = torch.ldexp((frac + 1024).to(torch.float32), exp - 25)
-    subnormal = torch.ldexp(frac.to(torch.float32), exp - 24)
-    return sign * torch.where(exp == 0, subnormal, normal)
-
-
 def cast_to_fp4(x):
     sign = torch.sign(x)
     x = torch.abs(x)
@@ -292,10 +232,66 @@ def _ref_nvfp4_4over6_fp16_candidate(
     The CuTe-DSL implementation uses PTX to decode E2M1x2 and E4M3 to f16,
     multiply in f16x2, then widen the product to f32 for error accumulation.
     """
-    q_code = _e2m1_value_to_code(q)
-    scale_code = scale.contiguous().view(torch.uint8).to(torch.long)
-    prod_bits = _e2m1_e4m3_product_to_fp16_bits(q_code, scale_code)
-    return _fp16_bits_to_fp32(prod_bits)
+    # Stage 1: recover the raw E2M1 and E4M3 codes. The reference receives
+    # unpacked E2M1 values, but the FP16 product contract is code-domain.
+    e2m1_values = torch.tensor(E2M1_TO_FLOAT32, device=q.device, dtype=torch.float32)
+    q_code = torch.argmin(
+        (q.to(torch.float32).unsqueeze(-1) - e2m1_values).abs(),
+        dim=-1,
+    ).to(torch.int32)
+    scale_code = scale.contiguous().view(torch.uint8).to(torch.int32)
+
+    # Stage 2: express both inputs as dyadic significands. E2M1 magnitude is
+    # q_sig * 2^-1. Finite E4M3 is scale_sig * 2^scale_exp2.
+    q_mag = q_code & 0x7
+    q_sig = q_mag + (q_mag >= 5).to(torch.int32) + (q_mag >= 6).to(torch.int32)
+    q_sig = q_sig + 3 * (q_mag == 7).to(torch.int32)
+
+    scale_exp = (scale_code >> 3) & 0xF
+    scale_mant = scale_code & 0x7
+    scale_sig = torch.where(scale_exp == 0, scale_mant, scale_mant + 8)
+    scale_exp2 = torch.where(scale_exp == 0, scale_exp - 9, scale_exp - 10)
+
+    # Stage 3: multiply the dyadic significands exactly in integer space.
+    # The result is (-1)^sign * sig * 2^exp2 before fp16 packing.
+    sig = q_sig * scale_sig
+    sign = ((q_code >> 3) ^ (scale_code >> 7)) & 1
+    exp2 = scale_exp2 - 1
+
+    # Stage 4: pack that exact dyadic product into fp16 bits. These products
+    # are exactly representable in fp16, so RN does not need a tie path here.
+    log2_sig = (sig >= 2).to(torch.int32)
+    log2_sig = log2_sig + (sig >= 4).to(torch.int32)
+    log2_sig = log2_sig + (sig >= 8).to(torch.int32)
+    log2_sig = log2_sig + (sig >= 16).to(torch.int32)
+    log2_sig = log2_sig + (sig >= 32).to(torch.int32)
+    log2_sig = log2_sig + (sig >= 64).to(torch.int32)
+    log2_sig = log2_sig + (sig >= 128).to(torch.int32)
+    log2_sig = log2_sig + (sig >= 256).to(torch.int32)
+    floor_exp = log2_sig + exp2
+    normal = ((floor_exp + 15) << 10) | (
+        torch.bitwise_left_shift(sig, 10 - log2_sig) - 1024
+    )
+    subnormal = torch.bitwise_left_shift(sig, exp2 + 24)
+    prod_bits = (sign << 15) | torch.where(floor_exp < -14, subnormal, normal)
+    prod_bits = torch.where(sig == 0, sign << 15, prod_bits)
+    prod_bits = torch.where(
+        (scale_code & 0x7F) == 0x7F,
+        torch.full_like(prod_bits, 0x7E00),
+        prod_bits,
+    )
+
+    # Stage 5: decode the fp16 bit pattern to fp32 without using fp16 math.
+    sign_f32 = torch.where(
+        (prod_bits & 0x8000) != 0,
+        torch.tensor(-1.0, device=prod_bits.device, dtype=torch.float32),
+        torch.tensor(1.0, device=prod_bits.device, dtype=torch.float32),
+    )
+    fp16_exp = (prod_bits >> 10) & 0x1F
+    fp16_frac = prod_bits & 0x3FF
+    normal_f32 = torch.ldexp((fp16_frac + 1024).to(torch.float32), fp16_exp - 25)
+    subnormal_f32 = torch.ldexp(fp16_frac.to(torch.float32), fp16_exp - 24)
+    return sign_f32 * torch.where(fp16_exp == 0, subnormal_f32, normal_f32)
 
 
 def ref_fp4_quant_4over6_te(
