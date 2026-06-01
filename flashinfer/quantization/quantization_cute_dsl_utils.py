@@ -1258,6 +1258,36 @@ def _scale_f32x16(
 
 
 @cute.jit
+def _scale_f32x16_to_f16x2(
+    values: tuple, scale: Float32, disable_fp4_quant_fast_math: bool
+) -> tuple:
+    from ..cute_dsl.fp4_common import fmul_rn, pack_f32x2_to_f16x2
+
+    if cutlass.const_expr(disable_fp4_quant_fast_math):
+        return (
+            pack_f32x2_to_f16x2(fmul_rn(values[0], scale), fmul_rn(values[1], scale)),
+            pack_f32x2_to_f16x2(fmul_rn(values[2], scale), fmul_rn(values[3], scale)),
+            pack_f32x2_to_f16x2(fmul_rn(values[4], scale), fmul_rn(values[5], scale)),
+            pack_f32x2_to_f16x2(fmul_rn(values[6], scale), fmul_rn(values[7], scale)),
+            pack_f32x2_to_f16x2(fmul_rn(values[8], scale), fmul_rn(values[9], scale)),
+            pack_f32x2_to_f16x2(fmul_rn(values[10], scale), fmul_rn(values[11], scale)),
+            pack_f32x2_to_f16x2(fmul_rn(values[12], scale), fmul_rn(values[13], scale)),
+            pack_f32x2_to_f16x2(fmul_rn(values[14], scale), fmul_rn(values[15], scale)),
+        )
+    else:
+        return (
+            pack_f32x2_to_f16x2(values[0] * scale, values[1] * scale),
+            pack_f32x2_to_f16x2(values[2] * scale, values[3] * scale),
+            pack_f32x2_to_f16x2(values[4] * scale, values[5] * scale),
+            pack_f32x2_to_f16x2(values[6] * scale, values[7] * scale),
+            pack_f32x2_to_f16x2(values[8] * scale, values[9] * scale),
+            pack_f32x2_to_f16x2(values[10] * scale, values[11] * scale),
+            pack_f32x2_to_f16x2(values[12] * scale, values[13] * scale),
+            pack_f32x2_to_f16x2(values[14] * scale, values[15] * scale),
+        )
+
+
+@cute.jit
 def _pack_f32x16_to_e2m1(values: tuple) -> tuple:
     packed_lo = cvt_e2m1x8_f32(
         values[0],
@@ -1461,6 +1491,47 @@ def _e2m1x2_scaled_e4m3_to_f32x2(
     )
 
 
+@dsl_user_op
+def _e2m1x2_scaled_e4m3_to_f16x2(
+    byte_val: Uint32, scale_fp8: Uint32, *, loc=None, ip=None
+) -> Uint32:
+    """Decode E2M1x2 and multiply by an E4M3 scale, keeping the product in f16x2."""
+    return Uint32(
+        llvm.inline_asm(
+            T.i32(),
+            [
+                Uint32(byte_val).ir_value(loc=loc, ip=ip),
+                Uint32(scale_fp8).ir_value(loc=loc, ip=ip),
+            ],
+            """
+            {
+                .reg .b8 byte0, byte1, byte2, byte3;
+                .reg .b16 fp8_pair;
+                .reg .b16 scale_h, unused_h;
+                .reg .b32 q_h2;
+                .reg .b32 scale_h2;
+                .reg .b32 prod_h2;
+
+                mov.b32 {byte0, byte1, byte2, byte3}, $1;
+                cvt.rn.f16x2.e2m1x2 q_h2, byte0;
+                cvt.u16.u32 fp8_pair, $2;
+                cvt.rn.f16x2.e4m3x2 scale_h2, fp8_pair;
+                mov.b32 {scale_h, unused_h}, scale_h2;
+                mov.b32 scale_h2, {scale_h, scale_h};
+                mul.rn.f16x2 prod_h2, q_h2, scale_h2;
+                mov.b32 $0, prod_h2;
+            }
+            """,
+            "=r,r,r",
+            has_side_effects=False,
+            is_align_stack=False,
+            asm_dialect=llvm.AsmDialect.AD_ATT,
+            loc=loc,
+            ip=ip,
+        )
+    )
+
+
 @cute.jit
 def _decode_e2m1x16_scaled_e4m3_to_f32(
     packed_lo: Uint32, packed_hi: Uint32, scale_fp8: Uint32
@@ -1494,47 +1565,138 @@ def _decode_e2m1x16_scaled_e4m3_to_f32(
 
 
 @cute.jit
+def _decode_e2m1x16_scaled_e4m3_to_f16x2(
+    packed_lo: Uint32, packed_hi: Uint32, scale_fp8: Uint32
+) -> tuple:
+    return (
+        _e2m1x2_scaled_e4m3_to_f16x2(packed_lo, scale_fp8),
+        _e2m1x2_scaled_e4m3_to_f16x2(packed_lo >> Uint32(8), scale_fp8),
+        _e2m1x2_scaled_e4m3_to_f16x2(packed_lo >> Uint32(16), scale_fp8),
+        _e2m1x2_scaled_e4m3_to_f16x2(packed_lo >> Uint32(24), scale_fp8),
+        _e2m1x2_scaled_e4m3_to_f16x2(packed_hi, scale_fp8),
+        _e2m1x2_scaled_e4m3_to_f16x2(packed_hi >> Uint32(8), scale_fp8),
+        _e2m1x2_scaled_e4m3_to_f16x2(packed_hi >> Uint32(16), scale_fp8),
+        _e2m1x2_scaled_e4m3_to_f16x2(packed_hi >> Uint32(24), scale_fp8),
+    )
+
+
+@dsl_user_op
+def _f16x2_mse_error_accumulate(
+    err_h2: Uint32, candidate_h2: Uint32, original_h2: Uint32, *, loc=None, ip=None
+) -> Uint32:
+    return Uint32(
+        llvm.inline_asm(
+            T.i32(),
+            [
+                Uint32(err_h2).ir_value(loc=loc, ip=ip),
+                Uint32(candidate_h2).ir_value(loc=loc, ip=ip),
+                Uint32(original_h2).ir_value(loc=loc, ip=ip),
+            ],
+            """
+            {
+                .reg .b32 diff_h2;
+                .reg .b32 term_h2;
+                sub.rn.f16x2 diff_h2, $2, $3;
+                mul.rn.f16x2 term_h2, diff_h2, diff_h2;
+                add.rn.f16x2 $0, $1, term_h2;
+            }
+            """,
+            "=r,r,r,r",
+            has_side_effects=False,
+            is_align_stack=False,
+            asm_dialect=llvm.AsmDialect.AD_ATT,
+            loc=loc,
+            ip=ip,
+        )
+    )
+
+
+@dsl_user_op
+def _f16x2_mae_error_accumulate(
+    err_h2: Uint32, candidate_h2: Uint32, original_h2: Uint32, *, loc=None, ip=None
+) -> Uint32:
+    return Uint32(
+        llvm.inline_asm(
+            T.i32(),
+            [
+                Uint32(err_h2).ir_value(loc=loc, ip=ip),
+                Uint32(candidate_h2).ir_value(loc=loc, ip=ip),
+                Uint32(original_h2).ir_value(loc=loc, ip=ip),
+            ],
+            """
+            {
+                .reg .b32 diff_h2;
+                .reg .b32 term_h2;
+                sub.rn.f16x2 diff_h2, $2, $3;
+                and.b32 term_h2, diff_h2, 0x7fff7fff;
+                add.rn.f16x2 $0, $1, term_h2;
+            }
+            """,
+            "=r,r,r,r",
+            has_side_effects=False,
+            is_align_stack=False,
+            asm_dialect=llvm.AsmDialect.AD_ATT,
+            loc=loc,
+            ip=ip,
+        )
+    )
+
+
+@dsl_user_op
+def _f16x2_error_lt(err4_h2: Uint32, err6_h2: Uint32, *, loc=None, ip=None) -> Int32:
+    return Int32(
+        llvm.inline_asm(
+            T.i32(),
+            [
+                Uint32(err4_h2).ir_value(loc=loc, ip=ip),
+                Uint32(err6_h2).ir_value(loc=loc, ip=ip),
+            ],
+            """
+            {
+                .reg .b16 err4_lo, err4_hi, err6_lo, err6_hi;
+                .reg .b16 err4_sum, err6_sum;
+                .reg .pred use_map4;
+                mov.b32 {err4_lo, err4_hi}, $1;
+                mov.b32 {err6_lo, err6_hi}, $2;
+                add.rn.f16 err4_sum, err4_lo, err4_hi;
+                add.rn.f16 err6_sum, err6_lo, err6_hi;
+                setp.lt.f16 use_map4, err4_sum, err6_sum;
+                selp.u32 $0, 1, 0, use_map4;
+            }
+            """,
+            "=r,r,r",
+            has_side_effects=False,
+            is_align_stack=False,
+            asm_dialect=llvm.AsmDialect.AD_ATT,
+            loc=loc,
+            ip=ip,
+        )
+    )
+
+
+@cute.jit
 def _nvfp4_4over6_fp16_error(
     original_scaled: tuple,
     candidate_scaled: tuple,
     nvfp4_4over6_config: NVFP44Over6Config,
-) -> Float32:
-    from ..cute_dsl.fp4_common import (
-        fadd_rn,
-        fabs_f32,
-        fmul_rn,
-        fsub_rn,
-    )
-
-    err = Float32(0.0)
-    for i in cutlass.range_constexpr(16):
-        if cutlass.const_expr(nvfp4_4over6_config.err_use_fast_math):
-            diff = candidate_scaled[i] - original_scaled[i]
-            if cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE_FP16
-            ):
-                term = diff * diff
-            elif cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE_FP16
-            ):
-                term = fabs_f32(diff)
-            else:
-                raise ValueError("Unsupported NVFP4 4over6 fp16 error mode.")
-            err = err + term
+) -> Uint32:
+    err_h2 = Uint32(0)
+    for i in cutlass.range_constexpr(8):
+        if cutlass.const_expr(
+            nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE_FP16
+        ):
+            err_h2 = _f16x2_mse_error_accumulate(
+                err_h2, candidate_scaled[i], original_scaled[i]
+            )
+        elif cutlass.const_expr(
+            nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE_FP16
+        ):
+            err_h2 = _f16x2_mae_error_accumulate(
+                err_h2, candidate_scaled[i], original_scaled[i]
+            )
         else:
-            diff = fsub_rn(candidate_scaled[i], original_scaled[i])
-            if cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE_FP16
-            ):
-                term = fmul_rn(diff, diff)
-            elif cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE_FP16
-            ):
-                term = fabs_f32(diff)
-            else:
-                raise ValueError("Unsupported NVFP4 4over6 fp16 error mode.")
-            err = fadd_rn(err, term)
-    return err
+            raise ValueError("Unsupported NVFP4 4over6 fp16 error mode.")
+    return err_h2
 
 
 @cute.jit
@@ -1714,17 +1876,17 @@ def _nvfp4_4over6_quant_from_values(
             nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE_FP16
             or nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE_FP16
         ):
-            original_scaled = _scale_f32x16(
+            original_scaled = _scale_f32x16_to_f16x2(
                 values,
                 global_scale,
                 not nvfp4_4over6_config.err_use_fast_math,
             )
-            candidate4_scaled = _decode_e2m1x16_scaled_e4m3_to_f32(
+            candidate4_scaled = _decode_e2m1x16_scaled_e4m3_to_f16x2(
                 packed4_lo,
                 packed4_hi,
                 scale4_u32,
             )
-            candidate6_scaled = _decode_e2m1x16_scaled_e4m3_to_f32(
+            candidate6_scaled = _decode_e2m1x16_scaled_e4m3_to_f16x2(
                 packed6_lo,
                 packed6_hi,
                 scale6_u32,
@@ -1776,9 +1938,17 @@ def _nvfp4_4over6_quant_from_values(
 
         scale_fp8 = Uint8(scale6_u32 & Uint32(0xFF))
         packed64 = packed6
-        if err4 < err6:
-            scale_fp8 = Uint8(scale4_u32 & Uint32(0xFF))
-            packed64 = packed4
+        if cutlass.const_expr(
+            nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE_FP16
+            or nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE_FP16
+        ):
+            if _f16x2_error_lt(err4, err6) != Int32(0):
+                scale_fp8 = Uint8(scale4_u32 & Uint32(0xFF))
+                packed64 = packed4
+        else:
+            if err4 < err6:
+                scale_fp8 = Uint8(scale4_u32 & Uint32(0xFF))
+                packed64 = packed4
 
     return scale_fp8, packed64
 
