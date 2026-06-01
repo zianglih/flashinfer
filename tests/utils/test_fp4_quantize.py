@@ -5,6 +5,7 @@ from dataclasses import dataclass
 import pytest
 import torch
 from tests.test_helpers.utils_fp4 import (
+    _ref_nvfp4_4over6_fp16_candidate,
     cast_from_fp4,
     nvfp4_global_decode_scale_te,
     nvfp4_global_encode_scale_te,
@@ -687,6 +688,18 @@ NVFP4_TE_REFERENCE_CONFIGS = [
         err_use_fast_math=True,
         exact=False,
     ),
+    NVFP44Over6TestConfig(
+        id="4over6-mae-fp16-e4m3-256-exact",
+        e4m3_max=256,
+        err_mode="MAE_FP16",
+        exact=True,
+    ),
+    NVFP44Over6TestConfig(
+        id="4over6-mse-fp16-e4m3-256-exact",
+        e4m3_max=256,
+        err_mode="MSE_FP16",
+        exact=True,
+    ),
 ]
 NVFP4_DEFAULT_4OVER6_CONFIGS = [
     None,
@@ -700,12 +713,174 @@ NVFP4_DEFAULT_4OVER6_CONFIGS = [
 ]
 
 
+NVFP4_FP16_REFERENCE_INPUT = [
+    [
+        -6.0,
+        -5.0,
+        -4.0,
+        -3.0,
+        -2.0,
+        -1.0,
+        -0.5,
+        -0.25,
+        0.25,
+        0.5,
+        1.0,
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        -3.2,
+        -2.6,
+        -1.9,
+        -1.2,
+        -0.8,
+        -0.4,
+        0.0,
+        0.4,
+        0.8,
+        1.2,
+        1.9,
+        2.6,
+        3.2,
+        4.4,
+        5.4,
+        6.4,
+    ],
+    [
+        0.0,
+        0.125,
+        0.3,
+        0.7,
+        1.1,
+        1.6,
+        2.2,
+        2.8,
+        3.4,
+        4.2,
+        5.2,
+        6.2,
+        -0.125,
+        -0.7,
+        -2.2,
+        -5.2,
+        7.0,
+        5.5,
+        4.5,
+        3.5,
+        2.5,
+        1.5,
+        0.5,
+        -0.5,
+        -1.5,
+        -2.5,
+        -3.5,
+        -4.5,
+        -5.5,
+        -6.5,
+        -7.5,
+        -8.5,
+    ],
+]
+
+
+NVFP4_FP16_REFERENCE_CASES = [
+    (
+        "MAE_FP16",
+        False,
+        [[False, False], [True, False]],
+        [[115, 116], [121, 120]],
+    ),
+    (
+        "MSE_FP16",
+        False,
+        [[False, True], [True, True]],
+        [[115, 121], [121, 124]],
+    ),
+    (
+        "MAE_FP16",
+        True,
+        [[False, True], [True, False]],
+        [[119, 124], [121, 120]],
+    ),
+    (
+        "MSE_FP16",
+        True,
+        [[True, True], [True, True]],
+        [[123, 124], [121, 124]],
+    ),
+]
+
+
 def _nvfp4_4over6_config_id(
     nvfp4_4over6_config: NVFP44Over6TestConfig | None,
 ) -> str:
     if nvfp4_4over6_config is None:
         return "nvfp4"
     return nvfp4_4over6_config.id
+
+
+def _is_nvfp4_fp16_4over6_config(
+    nvfp4_4over6_config: NVFP44Over6TestConfig | None,
+) -> bool:
+    return nvfp4_4over6_config is not None and nvfp4_4over6_config.err_mode_name in (
+        "MAE_FP16",
+        "MSE_FP16",
+    )
+
+
+def test_ref_nvfp4_4over6_fp16_candidate_uses_fp16_product():
+    q = torch.tensor([0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0], dtype=torch.float32)
+    scale = torch.tensor([0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0], dtype=torch.float32)
+    scale = scale.to(torch.float8_e4m3fn)
+
+    expected = (q.to(torch.float16) * scale.to(torch.float16)).to(torch.float32)
+    candidate = _ref_nvfp4_4over6_fp16_candidate(q, scale)
+
+    torch.testing.assert_close(candidate, expected, rtol=0, atol=0)
+
+
+@pytest.mark.parametrize(
+    (
+        "err_mode",
+        "per_token_rowwise",
+        "expected_pick_four",
+        "expected_scale_ref",
+    ),
+    NVFP4_FP16_REFERENCE_CASES,
+)
+def test_ref_fp4_quant_4over6_te_fp16_modes(
+    err_mode: str,
+    per_token_rowwise: bool,
+    expected_pick_four: list[list[bool]],
+    expected_scale_ref: list[list[int]],
+) -> None:
+    x = torch.tensor(NVFP4_FP16_REFERENCE_INPUT, dtype=torch.bfloat16)
+    if per_token_rowwise:
+        global_amax = torch.abs(x).amax(dim=1).to(torch.float32)
+    else:
+        global_amax = torch.abs(x).amax().to(torch.float32)
+
+    _, scale_ref, _, pick_four = ref_fp4_quant_4over6_te(
+        x,
+        global_amax,
+        per_token_rowwise=per_token_rowwise,
+        nvfp4_4over6_config=NVFP44Over6Config(e4m3_max=256, err_mode=err_mode),
+    )
+
+    torch.testing.assert_close(
+        pick_four,
+        torch.tensor(expected_pick_four, dtype=torch.bool),
+        rtol=0,
+        atol=0,
+    )
+    torch.testing.assert_close(
+        scale_ref,
+        torch.tensor(expected_scale_ref, dtype=torch.uint8),
+        rtol=0,
+        atol=0,
+    )
 
 
 def _te_ref_scale_bytes_for_layout(
@@ -817,6 +992,8 @@ def test_nvfp4_quantize_te_reference(
     """NVFP4 quantization should match the Python reference bitwise."""
     if not _is_fp4_supported(torch.device(device)):
         pytest.skip("Nvfp4 Requires compute capability >= 10 and CUDA >= 12.8")
+    if _is_nvfp4_fp16_4over6_config(nvfp4_4over6_config) and backend != "cute-dsl":
+        pytest.skip("NVFP4 fp16 4over6 error modes are CuTe-DSL only.")
     if backend == "cute-dsl" and not _is_cute_dsl_available():
         pytest.skip("CuTe-DSL not available")
 

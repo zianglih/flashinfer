@@ -40,6 +40,8 @@ class NVFP44Over6ErrMode(IntEnum):
 
     MAE = 0
     MSE = 1
+    MAE_FP16 = 2
+    MSE_FP16 = 3
 
 
 @dataclass(frozen=True)
@@ -59,7 +61,9 @@ class NVFP44Over6Config:
             else:
                 err_mode = NVFP44Over6ErrMode(self.err_mode)
         except (KeyError, ValueError):
-            raise ValueError("NVFP4 4over6 error mode must be MAE or MSE.") from None
+            raise ValueError(
+                "NVFP4 4over6 error mode must be one of: MAE, MSE, MAE_FP16, MSE_FP16."
+            ) from None
         object.__setattr__(self, "err_mode", err_mode)
 
     @property
