@@ -720,15 +720,6 @@ def _nvfp4_4over6_config_id(
     return nvfp4_4over6_config.id
 
 
-def _is_nvfp4_fp16_4over6_config(
-    nvfp4_4over6_config: NVFP44Over6TestConfig | None,
-) -> bool:
-    return nvfp4_4over6_config is not None and nvfp4_4over6_config.err_mode_name in (
-        "MAE_FP16",
-        "MSE_FP16",
-    )
-
-
 def _te_ref_scale_bytes_for_layout(
     scale_ref: torch.Tensor,
     sf_layout: SfLayout,
@@ -838,8 +829,6 @@ def test_nvfp4_quantize_te_reference(
     """NVFP4 quantization should match the Python reference bitwise."""
     if not _is_fp4_supported(torch.device(device)):
         pytest.skip("Nvfp4 Requires compute capability >= 10 and CUDA >= 12.8")
-    if _is_nvfp4_fp16_4over6_config(nvfp4_4over6_config) and backend != "cute-dsl":
-        pytest.skip("NVFP4 fp16 4over6 error modes are CuTe-DSL only.")
     if backend == "cute-dsl" and not _is_cute_dsl_available():
         pytest.skip("CuTe-DSL not available")
 
