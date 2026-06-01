@@ -831,9 +831,30 @@ def _is_nvfp4_fp16_4over6_config(
 
 
 def test_ref_nvfp4_4over6_fp16_candidate_uses_fp16_product():
-    q = torch.tensor([0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0], dtype=torch.float32)
-    scale = torch.tensor([0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 6.0], dtype=torch.float32)
-    scale = scale.to(torch.float8_e4m3fn)
+    q = torch.tensor(
+        [
+            0.0,
+            0.5,
+            1.0,
+            1.5,
+            2.0,
+            3.0,
+            4.0,
+            6.0,
+            0.0,
+            -0.5,
+            -1.0,
+            -1.5,
+            -2.0,
+            -3.0,
+            -4.0,
+            -6.0,
+        ],
+        dtype=torch.float32,
+    ).view(16, 1)
+    scale_bits = torch.arange(256, dtype=torch.uint8)
+    scale_bits = scale_bits[(scale_bits & 0x7F) != 0x7F]
+    scale = scale_bits.view(torch.float8_e4m3fn).view(1, -1)
 
     expected = (q.to(torch.float16) * scale.to(torch.float16)).to(torch.float32)
     candidate = _ref_nvfp4_4over6_fp16_candidate(q, scale)

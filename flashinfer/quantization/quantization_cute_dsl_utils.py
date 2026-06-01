@@ -1442,7 +1442,7 @@ def _e2m1x2_scaled_e4m3_to_f32x2(
             cvt.rn.f16x2.e4m3x2 scale_h2, fp8_pair;
             mov.b32 {scale_h, unused_h}, scale_h2;
             mov.b32 scale_h2, {scale_h, scale_h};
-            mul.f16x2 prod_h2, q_h2, scale_h2;
+            mul.rn.f16x2 prod_h2, q_h2, scale_h2;
             mov.b32 {lo, hi}, prod_h2;
             cvt.f32.f16 $0, lo;
             cvt.f32.f16 $1, hi;

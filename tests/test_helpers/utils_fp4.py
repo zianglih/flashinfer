@@ -36,6 +36,8 @@ E2M1_TO_FLOAT32 = [
     -4.0,
     -6.0,
 ]
+E2M1_MAG_SIG = (0, 1, 2, 3, 4, 6, 8, 12)
+E2M1_E4M3_FP16_PRODUCT_BITS = None
 
 
 def cast_from_fp4(x):
@@ -49,6 +51,67 @@ def cast_from_fp4(x):
     lookup_table = torch.tensor(E2M1_TO_FLOAT32, device=c.device)
     out = lookup_table[c.to(torch.long)].reshape(new_shape).to(torch.float32)
     return out
+
+
+def _dyadic_to_fp16_bits(sign: int, sig: int, exp2: int) -> int:
+    if sig == 0:
+        return sign << 15
+
+    floor_exp = sig.bit_length() - 1 + exp2
+    if floor_exp < -14:
+        frac = sig << (exp2 + 24)
+        return (sign << 15) | frac
+
+    exp_field = floor_exp + 15
+    mantissa_int = sig << (10 - (sig.bit_length() - 1))
+    return (sign << 15) | (exp_field << 10) | (mantissa_int - 1024)
+
+
+def _build_e2m1_e4m3_fp16_product_bits() -> torch.Tensor:
+    table = torch.empty((16, 256), dtype=torch.int32)
+    for q_code in range(16):
+        q_sign = (q_code >> 3) & 1
+        q_sig = E2M1_MAG_SIG[q_code & 0x7]
+        for sf_code in range(256):
+            sf_sign = (sf_code >> 7) & 1
+            sf_mag = sf_code & 0x7F
+            if sf_mag == 0x7F:
+                bits = 0x7E00
+            else:
+                sf_exp = (sf_code >> 3) & 0xF
+                sf_mant = sf_code & 0x7
+                if sf_exp == 0:
+                    sf_sig = sf_mant
+                    sf_exp2 = -9
+                else:
+                    sf_sig = 8 + sf_mant
+                    sf_exp2 = sf_exp - 10
+                bits = _dyadic_to_fp16_bits(
+                    q_sign ^ sf_sign,
+                    q_sig * sf_sig,
+                    -1 + sf_exp2,
+                )
+            table[q_code, sf_code] = bits
+    return table
+
+
+def _e2m1_value_to_code(q: torch.Tensor) -> torch.Tensor:
+    values = torch.tensor(E2M1_TO_FLOAT32, device=q.device, dtype=torch.float32)
+    return torch.argmin((q.to(torch.float32).unsqueeze(-1) - values).abs(), dim=-1)
+
+
+def _fp16_bits_to_fp32(bits: torch.Tensor) -> torch.Tensor:
+    bits = bits.to(torch.int32)
+    sign = torch.where(
+        (bits & 0x8000) != 0,
+        torch.tensor(-1.0, device=bits.device, dtype=torch.float32),
+        torch.tensor(1.0, device=bits.device, dtype=torch.float32),
+    )
+    exp = (bits >> 10) & 0x1F
+    frac = bits & 0x3FF
+    normal = torch.ldexp((frac + 1024).to(torch.float32), exp - 25)
+    subnormal = torch.ldexp(frac.to(torch.float32), exp - 24)
+    return sign * torch.where(exp == 0, subnormal, normal)
 
 
 def cast_to_fp4(x):
@@ -232,7 +295,15 @@ def _ref_nvfp4_4over6_fp16_candidate(
     The CuTe-DSL implementation uses PTX to decode E2M1x2 and E4M3 to f16,
     multiply in f16x2, then widen the product to f32 for error accumulation.
     """
-    return (q.to(torch.float16) * scale.to(torch.float16)).to(torch.float32)
+    global E2M1_E4M3_FP16_PRODUCT_BITS
+    if E2M1_E4M3_FP16_PRODUCT_BITS is None:
+        E2M1_E4M3_FP16_PRODUCT_BITS = _build_e2m1_e4m3_fp16_product_bits()
+
+    table = E2M1_E4M3_FP16_PRODUCT_BITS.to(device=q.device)
+    q_code = _e2m1_value_to_code(q)
+    scale_code = scale.contiguous().view(torch.uint8).to(torch.long)
+    prod_bits = table[q_code, scale_code]
+    return _fp16_bits_to_fp32(prod_bits)
 
 
 def ref_fp4_quant_4over6_te(
