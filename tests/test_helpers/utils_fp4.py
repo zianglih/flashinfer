@@ -232,49 +232,49 @@ def _ref_nvfp4_4over6_fp16_candidate(
     The CuTe-DSL implementation uses PTX to decode E2M1x2 and E4M3 to f16,
     multiply in f16x2, then widen the product to f32 for error accumulation.
     """
-    # Stage 1: recover the raw E2M1 and E4M3 codes. The reference receives
-    # unpacked E2M1 values, but the FP16 product contract is code-domain.
-    e2m1_values = torch.tensor(E2M1_TO_FLOAT32, device=q.device, dtype=torch.float32)
-    q_code = torch.argmin(
-        (q.to(torch.float32).unsqueeze(-1) - e2m1_values).abs(),
-        dim=-1,
-    ).to(torch.int32)
+    # Stage 1: express the decoded E2M1 input as sign and integer significand:
+    # q = (-1)^q_sign * q_sig * 2^-1.
+    q_float = q.to(torch.float32)
+    q_sign = (q_float < 0).to(torch.int32)
+    q_sig = (torch.abs(q_float) * 2).to(torch.int32)
+
+    # Stage 2: decode the E4M3 scale byte as sign and integer significand:
+    # scale = (-1)^scale_sign * scale_sig * 2^scale_exp2.
     scale_code = scale.contiguous().view(torch.uint8).to(torch.int32)
+    scale_sign = scale_code >> 7
+    scale_exp_field = (scale_code >> 3) & 0xF
+    scale_mantissa = scale_code & 0x7
+    scale_sig = torch.where(
+        scale_exp_field == 0,
+        scale_mantissa,
+        scale_mantissa + 8,
+    )
+    scale_exp2 = torch.where(
+        scale_exp_field == 0,
+        scale_exp_field - 9,
+        scale_exp_field - 10,
+    )
 
-    # Stage 2: express both inputs as dyadic significands. E2M1 magnitude is
-    # q_sig * 2^-1. Finite E4M3 is scale_sig * 2^scale_exp2.
-    q_mag = q_code & 0x7
-    q_sig = q_mag + (q_mag >= 5).to(torch.int32) + (q_mag >= 6).to(torch.int32)
-    q_sig = q_sig + 3 * (q_mag == 7).to(torch.int32)
-
-    scale_exp = (scale_code >> 3) & 0xF
-    scale_mant = scale_code & 0x7
-    scale_sig = torch.where(scale_exp == 0, scale_mant, scale_mant + 8)
-    scale_exp2 = torch.where(scale_exp == 0, scale_exp - 9, scale_exp - 10)
-
-    # Stage 3: multiply the dyadic significands exactly in integer space.
-    # The result is (-1)^sign * sig * 2^exp2 before fp16 packing.
-    sig = q_sig * scale_sig
-    sign = ((q_code >> 3) ^ (scale_code >> 7)) & 1
-    exp2 = scale_exp2 - 1
+    # Stage 3: multiply the dyadic significands exactly in integer space:
+    # product = (-1)^product_sign * product_sig * 2^product_exp2.
+    product_sign = q_sign ^ scale_sign
+    product_sig = q_sig * scale_sig
+    product_exp2 = scale_exp2 - 1
 
     # Stage 4: pack that exact dyadic product into fp16 bits. These products
     # are exactly representable in fp16, so RN does not need a tie path here.
-    log2_sig = (sig >= 2).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 4).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 8).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 16).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 32).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 64).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 128).to(torch.int32)
-    log2_sig = log2_sig + (sig >= 256).to(torch.int32)
-    floor_exp = log2_sig + exp2
-    normal = ((floor_exp + 15) << 10) | (
-        torch.bitwise_left_shift(sig, 10 - log2_sig) - 1024
+    log2_sig = torch.zeros_like(product_sig)
+    for threshold in (2, 4, 8, 16, 32, 64, 128, 256):
+        log2_sig = log2_sig + (product_sig >= threshold).to(torch.int32)
+
+    floor_exp = log2_sig + product_exp2
+    normal_bits = ((floor_exp + 15) << 10) | (
+        torch.bitwise_left_shift(product_sig, 10 - log2_sig) - 1024
     )
-    subnormal = torch.bitwise_left_shift(sig, exp2 + 24)
-    prod_bits = (sign << 15) | torch.where(floor_exp < -14, subnormal, normal)
-    prod_bits = torch.where(sig == 0, sign << 15, prod_bits)
+    subnormal_bits = torch.bitwise_left_shift(product_sig, product_exp2 + 24)
+    magnitude_bits = torch.where(floor_exp < -14, subnormal_bits, normal_bits)
+    prod_bits = (product_sign << 15) | magnitude_bits
+    prod_bits = torch.where(product_sig == 0, product_sign << 15, prod_bits)
     prod_bits = torch.where(
         (scale_code & 0x7F) == 0x7F,
         torch.full_like(prod_bits, 0x7E00),
