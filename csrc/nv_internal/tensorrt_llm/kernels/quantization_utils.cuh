@@ -394,30 +394,15 @@ struct PackedVec<__nv_fp8_e4m3, NUM_ELTS> {
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 // Quantization helper functions
 
-// Quantizes the provided PackedVec into the uint32_t or uint64_t output
-template <typename NVFP4_4OVER6_CONFIG>
-__device__ __forceinline__ float compute_4over6_error(float diff) {
-  if constexpr (NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MSE ||
-                NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MSE_FP16) {
-    return diff * diff;
-  } else if constexpr (NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MAE ||
-                       NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MAE_FP16) {
-    return fabsf(diff);
-  } else {
-    return fabsf(diff);
-  }
-}
-
 template <typename NVFP4_4OVER6_CONFIG>
 __device__ __forceinline__ float compute_4over6_error_rn(float diff) {
-  if constexpr (NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MSE ||
-                NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MSE_FP16) {
+  if constexpr (NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MSE) {
     return __fmul_rn(diff, diff);
-  } else if constexpr (NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MAE ||
-                       NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MAE_FP16) {
+  } else if constexpr (NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MAE) {
     return fabsf(diff);
   } else {
-    return fabsf(diff);
+    static_assert(NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MAE,
+                  "Unsupported NVFP4 4over6 error mode.");
   }
 }
 
@@ -536,17 +521,6 @@ __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t> cvt
     } else {
       outputGlobalDecodeScale = reciprocal_approximate_ftz(SFScaleVal);
     }
-    float candidateGlobalDecodeScale;
-    if constexpr (DISABLE_FP4_QUANT_FAST_MATH) {
-      candidateGlobalDecodeScale =
-          globalAmax > 0.0f ? __fdiv_rn(globalAmax, 6.0f * float(NVFP4_4OVER6_CONFIG::e4m3Max))
-                            : outputGlobalDecodeScale;
-    } else {
-      candidateGlobalDecodeScale =
-          globalAmax > 0.0f
-              ? globalAmax * reciprocal_approximate_ftz(6.0f * float(NVFP4_4OVER6_CONFIG::e4m3Max))
-              : outputGlobalDecodeScale;
-    }
     constexpr float ERROR_DENOM = E2M1_MAX_VALUE * float(NVFP4_4OVER6_CONFIG::e4m3Max);
     float outputScale4;
     float outputScale6;
@@ -593,112 +567,64 @@ __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t> cvt
     for (int i = 0; i < CVT_ELTS_PER_THREAD / 2; i++) {
       uint32_t const byte4 = static_cast<uint32_t>((e2m1Bits4 >> (8 * i)) & 0xFF);
       uint32_t const byte6 = static_cast<uint32_t>((e2m1Bits6 >> (8 * i)) & 0xFF);
-      if constexpr (NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MAE_FP16 ||
-                    NVFP4_4OVER6_CONFIG::errMode == NVFP44Over6ErrMode::MSE_FP16) {
+      if constexpr (NVFP4_4OVER6_CONFIG::errUseFastMath) {
         float2 const candidate4 = e2m1x2_byte_scaled_e4m3_to_float2(byte4, fp8SFVal4);
         float2 const candidate6 = e2m1x2_byte_scaled_e4m3_to_float2(byte6, fp8SFVal6);
         float2 originalScaled;
         float diff4;
         float diff6;
-        if constexpr (!NVFP4_4OVER6_CONFIG::errUseFastMath) {
-          originalScaled.x = __fmul_rn(fp2Vals[i].x, SFScaleVal);
-          originalScaled.y = __fmul_rn(fp2Vals[i].y, SFScaleVal);
-          diff4 = __fsub_rn(candidate4.x, originalScaled.x);
-          error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
-          diff6 = __fsub_rn(candidate6.x, originalScaled.x);
-          error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
-          diff4 = __fsub_rn(candidate4.y, originalScaled.y);
-          error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
-          diff6 = __fsub_rn(candidate6.y, originalScaled.y);
-          error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
-        } else {
-          originalScaled.x = fp2Vals[i].x * SFScaleVal;
-          originalScaled.y = fp2Vals[i].y * SFScaleVal;
-          diff4 = candidate4.x - originalScaled.x;
-          error4 += compute_4over6_error<NVFP4_4OVER6_CONFIG>(diff4);
-          diff6 = candidate6.x - originalScaled.x;
-          error6 += compute_4over6_error<NVFP4_4OVER6_CONFIG>(diff6);
-          diff4 = candidate4.y - originalScaled.y;
-          error4 += compute_4over6_error<NVFP4_4OVER6_CONFIG>(diff4);
-          diff6 = candidate6.y - originalScaled.y;
-          error6 += compute_4over6_error<NVFP4_4OVER6_CONFIG>(diff6);
-        }
+        originalScaled.x = __fmul_rn(fp2Vals[i].x, SFScaleVal);
+        originalScaled.y = __fmul_rn(fp2Vals[i].y, SFScaleVal);
+        diff4 = __fsub_rn(candidate4.x, originalScaled.x);
+        error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
+        diff6 = __fsub_rn(candidate6.x, originalScaled.x);
+        error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
+        diff4 = __fsub_rn(candidate4.y, originalScaled.y);
+        error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
+        diff6 = __fsub_rn(candidate6.y, originalScaled.y);
+        error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
       } else {
         float2 const e2m1Val4 = e2m1x2_byte_to_float2(byte4);
         float2 const e2m1Val6 = e2m1x2_byte_to_float2(byte6);
         float diff4;
-        if constexpr (!NVFP4_4OVER6_CONFIG::errUseFastMath) {
-          float const dequant4 =
-              globalAmax > 0.0f
-                  ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val4.x, sfValue4), globalAmax), ERROR_DENOM)
-                  : __fmul_rn(__fmul_rn(e2m1Val4.x, sfValue4), outputGlobalDecodeScale);
-          diff4 = __fsub_rn(dequant4, fp2Vals[i].x);
-          error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
-        } else {
-          float const dequant4 = e2m1Val4.x * sfValue4 * candidateGlobalDecodeScale;
-          diff4 = dequant4 - fp2Vals[i].x;
-          error4 += compute_4over6_error<NVFP4_4OVER6_CONFIG>(diff4);
-        }
+        float const dequant4 =
+            globalAmax > 0.0f
+                ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val4.x, sfValue4), globalAmax), ERROR_DENOM)
+                : __fmul_rn(__fmul_rn(e2m1Val4.x, sfValue4), outputGlobalDecodeScale);
+        diff4 = __fsub_rn(dequant4, fp2Vals[i].x);
+        error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
 
         float diff6;
-        if constexpr (!NVFP4_4OVER6_CONFIG::errUseFastMath) {
-          float const dequant6 =
-              globalAmax > 0.0f
-                  ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val6.x, sfValue6), globalAmax), ERROR_DENOM)
-                  : __fmul_rn(__fmul_rn(e2m1Val6.x, sfValue6), outputGlobalDecodeScale);
-          diff6 = __fsub_rn(dequant6, fp2Vals[i].x);
-          error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
-        } else {
-          float const dequant6 = e2m1Val6.x * sfValue6 * candidateGlobalDecodeScale;
-          diff6 = dequant6 - fp2Vals[i].x;
-          error6 += compute_4over6_error<NVFP4_4OVER6_CONFIG>(diff6);
-        }
+        float const dequant6 =
+            globalAmax > 0.0f
+                ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val6.x, sfValue6), globalAmax), ERROR_DENOM)
+                : __fmul_rn(__fmul_rn(e2m1Val6.x, sfValue6), outputGlobalDecodeScale);
+        diff6 = __fsub_rn(dequant6, fp2Vals[i].x);
+        error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
 
-        if constexpr (!NVFP4_4OVER6_CONFIG::errUseFastMath) {
-          float const dequant4 =
-              globalAmax > 0.0f
-                  ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val4.y, sfValue4), globalAmax), ERROR_DENOM)
-                  : __fmul_rn(__fmul_rn(e2m1Val4.y, sfValue4), outputGlobalDecodeScale);
-          diff4 = __fsub_rn(dequant4, fp2Vals[i].y);
-          error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
-        } else {
-          float const dequant4 = e2m1Val4.y * sfValue4 * candidateGlobalDecodeScale;
-          diff4 = dequant4 - fp2Vals[i].y;
-          error4 += compute_4over6_error<NVFP4_4OVER6_CONFIG>(diff4);
-        }
+        float const dequant4_y =
+            globalAmax > 0.0f
+                ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val4.y, sfValue4), globalAmax), ERROR_DENOM)
+                : __fmul_rn(__fmul_rn(e2m1Val4.y, sfValue4), outputGlobalDecodeScale);
+        diff4 = __fsub_rn(dequant4_y, fp2Vals[i].y);
+        error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
 
-        if constexpr (!NVFP4_4OVER6_CONFIG::errUseFastMath) {
-          float const dequant6 =
-              globalAmax > 0.0f
-                  ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val6.y, sfValue6), globalAmax), ERROR_DENOM)
-                  : __fmul_rn(__fmul_rn(e2m1Val6.y, sfValue6), outputGlobalDecodeScale);
-          diff6 = __fsub_rn(dequant6, fp2Vals[i].y);
-          error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
-        } else {
-          float const dequant6 = e2m1Val6.y * sfValue6 * candidateGlobalDecodeScale;
-          diff6 = dequant6 - fp2Vals[i].y;
-          error6 += compute_4over6_error<NVFP4_4OVER6_CONFIG>(diff6);
-        }
+        float const dequant6_y =
+            globalAmax > 0.0f
+                ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val6.y, sfValue6), globalAmax), ERROR_DENOM)
+                : __fmul_rn(__fmul_rn(e2m1Val6.y, sfValue6), outputGlobalDecodeScale);
+        diff6 = __fsub_rn(dequant6_y, fp2Vals[i].y);
+        error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
       }
     }
 
     if constexpr (CVT_NUM_THREADS_PER_SF >= 2) {
-      if constexpr (!NVFP4_4OVER6_CONFIG::errUseFastMath) {
-        error4 = __fadd_rn(error4, __shfl_xor_sync(uint32_t(-1), error4, 1));
-        error6 = __fadd_rn(error6, __shfl_xor_sync(uint32_t(-1), error6, 1));
-      } else {
-        error4 += __shfl_xor_sync(uint32_t(-1), error4, 1);
-        error6 += __shfl_xor_sync(uint32_t(-1), error6, 1);
-      }
+      error4 = __fadd_rn(error4, __shfl_xor_sync(uint32_t(-1), error4, 1));
+      error6 = __fadd_rn(error6, __shfl_xor_sync(uint32_t(-1), error6, 1));
     }
     if constexpr (CVT_NUM_THREADS_PER_SF == 4) {
-      if constexpr (!NVFP4_4OVER6_CONFIG::errUseFastMath) {
-        error4 = __fadd_rn(error4, __shfl_xor_sync(uint32_t(-1), error4, 2));
-        error6 = __fadd_rn(error6, __shfl_xor_sync(uint32_t(-1), error6, 2));
-      } else {
-        error4 += __shfl_xor_sync(uint32_t(-1), error4, 2);
-        error6 += __shfl_xor_sync(uint32_t(-1), error6, 2);
-      }
+      error4 = __fadd_rn(error4, __shfl_xor_sync(uint32_t(-1), error4, 2));
+      error6 = __fadd_rn(error6, __shfl_xor_sync(uint32_t(-1), error6, 2));
     }
 
     if (error4 < error6) {

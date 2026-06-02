@@ -1508,32 +1508,14 @@ def _nvfp4_4over6_fp16_error(
 
     err = Float32(0.0)
     for i in cutlass.range_constexpr(16):
-        if cutlass.const_expr(nvfp4_4over6_config.err_use_fast_math):
-            diff = candidate_scaled[i] - original_scaled[i]
-            if cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE_FP16
-            ):
-                term = diff * diff
-            elif cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE_FP16
-            ):
-                term = fabs_f32(diff)
-            else:
-                raise ValueError("Unsupported NVFP4 4over6 fp16 error mode.")
-            err = err + term
+        diff = fsub_rn(candidate_scaled[i], original_scaled[i])
+        if cutlass.const_expr(nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE):
+            term = fmul_rn(diff, diff)
+        elif cutlass.const_expr(nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE):
+            term = fabs_f32(diff)
         else:
-            diff = fsub_rn(candidate_scaled[i], original_scaled[i])
-            if cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE_FP16
-            ):
-                term = fmul_rn(diff, diff)
-            elif cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE_FP16
-            ):
-                term = fabs_f32(diff)
-            else:
-                raise ValueError("Unsupported NVFP4 4over6 fp16 error mode.")
-            err = fadd_rn(err, term)
+            raise ValueError("Unsupported NVFP4 4over6 fp16 error mode.")
+        err = fadd_rn(err, term)
     return err
 
 
@@ -1584,41 +1566,20 @@ def _nvfp4_4over6_error(
         fdiv_rn,
         fmul_rn,
         fsub_rn,
-        rcp_approx_ftz,
     )
 
     err = Float32(0.0)
     denom = Float32(6.0 * nvfp4_4over6_config.e4m3_max)
     for i in cutlass.range_constexpr(16):
-        if cutlass.const_expr(nvfp4_4over6_config.err_use_fast_math):
-            global_decode_scale = global_amax * rcp_approx_ftz(denom)
-            dequant = quantized[i] * scale * global_decode_scale
-            diff = dequant - original[i]
-            if cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE
-            ):
-                term = diff * diff
-            elif cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE
-            ):
-                term = fabs_f32(diff)
-            else:
-                raise ValueError("Unsupported NVFP4 4over6 error mode.")
-            err = err + term
+        dequant = fdiv_rn(fmul_rn(fmul_rn(quantized[i], scale), global_amax), denom)
+        diff = fsub_rn(dequant, original[i])
+        if cutlass.const_expr(nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE):
+            term = fmul_rn(diff, diff)
+        elif cutlass.const_expr(nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE):
+            term = fabs_f32(diff)
         else:
-            dequant = fdiv_rn(fmul_rn(fmul_rn(quantized[i], scale), global_amax), denom)
-            diff = fsub_rn(dequant, original[i])
-            if cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE
-            ):
-                term = fmul_rn(diff, diff)
-            elif cutlass.const_expr(
-                nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE
-            ):
-                term = fabs_f32(diff)
-            else:
-                raise ValueError("Unsupported NVFP4 4over6 error mode.")
-            err = fadd_rn(err, term)
+            raise ValueError("Unsupported NVFP4 4over6 error mode.")
+        err = fadd_rn(err, term)
     return err
 
 
@@ -1710,14 +1671,11 @@ def _nvfp4_4over6_quant_from_values(
         packed4_lo, packed4_hi, packed4 = _pack_f32x16_to_e2m1(scaled4)
         packed6_lo, packed6_hi, packed6 = _pack_f32x16_to_e2m1(scaled6)
 
-        if cutlass.const_expr(
-            nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MAE_FP16
-            or nvfp4_4over6_config.err_mode == NVFP44Over6ErrMode.MSE_FP16
-        ):
+        if cutlass.const_expr(nvfp4_4over6_config.err_use_fast_math):
             original_scaled = _scale_f32x16(
                 values,
                 global_scale,
-                not nvfp4_4over6_config.err_use_fast_math,
+                True,
             )
             candidate4_scaled = _decode_e2m1x16_scaled_e4m3_to_f32(
                 packed4_lo,
@@ -1737,23 +1695,6 @@ def _nvfp4_4over6_quant_from_values(
             err6 = _nvfp4_4over6_fp16_error(
                 original_scaled,
                 candidate6_scaled,
-                nvfp4_4over6_config,
-            )
-        elif cutlass.const_expr(nvfp4_4over6_config.err_use_fast_math):
-            quantized4 = _decode_e2m1x16_to_f32(packed4_lo, packed4_hi)
-            quantized6 = _decode_e2m1x16_to_f32(packed6_lo, packed6_hi)
-            err4 = _nvfp4_4over6_error(
-                values,
-                quantized4,
-                scale4,
-                global_amax,
-                nvfp4_4over6_config,
-            )
-            err6 = _nvfp4_4over6_error(
-                values,
-                quantized6,
-                scale6,
-                global_amax,
                 nvfp4_4over6_config,
             )
         else:

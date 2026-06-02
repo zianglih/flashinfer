@@ -27,8 +27,6 @@ namespace common {
 enum class NVFP44Over6ErrMode : std::uint8_t {
   MAE = 0,
   MSE = 1,
-  MAE_FP16 = 2,
-  MSE_FP16 = 3,
 };
 
 template <int E4M3_MAX = 448, NVFP44Over6ErrMode ERR_MODE = NVFP44Over6ErrMode::MAE,

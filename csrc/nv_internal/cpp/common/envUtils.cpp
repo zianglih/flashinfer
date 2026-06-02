@@ -376,14 +376,7 @@ NVFP44Over6ErrMode getEnvNVFP44Over6ErrMode() {
   if (*mode == "MSE") {
     return NVFP44Over6ErrMode::MSE;
   }
-  if (*mode == "MAE_FP16") {
-    return NVFP44Over6ErrMode::MAE_FP16;
-  }
-  if (*mode == "MSE_FP16") {
-    return NVFP44Over6ErrMode::MSE_FP16;
-  }
-  throw std::invalid_argument(
-      "FLASHINFER_NVFP4_4OVER6_ERR_MODE must be MAE, MSE, MAE_FP16 or MSE_FP16.");
+  throw std::invalid_argument("FLASHINFER_NVFP4_4OVER6_ERR_MODE must be MAE or MSE.");
 }
 
 bool getEnvNVFP44Over6ErrUseFastMath() {

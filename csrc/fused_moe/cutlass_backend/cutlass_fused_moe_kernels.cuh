@@ -113,14 +113,6 @@ auto dispatchNVFP44Over6Config(Fn&& fn) {
         case NVFP44Over6ErrMode::MSE:
           return dispatchErrUseFastMath(
               e4m3MaxTag, std::integral_constant<NVFP44Over6ErrMode, NVFP44Over6ErrMode::MSE>{});
-        case NVFP44Over6ErrMode::MAE_FP16:
-          return dispatchErrUseFastMath(
-              e4m3MaxTag,
-              std::integral_constant<NVFP44Over6ErrMode, NVFP44Over6ErrMode::MAE_FP16>{});
-        case NVFP44Over6ErrMode::MSE_FP16:
-          return dispatchErrUseFastMath(
-              e4m3MaxTag,
-              std::integral_constant<NVFP44Over6ErrMode, NVFP44Over6ErrMode::MSE_FP16>{});
         default:
           TLLM_CHECK_WITH_INFO(false, "Unsupported NVFP4 4over6 error mode.");
           return dispatchErrUseFastMath(

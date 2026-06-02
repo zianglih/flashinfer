@@ -317,12 +317,8 @@ def ref_fp4_quant_4over6_te(
     if nvfp4_4over6_err_mode not in (
         NVFP44Over6ErrMode.MAE,
         NVFP44Over6ErrMode.MSE,
-        NVFP44Over6ErrMode.MAE_FP16,
-        NVFP44Over6ErrMode.MSE_FP16,
     ):
-        raise ValueError(
-            "nvfp4_4over6_err_mode must be MAE, MSE, MAE_FP16, or MSE_FP16."
-        )
+        raise ValueError("nvfp4_4over6_err_mode must be MAE or MSE.")
 
     m, n = x.shape
     x_blocks = x.view(m, n // block_size, block_size).to(torch.float32)
@@ -395,17 +391,14 @@ def ref_fp4_quant_4over6_te(
 
     err4 = torch.zeros((m, n // block_size), dtype=torch.float32, device=x.device)
     err6 = torch.zeros((m, n // block_size), dtype=torch.float32, device=x.device)
-    if nvfp4_4over6_err_mode in (
-        NVFP44Over6ErrMode.MAE_FP16,
-        NVFP44Over6ErrMode.MSE_FP16,
-    ):
+    if nvfp4_4over6_config.err_use_fast_math:
         original_scaled = x_blocks * global_encode_scale
         candidate4_scaled = _ref_nvfp4_4over6_fp16_candidate(q4, sf4_fp8)
         candidate6_scaled = _ref_nvfp4_4over6_fp16_candidate(q6, sf6_fp8)
         for i in range(block_size):
             diff4 = candidate4_scaled[:, :, i] - original_scaled[:, :, i]
             diff6 = candidate6_scaled[:, :, i] - original_scaled[:, :, i]
-            if nvfp4_4over6_err_mode == NVFP44Over6ErrMode.MSE_FP16:
+            if nvfp4_4over6_err_mode == NVFP44Over6ErrMode.MSE:
                 err4 += diff4 * diff4
                 err6 += diff6 * diff6
             else:
