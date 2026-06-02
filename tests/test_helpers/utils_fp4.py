@@ -314,11 +314,6 @@ def ref_fp4_quant_4over6_te(
     if nvfp4_4over6_config is None:
         nvfp4_4over6_config = NVFP44Over6Config()
     nvfp4_4over6_err_mode = nvfp4_4over6_config.err_mode
-    if nvfp4_4over6_err_mode not in (
-        NVFP44Over6ErrMode.MAE,
-        NVFP44Over6ErrMode.MSE,
-    ):
-        raise ValueError("nvfp4_4over6_err_mode must be MAE or MSE.")
 
     m, n = x.shape
     x_blocks = x.view(m, n // block_size, block_size).to(torch.float32)

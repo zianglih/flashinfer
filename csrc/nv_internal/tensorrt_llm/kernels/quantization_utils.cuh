@@ -587,7 +587,7 @@ __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t> cvt
         float2 const e2m1Val4 = e2m1x2_byte_to_float2(byte4);
         float2 const e2m1Val6 = e2m1x2_byte_to_float2(byte6);
         float diff4;
-        float const dequant4 =
+        float dequant4 =
             globalAmax > 0.0f
                 ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val4.x, sfValue4), globalAmax), ERROR_DENOM)
                 : __fmul_rn(__fmul_rn(e2m1Val4.x, sfValue4), outputGlobalDecodeScale);
@@ -595,25 +595,25 @@ __device__ std::conditional_t<CVT_ELTS_PER_THREAD == 16, uint64_t, uint32_t> cvt
         error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
 
         float diff6;
-        float const dequant6 =
+        float dequant6 =
             globalAmax > 0.0f
                 ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val6.x, sfValue6), globalAmax), ERROR_DENOM)
                 : __fmul_rn(__fmul_rn(e2m1Val6.x, sfValue6), outputGlobalDecodeScale);
         diff6 = __fsub_rn(dequant6, fp2Vals[i].x);
         error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
 
-        float const dequant4_y =
+        dequant4 =
             globalAmax > 0.0f
                 ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val4.y, sfValue4), globalAmax), ERROR_DENOM)
                 : __fmul_rn(__fmul_rn(e2m1Val4.y, sfValue4), outputGlobalDecodeScale);
-        diff4 = __fsub_rn(dequant4_y, fp2Vals[i].y);
+        diff4 = __fsub_rn(dequant4, fp2Vals[i].y);
         error4 = __fadd_rn(error4, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff4));
 
-        float const dequant6_y =
+        dequant6 =
             globalAmax > 0.0f
                 ? __fdiv_rn(__fmul_rn(__fmul_rn(e2m1Val6.y, sfValue6), globalAmax), ERROR_DENOM)
                 : __fmul_rn(__fmul_rn(e2m1Val6.y, sfValue6), outputGlobalDecodeScale);
-        diff6 = __fsub_rn(dequant6_y, fp2Vals[i].y);
+        diff6 = __fsub_rn(dequant6, fp2Vals[i].y);
         error6 = __fadd_rn(error6, compute_4over6_error_rn<NVFP4_4OVER6_CONFIG>(diff6));
       }
     }

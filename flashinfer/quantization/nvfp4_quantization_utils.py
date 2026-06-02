@@ -59,9 +59,7 @@ class NVFP44Over6Config:
             else:
                 err_mode = NVFP44Over6ErrMode(self.err_mode)
         except (KeyError, ValueError):
-            raise ValueError(
-                "NVFP4 4over6 error mode must be one of: MAE, MSE."
-            ) from None
+            raise ValueError("NVFP4 4over6 error mode must be MAE or MSE.") from None
         object.__setattr__(self, "err_mode", err_mode)
 
     @property
