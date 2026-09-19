@@ -419,7 +419,6 @@ def is_valid_bf16_nvfp4(knobs: Dict[str, Any]) -> bool:
         and knobs.get("load_balance_mode", "static") in ("static", "atomic_counter")
         and knobs.get("force_static_sched", True)
         and token_back in ("epi_warps", "reuse_dispatch_warps")
-        and not knobs.get("apply_topk_in_fc1", False)
         and (
             not knobs.get("in_kernel_fc2_reduce", False)
             or token_back == "reuse_dispatch_warps"

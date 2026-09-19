@@ -333,3 +333,71 @@ def test_symm_buffer_resolves_cached_knobs(
         assert cfg.epi_flag_batch == (1, 2)
     finally:
         buf.destroy()
+
+
+@pytest.mark.parametrize("legacy", [False, True])
+def test_routing_weight_placement_partitions_cache(monkeypatch, tmp_path, legacy):
+    import json
+
+    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe.shim import knob_cache
+
+    path = _cache_env(monkeypatch, tmp_path)
+    monkeypatch.setattr(knob_cache, "_current_device_name", lambda: "testgpu")
+    key = dict(max_tokens=2048, **{**_KEY, "dtype": "bf16_nvfp4"})
+    knob_cache.record_knobs(_KNOBS, **key)
+    if legacy:
+        data = json.loads(path.read_text())
+        del data["entries"][0]["apply_topk_in_fc1"]
+        path.write_text(json.dumps(data))
+    assert knob_cache.lookup_knobs(**key) == _KNOBS
+    assert knob_cache.lookup_knobs(apply_topk_in_fc1=False, **key) == _KNOBS
+    assert knob_cache.lookup_knobs(apply_topk_in_fc1=True, **key) is None
+
+    fc1_knobs = {**_KNOBS, "flag_batch": 8}
+    knob_cache.record_knobs(fc1_knobs, apply_topk_in_fc1=True, **key)
+    replacement = {**_KNOBS, "flag_batch": 2}
+    knob_cache.record_knobs(replacement, apply_topk_in_fc1=False, **key)
+    assert knob_cache.resolve_knobs(**key) == (replacement, "cache")
+    assert knob_cache.resolve_knobs(apply_topk_in_fc1=True, **key) == (
+        fc1_knobs,
+        "cache",
+    )
+    entries = json.loads(path.read_text())["entries"]
+    assert len(entries) == 2
+    assert {entry["apply_topk_in_fc1"] for entry in entries} == {False, True}
+
+
+@pytest.mark.parametrize("apply_topk_in_fc1", [False, True])
+def test_bf16_nvfp4_routing_weight_placement_is_session_config(apply_topk_in_fc1):
+    from flashinfer.moe_ep import Sm100_Bf16_Nvfp4_Bf16_Cutedsl_MegaMoeConfig
+    from flashinfer.moe_ep.cute_dsl.megamoe.bf16_nvfp4 import (
+        MegaMoEBf16Nvfp4Config,
+        MegaMoEBf16Nvfp4Frontend,
+        bf16_nvfp4_candidates,
+    )
+
+    public = Sm100_Bf16_Nvfp4_Bf16_Cutedsl_MegaMoeConfig(
+        intermediate_size=256, top_k=2, knobs="auto"
+    )
+    assert public.apply_topk_in_fc1 is False
+    public = Sm100_Bf16_Nvfp4_Bf16_Cutedsl_MegaMoeConfig(
+        intermediate_size=256,
+        top_k=2,
+        knobs="auto",
+        apply_topk_in_fc1=apply_topk_in_fc1,
+    )
+    frontend = MegaMoEBf16Nvfp4Frontend(
+        MegaMoEBf16Nvfp4Config(
+            rank=0,
+            world_size=1,
+            num_tokens_per_rank=64,
+            num_topk=2,
+            num_total_experts=4,
+            hidden=256,
+            intermediate=256,
+            apply_topk_in_fc1=public.apply_topk_in_fc1,
+        )
+    )
+    for knobs in bf16_nvfp4_candidates():
+        frontend.apply_knobs({**knobs, "apply_topk_in_fc1": not apply_topk_in_fc1})
+        assert frontend.config.apply_topk_in_fc1 is apply_topk_in_fc1

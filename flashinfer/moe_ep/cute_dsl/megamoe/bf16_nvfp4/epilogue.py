@@ -4,7 +4,8 @@
 """W4A16 epilogue for the swapped MegaMoE pipeline.
 
 FC1 changes: internal gate16/up16 accumulators receive FP32 expert
-alphas and SwiGLU, then store BF16 directly. Prepared weights share W4A4's
+alphas and SwiGLU, optionally apply FP32 routing weights, then store BF16.
+Prepared weights share W4A4's
 gate16/up16 ordering and decode directly into operand-A TMEM.
 FC2 owns the BF16 return router and store path, with statically unrolled
 non-overlap subtiles and the common phase-aware completion tracker.
@@ -54,11 +55,13 @@ class W4A16Epilogue:
         static_expert_shape,
         token_back_by_dispatch=False,
         in_kernel_fc2_reduce=False,
+        apply_topk_in_fc1=False,
         gate_up_clamp=None,
         epi_flag_batch=(1, 1),
     ):
         self.token_back_by_dispatch = token_back_by_dispatch
         self.in_kernel_fc2_reduce = in_kernel_fc2_reduce
+        self.apply_topk_in_fc1 = apply_topk_in_fc1
         self.gate_up_clamp = gate_up_clamp
         fc1_batch, fc2_batch = (1, 1) if epi_flag_batch is None else epi_flag_batch
         self.fc1_epi_flag_batch = max(1, min(32, int(fc1_batch)))
@@ -108,6 +111,7 @@ class W4A16Epilogue:
             fc1_output,
             fc1_done_counter,
             optional_epi_args,
+            token_comm_args,
         )
         fc2_epi = W4A16Fc2Epilogue(
             self, tidx, fc2_output, token_comm_args, optional_epi_args
@@ -284,7 +288,7 @@ class W4A16Fc2Epilogue(EpilogueContext):
             # register packing and STG remain.
             cute.arch.fence_view_async_tmem_load()
             acc_pipeline.consumer_release(acc_consumer_state)
-        if cutlass.const_expr(self.in_kernel_fc2_reduce):
+        if cutlass.const_expr(self.in_kernel_fc2_reduce and not self.apply_topk_in_fc1):
             # Preserve FC2's BF16 rounding before weighting; dispatch reduces
             # these weighted BF16 contributions into the source token output.
             for row in cutlass.range_constexpr(2):
@@ -416,6 +420,7 @@ class W4A16Fc1Epilogue(EpilogueContext):
         fc1_output,
         fc1_done_counter,
         optional_epi_args,
+        token_comm_args,
     ):
         # Loop-invariant fields consumed by the BF16 body and completion method.
         self.base = base
@@ -425,6 +430,7 @@ class W4A16Fc1Epilogue(EpilogueContext):
         self.fc1_output = fc1_output
         self.fc1_done_counter = fc1_done_counter
         self.optional_epi_args = optional_epi_args
+        self.token_comm_args = token_comm_args
         self._freeze()
 
     @cute.jit
@@ -506,6 +512,20 @@ class W4A16Fc1Epilogue(EpilogueContext):
         )
         for half in cutlass.range_constexpr(2):
             token_col = subtile_idx * 64 + half * 32
+            if cutlass.const_expr(self.apply_topk_in_fc1):
+                # The existing accumulator wait also orders the dispatch
+                # weight store. Prefetch while activation and transpose run.
+                topk_score = cutlass.Float32(0)
+                token_in_tile = token_col + lane
+                if token_in_tile < work_tile_info.valid_tokens_in_cta_tile:
+                    pool_row = (
+                        work_tile_info.cumulative_data_physical_row
+                        + work_tile_info.tile_n_idx * self.cta_tile_n
+                        + token_in_tile
+                    )
+                    topk_score = self.token_comm_args.fc1_input_topk_weights_buffer[
+                        pool_row
+                    ]
             gate_ptr = tmem_acc_tensor.iterator + cute.assume(
                 (gate_feature << 16) + token_col, divby=16
             )
@@ -576,6 +596,16 @@ class W4A16Fc1Epilogue(EpilogueContext):
                 in_bound = in_bound and output_column < real_fc1_output.shape[1]
             if in_bound:
                 token_row = work_tile_info.tile_n_idx * self.cta_tile_n + token_in_tile
+                if cutlass.const_expr(self.apply_topk_in_fc1):
+                    # Weight the completed FP32 activation before its BF16
+                    # handoff; the final combine then sums the resulting partials.
+                    for i in cutlass.range_constexpr(0, 16, 2):
+                        transposed_output[i], transposed_output[i + 1] = (
+                            cute.arch.mul_packed_f32x2(
+                                (transposed_output[i], transposed_output[i + 1]),
+                                (topk_score, topk_score),
+                            )
+                        )
                 output = cute.make_rmem_tensor((16,), cutlass.BFloat16)
                 output.store(transposed_output.load().to(cutlass.BFloat16))
                 row = cute.local_tile(

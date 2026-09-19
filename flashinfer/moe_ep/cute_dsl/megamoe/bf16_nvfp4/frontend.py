@@ -58,8 +58,6 @@ class MegaMoEBf16Nvfp4Config:
             raise ValueError(
                 f"Unsupported load_balance_mode={self.load_balance_mode!r}."
             )
-        if self.apply_topk_in_fc1:
-            raise ValueError("W4A16 routing scores are applied after FC2.")
         if self.in_kernel_fc2_reduce and not self.enable_in_kernel_fc2_reduce:
             raise ValueError(
                 "in_kernel_fc2_reduce knob selected without enable_in_kernel_fc2_reduce."
@@ -123,6 +121,8 @@ class MegaMoEBf16Nvfp4Inputs:
     fc2_weight_sf: torch.Tensor
     fc2_alpha: torch.Tensor
     combine_output: torch.Tensor
+    reduced_output: Optional[torch.Tensor] = None
+    staging_inputs: Optional[Tuple[torch.Tensor, torch.Tensor, torch.Tensor]] = None
 
 
 class MegaMoEBf16Nvfp4Frontend:
@@ -132,6 +132,8 @@ class MegaMoEBf16Nvfp4Frontend:
         self._config = config
         self._mega: Optional[_CompiledMega] = None
         self._reduce = None
+        self._staging_variants: dict[tuple[torch.dtype, bool], Callable] = {}
+        self._launch_inputs: Optional[MegaMoEBf16Nvfp4Inputs] = None
 
     @property
     def config(self) -> MegaMoEBf16Nvfp4Config:
@@ -152,12 +154,13 @@ class MegaMoEBf16Nvfp4Frontend:
                 f"unsupported BF16/NVFP4 MegaMoE knobs {knobs}: "
                 f"{tuner.describe_invalid_knobs(self.config, knobs, tuner.is_valid_bf16_nvfp4_for_config)}."
             )
-        # Clamp and reduction permission belong to the session, not the tuner.
+        # Numerical behavior belongs to the session, not the tuner.
         new_config = with_knobs(
             self.config,
             {
                 **knobs,
                 "gate_up_clamp": self.config.gate_up_clamp,
+                "apply_topk_in_fc1": self.config.apply_topk_in_fc1,
                 "enable_in_kernel_fc2_reduce": self.config.enable_in_kernel_fc2_reduce,
             },
         )
@@ -171,6 +174,8 @@ class MegaMoEBf16Nvfp4Frontend:
             ensure_not_capturing("workspace release (symmetric-heap free)")
             free_sym_tensor(self._mega.shared_workspace)
         self._mega = None
+        self._staging_variants.clear()
+        self._launch_inputs = None
 
     @staticmethod
     def _to_cute(
@@ -186,72 +191,153 @@ class MegaMoEBf16Nvfp4Frontend:
         )
 
     def _ensure_compiled(self, inputs: MegaMoEBf16Nvfp4Inputs) -> _CompiledMega:
-        # The frozen config changes only through the setters, which release
-        # the previous compilation and its workspace together.
-        if self._mega is not None:
-            return self._mega
+        # All input specializations share one collective workspace allocation.
+        if self._mega is None:
+            ensure_not_capturing("cute.compile + symmetric-heap allocation")
+            import cutlass
+            from .megamoe_kernel import Sm100W4A16MegaMoEKernel
 
-        ensure_not_capturing("cute.compile + symmetric-heap allocation")
-        import cutlass
+            c = self.config
+            cluster_size = c.cluster_shape_mnk[0] * c.cluster_shape_mnk[1]
+            sm_count = torch.cuda.get_device_properties(
+                torch.cuda.current_device()
+            ).multi_processor_count
+            max_active_clusters = max(1, sm_count // cluster_size)
+            kernel = Sm100W4A16MegaMoEKernel(
+                mma_tiler_mnk=c.mma_tiler_mnk,
+                cluster_shape_mnk=c.cluster_shape_mnk,
+                use_2cta_instrs=c.use_2cta_instrs,
+                group_hint=c.group_hint or max_active_clusters,
+                token_padding_block=c.mma_tiler_mnk[1],
+                load_balance_mode=c.load_balance_mode,
+                static_expert_shape=(
+                    c.num_experts_per_rank,
+                    2 * c.intermediate,
+                    c.hidden,
+                ),
+                force_static_sched=c.force_static_sched,
+                num_sched_stages=c.num_sched_stages,
+                ab_dtype=cutlass.BFloat16,
+                world_size=c.world_size,
+                num_topk=c.num_topk,
+                max_tokens_per_rank=c.num_tokens_per_rank,
+                hidden=c.hidden,
+                in_kernel_fc2_reduce=c.in_kernel_fc2_reduce,
+                token_back_mode=c.token_back_mode,
+                epi_flag_batch=c.epi_flag_batch,
+                flag_batch=c.flag_batch,
+                gate_up_clamp=c.gate_up_clamp,
+                apply_topk_in_fc1=c.apply_topk_in_fc1,
+            )
+            local_bytes, shared_bytes = kernel.get_workspace_sizes()
+            local_workspace = torch.zeros(local_bytes, dtype=torch.uint8, device="cuda")
+            shared_workspace = sym_zeros((shared_bytes,), torch.uint8)
+            symmetric_base, peer_offsets_list = _compute_peer_offsets(
+                shared_workspace, c.world_size
+            )
+            mega = _CompiledMega(
+                compiled=None,
+                kernel=kernel,
+                local_workspace=local_workspace,
+                shared_workspace=shared_workspace,
+                symmetric_base=symmetric_base,
+                peer_offsets_list=peer_offsets_list,
+            )
+            self._mega = mega
+        mega = self._mega
+        if inputs.staging_inputs is None:
+            if mega.compiled is None:
+                mega.compiled = self._compile(inputs, mega)
+        else:
+            key = self._staging_key(inputs.staging_inputs)
+            if key not in self._staging_variants:
+                self._staging_variants[key] = self._compile(inputs, mega, key)
+        return mega
+
+    def _warm_staging_variants(
+        self, inputs: Optional[MegaMoEBf16Nvfp4Inputs] = None
+    ) -> None:
+        inputs = self._launch_inputs if inputs is None else inputs
+        if inputs is None or inputs.staging_inputs is None:
+            return
+        # Public preparation covers first-use layouts in a serving graph;
+        # private autotune trials compile only the ABI they actually launch.
+        assert self._mega is not None
+        for dtype in (torch.int32, torch.int64):
+            for vector_copy in (False, True):
+                key = (dtype, vector_copy)
+                if key not in self._staging_variants:
+                    self._staging_variants[key] = self._compile(inputs, self._mega, key)
+
+    def _compile(
+        self,
+        inputs: MegaMoEBf16Nvfp4Inputs,
+        mega: _CompiledMega,
+        staging_key: Optional[tuple[torch.dtype, bool]] = None,
+    ):
+        ensure_not_capturing("MegaMoE input specialization cute.compile")
         import cutlass.cute as cute
-        from .megamoe_kernel import Sm100W4A16MegaMoEKernel
 
         c = self.config
-        cluster_size = c.cluster_shape_mnk[0] * c.cluster_shape_mnk[1]
         sm_count = torch.cuda.get_device_properties(
             torch.cuda.current_device()
         ).multi_processor_count
-        max_active_clusters = max(1, sm_count // cluster_size)
-        kernel = Sm100W4A16MegaMoEKernel(
-            mma_tiler_mnk=c.mma_tiler_mnk,
-            cluster_shape_mnk=c.cluster_shape_mnk,
-            use_2cta_instrs=c.use_2cta_instrs,
-            group_hint=c.group_hint or max_active_clusters,
-            token_padding_block=c.mma_tiler_mnk[1],
-            load_balance_mode=c.load_balance_mode,
-            static_expert_shape=(
-                c.num_experts_per_rank,
-                2 * c.intermediate,
-                c.hidden,
-            ),
-            force_static_sched=c.force_static_sched,
-            num_sched_stages=c.num_sched_stages,
-            ab_dtype=cutlass.BFloat16,
-            world_size=c.world_size,
-            num_topk=c.num_topk,
-            max_tokens_per_rank=c.num_tokens_per_rank,
-            hidden=c.hidden,
-            in_kernel_fc2_reduce=c.in_kernel_fc2_reduce,
-            token_back_mode=c.token_back_mode,
-            epi_flag_batch=c.epi_flag_batch,
-            flag_batch=c.flag_batch,
-            gate_up_clamp=c.gate_up_clamp,
-            apply_topk_in_fc1=c.apply_topk_in_fc1,
-        )
-        local_bytes, shared_bytes = kernel.get_workspace_sizes()
-        local_workspace = torch.zeros(local_bytes, dtype=torch.uint8, device="cuda")
-        shared_workspace = sym_zeros((shared_bytes,), torch.uint8)
-        symmetric_base, peer_offsets_list = _compute_peer_offsets(
-            shared_workspace, c.world_size
-        )
-        mega = _CompiledMega(
-            compiled=None,
-            kernel=kernel,
-            local_workspace=local_workspace,
-            shared_workspace=shared_workspace,
-            symmetric_base=symmetric_base,
-            peer_offsets_list=peer_offsets_list,
-        )
+        cluster_size = c.cluster_shape_mnk[0] * c.cluster_shape_mnk[1]
         kwargs = self._runtime_kwargs(inputs, mega)
-        kwargs["max_active_clusters"] = max_active_clusters
+        if staging_key is not None:
+            # Typed null pointers are compile descriptors, never launch inputs.
+            kwargs["staging_inputs"] = self._staging_args(None, staging_key)
+        kwargs["max_active_clusters"] = max(1, sm_count // cluster_size)
         # Start with 61440 registers per CTA; the kernel redistributes this
         # pool among the five warpgroup roles.
         kwargs["options"] = "--ptxas-options='-maxrregcount=96'"
         if c.enable_iket:
             kwargs["options"] += " iket"
-        mega.compiled = cute.compile(kernel, **kwargs)
-        self._mega = mega
-        return mega
+        return cute.compile(mega.kernel, **kwargs)
+
+    def _staging_key(self, sources) -> tuple[torch.dtype, bool]:
+        hidden, ids, _ = sources
+        vector_copy = (
+            hidden.stride() == (self.config.hidden, 1) and hidden.data_ptr() % 16 == 0
+        )
+        return ids.dtype, vector_copy
+
+    def _staging_args(self, sources, key):
+        import cutlass
+        from cutlass.cute.runtime import make_ptr, nullptr
+        from cutlass.cute.typing import AddressSpace
+
+        ids_dtype, vector_copy = key
+        dtypes = (
+            cutlass.BFloat16,
+            {torch.int32: cutlass.Int32, torch.int64: cutlass.Int64}[ids_dtype],
+            cutlass.Float32,
+        )
+        alignments = (16 if vector_copy else 2, dtypes[1].width // 8, 4)
+        args = [cutlass.Int32(0 if sources is None else sources[0].shape[0])]
+        for index, (dtype, alignment) in enumerate(
+            zip(dtypes, alignments, strict=True)
+        ):
+            tensor = None if sources is None else sources[index]
+            pointer = (
+                nullptr(dtype, AddressSpace.gmem, assumed_align=alignment)
+                if tensor is None
+                else make_ptr(
+                    dtype, tensor.data_ptr(), AddressSpace.gmem, assumed_align=alignment
+                )
+            )
+            stride = (
+                # None preserves this layout choice across the JIT boundary;
+                # an unannotated tuple of Python integers becomes runtime args.
+                None
+                if index == 0 and vector_copy
+                else tuple(
+                    cutlass.Int64(s)
+                    for s in ((0, 0) if tensor is None else tensor.stride())
+                )
+            )
+            args.append((pointer, stride))
+        return tuple(args)
 
     def _runtime_kwargs(
         self, inputs: MegaMoEBf16Nvfp4Inputs, mega: _CompiledMega
@@ -266,17 +352,34 @@ class MegaMoEBf16Nvfp4Frontend:
             rank_idx=c.rank,
             num_max_ranks=c.world_size,
         )
+        reduced_output = inputs.reduced_output
+        if reduced_output is not None:
+            # Live rows vary independently of workspace capacity, including zero.
+            reduced_output = self._to_cute(
+                reduced_output, static_layout=True
+            ).mark_compact_shape_dynamic(
+                mode=0, stride_order=reduced_output.dim_order(), divisibility=1
+            )
+        staging_inputs = (
+            None
+            if inputs.staging_inputs is None
+            else self._staging_args(
+                inputs.staging_inputs, self._staging_key(inputs.staging_inputs)
+            )
+        )
         return {
+            "staging_inputs": staging_inputs,
             "activation": self._to_cute(inputs.activation),
             "topk_idx": self._to_cute(inputs.topk_idx),
-            "topk_weights": self._to_cute(inputs.topk_weights),
+            "topk_weights": self._to_cute(inputs.topk_weights, static_layout=True),
             "fc1_weight": self._to_cute(inputs.fc1_weight),
             "fc1_weight_sf": self._to_cute(inputs.fc1_weight_sf),
             "fc1_alpha": self._to_cute(inputs.fc1_alpha, assumed_align=4),
             "fc2_weight": self._to_cute(inputs.fc2_weight),
             "fc2_weight_sf": self._to_cute(inputs.fc2_weight_sf),
             "fc2_alpha": self._to_cute(inputs.fc2_alpha, assumed_align=4),
-            "combine_output": self._to_cute(inputs.combine_output),
+            "combine_output": self._to_cute(inputs.combine_output, static_layout=True),
+            "reduced_output": reduced_output,
             "local_workspace": self._to_cute(mega.local_workspace, static_layout=True),
             "shared_workspace": self._to_cute(mega.shared_workspace),
             "peer_rank_ptr_mapper_host": mapper,
@@ -294,6 +397,12 @@ class MegaMoEBf16Nvfp4Frontend:
         self._validate(inputs, n)
         mega = self._ensure_compiled(inputs)
         key = (
+            tuple(
+                (t.data_ptr(), t.dtype, tuple(t.shape), t.stride())
+                for t in inputs.staging_inputs
+            )
+            if inputs.staging_inputs is not None
+            else None,
             inputs.activation.data_ptr(),
             inputs.topk_idx.data_ptr(),
             inputs.topk_weights.data_ptr(),
@@ -304,33 +413,56 @@ class MegaMoEBf16Nvfp4Frontend:
             inputs.fc2_weight_sf.data_ptr(),
             inputs.fc2_alpha.data_ptr(),
             inputs.combine_output.data_ptr(),
+            (
+                inputs.reduced_output.data_ptr(),
+                tuple(inputs.reduced_output.shape),
+                inputs.reduced_output.stride(),
+            )
+            if inputs.reduced_output is not None
+            else None,
             torch.cuda.current_stream().cuda_stream,
         )
         if mega.launch_key != key:
             mega.launch_kwargs = self._runtime_kwargs(inputs, mega)
             mega.launch_key = key
+            self._launch_inputs = inputs
         if self.config.in_kernel_fc2_reduce:
             inputs.combine_output.zero_()
-        mega.compiled(**mega.launch_kwargs)
+        compiled = (
+            mega.compiled
+            if inputs.staging_inputs is None
+            else self._staging_variants[self._staging_key(inputs.staging_inputs)]
+        )
+        compiled(**mega.launch_kwargs)
         if sync:
             torch.cuda.synchronize()
         return inputs.combine_output[:n]
 
     def make_launch_thunk(self, inputs: MegaMoEBf16Nvfp4Inputs) -> Callable[[], None]:
-        self._validate(inputs, inputs.activation.shape[0])
+        self._validate(
+            inputs,
+            inputs.reduced_output.shape[0]
+            if inputs.reduced_output is not None
+            else inputs.activation.shape[0],
+        )
         mega = self._ensure_compiled(inputs)
+        self._warm_staging_variants(inputs)
         kwargs = self._runtime_kwargs(inputs, mega)
-        compiled = mega.compiled
+        compiled = (
+            mega.compiled
+            if inputs.staging_inputs is None
+            else self._staging_variants[self._staging_key(inputs.staging_inputs)]
+        )
         if self.config.in_kernel_fc2_reduce:
 
-            def thunk():
-                inputs.combine_output.zero_()
+            def thunk(_inputs=inputs):
+                _inputs.combine_output.zero_()
                 compiled(**kwargs)
 
             return thunk
         else:
-
-            def thunk():
+            # The raw launch helper owns its scratch output through this closure.
+            def thunk(_inputs=inputs):
                 compiled(**kwargs)
 
             return thunk
@@ -406,9 +538,24 @@ class MegaMoEBf16Nvfp4Frontend:
             raise ValueError(
                 "combine_output must be CUDA BF16 with the expected shape."
             )
+        output = inputs.reduced_output
+        if c.in_kernel_fc2_reduce:
+            if output is not None:
+                raise ValueError("in_kernel_fc2_reduce does not use reduced_output.")
+        elif (
+            output is None
+            or output.shape != (num_tokens, c.hidden)
+            or output.dtype != torch.bfloat16
+            or output.device != inputs.activation.device
+            or not output.is_contiguous()
+        ):
+            raise ValueError(
+                "reduced_output must be contiguous BF16 on the activation device "
+                f"with shape ({num_tokens}, {c.hidden})."
+            )
 
     def reduce_topk(self, combined, scores, output):
-        """Apply FP32 routing scores after the BF16 FC2 cast, accumulating in FP32."""
+        """Combine BF16 FC2 partials in FP32, weighting if FC1 did not."""
         # Empty source ranks still execute the collective fused kernel, but
         # have no local rows to reduce and must not launch a zero-block grid.
         if output.shape[0] == 0:
@@ -430,7 +577,7 @@ class MegaMoEBf16Nvfp4Frontend:
             compact(combined),
             None,
             compact(output),
-            compact(scores),
+            None if self.config.apply_topk_in_fc1 else compact(scores),
             cuda.CUstream(torch.cuda.current_stream().cuda_stream),
         )
         if self._reduce is None:
@@ -463,6 +610,9 @@ class MegaMoEBf16Nvfp4SymmBuffer:
     _frontend: MegaMoEBf16Nvfp4Frontend
     _sym_roots: list[torch.Tensor] = field(default_factory=list)
     _destroyed: bool = False
+    _staging_inputs: Optional[Tuple[torch.Tensor, torch.Tensor, torch.Tensor]] = field(
+        default=None, repr=False
+    )
 
     @property
     def kernel_combine_output(self) -> torch.Tensor:
@@ -474,6 +624,7 @@ class MegaMoEBf16Nvfp4SymmBuffer:
 
     def destroy(self) -> None:
         if not self._destroyed:
+            self._staging_inputs = None
             self._frontend.release()
             for root in self._sym_roots:
                 free_sym_tensor(root)
@@ -496,6 +647,7 @@ def get_symm_buffer_for_bf16_nvfp4_mega_moe(
     gate_up_clamp: Optional[float] = None,
     activation_clamp: Optional[float] = None,
     enable_in_kernel_fc2_reduce: bool = False,
+    apply_topk_in_fc1: bool = False,
     fc1_alpha: torch.Tensor | int | float | None = None,
     fc2_alpha: torch.Tensor | int | float | None = None,
     token_back_mode: Optional[
@@ -526,6 +678,7 @@ def get_symm_buffer_for_bf16_nvfp4_mega_moe(
             max_tokens=num_max_tokens,
             combine_dtype="bf16",
             enable_in_kernel_fc2_reduce=enable_in_kernel_fc2_reduce,
+            apply_topk_in_fc1=apply_topk_in_fc1,
         )
     else:
         resolved_knobs = {}
@@ -535,6 +688,7 @@ def get_symm_buffer_for_bf16_nvfp4_mega_moe(
         **({"token_back_mode": token_back_mode} if token_back_mode is not None else {}),
         **(knobs or {}),
         "enable_in_kernel_fc2_reduce": enable_in_kernel_fc2_reduce,
+        "apply_topk_in_fc1": apply_topk_in_fc1,
     }
     cfg = MegaMoEBf16Nvfp4Config(
         rank=rank,
@@ -603,17 +757,6 @@ def bf16_nvfp4_mega_moe(
         raise ValueError(f"y must be bfloat16 with shape ({n}, {symm_buffer.hidden}).")
     if not y.is_cuda or not y.is_contiguous():
         raise ValueError("y must be a contiguous CUDA tensor.")
-    if (
-        n > 0
-        and not symm_buffer._frontend.config.in_kernel_fc2_reduce
-        and symm_buffer._frontend._reduce is None
-        and torch.cuda.is_current_stream_capturing()
-    ):
-        raise RuntimeError(
-            "W4A16 top-k reducer cannot compile during CUDA graph capture; "
-            "call warmup() with its default batch on all EP ranks before "
-            "capturing a nonempty forward."
-        )
     clamp = resolve_gate_up_clamp(
         gate_up_clamp=gate_up_clamp, activation_clamp=activation_clamp
     )
@@ -631,13 +774,13 @@ def bf16_nvfp4_mega_moe(
             transformed_l2[1],
             symm_buffer.fc2_alpha,
             symm_buffer.kernel_combine_output,
+            None if symm_buffer._frontend.config.in_kernel_fc2_reduce else y,
+            symm_buffer._staging_inputs,
         ),
         num_tokens=n,
     )
     if symm_buffer._frontend.config.in_kernel_fc2_reduce:
         y.copy_(result[:, 0])
-    else:
-        symm_buffer._frontend.reduce_topk(result, symm_buffer.topk_weights[:n], y)
     if sync:
         torch.cuda.synchronize()
 
@@ -647,6 +790,15 @@ def bf16_nvfp4_mega_launch_thunk(
     transformed_l2: TransformedWeights,
     symm_buffer: MegaMoEBf16Nvfp4SymmBuffer,
 ) -> Callable[[], None]:
+    reduced_output = None
+    if not symm_buffer._frontend.config.in_kernel_fc2_reduce:
+        ensure_not_capturing("launch thunk output allocation")
+        # Keep this raw-core thunk compute-only while sharing the Tensor signature.
+        reduced_output = torch.empty(
+            (0, symm_buffer.hidden),
+            dtype=torch.bfloat16,
+            device=symm_buffer.x.device,
+        )
     return symm_buffer._frontend.make_launch_thunk(
         MegaMoEBf16Nvfp4Inputs(
             symm_buffer.x,
@@ -659,6 +811,7 @@ def bf16_nvfp4_mega_launch_thunk(
             transformed_l2[1],
             symm_buffer.fc2_alpha,
             symm_buffer.kernel_combine_output,
+            reduced_output,
         )
     )
 

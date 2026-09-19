@@ -9,6 +9,7 @@ dynamic routed-token widths with M128/M256, N64/N128 and K256 allocation.
 Static and atomic schedulers fuse BF16 dispatch, both GEMMs, and combine.
 """
 
+import os
 from typing import Any, List, Optional, Tuple
 
 import cutlass
@@ -28,16 +29,20 @@ from .workspace import _RegionSpec, _layout_regions, _round_up
 from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import get_cutedsl_target_arch
 from cutlass.cute.typing import AddressSpace
 from cutlass.cutlass_dsl import Int64
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import CombineFormat, TokenSrcMetadata
+from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    CombineFormat,
+    TokenSrcMetadata,
+)
 from .custom_ext import W4A16Fc12SchedExtension
 from .fc1_fc2_fuse_sched import BlockPhase, MoEFusedFc12SchedulerParams
 from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import spin_wait
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import TokenInPullTokenBackPush
+from .token_comm import W4A16TokenComm
 from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
     TokenCommArgs as ExtractedTokenCommArgs,
 )
 
 from .epilogue import W4A16Epilogue, W4A16EpiArgs
+from .topk_reduce import Bf16TopkReduce
 from . import dynamic_mainloop
 
 # Communication ABI: one packed i64 provenance record and two signal slots.
@@ -142,8 +147,7 @@ class Sm100W4A16MegaMoEKernel:
             raise ValueError("W4A16 requires forward 2Dx3D scheduler records.")
         if load_balance_mode not in ("static", "atomic_counter"):
             raise ValueError("Unsupported W4A16 load_balance_mode.")
-        if apply_topk_in_fc1:
-            raise ValueError("W4A16 MegaMoE applies routing weights after FC2.")
+        self.apply_topk_in_fc1 = apply_topk_in_fc1
         if token_back_mode not in ("epi_warps", "reuse_dispatch_warps"):
             raise ValueError(
                 "W4A16 supports epi_warps or reuse_dispatch_warps token return."
@@ -208,6 +212,7 @@ class Sm100W4A16MegaMoEKernel:
         self.num_topk = num_topk
         self.max_tokens_per_rank = max_tokens_per_rank
         self.hidden = hidden
+        self.topk_reduce = Bf16TopkReduce(hidden, num_topk)
         self.num_experts_per_rank = static_expert_shape[0]
         self.num_total_experts = world_size * self.num_experts_per_rank
         self.intermediate_gateup = gateup
@@ -241,7 +246,7 @@ class Sm100W4A16MegaMoEKernel:
         fc2_publishes_per_token_cluster_tile = (
             (hidden + cluster_fc2_tile_hidden - 1) // cluster_fc2_tile_hidden
         ) * cluster_shape_mnk[0]
-        self.token_comm = TokenInPullTokenBackPush(
+        self.token_comm = W4A16TokenComm(
             world_size=world_size,
             num_topk=num_topk,
             num_experts_per_rank=self.num_experts_per_rank,
@@ -275,7 +280,7 @@ class Sm100W4A16MegaMoEKernel:
         self._local_region_by_name = {r.name: r for r in self._local_region_specs}
         self._shared_region_by_name = {r.name: r for r in self._shared_region_specs}
         local_leading = self._local_offsets["l1_token_buffer"]
-        shared_leading = self._shared_offsets["src_token_topk_idx"]
+        shared_leading = self._shared_offsets["expert_recv_count_bank1"]
         self.local_zero_i32_count = local_leading // 4
         self.shared_zero_i32_count = shared_leading // 4
 
@@ -290,6 +295,7 @@ class Sm100W4A16MegaMoEKernel:
             f"_clamp{self.gate_up_clamp}_ep{self.world_size}_topk{self.num_topk}"
             f"_tokens{self.max_tokens_per_rank}_flag{self.flag_batch}"
             + ("_ikr" if self.in_kernel_fc2_reduce else "")
+            + ("_topk_fc1" if self.apply_topk_in_fc1 else "")
         )
 
     def _make_mixed(self, fragment_size, output_tensor, raw_stages, activation_stages):
@@ -418,6 +424,8 @@ class Sm100W4A16MegaMoEKernel:
         fc2_alpha: cute.Tensor,
         # Combine destination (peer write target via the epilogue Fc2OutputDest).
         combine_output: cute.Tensor,  # (T, 1 if in-kernel reduce else num_topk, H) BF16
+        reduced_output: Optional[cute.Tensor],  # (active local T, H) BF16
+        staging_inputs,  # optional source bundle; hidden strides=None means contiguous
         # Opaque workspaces.
         local_workspace: cute.Tensor,  # (local_ws_bytes,) Uint8
         shared_workspace: cute.Tensor,  # (shared_ws_bytes,) Uint8
@@ -600,6 +608,30 @@ class Sm100W4A16MegaMoEKernel:
             sm_count=sm_count,
         )
 
+        if cutlass.const_expr(staging_inputs is not None):
+            live_rows, hidden_source, ids_source, scores_source = staging_inputs
+            staging_inputs = (
+                cute.make_tensor(
+                    hidden_source[0],
+                    cute.make_layout(
+                        (live_rows, self.hidden),
+                        stride=(self.hidden, 1)
+                        if cutlass.const_expr(hidden_source[1] is None)
+                        else hidden_source[1],
+                    ),
+                ),
+                cute.make_tensor(
+                    ids_source[0],
+                    cute.make_layout((live_rows, self.num_topk), stride=ids_source[1]),
+                ),
+                cute.make_tensor(
+                    scores_source[0],
+                    cute.make_layout(
+                        (live_rows, self.num_topk), stride=scores_source[1]
+                    ),
+                ),
+            )
+
         self._launch_fc12(
             activation=l1_token_buffer_bf16,
             fc1_weight=fc1_weight,
@@ -610,6 +642,9 @@ class Sm100W4A16MegaMoEKernel:
             fc2_weight=fc2_weight,
             fc2_weight_sf=fc2_weight_sf,
             fc2_output=fc2_output_target,
+            reduced_output=reduced_output,
+            staging_inputs=staging_inputs,
+            recv_counter_bank=self._view_local(local_workspace, "recv_counter_bank"),
             fc1_done_counter=fc1_done_counter,
             max_active_clusters=max_active_clusters,
             stream=stream,
@@ -630,6 +665,9 @@ class Sm100W4A16MegaMoEKernel:
         fc2_weight,
         fc2_weight_sf,
         fc2_output,
+        reduced_output: Optional[cute.Tensor],
+        staging_inputs: Optional[Tuple[cute.Tensor, cute.Tensor, cute.Tensor]],
+        recv_counter_bank: cute.Tensor,
         fc1_done_counter,
         max_active_clusters,
         stream,
@@ -704,6 +742,7 @@ class Sm100W4A16MegaMoEKernel:
             cluster_shape_mn=self.cluster_shape_mn,
             token_back_by_dispatch=self.token_back_by_dispatch,
             in_kernel_fc2_reduce=self.in_kernel_fc2_reduce,
+            apply_topk_in_fc1=self.apply_topk_in_fc1,
             epi_flag_batch=self.epi_flag_batch,
             static_expert_shape=self.static_expert_shape,
             gate_up_clamp=self.gate_up_clamp,
@@ -801,6 +840,9 @@ class Sm100W4A16MegaMoEKernel:
             mix.smem_layout_a_transform,
             token_comm_args,
             fc2_alpha,
+            reduced_output,
+            staging_inputs,
+            recv_counter_bank,
         ).launch(
             grid=grid,
             block=(self.threads_per_cta, 1, 1),
@@ -942,6 +984,32 @@ class Sm100W4A16MegaMoEKernel:
             state.advance()
         return state
 
+    @cute.jit
+    def _prepare_reduce_worker(
+        self, token_comm_args, reduced_output, score_reg, reduce_thread
+    ):
+        workers_per_cta = self.threads_per_cta - self.token_comm.num_dispatch_threads
+        # Decode groups own the first strips; each WG spans the grid.
+        worker_idx = (
+            (reduce_thread // 128) * token_comm_args.sm_count
+            + self.token_comm._cta_linear_id()
+        ) * 128 + reduce_thread % 128
+        worker_stride = token_comm_args.sm_count * workers_per_cta
+        num_workers = reduced_output.shape[0] * self.topk_reduce.hidden_tiles
+        token_idx = cutlass.Int32(0)
+        hidden_tile_idx = cutlass.Int32(0)
+        # Dispatch publishes local scores before the scheduler releases work.
+        # Preparation never reads still-pending remote combine writes.
+        if worker_idx < num_workers:
+            token_idx, hidden_tile_idx = self.topk_reduce._prepare_bf16_worker(
+                None
+                if cutlass.const_expr(self.apply_topk_in_fc1)
+                else token_comm_args.input_topk_weights_buffer,
+                score_reg,
+                worker_idx,
+            )
+        return worker_idx, worker_stride, num_workers, token_idx, hidden_tile_idx
+
     @cute.kernel
     def kernel(
         self,
@@ -971,10 +1039,38 @@ class Sm100W4A16MegaMoEKernel:
         transform_layout,
         token_comm_args,
         fc2_alpha,
+        reduced_output: Optional[cute.Tensor],
+        staging_inputs: Optional[Tuple[cute.Tensor, cute.Tensor, cute.Tensor]],
+        recv_counter_bank: cute.Tensor,
     ):
         mix = self.mixed_fc1
         tidx = cute.arch.thread_idx()[0]
         warp = cute.arch.make_warp_uniform(cute.arch.warp_idx())
+        # Snapshot before any dispatch/scheduler use. The bank word changes
+        # only after all producers retire; these views retain this generation.
+        bank = recv_counter_bank[0]
+        count_offset = bank * (self.shared_zero_i32_count // 2)
+        token_comm_args.expert_recv_count = cute.make_tensor(
+            token_comm_args.expert_recv_count.iterator + count_offset,
+            token_comm_args.expert_recv_count.layout,
+        )
+        token_comm_args.expert_recv_count_sum = cute.make_tensor(
+            token_comm_args.expert_recv_count_sum.iterator + count_offset,
+            token_comm_args.expert_recv_count_sum.layout,
+        )
+        clear_offset = 2 * count_offset
+        if cutlass.const_expr(os.environ.get("MEGA_USE_NCU", "0") != "1"):
+            # Reclaim the previous bank after input publication. Kernel replay
+            # instead retains the active-bank tail reset for peer counters.
+            clear_offset = self.shared_zero_i32_count - clear_offset
+        token_comm_args.shared_zero_prefix = cute.make_tensor(
+            token_comm_args.shared_zero_prefix.iterator + clear_offset,
+            token_comm_args.shared_zero_prefix.layout,
+        )
+        sched_params.expert_token_sizes = cute.make_tensor(
+            sched_params.expert_token_sizes.iterator + 2 * count_offset,
+            sched_params.expert_token_sizes.layout,
+        )
         cta_v_size = cute.size(mma.thr_id.shape)
         cta_v = cute.arch.block_idx()[0] % cta_v_size
         leader = cta_v == 0
@@ -1060,7 +1156,6 @@ class Sm100W4A16MegaMoEKernel:
             num_consumer_threads=32 * (7 + self.num_transform_warps),
             ext=ext,
         )
-        consumer = scheduler.make_consumer()
         early_init = self.load_balance_mode == "atomic_counter"
         if cutlass.const_expr(early_init):
             scheduler.internal_init(warp_idx=warp, sched_warp_id=7)
@@ -1107,7 +1202,9 @@ class Sm100W4A16MegaMoEKernel:
             scheduler.publish_work()
             scheduler.produce_tail()
 
+        # Each role owns its scheduler state, including mutations inside jit calls.
         if warp == 5:
+            consumer = scheduler.make_consumer()
             state = pipeline.make_pipeline_state(
                 pipeline.PipelineUserType.Producer, mix.num_load2trans_stage
             )
@@ -1151,6 +1248,7 @@ class Sm100W4A16MegaMoEKernel:
             raw_pipe.producer_tail(state)
 
         if warp == 6:
+            consumer = scheduler.make_consumer()
             state = pipeline.make_pipeline_state(
                 pipeline.PipelineUserType.Producer, self.num_activation_stages
             )
@@ -1196,7 +1294,123 @@ class Sm100W4A16MegaMoEKernel:
                 work = consumer.consume_work()
             activation_pipe.producer_tail(state)
 
+        if warp == 4:
+            consumer = scheduler.make_consumer()
+            acc = cute.make_tensor(tmem.retrieve_ptr(cutlass.Float32), acc_fake.layout)
+            # Match the inherited transform destination after both acc stages.
+            a_ptr = cute.recast_ptr(
+                acc.iterator + mix.num_acc_tmem_cols, dtype=cutlass.BFloat16
+            )
+            a_frag = cute.make_tensor(
+                a_ptr, mma.make_fragment_A(transform_layout.outer).layout
+            )
+            b_frag = mma.make_fragment_B(s_b)
+            a_state = pipeline.make_pipeline_state(
+                pipeline.PipelineUserType.Consumer, mix.num_trans2mma_stage
+            )
+            b_state = pipeline.make_pipeline_state(
+                pipeline.PipelineUserType.Consumer, self.num_activation_stages
+            )
+            acc_state = pipeline.make_pipeline_state(
+                pipeline.PipelineUserType.Producer, 2
+            )
+            work = consumer.consume_work()
+            while work.is_valid_tile:
+                k_count = cutlass.Int32(self._fc2_k_tiles)
+                if work.phase == cutlass.Int32(BlockPhase.Linear1):
+                    k_count = cutlass.Int32(self._fc1_k_tiles)
+                a_state.reset_count()
+                b_state.reset_count()
+                if leader:
+                    acc_pipe.producer_acquire(acc_state)
+                    tile_acc = acc[(None, None, None, acc_state.index)]
+                    for k_tile in cutlass.range(k_count, unroll=1):
+                        transform_pipe.consumer_wait(a_state)
+                        activation_pipe.consumer_wait(b_state)
+                        dynamic_mainloop.issue_dynamic_bf16_mma_tile(
+                            acc_tensor=tile_acc,
+                            a_frag_tile=a_frag[(None, None, None, a_state.index)],
+                            b_frag_tile=b_frag[(None, None, None, b_state.index)],
+                            k_tile_idx=k_tile,
+                            valid_tokens_in_tile=work.valid_tokens_in_cta_tile,
+                            mma_tiler_mnk=self.mma_tiler,
+                        )
+                        transform_pipe.consumer_release(a_state)
+                        activation_pipe.consumer_release(b_state)
+                        a_state.advance()
+                        b_state.advance()
+                    acc_pipe.producer_commit(acc_state)
+                acc_state.advance()
+                work = consumer.consume_work()
+            acc_pipe.producer_tail(acc_state)
+
+        if warp < 4:
+            consumer = scheduler.make_consumer()
+            cute.arch.setmaxregister_increase(144)
+            self.epilogue.run(
+                tmem_ptr=tmem.retrieve_ptr(cutlass.Float32),
+                acc_pipeline=acc_pipe,
+                sched_consumer=consumer,
+                sched_ext=ext,
+                fc1_output=fc1_output,
+                fc2_output=fc2_output,
+                fc1_done_counter=fc1_done,
+                tidx=tidx,
+                optional_epi_args=W4A16EpiArgs(
+                    fc1_alpha=fc1_alpha,
+                    fc2_alpha=fc2_alpha,
+                ),
+                token_comm_args=token_comm_args,
+            )
+            cute.arch.fence_acq_rel_sys()
+            tmem.relinquish_alloc_permit()
+            tmem.free(tmem.retrieve_ptr(cutlass.Float32), 512)
+
+        if warp >= 8 and warp < 12:
+            cute.arch.setmaxregister_decrease(64)
+            if cutlass.const_expr(staging_inputs is not None):
+                self.token_comm.stage_inputs(
+                    staging_inputs[0],
+                    staging_inputs[1],
+                    staging_inputs[2],
+                    token_comm_args,
+                    warp_idx=warp,
+                    lane_idx=cute.arch.lane_idx(),
+                )
+            self.token_comm.dispatch_warp_body(
+                token_comm_args,
+                comm_storage,
+                warp_idx=warp,
+                lane_idx=cute.arch.lane_idx(),
+                tidx=tidx,
+            )
+            if cutlass.const_expr(os.environ.get("MEGA_USE_NCU", "0") != "1"):
+                # Input publication retires previous-bank readers on every
+                # rank. The existing drain publishes these clears before the
+                # next invocation can write this bank, overlapping live GEMMs.
+                self.token_comm.tail_reset_counters(
+                    token_comm_args,
+                    token_comm_args.shared_zero_prefix,
+                    cta_linear_id=self.token_comm._cta_linear_id(),
+                    local_warp_idx=warp - self.token_comm.dispatch_warp_start,
+                    lane_idx=cute.arch.lane_idx(),
+                )
+        # Keep combine state out of the other compute roles' live ranges.
+        if cutlass.const_expr(
+            not self.in_kernel_fc2_reduce and reduced_output is not None
+        ):
+            score_reg = None
+            if cutlass.const_expr(not self.apply_topk_in_fc1):
+                score_reg = cute.make_rmem_tensor(
+                    (self.num_topk,), token_comm_args.input_topk_weights_buffer.dtype
+                )
+            worker_idx = cutlass.Int32(0)
+            worker_stride = cutlass.Int32(0)
+            num_workers = cutlass.Int32(0)
+            token_idx = cutlass.Int32(0)
+            hidden_tile_idx = cutlass.Int32(0)
         if warp >= 12:
+            consumer = scheduler.make_consumer()
             # Both decode groups retain their initial 96-register allocation.
             # Control80 and dispatch64 donate exactly what epilogue144 needs:
             # 128*(144+80+64+96+96) = 640*96 = 61440 registers.
@@ -1270,90 +1484,95 @@ class Sm100W4A16MegaMoEKernel:
                         cutlass.Int32(self._fc2_k_tiles),
                     )
                 work = consumer.consume_work()
+            if cutlass.const_expr(
+                not self.in_kernel_fc2_reduce and reduced_output is not None
+            ):
+                # Prepare while the final MMA may still be consuming weights.
+                (
+                    worker_idx,
+                    worker_stride,
+                    num_workers,
+                    token_idx,
+                    hidden_tile_idx,
+                ) = self._prepare_reduce_worker(
+                    token_comm_args,
+                    reduced_output,
+                    score_reg,
+                    tidx - 32 * self.transform_warp_id[0],
+                )
             transform_pipe.producer_tail(transform_state)
 
-        if warp == 4:
-            acc = cute.make_tensor(tmem.retrieve_ptr(cutlass.Float32), acc_fake.layout)
-            # Match the inherited transform destination after both acc stages.
-            a_ptr = cute.recast_ptr(
-                acc.iterator + mix.num_acc_tmem_cols, dtype=cutlass.BFloat16
-            )
-            a_frag = cute.make_tensor(
-                a_ptr, mma.make_fragment_A(transform_layout.outer).layout
-            )
-            b_frag = mma.make_fragment_B(s_b)
-            a_state = pipeline.make_pipeline_state(
-                pipeline.PipelineUserType.Consumer, mix.num_trans2mma_stage
-            )
-            b_state = pipeline.make_pipeline_state(
-                pipeline.PipelineUserType.Consumer, self.num_activation_stages
-            )
-            acc_state = pipeline.make_pipeline_state(
-                pipeline.PipelineUserType.Producer, 2
-            )
-            work = consumer.consume_work()
-            while work.is_valid_tile:
-                k_count = cutlass.Int32(self._fc2_k_tiles)
-                if work.phase == cutlass.Int32(BlockPhase.Linear1):
-                    k_count = cutlass.Int32(self._fc1_k_tiles)
-                a_state.reset_count()
-                b_state.reset_count()
-                if leader:
-                    acc_pipe.producer_acquire(acc_state)
-                    tile_acc = acc[(None, None, None, acc_state.index)]
-                    for k_tile in cutlass.range(k_count, unroll=1):
-                        transform_pipe.consumer_wait(a_state)
-                        activation_pipe.consumer_wait(b_state)
-                        dynamic_mainloop.issue_dynamic_bf16_mma_tile(
-                            acc_tensor=tile_acc,
-                            a_frag_tile=a_frag[(None, None, None, a_state.index)],
-                            b_frag_tile=b_frag[(None, None, None, b_state.index)],
-                            k_tile_idx=k_tile,
-                            valid_tokens_in_tile=work.valid_tokens_in_cta_tile,
-                            mma_tiler_mnk=self.mma_tiler,
-                        )
-                        transform_pipe.consumer_release(a_state)
-                        activation_pipe.consumer_release(b_state)
-                        a_state.advance()
-                        b_state.advance()
-                    acc_pipe.producer_commit(acc_state)
-                acc_state.advance()
-                work = consumer.consume_work()
-            acc_pipe.producer_tail(acc_state)
-
-        if warp < 4:
-            cute.arch.setmaxregister_increase(144)
-            self.epilogue.run(
-                tmem_ptr=tmem.retrieve_ptr(cutlass.Float32),
-                acc_pipeline=acc_pipe,
-                sched_consumer=consumer,
-                sched_ext=ext,
-                fc1_output=fc1_output,
-                fc2_output=fc2_output,
-                fc1_done_counter=fc1_done,
-                tidx=tidx,
-                optional_epi_args=W4A16EpiArgs(
-                    fc1_alpha=fc1_alpha,
-                    fc2_alpha=fc2_alpha,
-                ),
-                token_comm_args=token_comm_args,
-            )
-            cute.arch.fence_acq_rel_sys()
-            tmem.relinquish_alloc_permit()
-            tmem.free(tmem.retrieve_ptr(cutlass.Float32), 512)
-
-        if warp >= 8 and warp < 12:
-            cute.arch.setmaxregister_decrease(64)
-            self.token_comm.dispatch_warp_body(
-                token_comm_args,
-                comm_storage,
-                warp_idx=warp,
-                lane_idx=cute.arch.lane_idx(),
-                tidx=tidx,
-            )
-        self.token_comm.kernel_tail(
-            token_comm_args, warp_idx=warp, lane_idx=cute.arch.lane_idx(), tidx=tidx
+        tail_barrier = pipeline.NamedBarrier(
+            barrier_id=self.token_comm.kernel_tail_named_barrier_id,
+            num_threads=self.token_comm.kernel_tail_threads,
         )
+        tail_barrier.arrive_and_wait()
+        self.token_comm.kernel_tail_drain(
+            token_comm_args,
+            warp_idx=warp,
+            lane_idx=cute.arch.lane_idx(),
+        )
+        if cutlass.const_expr(
+            not self.in_kernel_fc2_reduce and reduced_output is not None
+        ):
+            if warp < 8:
+                # Other retired roles prepare while dispatch completes the drain.
+                (
+                    worker_idx,
+                    worker_stride,
+                    num_workers,
+                    token_idx,
+                    hidden_tile_idx,
+                ) = self._prepare_reduce_worker(
+                    token_comm_args,
+                    reduced_output,
+                    score_reg,
+                    tidx + 32 * self.num_transform_warps,
+                )
+            # bar.sync is aligned: every role must execute one common site.
+            tail_barrier.arrive_and_wait()
+            if warp < 8 or warp >= 12:
+                combine = cute.recast_tensor(
+                    token_comm_args.combine_output, cutlass.BFloat16
+                )
+                while worker_idx < num_workers:
+                    self.topk_reduce._reduce_bf16_worker(
+                        combine,
+                        None
+                        if cutlass.const_expr(self.apply_topk_in_fc1)
+                        else token_comm_args.input_topk_weights_buffer,
+                        reduced_output,
+                        token_idx,
+                        hidden_tile_idx,
+                        score_reg,
+                    )
+                    worker_idx += worker_stride
+                    if worker_idx < num_workers:
+                        token_idx, hidden_tile_idx = (
+                            self.topk_reduce._prepare_bf16_worker(
+                                None
+                                if cutlass.const_expr(self.apply_topk_in_fc1)
+                                else token_comm_args.input_topk_weights_buffer,
+                                score_reg,
+                                worker_idx,
+                            )
+                        )
+            else:
+                self.token_comm.kernel_tail_cleanup(
+                    token_comm_args,
+                    warp_idx=warp,
+                    lane_idx=cute.arch.lane_idx(),
+                )
+        else:
+            self.token_comm.kernel_tail_cleanup(
+                token_comm_args, warp_idx=warp, lane_idx=cute.arch.lane_idx()
+            )
+        if (
+            self.token_comm._cta_linear_id() == 0
+            and warp == self.token_comm.dispatch_warp_start
+            and cute.arch.lane_idx() == 0
+        ):
+            recv_counter_bank[0] = bank ^ cutlass.Int32(1)
 
     def _pool_shapes(self) -> Tuple[int, int]:
         # Every source token may select every local expert up to top-k. Each
@@ -1457,6 +1676,7 @@ class Sm100W4A16MegaMoEKernel:
                 (1,),
                 16,
             ),
+            _RegionSpec("recv_counter_bank", cutlass.Int32, (1,), 16),
             _RegionSpec(
                 "l1_topk_weights_buffer",
                 cutlass.Float32,
@@ -1498,8 +1718,8 @@ class Sm100W4A16MegaMoEKernel:
 
         max_slot = max_tokens_per_rank * num_topk
 
-        # Shared counter prefix is bulk-zeroed between tail barriers; keep
-        # src_token_topk_idx as the first data region used to derive the prefix.
+        # Two equally aligned counter banks. Normal launches reclaim the
+        # previous bank while computing; the next launch publishes to it.
         return [
             _RegionSpec(
                 "expert_recv_count",
@@ -1509,6 +1729,18 @@ class Sm100W4A16MegaMoEKernel:
             ),
             _RegionSpec(
                 "expert_recv_count_sum",
+                cutlass.Int64,
+                (num_experts_per_rank,),
+                16,
+            ),
+            _RegionSpec(
+                "expert_recv_count_bank1",
+                cutlass.Int64,
+                (world_size, num_experts_per_rank),
+                16,
+            ),
+            _RegionSpec(
+                "expert_recv_count_sum_bank1",
                 cutlass.Int64,
                 (num_experts_per_rank,),
                 16,

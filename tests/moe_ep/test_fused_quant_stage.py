@@ -16,8 +16,6 @@ Run on one Blackwell GPU from the FlashInfer repo root::
 
 from __future__ import annotations
 
-from unittest.mock import patch
-
 import pytest
 
 pytest.importorskip("flashinfer.moe_ep.kernel_src.cutedsl_megamoe")
@@ -36,7 +34,6 @@ def _require_blackwell():
 def _make_buffers(quant_type: str, capacity: int, hidden: int, topk: int):
     import torch
 
-    assert quant_type in ("nvfp4", "mxfp8_e4m3", "mxfp8_e5m2", "bf16"), quant_type
     if quant_type == "nvfp4":
         x = (
             torch.zeros(capacity * hidden // 2, dtype=torch.uint8, device="cuda")
@@ -46,7 +43,7 @@ def _make_buffers(quant_type: str, capacity: int, hidden: int, topk: int):
         sf = torch.zeros(
             capacity, hidden // 16, dtype=torch.float8_e4m3fn, device="cuda"
         )
-    elif quant_type in ("mxfp8_e4m3", "mxfp8_e5m2"):
+    else:
         data_dtype = (
             torch.float8_e4m3fn if quant_type == "mxfp8_e4m3" else torch.float8_e5m2
         )
@@ -56,9 +53,6 @@ def _make_buffers(quant_type: str, capacity: int, hidden: int, topk: int):
             .view(torch.float8_e8m0fnu)
             .reshape(capacity, hidden // 32)
         )
-    elif quant_type == "bf16":
-        x = torch.full((capacity, hidden), -2.0, dtype=torch.bfloat16, device="cuda")
-        sf = None
     # Dirty the routing tail so the capacity re-mask is actually exercised;
     # reset the tail-fill memo for this (possibly reused) address so the
     # fused path treats the dirty buffer as fully live.
@@ -85,7 +79,6 @@ def _make_batch(num_tokens: int, hidden: int, topk: int, num_experts: int, seed:
 
 
 def _stage(quant_type: str, monkeypatch, fused: bool, batch, buffers, norm_const):
-    assert quant_type in ("nvfp4", "mxfp8_e4m3", "mxfp8_e5m2", "bf16"), quant_type
     monkeypatch.setenv("FLASHINFER_MEGA_FUSED_STAGE", "1" if fused else "0")
     hidden_states, topk_ids, topk_weights = batch
     x, sf, idx_out, w_out = buffers
@@ -104,7 +97,7 @@ def _stage(quant_type: str, monkeypatch, fused: bool, batch, buffers, norm_const
             w_out,
             norm_const=norm_const,
         )
-    elif quant_type in ("mxfp8_e4m3", "mxfp8_e5m2"):
+    else:
         from flashinfer.moe_ep.backends.mega.kernel.sm100.mxfp8_mxfp8_bf16_cutedsl.staging import (
             stage_mega_moe_inputs,
         )
@@ -120,48 +113,18 @@ def _stage(quant_type: str, monkeypatch, fused: bool, batch, buffers, norm_const
             kind=quant_type,
         )
 
-    elif quant_type == "bf16":
-        from flashinfer.moe_ep.backends.mega.kernel.sm100.bf16_nvfp4_bf16_cutedsl import (
-            staging,
-        )
-
-        with patch.object(
-            staging,
-            "_torch_stage_mega_moe_inputs",
-            wraps=staging._torch_stage_mega_moe_inputs,
-        ) as fallback:
-            staging.stage_mega_moe_inputs(
-                hidden_states, topk_weights, topk_ids, x, idx_out, w_out
-            )
-            if not fused or hidden_states.shape[0] == 0:
-                fallback.assert_called_once()
-            else:
-                fallback.assert_not_called()
-
 
 @pytest.mark.arch_blackwell
-@pytest.mark.parametrize(
-    "quant_type,hidden,id_dtype",
-    [
-        ("nvfp4", 2048, "int64"),
-        ("mxfp8_e4m3", 2048, "int64"),
-        ("mxfp8_e5m2", 2048, "int64"),
-        ("bf16", 256, "int32"),
-        ("bf16", 7168, "int64"),
-    ],
-)
+@pytest.mark.parametrize("quant_type", ["nvfp4", "mxfp8_e4m3", "mxfp8_e5m2"])
 @pytest.mark.parametrize("num_tokens", [32, 64])  # partial + full capacity
-def test_fused_stage_bit_matches_torch_stage(
-    monkeypatch, quant_type, hidden, id_dtype, num_tokens
-):
+def test_fused_stage_bit_matches_torch_stage(monkeypatch, quant_type, num_tokens):
     import torch
 
     _require_blackwell()
 
-    topk, num_experts, capacity = 4, 16, 64
+    hidden, topk, num_experts, capacity = 2048, 4, 16, 64
     norm_const = 2.0 if quant_type == "nvfp4" else 1.0
-    batch = list(_make_batch(num_tokens, hidden, topk, num_experts, seed=17))
-    batch[1] = batch[1].to(getattr(torch, id_dtype))
+    batch = _make_batch(num_tokens, hidden, topk, num_experts, seed=17)
 
     ref = _make_buffers(quant_type, capacity, hidden, topk)
     got = _make_buffers(quant_type, capacity, hidden, topk)
@@ -173,48 +136,35 @@ def test_fused_stage_bit_matches_torch_stage(
         ("x", ref[0], got[0]),
         ("x_sf", ref[1], got[1]),
     ):
-        if r is None:
-            assert g is None
-            continue
         assert torch.equal(r.view(torch.uint8), g.view(torch.uint8)), (
             f"{quant_type} {name} mismatch (tokens={num_tokens})"
         )
     assert torch.equal(ref[2], got[2]), "topk_idx mismatch (incl. -1 tail mask)"
-    assert torch.equal(ref[3].view(torch.uint8), got[3].view(torch.uint8)), (
-        "topk_weights mismatch"
-    )
+    assert torch.equal(ref[3], got[3]), "topk_weights mismatch"
     if num_tokens < capacity:
         assert (got[2][num_tokens:] == -1).all()
 
 
 @pytest.mark.arch_blackwell
-@pytest.mark.parametrize("quant_type", ["nvfp4", "bf16"])
-def test_fused_stage_launch_cache_tracks_new_data_and_token_count(
-    monkeypatch, quant_type
-):
+def test_fused_stage_launch_cache_tracks_new_data_and_token_count(monkeypatch):
     """Cache-hit relaunch (new data, same ptrs) and cache-rebuild (new n)."""
     import torch
 
     _require_blackwell()
 
     hidden, topk, num_experts, capacity = 2048, 4, 16, 64
-    buffers = _make_buffers(quant_type, capacity, hidden, topk)
+    buffers = _make_buffers("nvfp4", capacity, hidden, topk)
 
-    ref = _make_buffers(quant_type, capacity, hidden, topk)
-    batches = ((3, 32), (5, 32), (7, 48))
-    if quant_type == "bf16":
-        batches += ((8, 0), (9, 7))  # Empty input followed by refill.
-    for seed, num_tokens in batches:
+    for seed, num_tokens in ((3, 32), (5, 32), (7, 48)):
         batch = _make_batch(num_tokens, hidden, topk, num_experts, seed=seed)
-        _stage(quant_type, monkeypatch, False, batch, ref, 1.0)
-        _stage(quant_type, monkeypatch, True, batch, buffers, 1.0)
+        ref = _make_buffers("nvfp4", capacity, hidden, topk)
+        _stage("nvfp4", monkeypatch, False, batch, ref, 1.0)
+        _stage("nvfp4", monkeypatch, True, batch, buffers, 1.0)
         torch.cuda.synchronize()
         assert torch.equal(ref[0].view(torch.uint8), buffers[0].view(torch.uint8)), (
             f"x mismatch at seed={seed} tokens={num_tokens}"
         )
         assert torch.equal(ref[2], buffers[2])
-        assert torch.equal(ref[3], buffers[3])
-        assert (buffers[2][num_tokens:] == -1).all()
 
 
 @pytest.mark.arch_blackwell

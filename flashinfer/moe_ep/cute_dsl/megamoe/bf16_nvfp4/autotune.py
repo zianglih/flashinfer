@@ -132,7 +132,7 @@ def autotune_bf16_nvfp4_mega_moe(
     each rank's median GPU-event time on the same hot, staged inputs.
     Output overwrites ``y``. Every EP rank must call outside graph capture.
     At least one eager preparation forward runs before each capture, even
-    when ``warmup_iters=0``, to compile the fused kernel and reducer.
+    when ``warmup_iters=0``, to compile the integrated kernel.
     ``process_group`` selects the EP group; ``None`` uses the default group.
     Candidate failures abort the sweep; distributed failure recovery belongs
     to the caller, since preparation also allocates symmetric storage.
@@ -217,6 +217,7 @@ def autotune_bf16_nvfp4_mega_moe(
             topk=cfg.num_topk,
             max_tokens=cfg.num_tokens_per_rank,
             combine_dtype="bf16",
+            apply_topk_in_fc1=cfg.apply_topk_in_fc1,
             p50_us=p50_s * 1e6,
             source="autotune_graph_events",
         )

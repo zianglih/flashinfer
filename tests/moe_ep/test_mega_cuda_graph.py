@@ -156,8 +156,13 @@ def _random_batch(problem: dict, *, seed: int, num_tokens: int = 32):
 
 @pytest.mark.arch_blackwell
 @pytest.mark.parametrize(
-    "backend_name,quantize_input",
-    [("nvfp4", True), ("mxfp8", True), ("w4a16", True), ("w4a16", False)],
+    "backend_name,quantize_input,input_layout",
+    [("nvfp4", True, "contiguous"), ("mxfp8", True, "contiguous")]
+    + [
+        ("w4a16", True, layout)
+        for layout in ("contiguous", "transposed", "offset", "strided")
+    ]
+    + [("w4a16", False, "contiguous")],
 )
 @pytest.mark.parametrize(
     "hidden,intermediate",
@@ -170,9 +175,16 @@ def _random_batch(problem: dict, *, seed: int, num_tokens: int = 32):
     ],
 )
 def test_mega_layer_graph_capture_replay_matches_eager(
-    monkeypatch, request, backend_name, quantize_input, hidden, intermediate
+    monkeypatch,
+    request,
+    backend_name,
+    quantize_input,
+    input_layout,
+    hidden,
+    intermediate,
 ):
     import torch
+    from flashinfer.moe_ep import MoEEpTensors
 
     _require_blackwell()
 
@@ -186,15 +198,47 @@ def test_mega_layer_graph_capture_replay_matches_eager(
         knobs="auto" if backend_name == "w4a16" else None,
         quantize_input=quantize_input,
     )
+    graph = None
     try:
         t = _random_batch(problem, seed=3)
+        if input_layout in ("transposed", "offset"):
+            t.topk_ids = t.topk_ids.to(torch.int64)
+
+        def view(source):
+            if input_layout == "contiguous":
+                return source
+            if input_layout == "transposed":
+                return source.t().contiguous().t()
+            if input_layout == "offset":
+                storage = torch.empty(
+                    source.numel() + 1, dtype=source.dtype, device=source.device
+                )
+                return storage[1:].view_as(source).copy_(source)
+            if input_layout == "strided":
+                storage = torch.empty(
+                    (source.shape[0], 2 * source.shape[1]),
+                    dtype=source.dtype,
+                    device=source.device,
+                )
+                return storage[:, ::2].copy_(source)
+            raise AssertionError(input_layout)
+
+        t = MoEEpTensors(
+            *(view(x) for x in (t.hidden_states, t.topk_ids, t.topk_weights))
+        )
+        control = MoEEpTensors(
+            *(
+                x.clone(memory_format=torch.contiguous_format)
+                for x in (t.hidden_states, t.topk_ids, t.topk_weights)
+            )
+        )
 
         # 1) Warmup includes the real collective autotune sweep for knobs="auto".
         # Later eager/capture/replay calls use the selected callable normally.
         layer.warmup(t if not quantize_input else None)
 
         # Eager reference on the real batch after warmup.
-        y_eager = layer.forward(t).clone()
+        y_eager = layer.forward(control).clone()
         torch.cuda.synchronize()
 
         # 2) Capture one forward. The graph's input buffers are t's tensors
@@ -226,6 +270,8 @@ def test_mega_layer_graph_capture_replay_matches_eager(
         torch.cuda.synchronize()
         assert torch.equal(y_replay, y_eager2)
     finally:
+        if graph is not None:
+            graph.reset()
         layer.destroy()
 
 

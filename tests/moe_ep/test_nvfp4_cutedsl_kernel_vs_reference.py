@@ -232,6 +232,7 @@ def _torch_nvfp4_mega_reference(
     fc1_alpha=None,
     fc2_alpha=None,
     return_terms=False,
+    apply_topk_in_fc1=False,
 ):
     """Pure-torch oracle with explicit W4A4 and W4A16 rounding boundaries.
 
@@ -242,7 +243,8 @@ def _torch_nvfp4_mega_reference(
 
     W4A16 instead rounds decoded weights and SwiGLU/FC2 outputs to BF16,
     applies FP32 global scales after each GEMM, and applies FP32 routing after
-    the BF16 FC2 store. Neither activations nor combine terms are quantized.
+    the BF16 FC2 store by default. ``apply_topk_in_fc1`` instead weights FP32
+    SwiGLU before its BF16 handoff. Activations and combine terms stay BF16.
 
     ``term_transform``, when set, is applied to each per-(token, topk) fc2
     output term before the topk sum; the multirank oracle uses it to model the
@@ -312,6 +314,8 @@ def _torch_nvfp4_mega_reference(
                 swiglu_rt = _dequant_nvfp4(fc1_q, fc1_q_sf, logical_cols=intermediate)
             elif mode == "w4a16":
                 swiglu = (torch.nn.functional.silu(gate) * up).reshape(m, intermediate)
+                if apply_topk_in_fc1:
+                    swiglu = swiglu * topk_weights[tokens, slots].unsqueeze(-1)
                 swiglu_rt = swiglu.bfloat16().float()
 
             fc2_w = _dequant_nvfp4(
@@ -322,7 +326,8 @@ def _torch_nvfp4_mega_reference(
             fc2_out = swiglu_rt @ fc2_w.transpose(0, 1)
             if mode == "w4a16":
                 fc2_out = (fc2_out * fc2_alpha[expert]).bfloat16().float()
-                fc2_out = fc2_out * topk_weights[tokens, slots].unsqueeze(-1)
+                if not apply_topk_in_fc1:
+                    fc2_out = fc2_out * topk_weights[tokens, slots].unsqueeze(-1)
             if term_transform is not None:
                 fc2_out = term_transform(fc2_out)
             out[tokens, slots] = fc2_out
@@ -442,13 +447,18 @@ def test_nvfp4_preprocess_fp4_weights_match_plain_quant(
 
 @pytest.mark.arch_blackwell
 @pytest.mark.parametrize(
-    "mode,tile_n,in_kernel_fc2_reduce,token_back_mode",
+    "mode,tile_n,in_kernel_fc2_reduce,token_back_mode,apply_topk_in_fc1",
     [
-        (mode, 128, False, token_back_mode)
+        (mode, 128, False, token_back_mode, apply_topk_in_fc1)
         for mode in NVFP4_MODES
         for token_back_mode in ("epi_warps", "reuse_dispatch_warps")
+        for apply_topk_in_fc1 in ([False, True] if mode == "w4a16" else [False])
     ]
-    + [("w4a16", tile_n, True, "reuse_dispatch_warps") for tile_n in (64, 128)],
+    + [
+        ("w4a16", tile_n, True, "reuse_dispatch_warps", apply_topk_in_fc1)
+        for tile_n in (64, 128)
+        for apply_topk_in_fc1 in (False, True)
+    ],
 )
 @pytest.mark.parametrize(
     "hidden,intermediate,num_experts,topk",
@@ -467,6 +477,7 @@ def test_nvfp4_kernel_matches_torch_reference(
     tile_n,
     in_kernel_fc2_reduce,
     token_back_mode,
+    apply_topk_in_fc1,
     hidden,
     intermediate,
     num_experts,
@@ -501,7 +512,7 @@ def test_nvfp4_kernel_matches_torch_reference(
         from flashinfer.moe_ep import (
             preprocess_bf16_nvfp4_cutedsl_mega_weights as preprocess_mega_weights,
         )
-        from flashinfer.moe_ep.backends.mega.kernel.sm100.bf16_nvfp4_bf16_cutedsl.staging import (
+        from flashinfer.moe_ep.backends.mega.kernel.sm100.common.bf16_staging import (
             stage_mega_moe_inputs,
         )
         from flashinfer.moe_ep.cute_dsl.megamoe.bf16_nvfp4 import (
@@ -561,6 +572,7 @@ def test_nvfp4_kernel_matches_torch_reference(
         fc1_alpha=alpha1,
         fc2_alpha=alpha2,
         knobs=knobs,
+        **({"apply_topk_in_fc1": apply_topk_in_fc1} if mode == "w4a16" else {}),
     )
     graph = None
     try:
@@ -595,6 +607,7 @@ def test_nvfp4_kernel_matches_torch_reference(
             fc1_alpha=alpha1,
             fc2_alpha=alpha2,
             return_terms=mode == "w4a16",
+            apply_topk_in_fc1=apply_topk_in_fc1,
         )
 
         y_kernel = torch.empty(

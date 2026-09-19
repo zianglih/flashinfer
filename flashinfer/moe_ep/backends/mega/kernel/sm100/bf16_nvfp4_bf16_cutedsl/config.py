@@ -14,7 +14,9 @@ class Sm100_Bf16_Nvfp4_Bf16_Cutedsl_MegaMoeConfig:
     """BF16 activations and NVFP4 expert weights with online dequantization.
 
     Input, FC1 activation handoff, dispatch/combine and output remain BF16.
-    Routing scores are applied after FC2. ``MoEWeightPack`` supplies packed
+    Routing scores are applied after FC2 by default. ``apply_topk_in_fc1``
+    instead multiplies the completed FP32 SwiGLU activation before its BF16
+    handoff, changing the rounding contract. ``MoEWeightPack`` supplies packed
     weight data and E4M3 block scales; ``fc1_alpha`` and ``fc2_alpha`` supply
     optional per-expert FP32 epilogue scales (default one).
     SwiGLU uses the kernel's fixed approximate exp2/reciprocal implementation.
@@ -33,6 +35,8 @@ class Sm100_Bf16_Nvfp4_Bf16_Cutedsl_MegaMoeConfig:
     # None looks up a recorded winner or the built-in profile; a dict overrides
     # both. "auto" tunes collectively on the first forward, before capture.
     knobs: dict | Literal["auto"] | None = None
+
+    apply_topk_in_fc1: bool = False
 
     def __post_init__(self) -> None:
         if (

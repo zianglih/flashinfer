@@ -20,7 +20,9 @@ are GLOBAL across the EP group, including empty ranks below eight tokens:
     torchrun --master-addr=127.0.0.1 --master-port=29500 --nproc-per-node=8 \\
         benchmarks/bench_cute_dsl_moe_distributed.py \\
         --parallel-modes ep --variants w4a16,w4a16_megamoe \\
-        --timing cupti --cuda-graph --refcheck --no-fused-finalize
+        --timing cupti --cuda-graph --refcheck --no-fused-finalize \\
+        --precomputed-routing --warmup 3 --iters 100 \\
+        --num-tokens 1,2,4,8,16,32,64,128,256,512,4096,8192,16384
 
 With ``--no-fused-finalize``, both W4A16 paths cast FC2 results to BF16 before
 applying FP32 routing weights. Split EP rounds each rank's weighted partial
@@ -33,7 +35,13 @@ from the first GPU activity's start to the last activity's end on each rank,
 then takes the maximum rank span per iteration and the median across
 iterations. This includes gaps and overlap; it is not a sum of kernel times.
 Weight preparation, compilation, autotuning, warmup, graph capture, and L2
-flushing are excluded. Nsight Systems' breakdown instead sums activity
+flushing are excluded. With ``--precomputed-routing``, EP routes are computed
+once before warmup and excluded from both Split and MegaMoE measurements.
+Use 4–512 tokens for decode retention; report 1/2 without including them in
+that decision and check prefill 4096/8192/16384 separately.
+``--apply-topk-in-fc1`` selects MegaMoE's distinct FC1-weighted rounding
+contract; validate it against its own reference, not Split's default contract.
+Nsight Systems' breakdown instead sums activity
 durations across ranks and must not be substituted for this latency metric.
 
 Run Nsight Systems mode directly to capture and report per-kernel breakdowns
@@ -192,6 +200,10 @@ def _profile_worker_arguments(args, num_tokens):
                 else json.dumps(args.megamoe_knobs, sort_keys=True),
             )
         )
+    if args.precomputed_routing:
+        arguments.append("--precomputed-routing")
+    if args.apply_topk_in_fc1:
+        arguments.append("--apply-topk-in-fc1")
     if args.use_per_token_activation:
         arguments.append("--use-per-token-activation")
     if not args.use_fused_finalize:
@@ -910,6 +922,8 @@ def _run_distributed_iterations(
                         "repeat_iters": args.iters,
                         "sample_count": len(samples),
                         "cuda_graph": args.cuda_graph,
+                        "precomputed_routing": args.precomputed_routing,
+                        "apply_topk_in_fc1": args.apply_topk_in_fc1,
                         "cold_l2_cache": True,
                         "sample_aggregation": "per_iteration_rank_max",
                         "samples_ms": [float(sample) for sample in samples],
@@ -1062,7 +1076,8 @@ def _benchmark_distributed_ep(
         )
 
     def run_once():
-        _route_tokens(router_logits, routing_bias, topk_values, topk_indices)
+        if not args.precomputed_routing:
+            _route_tokens(router_logits, routing_bias, topk_values, topk_indices)
         return combine(compute(*dispatch()))
 
     profile_state = {}
@@ -1096,7 +1111,7 @@ def _benchmark_distributed_ep(
                 ("activation prep/quant", profile_activation_prep),
                 ("local MoE", profile_local_moe),
                 ("combine", lambda: combine(profile_state["local_output"])),
-            )
+            )[int(args.precomputed_routing) :]
         )
 
     # Finish the setup collective before CuTe DSL selects a tactic. Inference
@@ -1221,6 +1236,7 @@ def _benchmark_distributed_megamoe(
                 intermediate_size=CFG.intermediate_size,
                 top_k=CFG.top_k,
                 knobs=args.megamoe_knobs,
+                **({"apply_topk_in_fc1": True} if args.apply_topk_in_fc1 else {}),
             )
         ),
     )
@@ -1242,12 +1258,15 @@ def _benchmark_distributed_megamoe(
         _route_tokens(router_logits, routing_bias, topk_values, topk_indices)
 
     def run_once():
-        route()
+        if not args.precomputed_routing:
+            route()
         return layer.forward(tensors)
 
     def profile_once():
         _run_profile_iteration(
-            (("routing", route), ("MegaMoE", lambda: layer.forward(tensors)))
+            (("routing", route), ("MegaMoE", lambda: layer.forward(tensors)))[
+                int(args.precomputed_routing) :
+            ]
         )
 
     try:
@@ -1259,6 +1278,7 @@ def _benchmark_distributed_megamoe(
                 + json.dumps(
                     {
                         "variant": "w4a16_megamoe",
+                        "apply_topk_in_fc1": args.apply_topk_in_fc1,
                         "global_tokens": num_tokens,
                         "local_tokens": local_num_tokens,
                         "max_tokens_per_rank": capacity,
@@ -1930,6 +1950,16 @@ def main():
         help="Measure CUDA graph replay in benchmark mode (profilers use NVTX stages).",
     )
     parser.add_argument(
+        "--precomputed-routing",
+        action="store_true",
+        help="Compute EP routes before warmup and exclude routing from timing.",
+    )
+    parser.add_argument(
+        "--apply-topk-in-fc1",
+        action="store_true",
+        help="Weight MegaMoE FP32 SwiGLU activations before the BF16 FC1 handoff.",
+    )
+    parser.add_argument(
         "--refcheck",
         action="store_true",
         help="Check MegaMoE against split W4A16 at atol=rtol=1e-2 before timing.",
@@ -2051,6 +2081,15 @@ def main():
         parser.error("W4A16 MegaMoE supports expert parallelism only")
     if args.megamoe_knobs is not None and "w4a16_megamoe" not in variant_names:
         parser.error("--megamoe-knobs requires the w4a16_megamoe variant")
+    if args.precomputed_routing and parallel_modes != ["ep"]:
+        parser.error("--precomputed-routing requires --parallel-modes ep")
+    if args.apply_topk_in_fc1 and (
+        "w4a16_megamoe" not in variant_names or args.refcheck
+    ):
+        parser.error(
+            "--apply-topk-in-fc1 requires MegaMoE without --refcheck; "
+            "FC1 weighting has a distinct numerical contract"
+        )
     if args.refcheck and (
         args.mode != "benchmark"
         or "ep" not in parallel_modes

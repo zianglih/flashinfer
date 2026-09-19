@@ -18,7 +18,6 @@ from ......core.validation.common import (
 )
 from ......weights import MoEWeightPack
 from ..common.bf16_staging import validate_bf16_forward_inputs
-from .staging import forget_staged_inputs, stage_mega_moe_inputs
 from .config import Sm100_Bf16_Nvfp4_Bf16_Cutedsl_MegaMoeConfig
 from .weights import (
     TransformedMegaWeights,
@@ -107,6 +106,7 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
             self.ep_rank,
             self.ep_world_size,
             gate_up_clamp=config.gate_up_clamp,
+            apply_topk_in_fc1=config.apply_topk_in_fc1,
             enable_in_kernel_fc2_reduce=config.enable_in_kernel_fc2_reduce,
             fc1_alpha=config.fc1_alpha,
             fc2_alpha=config.fc2_alpha,
@@ -131,6 +131,7 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
             config.intermediate_size,
             config.top_k,
             config.gate_up_clamp,
+            config.apply_topk_in_fc1,
             config.enable_in_kernel_fc2_reduce,
             epilogue_pool_key(config.fc1_alpha),
             epilogue_pool_key(config.fc2_alpha),
@@ -182,31 +183,44 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
         self, workspace: Any, transformed_weights: TransformedMegaWeights
     ) -> None:
         mega = workspace._frontend._mega
-        if mega is None or mega.compiled is None:
+        if mega is None or len(workspace._frontend._staging_variants) != 4:
             raise RuntimeError(
                 "MegaMoE workspace is not warmed for CUDA graph capture; "
                 "call layer.warmup(..., workspace=workspace) first"
             )
 
     def _forget_workspace_state(self, workspace: Any) -> None:
-        forget_staged_inputs(workspace.topk_idx)
+        workspace._staging_inputs = None
+        workspace._frontend._launch_inputs = None
+        mega = workspace._frontend._mega
+        if mega is not None:
+            mega.launch_key = None
+            mega.launch_kwargs = None
 
     def stage_inputs(
         self, t: MoEEpTensors, workspace: Any, *, quantize_input: bool
     ) -> None:
         del quantize_input
-        stage_mega_moe_inputs(
-            t.hidden_states,
-            t.topk_weights,
-            t.topk_ids,
-            workspace.x,
-            workspace.topk_idx,
-            workspace.topk_weights,
-        )
+        workspace._staging_inputs = None
+        sources = (t.hidden_states, t.topk_ids, t.topk_weights)
+        target_storage = {
+            tensor.untyped_storage().data_ptr()
+            for tensor in (workspace.x, workspace.topk_idx, workspace.topk_weights)
+        }
+        if any(
+            tensor.numel() != 0
+            and tensor.untyped_storage().data_ptr() in target_storage
+            for tensor in sources
+        ):
+            raise MoEEpConfigError(
+                "MegaMoE inputs must not alias its staging workspace"
+            )
         if t.fc1_alpha is not None:
             workspace.fc1_alpha.copy_(t.fc1_alpha)
         if t.fc2_alpha is not None:
             workspace.fc2_alpha.copy_(t.fc2_alpha)
+        # Keep the same sources through every autotune capture and final call.
+        workspace._staging_inputs = sources
 
     def compute(
         self,
@@ -217,31 +231,37 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
     ) -> torch.Tensor:
         from ......cute_dsl.megamoe.bf16_nvfp4 import bf16_nvfp4_mega_moe
 
-        if self._autotune_pending:
-            from ......cute_dsl.megamoe.bf16_nvfp4 import autotune_bf16_nvfp4_mega_moe
-
-            self._autotune_winner = dict(
-                autotune_bf16_nvfp4_mega_moe(
-                    output,
-                    transformed_weights[0],
-                    transformed_weights[1],
-                    workspace,
-                    num_tokens=output.shape[0],
-                    gate_up_clamp=self._kernel_config.gate_up_clamp,
-                    process_group=(
-                        self.ep_comm_group
-                        if torch.distributed.is_initialized()
-                        else None
-                    ),
+        try:
+            if self._autotune_pending:
+                from ......cute_dsl.megamoe.bf16_nvfp4 import (
+                    autotune_bf16_nvfp4_mega_moe,
                 )
+
+                self._autotune_winner = dict(
+                    autotune_bf16_nvfp4_mega_moe(
+                        output,
+                        transformed_weights[0],
+                        transformed_weights[1],
+                        workspace,
+                        num_tokens=output.shape[0],
+                        gate_up_clamp=self._kernel_config.gate_up_clamp,
+                        process_group=(
+                            self.ep_comm_group
+                            if torch.distributed.is_initialized()
+                            else None
+                        ),
+                    )
+                )
+                self._autotune_pending = False
+            bf16_nvfp4_mega_moe(
+                output,
+                transformed_weights[0],
+                transformed_weights[1],
+                workspace,
+                num_tokens=output.shape[0],
+                gate_up_clamp=self._kernel_config.gate_up_clamp,
             )
-            self._autotune_pending = False
-        bf16_nvfp4_mega_moe(
-            output,
-            transformed_weights[0],
-            transformed_weights[1],
-            workspace,
-            num_tokens=output.shape[0],
-            gate_up_clamp=self._kernel_config.gate_up_clamp,
-        )
-        return output
+            workspace._frontend._warm_staging_variants()
+            return output
+        finally:
+            workspace._staging_inputs = None
