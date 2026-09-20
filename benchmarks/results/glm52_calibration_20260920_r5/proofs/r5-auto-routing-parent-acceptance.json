@@ -1,0 +1,25 @@
+{
+  "accepted_at": "2026-09-20T20:46:30.400589+00:00",
+  "status": "accepted",
+  "review_sha256": "fe7e7d98d1301234a28e240dda3967f5f959f316eb05871ead57fe6c6cfc03b5",
+  "raw_shared_comparator_files_rehashed": 136,
+  "summary_files_rehashed": 4,
+  "reused_reviews_rehashed": 6,
+  "source_files_rehashed": 11,
+  "pooled_groups_compared_to_independent_parent_raw_checker": 18,
+  "unpaired_groups_kept_null": 2,
+  "raw_checker_sha256": "c44748f0f9ca0eddd804a167f6220e67cacf92e56ae4fbda64d21d36cdf000f2",
+  "scope": "AUTO jobs033-044, precomputed-routing045-052, and eager-prefill053 repeat1 only; independent local raw parsing and pooling. No remote/source/runtime changes.",
+  "equivalence_claim": false,
+  "native_FAIL_preserved": 38,
+  "limitations": [
+    "Only 20 completed extension jobs plus the first eager-prefill invocation; entire60-job study incomplete. Newly audited 18 pooled groups plus two single-repeat prefill points.",
+    "Native cross-pair FAIL remains visible. Per-path and same-backend graph acceptance do not establish backend equality.",
+    "No numerical checks of the100timed replays; graph cases have two poisoned untimed replays, eager prefill has no graph check requested.",
+    "Core-versus-AUTO uses separate single-N processes versus a multi-N core process; tuning/compile/allocator/cache history can differ. No isolated causal attribution or statistical significance from two repeats.",
+    "Precomputed routing comparison is a benchmark timed-scope ablation, not serving causality or an end-to-end serving speedup.",
+    "Autotune event scores are tuning evidence only, not CUPTI performance samples; knob cache key records capacity rather than the exact live N, hence per-N isolation is essential.",
+    "Logged rank-MAX arrays are source-bound; lack of serialized individual rank arrays/tensors prevents independent local reconstruction of their reduction or oracle tensors.",
+    "Candidate per-rank event arrays are not serialized; candidate selection is checked against source policy, printed scores, cache entry and all-rank winner records, not reconstructed from event samples."
+  ]
+}

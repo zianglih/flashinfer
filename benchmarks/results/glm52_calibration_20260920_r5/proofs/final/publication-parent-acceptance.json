@@ -1,0 +1,35 @@
+{
+  "status": "accepted",
+  "accepted_at": "2026-09-20T21:05:12.747980+00:00",
+  "review_sha256": "a0bd9449a484122784289d4de26298f9aa9307e2e7882508313bcd2e1f89c925",
+  "review_bound_files_rehashed": 83,
+  "candidate_payload_files_rehashed": 348,
+  "original_copy_bytes_rechecked": 324,
+  "summary_metrics_exactly_equal": true,
+  "only_portability_change": {
+    "old": "../run-transfers/glm52-calibration-20260920-r5-20260920T204700Z",
+    "new": "../evidence"
+  },
+  "parent_png_visual_review": "Both actual PNGs inspected; clear labels, correct core-only scope and native-failure limitations.",
+  "counts": {
+    "payload_files": 348,
+    "total_files": 350,
+    "byte_identical_copies": 324,
+    "transferred_files": 263,
+    "complete_raw_logs": 60,
+    "relative_links": 961,
+    "external_links": 21,
+    "anchor_only_links": 0,
+    "paired_groups": 110,
+    "plotted_core_groups": 84,
+    "oracle_outputs": 504,
+    "split_partials": 252,
+    "cupti_samples": 44000,
+    "all_samples": 44192,
+    "native_pair_outcomes": {
+      "PASS": 8,
+      "FAIL": 244
+    }
+  },
+  "scope": "Full final candidate accepted for append-only proof seal and publication. Remote archive and cleanup remain separate."
+}

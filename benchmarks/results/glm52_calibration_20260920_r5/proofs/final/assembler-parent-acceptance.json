@@ -1,0 +1,12 @@
+{
+  "status": "accepted",
+  "accepted_at": "2026-09-20T21:05:12.628724+00:00",
+  "review_sha256": "c77436d70c6e2a0e1c09faab3ee400a50692c08e2332531c59e9f5942c7a2d47",
+  "bound_files_rehashed": 6,
+  "scope": "Local source and existing focused-fixture review only; no remote/GPU execution or source mutation by reviewer.",
+  "limitations": [
+    "Actualfinalcandidate byte/link/PNG review andfull504record independent review.",
+    "Parent must verify allraw.log files are Git-tracked duringpublication.",
+    "Remote preservation/cachearchival/deletion/GitHub are separate workflows."
+  ]
+}

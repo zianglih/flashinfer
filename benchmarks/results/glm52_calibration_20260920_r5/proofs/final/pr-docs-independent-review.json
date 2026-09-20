@@ -1,0 +1,30 @@
+{
+  "review_status": "passed",
+  "issue_count": 0,
+  "issues": [],
+  "scope": "Local frozen-data check of current PR draft and repository documentation; no publication action",
+  "bound_files": {
+    "PR_BODY.r5-final.md": {
+      "sha256": "d045dbabba9103f3b4cdd81797d4cb2c06e2c3f04de0c22662e45c7b2c6aa724",
+      "size": 27443
+    },
+    "flashinfer/benchmarks/docs/sglang_megamoe_alignment.md": {
+      "sha256": "380d6c1cfb3bd7ac8baee3f162047ec5b010bec593518607be35fe4e5e0166ca",
+      "size": 26197
+    },
+    "artifacts/r5-final-publication-candidate-v2/summary/summary.json": {
+      "sha256": "64827c96c34bfdd8dfc96c00c8ec498f806603a9667be40e53f1552a1043a0e0",
+      "size": 833283
+    },
+    "artifacts/r5-final-publication-independent-review.json": {
+      "sha256": "a0bd9449a484122784289d4de26298f9aa9307e2e7882508313bcd2e1f89c925",
+      "size": 36717
+    }
+  },
+  "pr_table_rows": 110,
+  "all_coordinates_unique": true,
+  "all_displayed_repeat_and_pooled_values_match": true,
+  "resolved_scope_wording": "core graph mode with routing included / Core communication controls",
+  "workflow_placeholder": "Independent final review/publication seal pending: parent can replace after accepting this review",
+  "limits": "No live URL verification; future repository publication paths are supplied by the parent. No equivalence or serving causality claim."
+}

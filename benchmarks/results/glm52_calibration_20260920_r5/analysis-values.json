@@ -1,0 +1,363 @@
+{
+  "run_id": "glm52-calibration-20260920-r5",
+  "status": "FINAL",
+  "group_distributions": [
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "groups": 14,
+      "lower": 2,
+      "higher": 12,
+      "equal": 0,
+      "minimum_percent": -4.455297918594825,
+      "maximum_percent": 7.980641019309598,
+      "repeat_sign_reversals": 7
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "groups": 14,
+      "lower": 14,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -19.082456649782674,
+      "maximum_percent": -1.9930076788043594,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "groups": 14,
+      "lower": 14,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -20.835651072957507,
+      "maximum_percent": -2.343311517347191,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "groups": 14,
+      "lower": 14,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -12.555654240932213,
+      "maximum_percent": -4.753148626639991,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "groups": 14,
+      "lower": 14,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -38.0766162256896,
+      "maximum_percent": -18.215340203652765,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "groups": 14,
+      "lower": 14,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -37.24337521056107,
+      "maximum_percent": -22.20575076732183,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "auto",
+      "ep": 4,
+      "communication": "allgather",
+      "groups": 3,
+      "lower": 3,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -21.373241018052536,
+      "maximum_percent": -7.6769679802209945,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "auto",
+      "ep": 8,
+      "communication": "allgather",
+      "groups": 3,
+      "lower": 3,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -34.46181641074919,
+      "maximum_percent": -25.672473997258628,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allgather",
+      "groups": 3,
+      "lower": 2,
+      "higher": 1,
+      "equal": 0,
+      "minimum_percent": -17.773544801472763,
+      "maximum_percent": 1.3185759276299391,
+      "repeat_sign_reversals": 1
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allreduce",
+      "groups": 3,
+      "lower": 3,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -17.322616762449982,
+      "maximum_percent": -2.368544050484689,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allgather",
+      "groups": 3,
+      "lower": 3,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -28.803439540806362,
+      "maximum_percent": -13.226183640687438,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allreduce",
+      "groups": 3,
+      "lower": 3,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -34.31170204063654,
+      "maximum_percent": -19.29010758664148,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "prefill",
+      "ep": 4,
+      "communication": "allgather",
+      "groups": 2,
+      "lower": 1,
+      "higher": 1,
+      "equal": 0,
+      "minimum_percent": -5.066512634631182,
+      "maximum_percent": 4.665622834479066,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "prefill",
+      "ep": 4,
+      "communication": "allreduce",
+      "groups": 2,
+      "lower": 2,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -7.87981599443971,
+      "maximum_percent": -1.2987339270653098,
+      "repeat_sign_reversals": 1
+    },
+    {
+      "phase": "prefill",
+      "ep": 8,
+      "communication": "allgather",
+      "groups": 2,
+      "lower": 2,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -10.39687723263134,
+      "maximum_percent": -4.375509446260317,
+      "repeat_sign_reversals": 0
+    },
+    {
+      "phase": "prefill",
+      "ep": 8,
+      "communication": "allreduce",
+      "groups": 2,
+      "lower": 2,
+      "higher": 0,
+      "equal": 0,
+      "minimum_percent": -12.389608531329777,
+      "maximum_percent": -6.31162189511516,
+      "repeat_sign_reversals": 0
+    }
+  ],
+  "matching_default_controls": [
+    {
+      "phase": "auto",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "mega_change_from_default_percent": -12.792341155781028,
+      "split_control_change_from_default_percent": 0.13312869597621457
+    },
+    {
+      "phase": "auto",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "mega_change_from_default_percent": -5.695514125213719,
+      "split_control_change_from_default_percent": -4.524694054281076
+    },
+    {
+      "phase": "auto",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "mega_change_from_default_percent": -7.109784296422072,
+      "split_control_change_from_default_percent": -4.403435251209253
+    },
+    {
+      "phase": "auto",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "mega_change_from_default_percent": -7.198584443592615,
+      "split_control_change_from_default_percent": -9.101518235171413
+    },
+    {
+      "phase": "auto",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "mega_change_from_default_percent": -8.665312670402002,
+      "split_control_change_from_default_percent": 5.364061164521594
+    },
+    {
+      "phase": "auto",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "mega_change_from_default_percent": -6.5257184697053,
+      "split_control_change_from_default_percent": -11.681351370596605
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "mega_change_from_default_percent": -2.2176526653108097,
+      "split_control_change_from_default_percent": -5.413655130480832
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "mega_change_from_default_percent": 0.09899861597328918,
+      "split_control_change_from_default_percent": -6.092737204003895
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "mega_change_from_default_percent": -1.1487528066040364,
+      "split_control_change_from_default_percent": -2.7223043887469656
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 16,
+      "mega_change_from_default_percent": -3.481158626677616,
+      "split_control_change_from_default_percent": -3.1141376743692883
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 128,
+      "mega_change_from_default_percent": -1.6913896540923568,
+      "split_control_change_from_default_percent": -4.967475225535933
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 1024,
+      "mega_change_from_default_percent": 0.252920070772511,
+      "split_control_change_from_default_percent": -2.58063054644716
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "mega_change_from_default_percent": -3.2090075230473025,
+      "split_control_change_from_default_percent": -12.961939823088676
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "mega_change_from_default_percent": -1.6690506484166923,
+      "split_control_change_from_default_percent": -10.541376305714467
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "mega_change_from_default_percent": -1.5242399921147731,
+      "split_control_change_from_default_percent": -14.350465245716315
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 16,
+      "mega_change_from_default_percent": -3.4239669993920363,
+      "split_control_change_from_default_percent": -9.791149770022955
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 128,
+      "mega_change_from_default_percent": -2.9139041472664995,
+      "split_control_change_from_default_percent": -6.421137335760374
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 1024,
+      "mega_change_from_default_percent": -3.0251093832734166,
+      "split_control_change_from_default_percent": -5.611764601070868
+    }
+  ],
+  "equivalence_claim": false
+}

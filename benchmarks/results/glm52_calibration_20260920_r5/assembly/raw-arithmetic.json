@@ -1,0 +1,2500 @@
+{
+  "checked_at": "2026-09-20T20:58:59.906330+00:00",
+  "status": "parent_direct_raw_arithmetic_passed",
+  "summary_path": "summary/summary.json",
+  "summary_sha256": "64827c96c34bfdd8dfc96c00c8ec498f806603a9667be40e53f1552a1043a0e0",
+  "checker_sha256": "6132f83b3d73cdcdaab1c1e6efcc73faa531fdc9ea1007f5e4c127be9b663687",
+  "raw_logs_rehashed": {
+    "runs/glm52-calibration-20260920-r5/011-core-ep4-allgather-caplive-r1/benchmark.log": "05b019436e62e9f0d71b86d0b99f5d3d41399dd1e9361f50fd5bfd75607bb6ef",
+    "runs/glm52-calibration-20260920-r5/023-core-ep4-allgather-caplive-r2/benchmark.log": "4c62a598591163432bb1a13ad3801bd68af3d9bf8fb577b634c2aaa61e56805b",
+    "runs/glm52-calibration-20260920-r5/012-core-ep4-allgather-cap32768-r1/benchmark.log": "3d1c36b7333ea6559c5d0951794a7dd9226844119c710e4c399f1eaf502e97cf",
+    "runs/glm52-calibration-20260920-r5/024-core-ep4-allgather-cap32768-r2/benchmark.log": "8f7b6dc5cee1e55169cc07a89ec4cd8e3f61174d02dcc5c979b6eb4d7dae38ba",
+    "runs/glm52-calibration-20260920-r5/013-core-ep4-allreduce-caplive-r1/benchmark.log": "0dd48c53a89de444dcaeb0af2f07f3e88f5a4d541d52ebff9c011adbf720154c",
+    "runs/glm52-calibration-20260920-r5/025-core-ep4-allreduce-caplive-r2/benchmark.log": "4d3817ccccd340353bd896c77ae64172cbf010e57eb7ef32c12f7620ccdcc545",
+    "runs/glm52-calibration-20260920-r5/014-core-ep4-allreduce-cap32768-r1/benchmark.log": "e6a2c1841527bc8386f98991d29666040d4e489bfe84569cdb76f8376e7a8d50",
+    "runs/glm52-calibration-20260920-r5/026-core-ep4-allreduce-cap32768-r2/benchmark.log": "1032d22e505ccb6758245de5edc1f1af3e18b03b13138965adb22d5487331118",
+    "runs/glm52-calibration-20260920-r5/009-core-ep4-alltoall-caplive-r1/benchmark.log": "c43928e31233d0918c7b4f6e6401570c3c0e1ff2cd231d9a204085a5c46df7e7",
+    "runs/glm52-calibration-20260920-r5/021-core-ep4-alltoall-caplive-r2/benchmark.log": "27f9bc1bf436e97eb48ef7d384d246ed1b910779ee74c31c7aac6a8887b62fce",
+    "runs/glm52-calibration-20260920-r5/010-core-ep4-alltoall-cap32768-r1/benchmark.log": "3507a151a001de35702535159d08aee203f9ae7263977c61e3107b76fda45843",
+    "runs/glm52-calibration-20260920-r5/022-core-ep4-alltoall-cap32768-r2/benchmark.log": "dce62a8633e135480b6f7ce8412a3d0ea349d5bb60da66c07f58f1a8bc9e7f8d",
+    "runs/glm52-calibration-20260920-r5/017-core-ep8-allgather-caplive-r1/benchmark.log": "12691a691fa41bd8343a886e61e95d42906771f4a4d8d5e36f911238c5b9eb02",
+    "runs/glm52-calibration-20260920-r5/029-core-ep8-allgather-caplive-r2/benchmark.log": "4c91617a54fc03b34dd6602566f763211b31a8b7f997d49816a2d647aa688ec3",
+    "runs/glm52-calibration-20260920-r5/018-core-ep8-allgather-cap32768-r1/benchmark.log": "db4b658dcf9e95d9245cbc4d67ab396393345d0bc5a0f40dc74700a8651b51bc",
+    "runs/glm52-calibration-20260920-r5/030-core-ep8-allgather-cap32768-r2/benchmark.log": "3cb03826b281c79e7d20436ec68c504e4a218f529b1631298747ea7cadf0f7d2",
+    "runs/glm52-calibration-20260920-r5/019-core-ep8-allreduce-caplive-r1/benchmark.log": "0cf4c3dc7a28ffbcbb40204418e88dce7599b02d4b5c24bbb11e61e7a2514a72",
+    "runs/glm52-calibration-20260920-r5/031-core-ep8-allreduce-caplive-r2/benchmark.log": "9f8eff052645cacf1424b22b63f1082aa33c3dc32e074c076fd7e37591b9a3bb",
+    "runs/glm52-calibration-20260920-r5/020-core-ep8-allreduce-cap32768-r1/benchmark.log": "6da38a26a63ca7c9dece470b13d861c9083ac6b954d63c57aadfff04e1058ce1",
+    "runs/glm52-calibration-20260920-r5/032-core-ep8-allreduce-cap32768-r2/benchmark.log": "13ed926d0ed68a07f57bc533743df78d200d4d4b486468ef2dacfa8b9d2d6be1",
+    "runs/glm52-calibration-20260920-r5/015-core-ep8-alltoall-caplive-r1/benchmark.log": "e9364081a55ffd059519290aa731c5763bb37ab0cb0684193e0687acf3179493",
+    "runs/glm52-calibration-20260920-r5/027-core-ep8-alltoall-caplive-r2/benchmark.log": "c6d652dbaf7ff2610df516a9b393362002233dd3d631b7a4b3e4c2a059216b25",
+    "runs/glm52-calibration-20260920-r5/016-core-ep8-alltoall-cap32768-r1/benchmark.log": "faf1db005aaf522ccaafe7af0fbe8948fbf3823cba3a9056175cab2702b552ce",
+    "runs/glm52-calibration-20260920-r5/028-core-ep8-alltoall-cap32768-r2/benchmark.log": "6c072d853ffe01970ca4642b3895519b6ece546c5aafc1458de08b5564944e1b",
+    "runs/glm52-calibration-20260920-r5/033-auto-ep4-allgather-cap32768-r1-n16/benchmark.log": "0cb1a919f011072df30ae251e8914e7520ce1d3d804c2f94d1adee2f1a2c5068",
+    "runs/glm52-calibration-20260920-r5/039-auto-ep4-allgather-cap32768-r2-n16/benchmark.log": "2abc321972ed3dc3aa9b810f16bc2365e19de3296d39191c6fe8f35fc274eea0",
+    "runs/glm52-calibration-20260920-r5/034-auto-ep4-allgather-cap32768-r1-n128/benchmark.log": "be84dc468ffeaa7e13b73dc53b5e964594aca58ed1b4cef08b98fe8c9e5cd903",
+    "runs/glm52-calibration-20260920-r5/040-auto-ep4-allgather-cap32768-r2-n128/benchmark.log": "8cded60ce75b4c134862d03a8c8c060cbae88f300c7f94e5aa0c437369cfdee6",
+    "runs/glm52-calibration-20260920-r5/035-auto-ep4-allgather-cap32768-r1-n1024/benchmark.log": "6f89026d4e2fd991bf1254ffc5780536b2b0e442988ec8d3f52a583a8f90a5a7",
+    "runs/glm52-calibration-20260920-r5/041-auto-ep4-allgather-cap32768-r2-n1024/benchmark.log": "895c854159456582687a2932c49ed895dc9b5016388d4d07bde6cb92b1f5e56e",
+    "runs/glm52-calibration-20260920-r5/036-auto-ep8-allgather-cap32768-r1-n16/benchmark.log": "9f786d2c697d64c706c8718f6493e7e5202a3ed32c42fc8b7887bd812de0b0a8",
+    "runs/glm52-calibration-20260920-r5/042-auto-ep8-allgather-cap32768-r2-n16/benchmark.log": "ed16e06208bc88c5ba6a554a288b08440873691df3c0e1b9b672a049ab4eaf3f",
+    "runs/glm52-calibration-20260920-r5/037-auto-ep8-allgather-cap32768-r1-n128/benchmark.log": "dbdbbf92a99f5407894977dba8f43deea25e9c97c7c68f9331773edf19430f4b",
+    "runs/glm52-calibration-20260920-r5/043-auto-ep8-allgather-cap32768-r2-n128/benchmark.log": "7c43d1aee23b077f8f1de0e9bba22376b75b497fdedfe84b8f9e21c7d2584dea",
+    "runs/glm52-calibration-20260920-r5/038-auto-ep8-allgather-cap32768-r1-n1024/benchmark.log": "732ac96d64c12658fb9a07ae6f1cb63376602d5348621a39c4f5f7ca531e89cb",
+    "runs/glm52-calibration-20260920-r5/044-auto-ep8-allgather-cap32768-r2-n1024/benchmark.log": "f5df768c205d8a6890b3776e14a2d5799798c4fc44f75058ee3beec8f3f8bec0",
+    "runs/glm52-calibration-20260920-r5/045-routing-ep4-allgather-cap32768-r1/benchmark.log": "a6351befccb5eec8964b28e819f5eaa76bffa10de336a0c7e423a8c142b1d702",
+    "runs/glm52-calibration-20260920-r5/049-routing-ep4-allgather-cap32768-r2/benchmark.log": "bb774f55ab1c564b4bd762b8940a9321e993397bec336ceb0976fae5322f01b1",
+    "runs/glm52-calibration-20260920-r5/046-routing-ep4-allreduce-cap32768-r1/benchmark.log": "4f8aa56e2d2ee5f756193382680ef63baca7f2e58e0df83770bff65352e7ddec",
+    "runs/glm52-calibration-20260920-r5/050-routing-ep4-allreduce-cap32768-r2/benchmark.log": "8b50701cb7b142e1c4d52cfff3a803c1a3db0b713aaba48da71ac6521dd27430",
+    "runs/glm52-calibration-20260920-r5/047-routing-ep8-allgather-cap32768-r1/benchmark.log": "4dbc32d7598850695abf44be3ebd99c3bde121b5cf76768185d2f09b040685f2",
+    "runs/glm52-calibration-20260920-r5/051-routing-ep8-allgather-cap32768-r2/benchmark.log": "43186813816ac3e0b4bfb3316238fb1845818db3fbbf98ee1c2a2b28f13d2201",
+    "runs/glm52-calibration-20260920-r5/048-routing-ep8-allreduce-cap32768-r1/benchmark.log": "e63e3553e18663ae4f6eb4ff4c233e586f9f5e2df25d48d7695f48a0cff80d7c",
+    "runs/glm52-calibration-20260920-r5/052-routing-ep8-allreduce-cap32768-r2/benchmark.log": "6d2086ba6ed8e05021d434f202d938e1addcbe4af5784b7d6ece2c87ae75a345",
+    "runs/glm52-calibration-20260920-r5/053-prefill-ep4-allgather-cap32768-r1/benchmark.log": "271670cc50951a0bc0bbae54296386d87d8ccfc87a252c46161ee9413c9fa537",
+    "runs/glm52-calibration-20260920-r5/057-prefill-ep4-allgather-cap32768-r2/benchmark.log": "758a1c7dc9c02ef140c16c52926daade6d81911731e323ebfabf0d4097cc4009",
+    "runs/glm52-calibration-20260920-r5/054-prefill-ep4-allreduce-cap32768-r1/benchmark.log": "01bcc6569e30dc8475f5ce0013663579684c13347b2b3169c9bb937f63ca3f13",
+    "runs/glm52-calibration-20260920-r5/058-prefill-ep4-allreduce-cap32768-r2/benchmark.log": "99a7ec8d90c376dacb4959a3a57999855f97d72f854ae102095d557a92aa56a4",
+    "runs/glm52-calibration-20260920-r5/055-prefill-ep8-allgather-cap32768-r1/benchmark.log": "e8ccddf3f62885049904db39189577722d0c072a3211dcaddb9123101206d9ac",
+    "runs/glm52-calibration-20260920-r5/059-prefill-ep8-allgather-cap32768-r2/benchmark.log": "7d914cf32e84592d0b6b2bf950f13442ea4cf13291d1ab838f542787976b6a8b",
+    "runs/glm52-calibration-20260920-r5/056-prefill-ep8-allreduce-cap32768-r1/benchmark.log": "24af9508df12d6be46ddf32192510c92b4f85dacca7eb0378143a5281fb1e760",
+    "runs/glm52-calibration-20260920-r5/060-prefill-ep8-allreduce-cap32768-r2/benchmark.log": "a47937d9d68d09781cfee1f9b530ab9a5ec3ca771c27ddd28857344fadc6566e"
+  },
+  "groups": 110,
+  "complete_groups": 110,
+  "raw_performance_samples": 44000,
+  "repeat_medians": 440,
+  "pooled_medians": 220,
+  "native_comparison_counts": {
+    "FAIL": 220
+  },
+  "phase_groups": {
+    "core": 84,
+    "auto": 6,
+    "routing": 12,
+    "prefill": 8
+  },
+  "rows": [
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 203.34550000000002,
+        "mega_us": 196.1455,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.036707444218705,
+        "mega_latency_change_percent": -3.540771740707327
+      },
+      "repeat_signed_changes": [
+        -1.2809964770766014,
+        -3.4461242862873
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 258.2105,
+        "mega_us": 240.785,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0723695412920242,
+        "mega_latency_change_percent": -6.748563671887863
+      },
+      "repeat_signed_changes": [
+        -8.32265593913789,
+        -2.7774189641948888
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 287.9855,
+        "mega_us": 272.481,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0569012151305963,
+        "mega_latency_change_percent": -5.3837780027119475
+      },
+      "repeat_signed_changes": [
+        -5.92155057253575,
+        -5.337525321312764
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 319.6825,
+        "mega_us": 306.62600000000003,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0425811901143411,
+        "mega_latency_change_percent": -4.084208550671365
+      },
+      "repeat_signed_changes": [
+        -3.453143970409689,
+        -4.711254733401116
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 344.275,
+        "mega_us": 306.94599999999997,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1216142253034735,
+        "mega_latency_change_percent": -10.842785563866098
+      },
+      "repeat_signed_changes": [
+        -11.893937331554715,
+        -8.463509812462345
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 372.226,
+        "mega_us": 324.13000000000005,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1483849072902845,
+        "mega_latency_change_percent": -12.921182292478207
+      },
+      "repeat_signed_changes": [
+        -12.61697879296536,
+        -13.165301468673086
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 437.69849999999997,
+        "mega_us": 354.4675,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2348057297213426,
+        "mega_latency_change_percent": -19.015600921638985
+      },
+      "repeat_signed_changes": [
+        -20.58533391973959,
+        -16.90719046539192
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 203.93800000000002,
+        "mega_us": 199.87349999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.020335362116539,
+        "mega_latency_change_percent": -1.9930076788043594
+      },
+      "repeat_signed_changes": [
+        -2.837239748712772,
+        -0.6878802174541065
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 254.992,
+        "mega_us": 246.0655,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0362769262655676,
+        "mega_latency_change_percent": -3.500698061115648
+      },
+      "repeat_signed_changes": [
+        -0.4734819681438962,
+        -5.286372385917848
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 291.8895,
+        "mega_us": 278.14549999999997,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0494129870876934,
+        "mega_latency_change_percent": -4.708631177209188
+      },
+      "repeat_signed_changes": [
+        -4.055745755092188,
+        -5.2883129235524855
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 328.53049999999996,
+        "mega_us": 307.075,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.069870552796548,
+        "mega_latency_change_percent": -6.530748286688748
+      },
+      "repeat_signed_changes": [
+        -8.782650587898766,
+        -4.7323831050017695
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 342.978,
+        "mega_us": 315.217,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.088069488637986,
+        "mega_latency_change_percent": -8.094105161263998
+      },
+      "repeat_signed_changes": [
+        -8.125574929685886,
+        -8.692944083832433
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 374.946,
+        "mega_us": 331.87449999999995,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.129782493080969,
+        "mega_latency_change_percent": -11.487387517135817
+      },
+      "repeat_signed_changes": [
+        -11.055564387811112,
+        -12.01285101256243
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 442.52950000000004,
+        "mega_us": 358.084,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2358259514527319,
+        "mega_latency_change_percent": -19.082456649782674
+      },
+      "repeat_signed_changes": [
+        -18.9358662951133,
+        -19.202268529123366
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 208.4495,
+        "mega_us": 194.48100000000002,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.071824496994565,
+        "mega_latency_change_percent": -6.701143442416502
+      },
+      "repeat_signed_changes": [
+        -6.1416145400515765,
+        -9.53736998334821
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 254.96099999999998,
+        "mega_us": 237.8095,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0721228546378507,
+        "mega_latency_change_percent": -6.727107283074652
+      },
+      "repeat_signed_changes": [
+        -5.121693994544252,
+        -8.591790093355801
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 294.04999999999995,
+        "mega_us": 273.87300000000005,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0736728337587127,
+        "mega_latency_change_percent": -6.86175820438698
+      },
+      "repeat_signed_changes": [
+        -7.05396171602758,
+        -6.754567095196817
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 324.76950000000005,
+        "mega_us": 307.458,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0563052514489786,
+        "mega_latency_change_percent": -5.3303958653752925
+      },
+      "repeat_signed_changes": [
+        -5.608727415602033,
+        -4.951492929530266
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 387.4105,
+        "mega_us": 306.691,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.263194876928244,
+        "mega_latency_change_percent": -20.835651072957507
+      },
+      "repeat_signed_changes": [
+        -21.39360987541665,
+        -15.419440484625813
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 374.226,
+        "mega_us": 327.45750000000004,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1428231144499668,
+        "mega_latency_change_percent": -12.497394622500835
+      },
+      "repeat_signed_changes": [
+        -13.931678410078884,
+        -11.780287001376621
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 443.49100000000004,
+        "mega_us": 353.746,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2536989817552708,
+        "mega_latency_change_percent": -20.23603635699486
+      },
+      "repeat_signed_changes": [
+        -20.706301468879886,
+        -19.892032779318804
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 207.56949999999998,
+        "mega_us": 202.7055,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.023995402196783,
+        "mega_latency_change_percent": -2.343311517347191
+      },
+      "repeat_signed_changes": [
+        -2.8011003468484397,
+        -1.9863471962299872
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 257.218,
+        "mega_us": 248.09750000000003,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0367617569705458,
+        "mega_latency_change_percent": -3.545824942266873
+      },
+      "repeat_signed_changes": [
+        -3.7982232617939315,
+        -3.1946755407653904
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 303.33,
+        "mega_us": 278.946,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0874147684498072,
+        "mega_latency_change_percent": -8.038769656809396
+      },
+      "repeat_signed_changes": [
+        -9.356869238401222,
+        -7.1892993706387465
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 329.8255,
+        "mega_us": 311.2825,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0595696834868646,
+        "mega_latency_change_percent": -5.622063788275911
+      },
+      "repeat_signed_changes": [
+        -3.5868495104613207,
+        -7.043838262206914
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 352.882,
+        "mega_us": 312.30649999999997,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1299220477319558,
+        "mega_latency_change_percent": -11.498319551578163
+      },
+      "repeat_signed_changes": [
+        -10.160004284067492,
+        -11.335551635321405
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 374.09950000000003,
+        "mega_us": 331.7305,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1277211471360036,
+        "mega_latency_change_percent": -11.325596532473314
+      },
+      "repeat_signed_changes": [
+        -11.222285207011984,
+        -11.494533756905422
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 441.4425,
+        "mega_us": 354.6575,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2447008733778362,
+        "mega_latency_change_percent": -19.659412041205815
+      },
+      "repeat_signed_changes": [
+        -20.74476885038221,
+        -18.778323337694026
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 182.24099999999999,
+        "mega_us": 196.785,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9260919277383947,
+        "mega_latency_change_percent": 7.980641019309598
+      },
+      "repeat_signed_changes": [
+        7.712559842143141,
+        8.257272777077752
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 238.91299999999998,
+        "mega_us": 242.528,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9850945045520517,
+        "mega_latency_change_percent": 1.5131030961061276
+      },
+      "repeat_signed_changes": [
+        0.07300723435321732,
+        5.1533811113123384
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 272.36949999999996,
+        "mega_us": 273.33050000000003,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9964841098962609,
+        "mega_latency_change_percent": 0.352829520192266
+      },
+      "repeat_signed_changes": [
+        1.0077203939555357,
+        -0.4445965684246711
+      ],
+      "repeat_sign_reversal": true
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 305.0265,
+        "mega_us": 306.561,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9949944709209587,
+        "mega_latency_change_percent": 0.50307104464693
+      },
+      "repeat_signed_changes": [
+        -0.9625504191152157,
+        2.6702678295189353
+      ],
+      "repeat_sign_reversal": true
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 308.88100000000003,
+        "mega_us": 308.771,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0003562510728015,
+        "mega_latency_change_percent": -0.03561242031721035
+      },
+      "repeat_signed_changes": [
+        1.87522175739121,
+        -0.8917091251887777
+      ],
+      "repeat_sign_reversal": true
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 311.3935,
+        "mega_us": 321.10550000000006,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9697544887895099,
+        "mega_latency_change_percent": 3.118883342137857
+      },
+      "repeat_signed_changes": [
+        1.3046974543931222,
+        4.297096268706113
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 352.163,
+        "mega_us": 355.891,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9895248826185545,
+        "mega_latency_change_percent": 1.0586007047872714
+      },
+      "repeat_signed_changes": [
+        0.772004163998341,
+        1.5152145561601937
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 194.0975,
+        "mega_us": 196.833,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9861024320108924,
+        "mega_latency_change_percent": 1.4093432424425956
+      },
+      "repeat_signed_changes": [
+        -0.6581169878511317,
+        4.512632518633142
+      ],
+      "repeat_sign_reversal": true
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 244.674,
+        "mega_us": 247.05749999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9903524483166876,
+        "mega_latency_change_percent": 0.9741533632506849
+      },
+      "repeat_signed_changes": [
+        4.986744421343836,
+        0.2779191610719378
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 277.9375,
+        "mega_us": 279.698,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9937057111598939,
+        "mega_latency_change_percent": 0.633415785923086
+      },
+      "repeat_signed_changes": [
+        -0.8919860627177645,
+        2.617750381606898
+      ],
+      "repeat_sign_reversal": true
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 323.6035,
+        "mega_us": 309.186,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0466305072027842,
+        "mega_latency_change_percent": -4.455297918594825
+      },
+      "repeat_signed_changes": [
+        3.8914546360432123,
+        -6.014210342901761
+      ],
+      "repeat_sign_reversal": true
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 299.8255,
+        "mega_us": 316.77,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9465085077501025,
+        "mega_latency_change_percent": 5.651453929035388
+      },
+      "repeat_signed_changes": [
+        4.599739457225294,
+        5.297802068893742
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 310.03400000000005,
+        "mega_us": 330.978,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9367208696650534,
+        "mega_latency_change_percent": 6.75538811872245
+      },
+      "repeat_signed_changes": [
+        6.220671631703278,
+        7.2674884462538225
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 4,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 349.314,
+        "mega_us": 357.34600000000006,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9775231848124786,
+        "mega_latency_change_percent": 2.299363896093487
+      },
+      "repeat_signed_changes": [
+        5.276112606267547,
+        -0.5255272265870636
+      ],
+      "repeat_sign_reversal": true
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 179.6015,
+        "mega_us": 129.9205,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.382395387948784,
+        "mega_latency_change_percent": -27.6617956976974
+      },
+      "repeat_signed_changes": [
+        -21.90292164002464,
+        -33.927247255158036
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 197.5205,
+        "mega_us": 153.95350000000002,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2829880450915372,
+        "mega_latency_change_percent": -22.05695105065043
+      },
+      "repeat_signed_changes": [
+        -22.52815127441665,
+        -21.72015488613245
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 219.042,
+        "mega_us": 176.91299999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2381339980668467,
+        "mega_latency_change_percent": -19.23329772372423
+      },
+      "repeat_signed_changes": [
+        -19.712810518551606,
+        -17.828058323560448
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 227.937,
+        "mega_us": 186.41750000000002,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2227231885418481,
+        "mega_latency_change_percent": -18.215340203652765
+      },
+      "repeat_signed_changes": [
+        -18.449379490529083,
+        -17.663456608731753
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 278.386,
+        "mega_us": 188.0805,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.4801428111898896,
+        "mega_latency_change_percent": -32.43895167142027
+      },
+      "repeat_signed_changes": [
+        -21.309239829390126,
+        -35.203460049453824
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 261.71299999999997,
+        "mega_us": 193.457,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.3528225910667486,
+        "mega_latency_change_percent": -26.080477469594555
+      },
+      "repeat_signed_changes": [
+        -25.927495685624578,
+        -26.001931341204887
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": null,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 308.833,
+        "mega_us": 210.5135,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.4670460564286854,
+        "mega_latency_change_percent": -31.835814177889034
+      },
+      "repeat_signed_changes": [
+        -31.969473773013103,
+        -31.530008179787195
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 177.377,
+        "mega_us": 129.13649999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.373562083531767,
+        "mega_latency_change_percent": -27.196592568371337
+      },
+      "repeat_signed_changes": [
+        -20.00968265867066,
+        -34.52514864213402
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 197.6005,
+        "mega_us": 157.1365,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2575085992115136,
+        "mega_latency_change_percent": -20.47768097752789
+      },
+      "repeat_signed_changes": [
+        -20.082380889264996,
+        -20.55778096893659
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 222.449,
+        "mega_us": 181.56850000000003,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2251519399014696,
+        "mega_latency_change_percent": -18.377470791057714
+      },
+      "repeat_signed_changes": [
+        -18.39095151282759,
+        -18.423468216935657
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 240.43349999999998,
+        "mega_us": 189.80849999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2667161902654518,
+        "mega_latency_change_percent": -21.055718109165323
+      },
+      "repeat_signed_changes": [
+        -18.69330439668373,
+        -22.856295947391814
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 245.1215,
+        "mega_us": 194.0015,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2635031172439388,
+        "mega_latency_change_percent": -20.854963762868618
+      },
+      "repeat_signed_changes": [
+        -21.50424266801555,
+        -20.523229774031982
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 268.00199999999995,
+        "mega_us": 199.297,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.3447367496751077,
+        "mega_latency_change_percent": -25.636002716397634
+      },
+      "repeat_signed_changes": [
+        -26.917935394889938,
+        -23.767150300722793
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 344.06550000000004,
+        "mega_us": 213.057,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.6148988298905929,
+        "mega_latency_change_percent": -38.0766162256896
+      },
+      "repeat_signed_changes": [
+        -31.111954063782566,
+        -39.99742603703428
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 204.17649999999998,
+        "mega_us": 128.96049999999997,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.5832483589936455,
+        "mega_latency_change_percent": -36.83871552308911
+      },
+      "repeat_signed_changes": [
+        -24.1365387822454,
+        -42.19667025991137
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 204.6415,
+        "mega_us": 153.168,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.3360590985062153,
+        "mega_latency_change_percent": -25.15301148594005
+      },
+      "repeat_signed_changes": [
+        -25.825687852706437,
+        -23.512984707431727
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 230.242,
+        "mega_us": 175.937,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.3086616231946662,
+        "mega_latency_change_percent": -23.586052935606872
+      },
+      "repeat_signed_changes": [
+        -24.172485463743097,
+        -20.86318604866191
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 244.8335,
+        "mega_us": 185.9695,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.3165250215761186,
+        "mega_latency_change_percent": -24.04246150955649
+      },
+      "repeat_signed_changes": [
+        -24.805642773657834,
+        -23.441398552119985
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 297.5055,
+        "mega_us": 190.4495,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.5621227674527893,
+        "mega_latency_change_percent": -35.98454482354108
+      },
+      "repeat_signed_changes": [
+        -25.29653907682703,
+        -38.38066577066169
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 285.7455,
+        "mega_us": 192.289,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.486021041245209,
+        "mega_latency_change_percent": -32.70620184744817
+      },
+      "repeat_signed_changes": [
+        -33.05976526394725,
+        -32.2561351042308
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": null,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 336.8975,
+        "mega_us": 211.4255,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.5934572698184466,
+        "mega_latency_change_percent": -37.24337521056107
+      },
+      "repeat_signed_changes": [
+        -36.11093050437665,
+        -37.97938464650078
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 173.713,
+        "mega_us": 129.937,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.3369017292995835,
+        "mega_latency_change_percent": -25.200186514538338
+      },
+      "repeat_signed_changes": [
+        -22.32809538077256,
+        -28.005514344595984
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 207.42450000000002,
+        "mega_us": 156.3855,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.3263665749062414,
+        "mega_latency_change_percent": -24.60606148261175
+      },
+      "repeat_signed_changes": [
+        -24.87895196843001,
+        -24.3056629300348
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 277.1055,
+        "mega_us": 178.96099999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.54841278267332,
+        "mega_latency_change_percent": -35.41773800953067
+      },
+      "repeat_signed_changes": [
+        -38.51901267511676,
+        -23.163083015862775
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 244.1935,
+        "mega_us": 189.96849999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.285442060131022,
+        "mega_latency_change_percent": -22.20575076732183
+      },
+      "repeat_signed_changes": [
+        -21.367463096676897,
+        -22.997888667830622
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 257.71299999999997,
+        "mega_us": 193.0085,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.3352417121525735,
+        "mega_latency_change_percent": -25.10719288510862
+      },
+      "repeat_signed_changes": [
+        -34.87317554640652,
+        -24.525065087648766
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 284.512,
+        "mega_us": 198.56099999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.4328694960238921,
+        "mega_latency_change_percent": -30.209973568777425
+      },
+      "repeat_signed_changes": [
+        -30.317171250614816,
+        -30.186737991909308
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 336.73900000000003,
+        "mega_us": 215.298,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.564060047004617,
+        "mega_latency_change_percent": -36.06383578973627
+      },
+      "repeat_signed_changes": [
+        -35.17161006714652,
+        -36.375167183527104
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 143.345,
+        "mega_us": 126.9285,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1293365950121526,
+        "mega_latency_change_percent": -11.452439917681122
+      },
+      "repeat_signed_changes": [
+        -9.402898340173627,
+        -11.517670806390923
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 173.9535,
+        "mega_us": 152.11249999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1435845180376367,
+        "mega_latency_change_percent": -12.555654240932213
+      },
+      "repeat_signed_changes": [
+        -10.517844029960354,
+        -13.472879287439433
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 195.61650000000003,
+        "mega_us": 177.89,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0996486592838273,
+        "mega_latency_change_percent": -9.061863390869396
+      },
+      "repeat_signed_changes": [
+        -7.56345613710846,
+        -10.574638232098554
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 203.681,
+        "mega_us": 185.2335,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.099590516834158,
+        "mega_latency_change_percent": -9.057054904482998
+      },
+      "repeat_signed_changes": [
+        -9.620286175405434,
+        -8.731776677573544
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 210.84950000000003,
+        "mega_us": 189.74550000000002,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1112226640420986,
+        "mega_latency_change_percent": -10.009034880329338
+      },
+      "repeat_signed_changes": [
+        -9.609765383334123,
+        -10.511338813622151
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 210.48149999999998,
+        "mega_us": 194.082,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.084497789594089,
+        "mega_latency_change_percent": -7.791421098766394
+      },
+      "repeat_signed_changes": [
+        -8.577233840304189,
+        -7.228112463138214
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": null,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 234.4015,
+        "mega_us": 211.778,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1068264881149128,
+        "mega_latency_change_percent": -9.651602058860554
+      },
+      "repeat_signed_changes": [
+        -9.287212911769016,
+        -9.83047970636285
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 142.065,
+        "mega_us": 128.785,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.103117599099274,
+        "mega_latency_change_percent": -9.347833738077638
+      },
+      "repeat_signed_changes": [
+        -9.864364981504314,
+        -7.1382403888414885
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 32,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 173.361,
+        "mega_us": 159.68099999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.085670806169801,
+        "mega_latency_change_percent": -7.891048159620684
+      },
+      "repeat_signed_changes": [
+        -2.0477301119405156,
+        -8.762138409171127
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 64,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 195.553,
+        "mega_us": 183.105,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.067982851369433,
+        "mega_latency_change_percent": -6.365537731458993
+      },
+      "repeat_signed_changes": [
+        -6.113844352461461,
+        -6.474724927907305
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 202.51350000000002,
+        "mega_us": 188.99349999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0715368517964905,
+        "mega_latency_change_percent": -6.676098136667452
+      },
+      "repeat_signed_changes": [
+        -6.114399901961532,
+        -7.199214417970701
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 256,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 211.3605,
+        "mega_us": 193.92100000000002,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0899309512636588,
+        "mega_latency_change_percent": -8.251068671771677
+      },
+      "repeat_signed_changes": [
+        -8.072937719043793,
+        -8.2993421828213
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 512,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 209.377,
+        "mega_us": 199.42499999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0499034724833898,
+        "mega_latency_change_percent": -4.753148626639991
+      },
+      "repeat_signed_changes": [
+        -5.274898839517483,
+        -4.403073144861125
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "core",
+      "ep": 8,
+      "communication": "alltoall",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 230.19400000000002,
+        "mega_us": 214.3215,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0740592987637734,
+        "mega_latency_change_percent": -6.895270945376519
+      },
+      "repeat_signed_changes": [
+        -6.647504504129797,
+        -7.336443659313607
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "auto",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": "auto",
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 204.2095,
+        "mega_us": 174.30499999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1715642121568517,
+        "mega_latency_change_percent": -14.644029783139379
+      },
+      "repeat_signed_changes": [
+        -18.45012179232993,
+        -13.952846794807627
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "auto",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": "auto",
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 313.66550000000007,
+        "mega_us": 289.58549999999997,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0831533346800861,
+        "mega_latency_change_percent": -7.6769679802209945
+      },
+      "repeat_signed_changes": [
+        -8.368749930490782,
+        -7.0120965547705865
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "auto",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": "auto",
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 423.043,
+        "mega_us": 332.625,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2718316422397595,
+        "mega_latency_change_percent": -21.373241018052536
+      },
+      "repeat_signed_changes": [
+        -21.836358355980657,
+        -20.894771899893637
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "auto",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": "auto",
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 161.233,
+        "mega_us": 119.8405,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.3453965896337214,
+        "mega_latency_change_percent": -25.672473997258628
+      },
+      "repeat_signed_changes": [
+        -25.9188164239899,
+        -25.71246356807917
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "auto",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": "auto",
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 253.3305,
+        "mega_us": 173.361,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.4612888711994048,
+        "mega_latency_change_percent": -31.567260949629052
+      },
+      "repeat_signed_changes": [
+        -22.720299634320686,
+        -34.11786119054588
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "auto",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": "auto",
+      "graph": true,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 303.87399999999997,
+        "mega_us": 199.15349999999998,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.5258280672948252,
+        "mega_latency_change_percent": -34.46181641074919
+      },
+      "repeat_signed_changes": [
+        -33.829063659550904,
+        -35.435114152549616
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 192.8975,
+        "mega_us": 195.44099999999997,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9869858422746508,
+        "mega_latency_change_percent": 1.3185759276299391
+      },
+      "repeat_signed_changes": [
+        1.684072765344835,
+        1.42056450988588
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 308.51399999999995,
+        "mega_us": 307.37899999999996,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.003692509898204,
+        "mega_latency_change_percent": -0.3678925429640101
+      },
+      "repeat_signed_changes": [
+        0.9151754331470752,
+        -1.7650511824636617
+      ],
+      "repeat_sign_reversal": true
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 430.4825,
+        "mega_us": 353.9705,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2161536060208407,
+        "mega_latency_change_percent": -17.773544801472763
+      },
+      "repeat_signed_changes": [
+        -17.868281155654564,
+        -17.536141085276736
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 201.1055,
+        "mega_us": 195.649,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0278892302030678,
+        "mega_latency_change_percent": -2.7132524968238037
+      },
+      "repeat_signed_changes": [
+        -0.8969272597088462,
+        -3.4149620477996745
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 313.44149999999996,
+        "mega_us": 306.0175,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0242600504873087,
+        "mega_latency_change_percent": -2.368544050484689
+      },
+      "repeat_signed_changes": [
+        -0.4019865939184575,
+        -3.013429361935449
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 430.0505,
+        "mega_us": 355.5545,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2095206220143466,
+        "mega_latency_change_percent": -17.322616762449982
+      },
+      "repeat_signed_changes": [
+        -17.259166301908234,
+        -17.325991834344556
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 154.3855,
+        "mega_us": 124.9925,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.2351581094865691,
+        "mega_latency_change_percent": -19.038705059736827
+      },
+      "repeat_signed_changes": [
+        -21.01599873277363,
+        -14.163418254874326
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 215.08849999999998,
+        "mega_us": 186.64049999999997,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1524213662093705,
+        "mega_latency_change_percent": -13.226183640687438
+      },
+      "repeat_signed_changes": [
+        -13.895373575445324,
+        -12.119530698450841
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 294.6905,
+        "mega_us": 209.8095,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.404562233835932,
+        "mega_latency_change_percent": -28.803439540806362
+      },
+      "repeat_signed_changes": [
+        -27.85348430054202,
+        -29.341093658081384
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 16,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 156.70450000000002,
+        "mega_us": 125.48799999999999,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.24876083768966,
+        "mega_latency_change_percent": -19.9206149153343
+      },
+      "repeat_signed_changes": [
+        -19.935513763622392,
+        -20.014561643220496
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 128,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 228.5135,
+        "mega_us": 184.43300000000002,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.239005492509475,
+        "mega_latency_change_percent": -19.29010758664148
+      },
+      "repeat_signed_changes": [
+        -19.57418592754091,
+        -19.13104247037001
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "routing",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 1024,
+      "knobs": null,
+      "graph": true,
+      "precomputed_routing": true,
+      "pooled": {
+        "split_us": 317.842,
+        "mega_us": 208.785,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.5223411643556768,
+        "mega_latency_change_percent": -34.31170204063654
+      },
+      "repeat_signed_changes": [
+        -34.3849886424351,
+        -34.49126881421037
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "prefill",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 4096,
+      "knobs": null,
+      "graph": false,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 1390.1870000000001,
+        "mega_us": 1319.753,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.053369077395543,
+        "mega_latency_change_percent": -5.066512634631182
+      },
+      "repeat_signed_changes": [
+        -4.188147224859218,
+        -6.350909289663409
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "prefill",
+      "ep": 4,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16384,
+      "knobs": null,
+      "graph": false,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 2833.4695,
+        "mega_us": 2965.6685,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 0.9554235411004298,
+        "mega_latency_change_percent": 4.665622834479066
+      },
+      "repeat_signed_changes": [
+        2.9889537644883557,
+        6.827821789269617
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "prefill",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 4096,
+      "knobs": null,
+      "graph": false,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 1395.6100000000001,
+        "mega_us": 1285.6385,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0855384309041773,
+        "mega_latency_change_percent": -7.87981599443971
+      },
+      "repeat_signed_changes": [
+        -7.748262060323096,
+        -26.41935857138803
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "prefill",
+      "ep": 4,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 16384,
+      "knobs": null,
+      "graph": false,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 2965.3109999999997,
+        "mega_us": 2926.7995,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.013158229663494,
+        "mega_latency_change_percent": -1.2987339270653098
+      },
+      "repeat_signed_changes": [
+        -9.096434945886056,
+        0.9449199959603138
+      ],
+      "repeat_sign_reversal": true
+    },
+    {
+      "phase": "prefill",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 4096,
+      "knobs": null,
+      "graph": false,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 1174.3429999999998,
+        "mega_us": 1052.248,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1160325322547535,
+        "mega_latency_change_percent": -10.39687723263134
+      },
+      "repeat_signed_changes": [
+        -9.35043809064775,
+        -11.373122854811657
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "prefill",
+      "ep": 8,
+      "communication": "allgather",
+      "capacity": 32768,
+      "tokens": 16384,
+      "knobs": null,
+      "graph": false,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 2035.9115000000002,
+        "mega_us": 1946.83,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.0457572053029798,
+        "mega_latency_change_percent": -4.375509446260317
+      },
+      "repeat_signed_changes": [
+        -4.013251741746105,
+        -4.735540685897344
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "prefill",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 4096,
+      "knobs": null,
+      "graph": false,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 1209.0494999999999,
+        "mega_us": 1059.253,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.1414171118703462,
+        "mega_latency_change_percent": -12.389608531329777
+      },
+      "repeat_signed_changes": [
+        -12.660845133589682,
+        -12.066287349539916
+      ],
+      "repeat_sign_reversal": false
+    },
+    {
+      "phase": "prefill",
+      "ep": 8,
+      "communication": "allreduce",
+      "capacity": 32768,
+      "tokens": 16384,
+      "knobs": null,
+      "graph": false,
+      "precomputed_routing": false,
+      "pooled": {
+        "split_us": 2084.6385,
+        "mega_us": 1953.0639999999999,
+        "sample_count_per_arm": 200,
+        "speedup_split_over_mega": 1.067368248045123,
+        "mega_latency_change_percent": -6.31162189511516
+      },
+      "repeat_signed_changes": [
+        -6.257586972257235,
+        -6.207687171126574
+      ],
+      "repeat_sign_reversal": false
+    }
+  ],
+  "full_matrix_complete": true,
+  "equivalence_claim": false,
+  "scope": "Exact direct parsing of raw rank-MAX samples and repeat/pooled arithmetic. Numerical/reference/lifecycle acceptance is independently reviewed."
+}

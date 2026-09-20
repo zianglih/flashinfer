@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "scope": "Independent local source review only; no GPU execution or performance claim",
+  "reviewed_at": "2026-09-20T17:44:05.187490+00:00",
+  "review_status": "passed",
+  "issue_count": 0,
+  "runtime_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "prior_benchmark_commit": "6f88c235b658104053761aad15158e954f439a41",
+  "source_sha256": {
+    "benchmarks/w4a16_contract_reference.py": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+    "benchmarks/bench_cute_dsl_moe_distributed.py": "8d7aa29da0c41348a133273a478acfd871eeea3ef819950c32cde4fe3ec71041",
+    "tests/test_w4a16_contract_reference.py": "6590492d33b09608d118bf43571dbe91770ba1e2c3918a3f16ffe2675f5085b7",
+    "tests/moe_ep/w4a16_reference.py": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5"
+  },
+  "automated_source_checks": {
+    "_benchmark_distributed_ep.run_once_unchanged": true,
+    "_benchmark_distributed_gather_ep.run_once_unchanged": true,
+    "_benchmark_distributed_megamoe.run_once_unchanged": true,
+    "timing_loop_unchanged": true,
+    "independent_dequant_matches_pinned_reference": true,
+    "independent_swiglu_matches_pinned_reference": true,
+    "original_reference_sha": true,
+    "original_crosspair_math_reporting_and_failure_unchanged_except_explicit_enforce": true,
+    "module_final_sha": true,
+    "tracked_changes_do_not_touch_runtime": true
+  },
+  "manual_checks": [
+    "A2A atomically compacted receive rows are mapped using exact BF16 hidden-state bytes, full original K8 IDs and FP32 score bytes. Valid receive rows preserve non-owner IDs; only unreceived padding rows have all IDs=E.",
+    "Mapping checks source-rank block, requires at least one owned route, rejects missing/duplicate/ambiguous/unmatched payloads and constructs independent expected partials in native receive order. It does not add timed payload or read production tracking metadata.",
+    "A2A reference places each independent BF16 owner partial at the first original top-k slot for that owner; duplicate slots are zero. It then applies the native K8 pairwise FP32 tree and one BF16 cast; no rank-order or NCCL reduction is substituted.",
+    "Split owner-local reference uses ascending original route slots with FP32 FMA and one BF16 cast. Gather variants use trusted actual NCCL BF16 SUM with the original padded collective shape.",
+    "Mega reference uses BF16 expert terms, initial FP32 multiplication then ordered FP32 FMAs and final BF16 cast. Independent expert math decodes canonical NVFP4 weights and uses cuBLASLt FP32-output GEMMs plus source-matched SwiGLU.",
+    "Input and route identity is exact and cannot be waived by output tolerances. Padding and zero-token source ranks remain valid, with all-rank error reduction.",
+    "Original cross-pair CSV PASS/FAIL remains visible; default cross-pair policy still raises on FAIL. Per-path policy is explicit, preserves atol=rtol=.01, and requires independent per-variant checks before latency acceptance.",
+    "Reference outputs retained for the oracle are CPU tensors; temporary GPU work is outside unchanged timed callables. Additional setup changes allocator/cache history and is part of the new r4 methodology, not identical r3 execution state."
+  ],
+  "resolved_review_findings": [
+    {
+      "finding": "Canonical partial rows initially compared directly with atomic compact receive rows",
+      "resolution": "Exact payload-identity mapping added outside timed dispatch"
+    },
+    {
+      "finding": "Initial mapping incorrectly sanitized non-owned IDs in valid receive rows",
+      "resolution": "Retains complete original K8 IDs, as actual legacy sanitizer modifies padding rows only"
+    }
+  ],
+  "local_unittest": {
+    "command": "python3 -B tests/test_w4a16_contract_reference.py",
+    "tests": 12,
+    "passed": 5,
+    "skipped": 7,
+    "failures": 0,
+    "skip_reason": "Local environment has no Torch; numerical Torch and CUDA checks await actual runtime"
+  },
+  "required_next_gate": "Run new reference numerical tests on actual B300 pinned source/runtime before full r4 dispatch; this review is not GPU validation.",
+  "boundaries": [
+    "cuBLASLt expert arithmetic and NCCL are trusted primitives, not independently verified library implementations.",
+    "Per-path PASS does not imply cross-path equivalence when original cross-pair check fails.",
+    "No tolerance relaxation, measured speedup, or root-cause generalization follows from this source review."
+  ]
+}

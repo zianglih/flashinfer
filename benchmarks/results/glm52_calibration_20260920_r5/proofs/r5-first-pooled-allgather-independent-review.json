@@ -1,0 +1,615 @@
+{
+  "reviewed_at": "2026-09-20T19:27:40.921348+00:00",
+  "status": "passed",
+  "issue_count": 0,
+  "scope": "Only jobs 011/012/023/024, EP4/allgather core; local raw pooling audit, no HAI/GPU/source/cache mutation. Full60-job study and eager prefill not covered.",
+  "source": {
+    "benchmark_commit": "bd8391858db504c8997e704c7952f4d48ccab591",
+    "benchmark_sha256": {
+      "benchmarks/bench_cute_dsl_moe_distributed.py": "8d7aa29da0c41348a133273a478acfd871eeea3ef819950c32cde4fe3ec71041",
+      "benchmarks/moe_distributed_layout.py": "a66953bc8db2c38cb6fa23f5fa84c89721a0a09a9aad5b83eeba0c44d1a83d76",
+      "benchmarks/sglang_glm_routing.py": "29016eaa2713851fb09d5c141300ea42d0d7e6d444ec77de9dba2bdd6ffbeac0",
+      "benchmarks/w4a16_contract_reference.py": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+      "tests/moe_ep/w4a16_reference.py": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5"
+    },
+    "runtime_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f"
+  },
+  "transfer": "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T192252Z",
+  "transfer_receipt_sha256": "8b3151e47dae0059ad20fdb040644d41c076a9ac5cd43a1ba1dc165c79e102d4",
+  "summary_sha256": "fb7e589b812ea5b75bf713fc0b9da2765eaed0b56c70570c789d9c2c084966dc",
+  "review_script_sha256": "0c2fc836255958f70053b7418302121eb94c0f90babae1b00f532323287da85d",
+  "raw_file_sha256": {
+    "runs/glm52-calibration-20260920-r5/011-core-ep4-allgather-caplive-r1/invocation.json": "018b3af58945e2d9dd62cf91ccb54eed31bc971c844c785bcf2a605539340005",
+    "runs/glm52-calibration-20260920-r5/011-core-ep4-allgather-caplive-r1/benchmark.log": "05b019436e62e9f0d71b86d0b99f5d3d41399dd1e9361f50fd5bfd75607bb6ef",
+    "runs/glm52-calibration-20260920-r5/011-core-ep4-allgather-caplive-r1/validation.json": "3842a7f004e3bb1fe94e617e1bec6ccdc8ecef97baf67151136a2bd6e9f1080a",
+    "runs/glm52-calibration-20260920-r5/011-core-ep4-allgather-caplive-r1/exit.json": "c0d22bddafd05bd884664bb844c4f3ba82aba396f1bf9ba9998d130dc529dca0",
+    "runs/glm52-calibration-20260920-r5/012-core-ep4-allgather-cap32768-r1/invocation.json": "ef6b43d3cbfa982c78aa1481049d717ff8ff1504fe92992bcaa9f15ad175fe77",
+    "runs/glm52-calibration-20260920-r5/012-core-ep4-allgather-cap32768-r1/benchmark.log": "3d1c36b7333ea6559c5d0951794a7dd9226844119c710e4c399f1eaf502e97cf",
+    "runs/glm52-calibration-20260920-r5/012-core-ep4-allgather-cap32768-r1/validation.json": "60058f8082c50f0338c28616219926990679022686cf5d6460276271d460c88c",
+    "runs/glm52-calibration-20260920-r5/012-core-ep4-allgather-cap32768-r1/exit.json": "a51a870ace97cb25ef2d733e764c4174bd6d16b13f3accef2597d8a784eb6e70",
+    "runs/glm52-calibration-20260920-r5/023-core-ep4-allgather-caplive-r2/invocation.json": "3d6254189b2a5a95254baa3bf0b607adb175e0d4e6184124df1d9b7e71ccaf47",
+    "runs/glm52-calibration-20260920-r5/023-core-ep4-allgather-caplive-r2/benchmark.log": "4c62a598591163432bb1a13ad3801bd68af3d9bf8fb577b634c2aaa61e56805b",
+    "runs/glm52-calibration-20260920-r5/023-core-ep4-allgather-caplive-r2/validation.json": "29b5b4964b76e0dfd8443dd629d8408c5317c49e73ab1f4a4e883a24cd779479",
+    "runs/glm52-calibration-20260920-r5/023-core-ep4-allgather-caplive-r2/exit.json": "37afe4be3885bd5b5a0e9e750a9b625c7b4914d576b554c400f48aed8a9b9a50",
+    "runs/glm52-calibration-20260920-r5/024-core-ep4-allgather-cap32768-r2/invocation.json": "83e6304f70dd8b7a806643a0cc1bf199f8e29fb14d771c69afec15838bc8d6b8",
+    "runs/glm52-calibration-20260920-r5/024-core-ep4-allgather-cap32768-r2/benchmark.log": "8f7b6dc5cee1e55169cc07a89ec4cd8e3f61174d02dcc5c979b6eb4d7dae38ba",
+    "runs/glm52-calibration-20260920-r5/024-core-ep4-allgather-cap32768-r2/validation.json": "cd91967b9220302df781ab2a63db6300dacf2998573efa04656a9b7c5d057d30",
+    "runs/glm52-calibration-20260920-r5/024-core-ep4-allgather-cap32768-r2/exit.json": "2bca36bb200931fb115b4525a08f5debf129e2be501072a7aa4834827df61cde"
+  },
+  "jobs": [
+    {
+      "job": "011-core-ep4-allgather-caplive-r1",
+      "log_sha256": "05b019436e62e9f0d71b86d0b99f5d3d41399dd1e9361f50fd5bfd75607bb6ef",
+      "raw_sample_count": 1400,
+      "result_medians_checked": 14,
+      "oracle_count": 14,
+      "partial_count": 7,
+      "graph_count": 14,
+      "wrapper_rank_count": 4,
+      "native_status_counts": {
+        "FAIL": 7
+      },
+      "oracle_max_abs": 0.0,
+      "oracle_bitwise_mismatches": 0,
+      "partial_max_abs": 0.0,
+      "graph_max_abs": 0.0
+    },
+    {
+      "job": "012-core-ep4-allgather-cap32768-r1",
+      "log_sha256": "3d1c36b7333ea6559c5d0951794a7dd9226844119c710e4c399f1eaf502e97cf",
+      "raw_sample_count": 1400,
+      "result_medians_checked": 14,
+      "oracle_count": 14,
+      "partial_count": 7,
+      "graph_count": 14,
+      "wrapper_rank_count": 4,
+      "native_status_counts": {
+        "FAIL": 7
+      },
+      "oracle_max_abs": 0.0,
+      "oracle_bitwise_mismatches": 0,
+      "partial_max_abs": 0.0,
+      "graph_max_abs": 0.0
+    },
+    {
+      "job": "023-core-ep4-allgather-caplive-r2",
+      "log_sha256": "4c62a598591163432bb1a13ad3801bd68af3d9bf8fb577b634c2aaa61e56805b",
+      "raw_sample_count": 1400,
+      "result_medians_checked": 14,
+      "oracle_count": 14,
+      "partial_count": 7,
+      "graph_count": 14,
+      "wrapper_rank_count": 4,
+      "native_status_counts": {
+        "FAIL": 7
+      },
+      "oracle_max_abs": 0.0,
+      "oracle_bitwise_mismatches": 0,
+      "partial_max_abs": 0.0,
+      "graph_max_abs": 0.0
+    },
+    {
+      "job": "024-core-ep4-allgather-cap32768-r2",
+      "log_sha256": "8f7b6dc5cee1e55169cc07a89ec4cd8e3f61174d02dcc5c979b6eb4d7dae38ba",
+      "raw_sample_count": 1400,
+      "result_medians_checked": 14,
+      "oracle_count": 14,
+      "partial_count": 7,
+      "graph_count": 14,
+      "wrapper_rank_count": 4,
+      "native_status_counts": {
+        "FAIL": 7
+      },
+      "oracle_max_abs": 0.0,
+      "oracle_bitwise_mismatches": 0,
+      "partial_max_abs": 0.0,
+      "graph_max_abs": 0.0
+    }
+  ],
+  "counts": {
+    "jobs": 4,
+    "raw_logs": 4,
+    "raw_samples": 5600,
+    "repeat_medians": 56,
+    "pooled_groups": 14,
+    "pooled_medians": 28,
+    "new_r2_oracle_checks": 28,
+    "new_r2_owner_partial_checks": 14,
+    "new_r2_graph_checks": 28,
+    "new_r2_cupti_rank_records": 8
+  },
+  "native_cross_pair_status_counts": {
+    "FAIL": 28
+  },
+  "all_14_pooled_mega_lower": true,
+  "all_14_both_repeats_same_mega_lower_direction": true,
+  "pooled_mega_latency_reduction_percent_range": [
+    "1.993007678804342496248859950",
+    "19.08245664978266985590791122"
+  ],
+  "rows": [
+    {
+      "capacity": null,
+      "tokens": 16,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "011-core-ep4-allgather-caplive-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "204.8015000",
+          "mega_us": "202.178000",
+          "speedup_split_over_mega": "1.012976189298538911256417612",
+          "mega_latency_change_percent": "-1.280996477076583911738927690"
+        },
+        {
+          "repeat": 2,
+          "job": "023-core-ep4-allgather-caplive-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "201.937000",
+          "mega_us": "194.978000",
+          "speedup_split_over_mega": "1.035691206187364728328324221",
+          "mega_latency_change_percent": "-3.446124286287307427564042250"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "203.3455000",
+        "mega_us": "196.1455000",
+        "speedup_split_over_mega": "1.036707444218704991957500937",
+        "mega_latency_change_percent": "-3.540771740707318332591574440"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": null,
+      "tokens": 32,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "011-core-ep4-allgather-caplive-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "262.6265000",
+          "mega_us": "240.769000",
+          "speedup_split_over_mega": "1.090782035893325137372336140",
+          "mega_latency_change_percent": "-8.322655939137901163820101930"
+        },
+        {
+          "repeat": 2,
+          "job": "023-core-ep4-allgather-caplive-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "247.730000",
+          "mega_us": "240.8495000",
+          "speedup_split_over_mega": "1.028567632484186182657634747",
+          "mega_latency_change_percent": "-2.777418964194889597545715090"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "258.2105000",
+        "mega_us": "240.785000",
+        "speedup_split_over_mega": "1.072369541292024004817575846",
+        "mega_latency_change_percent": "-6.748563671887858936797690260"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": null,
+      "tokens": 64,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "011-core-ep4-allgather-caplive-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "286.707000",
+          "mega_us": "269.7295000",
+          "speedup_split_over_mega": "1.062942688879043634456001290",
+          "mega_latency_change_percent": "-5.921550572535724624791163100"
+        },
+        {
+          "repeat": 2,
+          "job": "023-core-ep4-allgather-caplive-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "289.282000",
+          "mega_us": "273.8415000",
+          "speedup_split_over_mega": "1.056384806539549337846893185",
+          "mega_latency_change_percent": "-5.337525321312767472570018180"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "287.9855000",
+        "mega_us": "272.481000",
+        "speedup_split_over_mega": "1.056901215130596261757700537",
+        "mega_latency_change_percent": "-5.383778002711942094306831420"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": null,
+      "tokens": 128,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "011-core-ep4-allgather-caplive-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "318.753000",
+          "mega_us": "307.746000",
+          "speedup_split_over_mega": "1.035766508744224132888810902",
+          "mega_latency_change_percent": "-3.453143970409690261738713050"
+        },
+        {
+          "repeat": 2,
+          "job": "023-core-ep4-allgather-caplive-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "320.594000",
+          "mega_us": "305.490000",
+          "speedup_split_over_mega": "1.049441880257946250286425088",
+          "mega_latency_change_percent": "-4.711254733401124163271926490"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "319.6825000",
+        "mega_us": "306.626000",
+        "speedup_split_over_mega": "1.042581190114341249600490500",
+        "mega_latency_change_percent": "-4.084208550671369249176917720"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": null,
+      "tokens": 256,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "011-core-ep4-allgather-caplive-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "348.9635000",
+          "mega_us": "307.458000",
+          "speedup_split_over_mega": "1.134995674205907798788777654",
+          "mega_latency_change_percent": "-11.89393733155473280156807231"
+        },
+        {
+          "repeat": 2,
+          "job": "023-core-ep4-allgather-caplive-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "335.186000",
+          "mega_us": "306.8175000",
+          "speedup_split_over_mega": "1.092460501764077994247394624",
+          "mega_latency_change_percent": "-8.463509812462334345706562920"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "344.275000",
+        "mega_us": "306.946000",
+        "speedup_split_over_mega": "1.121614225303473575156542193",
+        "mega_latency_change_percent": "-10.84278556386609541790719628"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": null,
+      "tokens": 512,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "011-core-ep4-allgather-caplive-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "364.596000",
+          "mega_us": "318.595000",
+          "speedup_split_over_mega": "1.144387074498972049153313768",
+          "mega_latency_change_percent": "-12.61697879296536440333958683"
+        },
+        {
+          "repeat": 2,
+          "job": "023-core-ep4-allgather-caplive-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "376.258000",
+          "mega_us": "326.7225000",
+          "speedup_split_over_mega": "1.151613372204240601733887320",
+          "mega_latency_change_percent": "-13.16530146867309133626394655"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "372.226000",
+        "mega_us": "324.130000",
+        "speedup_split_over_mega": "1.148384907290284762286736803",
+        "mega_latency_change_percent": "-12.92118229247822559412829840"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": null,
+      "tokens": 1024,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "011-core-ep4-allgather-caplive-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "444.5155000",
+          "mega_us": "353.0105000",
+          "speedup_split_over_mega": "1.259213252863583377831537589",
+          "mega_latency_change_percent": "-20.58533391973958163438620251"
+        },
+        {
+          "repeat": 2,
+          "job": "023-core-ep4-allgather-caplive-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "427.747000",
+          "mega_us": "355.427000",
+          "speedup_split_over_mega": "1.203473568412078992310657322",
+          "mega_latency_change_percent": "-16.90719046539192560088089455"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "437.6985000",
+        "mega_us": "354.4675000",
+        "speedup_split_over_mega": "1.234805729721342577246150917",
+        "mega_latency_change_percent": "-19.01560092163898208469985618"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": 32768,
+      "tokens": 16,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "012-core-ep4-allgather-cap32768-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "204.706000",
+          "mega_us": "198.898000",
+          "speedup_split_over_mega": "1.029200896942151253406268540",
+          "mega_latency_change_percent": "-2.837239748712788096098795350"
+        },
+        {
+          "repeat": 2,
+          "job": "024-core-ep4-allgather-cap32768-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "202.4335000",
+          "mega_us": "201.041000",
+          "speedup_split_over_mega": "1.006926447838998015330206276",
+          "mega_latency_change_percent": "-0.6878802174541269108126866400"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "203.938000",
+        "mega_us": "199.8735000",
+        "speedup_split_over_mega": "1.020335362116538710734539596",
+        "mega_latency_change_percent": "-1.993007678804342496248859950"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": 32768,
+      "tokens": 32,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "012-core-ep4-allgather-cap32768-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "246.5775000",
+          "mega_us": "245.41000",
+          "speedup_split_over_mega": "1.004757344851473045108186300",
+          "mega_latency_change_percent": "-0.4734819681438898520749054600"
+        },
+        {
+          "repeat": 2,
+          "job": "024-core-ep4-allgather-cap32768-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "260.273000",
+          "mega_us": "246.514000",
+          "speedup_split_over_mega": "1.055814274240002596201432779",
+          "mega_latency_change_percent": "-5.286372385917863166751833650"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "254.992000",
+        "mega_us": "246.0655000",
+        "speedup_split_over_mega": "1.036276926265567501336026383",
+        "mega_latency_change_percent": "-3.500698061115642843697057160"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": 32768,
+      "tokens": 64,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "012-core-ep4-allgather-cap32768-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "289.170000",
+          "mega_us": "277.442000",
+          "speedup_split_over_mega": "1.042271898270629536984306630",
+          "mega_latency_change_percent": "-4.055745755092160320918490850"
+        },
+        {
+          "repeat": 2,
+          "job": "024-core-ep4-allgather-cap32768-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "294.385000",
+          "mega_us": "278.817000",
+          "speedup_split_over_mega": "1.055835906705832140794858276",
+          "mega_latency_change_percent": "-5.288312923552490785875639040"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "291.8895000",
+        "mega_us": "278.1455000",
+        "speedup_split_over_mega": "1.049412987087693311594111715",
+        "mega_latency_change_percent": "-4.708631177209183612291637760"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": 32768,
+      "tokens": 128,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "012-core-ep4-allgather-cap32768-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "332.115000",
+          "mega_us": "302.9465000",
+          "speedup_split_over_mega": "1.096282676974317247434778088",
+          "mega_latency_change_percent": "-8.782650587898770004365957570"
+        },
+        {
+          "repeat": 2,
+          "job": "024-core-ep4-allgather-cap32768-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "325.185000",
+          "mega_us": "309.796000",
+          "speedup_split_over_mega": "1.049674624591666774264354608",
+          "mega_latency_change_percent": "-4.732383105001768224241585560"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "328.5305000",
+        "mega_us": "307.075000",
+        "speedup_split_over_mega": "1.069870552796548074574615322",
+        "mega_latency_change_percent": "-6.530748286688754925341787140"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": 32768,
+      "tokens": 256,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "012-core-ep4-allgather-cap32768-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "340.259000",
+          "mega_us": "312.611000",
+          "speedup_split_over_mega": "1.088442185335768734945347413",
+          "mega_latency_change_percent": "-8.125574929685915728900631580"
+        },
+        {
+          "repeat": 2,
+          "job": "024-core-ep4-allgather-cap32768-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "346.787000",
+          "mega_us": "316.641000",
+          "speedup_split_over_mega": "1.095205611402187335184009651",
+          "mega_latency_change_percent": "-8.692944083832438932255246020"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "342.978000",
+        "mega_us": "315.217000",
+        "speedup_split_over_mega": "1.088069488637985895430766742",
+        "mega_latency_change_percent": "-8.094105161263987777641714630"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": 32768,
+      "tokens": 512,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "012-core-ep4-allgather-cap32768-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "374.2595000",
+          "mega_us": "332.883000",
+          "speedup_split_over_mega": "1.124297425822285908262062046",
+          "mega_latency_change_percent": "-11.05556438781113104677369579"
+        },
+        {
+          "repeat": 2,
+          "job": "024-core-ep4-allgather-cap32768-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "376.0015000",
+          "mega_us": "330.833000",
+          "speedup_split_over_mega": "1.136529608594064074623752770",
+          "mega_latency_change_percent": "-12.01285101256244988384354850"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "374.946000",
+        "mega_us": "331.8745000",
+        "speedup_split_over_mega": "1.129782493080968860216738556",
+        "mega_latency_change_percent": "-11.48738751713580088866130056"
+      },
+      "both_repeats_mega_lower": true
+    },
+    {
+      "capacity": 32768,
+      "tokens": 1024,
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "012-core-ep4-allgather-cap32768-r1",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "441.749000",
+          "mega_us": "358.100000",
+          "speedup_split_over_mega": "1.233591175649259983244903658",
+          "mega_latency_change_percent": "-18.93586629511328831531027801"
+        },
+        {
+          "repeat": 2,
+          "job": "024-core-ep4-allgather-cap32768-r2",
+          "samples_per_arm": 100,
+          "native_cross_pair_status": "FAIL",
+          "split_us": "443.1065000",
+          "mega_us": "358.020000",
+          "speedup_split_over_mega": "1.237658510697726384000893805",
+          "mega_latency_change_percent": "-19.20226852912335973405941912"
+        }
+      ],
+      "pooled_samples_per_arm": 200,
+      "pooled": {
+        "split_us": "442.5295000",
+        "mega_us": "358.084000",
+        "speedup_split_over_mega": "1.235825951452731761262720479",
+        "mega_latency_change_percent": "-19.08245664978266985590791122"
+      },
+      "both_repeats_mega_lower": true
+    }
+  ],
+  "method": "Direct raw rank-MAX sample JSON -> Decimal central-pair median of100 and concatenated200; compare float summary within1e-10 in output units. No trimming and no average-of-repeat-medians.",
+  "limitations": [
+    "This is one EP4 communication mode, default knobs and routing-included graph execution, not the full matrix or eager prefill.",
+    "SGLang-aligned communication boundary is approximate; no serving causality or E2E speedup is established.",
+    "Per-path and untimed graph checks passed; all native cross-pair outcomes are retained, not backend equivalence.",
+    "Raw r5 input tensors were not captured; configuration/source and per-path input-contract records are checked."
+  ]
+}

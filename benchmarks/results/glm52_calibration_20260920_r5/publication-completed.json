@@ -1,0 +1,12 @@
+{
+  "status": "REVIEWED_PUBLICATION_SEALED",
+  "sealed_at": "2026-09-20T21:06:54.433153+00:00",
+  "publication_manifest_sha256": "5c3df148a71c92200c95412f086451721e15728cc05d0412e0b2e31ee8cae08a",
+  "candidate_manifest_sha256": "9b8edd2291de2f3fa68e96ca9524da62e1d4046b16c28b22026749ec237c1829",
+  "payload_files": 357,
+  "relative_links_checked": 971,
+  "successful_jobs": 60,
+  "paired_groups": 110,
+  "github_publication_performed": false,
+  "archive_cleanup_scope": "Separate receipts"
+}

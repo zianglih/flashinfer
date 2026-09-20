@@ -1,0 +1,37 @@
+{
+  "record": {
+    "completed_at": "2026-09-20T17:49:23.704795+00:00",
+    "exit_code": 0,
+    "passed": true,
+    "skips_permitted": false,
+    "expected_tests": 12,
+    "source_unchanged": true,
+    "runtime_unchanged": true,
+    "gpu_after": "0, 0 %, 0 MiB\n1, 0 %, 0 MiB\n2, 0 %, 0 MiB\n3, 0 %, 0 MiB\n4, 0 %, 0 MiB\n5, 0 %, 0 MiB\n6, 0 %, 0 MiB\n7, 0 %, 0 MiB\n",
+    "errors": []
+  },
+  "remote": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/validation/contract-reference-timing-r5",
+  "files": [
+    {
+      "name": "invocation.json",
+      "bytes": 694,
+      "sha256": "47c487971dca5264198330d84073c52852aef1272ab33758b78222e52b649efd"
+    },
+    {
+      "name": "stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "stderr.log",
+      "bytes": 1826,
+      "sha256": "4522febb3ba03ac528e17256b5b622c52667a68b501ecfd4efc9b37b4bca05f6"
+    },
+    {
+      "name": "exit.json",
+      "bytes": 357,
+      "sha256": "2a313ecd1f417f5e499328f9692961704a671b5d623758dfeb1ea343fd4517d9"
+    }
+  ],
+  "verified_at": "2026-09-20T17:49:23.779469+00:00"
+}

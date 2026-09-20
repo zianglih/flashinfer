@@ -1,0 +1,26 @@
+{
+  "completed_at": "2026-09-20T17:49:00.523515+00:00",
+  "source_head": "bd8391858db504c8997e704c7952f4d48ccab591",
+  "flashinfer_kernel_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "benchmark_sha256": {
+    "benchmarks/bench_cute_dsl_moe_distributed.py": "8d7aa29da0c41348a133273a478acfd871eeea3ef819950c32cde4fe3ec71041",
+    "benchmarks/moe_distributed_layout.py": "a66953bc8db2c38cb6fa23f5fa84c89721a0a09a9aad5b83eeba0c44d1a83d76",
+    "benchmarks/sglang_glm_routing.py": "29016eaa2713851fb09d5c141300ea42d0d7e6d444ec77de9dba2bdd6ffbeac0",
+    "benchmarks/w4a16_contract_reference.py": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+    "tests/moe_ep/w4a16_reference.py": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5"
+  },
+  "cupti_python": "13.2.0",
+  "cupti_library_dist": "13.2.86",
+  "cupti_timestamp_ok": true,
+  "loaded_cupti_libraries": [
+    "/opt/sglang/lib/python3.12/site-packages/nvidia/cu13/lib/libcupti.so.13"
+  ],
+  "image_torch_cuda_nccl_preserved": true,
+  "package_versions_unchanged": true,
+  "editable_freeze_change": {
+    "before": "-e git+https://github.com/flashinfer-ai/flashinfer.git@2358f6cafe4a407f198dbe99c1c056abe5e24d6f#egg=flashinfer_python",
+    "after": "-e git+https://github.com/flashinfer-ai/flashinfer.git@bd8391858db504c8997e704c7952f4d48ccab591#egg=flashinfer_python",
+    "only_freeze_change": true
+  },
+  "previous_timing_seal_sha256": "f590de5919ea050db4036fb520fea3ecb8c0c7a76774b48be0002b4bee5624bd"
+}

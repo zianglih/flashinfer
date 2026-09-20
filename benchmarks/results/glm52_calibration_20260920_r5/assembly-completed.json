@@ -1,0 +1,11 @@
+{
+  "status": "completed",
+  "run_id": "glm52-calibration-20260920-r5",
+  "successful_jobs": 60,
+  "paired_groups": 110,
+  "bundle_manifest_sha256": "9b8edd2291de2f3fa68e96ca9524da62e1d4046b16c28b22026749ec237c1829",
+  "copied_files": 324,
+  "payload_files": 348,
+  "relative_links_checked": 961,
+  "publication_performed": false
+}

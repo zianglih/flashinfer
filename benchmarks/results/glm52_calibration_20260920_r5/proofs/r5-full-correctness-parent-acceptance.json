@@ -1,0 +1,16 @@
+{
+  "accepted_at": "2026-09-20T18:32:26.628072+00:00",
+  "status": "accepted",
+  "independent_review_sha256": "dc7bf5e2c20fe6240a0bef634d5ebc6fa0ee05de9730f81e9b99c212cb7e6d51",
+  "review": "artifacts/r5-full-correctness-independent-review.json",
+  "parent_raw_check": "artifacts/r5-full-correctness-parent-raw-check.json",
+  "raw_files_sha_verified": 40,
+  "gate_sha256": "a12515be4816704d5c650b256113f436c7960ded76e59c95ebc4afa54fefd14d",
+  "scope": "Complete eight-job per-path correctness gate only; no A2A or performance acceptance",
+  "equivalence_claim": false,
+  "native_pair_status_counts": {
+    "PASS": 8,
+    "FAIL": 24
+  },
+  "performance_groups": 0
+}

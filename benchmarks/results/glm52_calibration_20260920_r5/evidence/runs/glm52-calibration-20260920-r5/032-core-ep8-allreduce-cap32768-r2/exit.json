@@ -1,0 +1,9 @@
+{
+  "exit_code": 0,
+  "finished_at": "2026-09-20T19:53:25.300053+00:00",
+  "interrupted": null,
+  "log_sha256": "13ed926d0ed68a07f57bc533743df78d200d4d4b486468ef2dacfa8b9d2d6be1",
+  "passed": true,
+  "timed_out": false,
+  "validation_issue": null
+}

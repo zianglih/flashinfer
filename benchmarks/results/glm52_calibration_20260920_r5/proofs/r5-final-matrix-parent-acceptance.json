@@ -1,0 +1,39 @@
+{
+  "accepted_at": "2026-09-20T20:54:37.660931+00:00",
+  "status": "accepted_final_measured_matrix",
+  "review_sha256": "0420119674757b5f6a6fb7392932aa833a42efd0721c9aa454251b3868955510",
+  "review_file": "artifacts/r5-final-matrix-independent-review.json",
+  "raw_files_rehashed": 263,
+  "summary_files_rehashed": 4,
+  "reused_reviews_rehashed": 3,
+  "all_110_groups_exact_parent_direct_raw_match": true,
+  "all_252_native_records_match": true,
+  "parent_raw_check_sha256": "27f36d8feb7990cd78a12b67b0dc6fafedb65e49d596052395bb7830708cca46",
+  "full_matrix_totals": {
+    "partials": 252,
+    "samples": 44192,
+    "jobs": 60,
+    "oracles": 504,
+    "graph_checks": 472,
+    "result_records": 504,
+    "rank_completions": 360,
+    "registrations": 2640,
+    "deferred_finalizes": 2640,
+    "detaches": 312,
+    "graph_replays": 944,
+    "diagnostic_cuda_event_samples": 192,
+    "performance_cupti_samples": 44000
+  },
+  "native_status_counts": {
+    "PASS": 8,
+    "FAIL": 244
+  },
+  "equivalence_claim": false,
+  "scope": "Final 60-job matrix: new independent raw review of eager-prefill053-060 and SHA-identical reuse of accepted correctness/core/AUTO/routing scopes; final inventory, terminal receipts, all raw counters and final110 summary rows reconciled locally.",
+  "not_covered": [
+    "portable publication bundle and PNG review",
+    "actual final archive transfer",
+    "GitHub final publication/readback",
+    "devbox cleanup"
+  ]
+}

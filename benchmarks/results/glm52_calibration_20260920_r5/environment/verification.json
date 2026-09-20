@@ -1,0 +1,72 @@
+{
+  "files": [
+    {
+      "path": "environment/initial/image-before.json",
+      "size": 2102,
+      "sha256": "1e67e2aa37827c5abbc1ab2bb306b5e881666668d816a866a03c29647dbb3c4e"
+    },
+    {
+      "path": "environment/initial/packages-before.txt",
+      "size": 7590,
+      "sha256": "daf2f918c4d87a4086274d9ac916771d14a2d7e3bf1fbbbe447623f343fb6232"
+    },
+    {
+      "path": "environment/initial/pip-check-before.txt",
+      "size": 1169,
+      "sha256": "d6825220f3e41f3694fb2bef944f745d67e4f0c015e875c2a4c6fcaffab264bd"
+    },
+    {
+      "path": "environment/initial/runtime-after.json",
+      "size": 2090,
+      "sha256": "0bc5f2d3fd71bf257d46bf89a81167153691e0ef70c059831ca026eaf7267620"
+    },
+    {
+      "path": "environment/initial/packages-after.txt",
+      "size": 7645,
+      "sha256": "201411a853d64eaa7eb9b0391aff79536d58ba55b5b56c94335d848d584ab6e7"
+    },
+    {
+      "path": "environment/initial/pip-check-after.txt",
+      "size": 1096,
+      "sha256": "f98fafb544af8238f9cf9983bff7ea7c7058bb5c6a845c3917d03472aabf478a"
+    },
+    {
+      "path": "environment/initial/setup-completed.json",
+      "size": 458,
+      "sha256": "10e45d51c62389e603c398730d4b2d3d457cc3852ff5ba37b3e9f7fced288551"
+    },
+    {
+      "path": "environment/timing-r5/packages-before.txt",
+      "size": 7666,
+      "sha256": "aed981513bcff3f74ed2432d5f06edcbbb7d5c107f58854a394c18a468d405a7"
+    },
+    {
+      "path": "environment/timing-r5/packages-after.txt",
+      "size": 7666,
+      "sha256": "abe3cfe82980bb29088b3429f94a0eb60152723174cd0d87b9c9a15b40d3912d"
+    },
+    {
+      "path": "environment/timing-r5/pip-check-after.txt",
+      "size": 1096,
+      "sha256": "f98fafb544af8238f9cf9983bff7ea7c7058bb5c6a845c3917d03472aabf478a"
+    },
+    {
+      "path": "environment/timing-r5/runtime-after.json",
+      "size": 2094,
+      "sha256": "4f4f96cc4704783b4adabaa47237bb1a4d615d1075619169df1929c47cea1825"
+    },
+    {
+      "path": "environment/timing-r5/setup-completed.json",
+      "size": 1502,
+      "sha256": "41a3f784c392d9adca79b52b9e76956ebc45228f23323ea4142851955f1a4268"
+    }
+  ],
+  "gpu_processes": "pid, process_name, used_gpu_memory [MiB]\n",
+  "gpu_state": "uuid, utilization.gpu [%], memory.used [MiB]\nGPU-6cf38cbd-1d3c-762d-0eeb-23a100b9957e, 0 %, 0 MiB\nGPU-087b80ea-bf85-5eab-b2d7-dcbd48b8a04d, 0 %, 0 MiB\nGPU-7161944d-a424-7cf8-fab4-3c558b36cc4b, 0 %, 0 MiB\nGPU-77cd824e-de9a-07f2-4265-6ced60a9fafc, 0 %, 0 MiB\nGPU-afaf753d-48bf-a4e3-3429-63cf47520cb2, 0 %, 0 MiB\nGPU-e57116b5-f481-8ec6-f998-67abc57dc8b5, 0 %, 0 MiB\nGPU-2d93ae19-4023-3d65-ddf9-5faf95b43128, 0 %, 0 MiB\nGPU-5607426e-64c2-b183-4cf8-f44edb595c11, 0 %, 0 MiB\n",
+  "verified": true,
+  "collected_at": "20260920T174910Z",
+  "remote": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment",
+  "devbox": "fi-sglang-align-0920",
+  "namespace": "ziangli",
+  "cluster": "c2"
+}

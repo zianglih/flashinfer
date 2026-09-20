@@ -1,0 +1,2417 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-20T18:59:45.625811+00:00",
+  "status": "passed",
+  "issue_count": 0,
+  "issues": [],
+  "scope": "Independent local raw-log review of only013 EP4/allreduce/live/r1 and015 EP8/A2A/live/r1; reuses accepted source/environment and full correctness gate. No validator/summarizer as proof, no HAI/GPU/GitHub calls or active changes.",
+  "snapshot": "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T185614Z",
+  "snapshot_total_files": 72,
+  "audited_job_files": 8,
+  "audited_shared_files": 8,
+  "transfer_receipt_sha256": "f316cc6617c1b02be7be40da6400cb4afaff509ce994a548ce44c25185f93ecd",
+  "audited_file_sha256": {
+    "runs/glm52-calibration-20260920-r5/provenance.json": "e20aedfc4de39101ab6d1d83898557a2d6c68860e262fcf2f6225d16fcea3a2f",
+    "runs/glm52-calibration-20260920-r5/plan.json": "93e65d1b7f7c4aac14bb409b8a2bcf6ea205985cba3b71a492df873b251ce480",
+    "runs/glm52-calibration-20260920-r5/gate-receipt.json": "a12515be4816704d5c650b256113f436c7960ded76e59c95ebc4afa54fefd14d",
+    "runs/glm52-calibration-20260920-r5/environment/initial/image-before.json": "1e67e2aa37827c5abbc1ab2bb306b5e881666668d816a866a03c29647dbb3c4e",
+    "runs/glm52-calibration-20260920-r5/environment/initial/runtime-after.json": "0bc5f2d3fd71bf257d46bf89a81167153691e0ef70c059831ca026eaf7267620",
+    "runs/glm52-calibration-20260920-r5/environment/initial/setup-completed.json": "10e45d51c62389e603c398730d4b2d3d457cc3852ff5ba37b3e9f7fced288551",
+    "runs/glm52-calibration-20260920-r5/environment/timing-r5/runtime-after.json": "4f4f96cc4704783b4adabaa47237bb1a4d615d1075619169df1929c47cea1825",
+    "runs/glm52-calibration-20260920-r5/environment/timing-r5/setup-completed.json": "41a3f784c392d9adca79b52b9e76956ebc45228f23323ea4142851955f1a4268",
+    "runs/glm52-calibration-20260920-r5/013-core-ep4-allreduce-caplive-r1/benchmark.log": "0dd48c53a89de444dcaeb0af2f07f3e88f5a4d541d52ebff9c011adbf720154c",
+    "runs/glm52-calibration-20260920-r5/013-core-ep4-allreduce-caplive-r1/invocation.json": "cb828ade27759baa27b9c701acd39a01f2e005ebc03f15908ca10ac73afe1861",
+    "runs/glm52-calibration-20260920-r5/013-core-ep4-allreduce-caplive-r1/exit.json": "16a08f1bc422729097eeeb5b8dff066902a201e07d7401a862c382e529f96ad9",
+    "runs/glm52-calibration-20260920-r5/013-core-ep4-allreduce-caplive-r1/validation.json": "26dd2397fb7fbe9658811404731cac9a6bde56ff2122323316200879613d05fd",
+    "runs/glm52-calibration-20260920-r5/015-core-ep8-alltoall-caplive-r1/benchmark.log": "e9364081a55ffd059519290aa731c5763bb37ab0cb0684193e0687acf3179493",
+    "runs/glm52-calibration-20260920-r5/015-core-ep8-alltoall-caplive-r1/invocation.json": "9f139744c5dcdc930534b602d71095a659d268e320d65b09a0b014007dc77099",
+    "runs/glm52-calibration-20260920-r5/015-core-ep8-alltoall-caplive-r1/exit.json": "b06402f170b603cf8bf13dc3bef1412de8e953f25dca29a1f5e996d27b5c92e9",
+    "runs/glm52-calibration-20260920-r5/015-core-ep8-alltoall-caplive-r1/validation.json": "675af59ccd6fef439526d676373db328391a9ec87e516a027ba570c6a8a519d7"
+  },
+  "reused_review_sha256": {
+    "artifacts/r5-full-correctness-independent-review.json": "dc7bf5e2c20fe6240a0bef634d5ebc6fa0ee05de9730f81e9b99c212cb7e6d51",
+    "artifacts/r5-first-cupti-independent-review.json": "61bcce1d3aad5f37b1737fb5109b87a9cbffbc0c8c57882d1be68d0be15522ad",
+    "artifacts/r4-reference-independent-review.json": "0ff08194419b2e0c417d5f9b51f7055dd9d95083dd892091dd6392ee4c36ceed",
+    "artifacts/a2a-combine-independent-source-trace.json": "2ebbbfe04b5b6aad9018d3cd09af54545ec979cf159c2ba2072b8737fcdffd23"
+  },
+  "source_commit": "bd8391858db504c8997e704c7952f4d48ccab591",
+  "runtime_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "source_sha256": {
+    "benchmarks/bench_cute_dsl_moe_distributed.py": "8d7aa29da0c41348a133273a478acfd871eeea3ef819950c32cde4fe3ec71041",
+    "benchmarks/moe_distributed_layout.py": "a66953bc8db2c38cb6fa23f5fa84c89721a0a09a9aad5b83eeba0c44d1a83d76",
+    "benchmarks/sglang_glm_routing.py": "29016eaa2713851fb09d5c141300ea42d0d7e6d444ec77de9dba2bdd6ffbeac0",
+    "benchmarks/w4a16_contract_reference.py": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+    "tests/moe_ep/w4a16_reference.py": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5"
+  },
+  "environment_sha256": {
+    "initial/image-before.json": "1e67e2aa37827c5abbc1ab2bb306b5e881666668d816a866a03c29647dbb3c4e",
+    "initial/runtime-after.json": "0bc5f2d3fd71bf257d46bf89a81167153691e0ef70c059831ca026eaf7267620",
+    "initial/setup-completed.json": "10e45d51c62389e603c398730d4b2d3d457cc3852ff5ba37b3e9f7fced288551",
+    "timing-r5/runtime-after.json": "4f4f96cc4704783b4adabaa47237bb1a4d615d1075619169df1929c47cea1825",
+    "timing-r5/setup-completed.json": "41a3f784c392d9adca79b52b9e76956ebc45228f23323ea4142851955f1a4268"
+  },
+  "totals": {
+    "samples": 2800,
+    "jobs": 2,
+    "oracle_outputs": 28,
+    "split_partials": 14,
+    "graph_checks": 28,
+    "checked_untimed_replays": 56,
+    "native_pair_FAIL": 14,
+    "wrapper_rank_completions": 12,
+    "registrations": 168,
+    "deferred_finalizes": 168,
+    "final_detaches": 12
+  },
+  "numerical_results": {
+    "atol": 0.01,
+    "rtol": 0.01,
+    "all28_output_and14_partial_max_abs": 0,
+    "all28_output_and14_partial_relative_l2": 0,
+    "all28_output_and14_partial_bitwise_mismatches": 0,
+    "all28_output_and14_partial_nonfinite_count": 0,
+    "all28_graph_max_abs": 0,
+    "missing_records": [],
+    "nonzero_reference_records": [],
+    "original_pair_PASS": 0,
+    "original_pair_FAIL": 14
+  },
+  "timer_evidence": {
+    "sample_count_per_variant_N": 100,
+    "exact_raw_medians_match": 28,
+    "positive_finite_samples": 2800,
+    "aggregation": "per_iteration_rank_max",
+    "timer": "cupti",
+    "each_rank_per_job": {
+      "registrations": 14,
+      "deferred_finalizes": 14,
+      "final_detaches": 1,
+      "cupti_used": true
+    },
+    "rank_completions": 12,
+    "fallback_observed": false,
+    "no_trimming": true
+  },
+  "ep8_a2a_mapping": {
+    "verified_execution_cases": 7,
+    "global_tokens": [
+      16,
+      32,
+      64,
+      128,
+      256,
+      512,
+      1024
+    ],
+    "source_ranks": 8,
+    "local_token_counts_per_rank": [
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128
+    ],
+    "experts_per_rank": 32,
+    "input_checks": 7,
+    "owner_partial_checks": 7,
+    "all_bitwise_exact": true,
+    "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+    "bound_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+    "basis": "Reviewed exact BF16input/fullK8IDs/FP32score mapping executes before native compute, checks received source blocks and missing/duplicate/ambiguous identities, and fails closed. The7 actual strict input/partial/final checks pass. No receive-map tensors are archived, so this is source-bound execution evidence, not local tensor replay.",
+    "empty_rank_boundary": "These N16..1024 points divide EP8 evenly; this review makes no new empty-rank claim. Empty ranks were separately covered by the accepted smallN full gate."
+  },
+  "allreduce_contract": "owner_fp32_fma_bf16_then_nccl_bf16_sum; actualcommunication allreduce+sum_reduce_scatter",
+  "cross_pair_records": [
+    {
+      "job": "013-core-ep4-allreduce-caplive-r1",
+      "global_tokens": 16,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00340566586",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00340566586,
+      "status": "FAIL",
+      "log_line": 47
+    },
+    {
+      "job": "013-core-ep4-allreduce-caplive-r1",
+      "global_tokens": 32,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00337569457",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00337569457,
+      "status": "FAIL",
+      "log_line": 74
+    },
+    {
+      "job": "013-core-ep4-allreduce-caplive-r1",
+      "global_tokens": 64,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00343335519",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00343335519,
+      "status": "FAIL",
+      "log_line": 101
+    },
+    {
+      "job": "013-core-ep4-allreduce-caplive-r1",
+      "global_tokens": 128,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00341393141",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00341393141,
+      "status": "FAIL",
+      "log_line": 128
+    },
+    {
+      "job": "013-core-ep4-allreduce-caplive-r1",
+      "global_tokens": 256,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.0034257723",
+      "max_abs": 0.03125,
+      "relative_l2": 0.0034257723,
+      "status": "FAIL",
+      "log_line": 155
+    },
+    {
+      "job": "013-core-ep4-allreduce-caplive-r1",
+      "global_tokens": 512,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.0625",
+      "relative_l2_raw": "0.00341703405",
+      "max_abs": 0.0625,
+      "relative_l2": 0.00341703405,
+      "status": "FAIL",
+      "log_line": 182
+    },
+    {
+      "job": "013-core-ep4-allreduce-caplive-r1",
+      "global_tokens": 1024,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.0625",
+      "relative_l2_raw": "0.00342212432",
+      "max_abs": 0.0625,
+      "relative_l2": 0.00342212432,
+      "status": "FAIL",
+      "log_line": 209
+    },
+    {
+      "job": "015-core-ep8-alltoall-caplive-r1",
+      "global_tokens": 16,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00262312058",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00262312058,
+      "status": "FAIL",
+      "log_line": 63
+    },
+    {
+      "job": "015-core-ep8-alltoall-caplive-r1",
+      "global_tokens": 32,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00263643856",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00263643856,
+      "status": "FAIL",
+      "log_line": 118
+    },
+    {
+      "job": "015-core-ep8-alltoall-caplive-r1",
+      "global_tokens": 64,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00264836974",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00264836974,
+      "status": "FAIL",
+      "log_line": 157
+    },
+    {
+      "job": "015-core-ep8-alltoall-caplive-r1",
+      "global_tokens": 128,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00264275902",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00264275902,
+      "status": "FAIL",
+      "log_line": 196
+    },
+    {
+      "job": "015-core-ep8-alltoall-caplive-r1",
+      "global_tokens": 256,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00264102917",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00264102917,
+      "status": "FAIL",
+      "log_line": 235
+    },
+    {
+      "job": "015-core-ep8-alltoall-caplive-r1",
+      "global_tokens": 512,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00263775658",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00263775658,
+      "status": "FAIL",
+      "log_line": 274
+    },
+    {
+      "job": "015-core-ep8-alltoall-caplive-r1",
+      "global_tokens": 1024,
+      "variant": "w4a16_megamoe",
+      "max_abs_raw": "0.03125",
+      "relative_l2_raw": "0.00263784127",
+      "max_abs": 0.03125,
+      "relative_l2": 0.00263784127,
+      "status": "FAIL",
+      "log_line": 313
+    }
+  ],
+  "jobs": [
+    {
+      "job": "013-core-ep4-allreduce-caplive-r1",
+      "ep": 4,
+      "communication": "allreduce",
+      "started_at": "2026-09-20T18:38:45.194694+00:00",
+      "finished_at": "2026-09-20T18:41:46.628667+00:00",
+      "log_sha256": "0dd48c53a89de444dcaeb0af2f07f3e88f5a4d541d52ebff9c011adbf720154c",
+      "exit_code": 0,
+      "repeat": 1,
+      "cross_pair": [
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "global_tokens": 16,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00340566586",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00340566586,
+          "status": "FAIL",
+          "log_line": 47
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "global_tokens": 32,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00337569457",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00337569457,
+          "status": "FAIL",
+          "log_line": 74
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "global_tokens": 64,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00343335519",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00343335519,
+          "status": "FAIL",
+          "log_line": 101
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "global_tokens": 128,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00341393141",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00341393141,
+          "status": "FAIL",
+          "log_line": 128
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "global_tokens": 256,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.0034257723",
+          "max_abs": 0.03125,
+          "relative_l2": 0.0034257723,
+          "status": "FAIL",
+          "log_line": 155
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "global_tokens": 512,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.0625",
+          "relative_l2_raw": "0.00341703405",
+          "max_abs": 0.0625,
+          "relative_l2": 0.00341703405,
+          "status": "FAIL",
+          "log_line": 182
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "global_tokens": 1024,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.0625",
+          "relative_l2_raw": "0.00342212432",
+          "max_abs": 0.0625,
+          "relative_l2": 0.00342212432,
+          "status": "FAIL",
+          "log_line": 209
+        }
+      ],
+      "oracle_records": [
+        {
+          "log_line": 41,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "owner_fp32_fma_bf16_then_nccl_bf16_sum",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport",
+              "NCCL BF16 SUM reduce-scatter"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 48,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 68,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "owner_fp32_fma_bf16_then_nccl_bf16_sum",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport",
+              "NCCL BF16 SUM reduce-scatter"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 75,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 95,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "owner_fp32_fma_bf16_then_nccl_bf16_sum",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport",
+              "NCCL BF16 SUM reduce-scatter"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 102,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 122,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "owner_fp32_fma_bf16_then_nccl_bf16_sum",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport",
+              "NCCL BF16 SUM reduce-scatter"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 129,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 149,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "owner_fp32_fma_bf16_then_nccl_bf16_sum",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport",
+              "NCCL BF16 SUM reduce-scatter"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 156,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 176,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "owner_fp32_fma_bf16_then_nccl_bf16_sum",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport",
+              "NCCL BF16 SUM reduce-scatter"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 183,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 203,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "owner_fp32_fma_bf16_then_nccl_bf16_sum",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport",
+              "NCCL BF16 SUM reduce-scatter"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 210,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "allreduce",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        }
+      ],
+      "graph_records": [
+        {
+          "log_line": 42,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 49,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 69,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 76,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 96,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 103,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 123,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 130,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 150,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 157,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 177,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 184,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 204,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 211,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        }
+      ],
+      "wrapper_finish_records": [
+        {
+          "log_line": 217,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 2,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 218,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 0,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 219,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 1,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 220,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 3,
+            "registrations": 14
+          }
+        }
+      ],
+      "timing_checks": [
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 16,
+          "sample_count": 100,
+          "raw_median_ms": 0.2099855,
+          "reported_median_ms": 0.2099855,
+          "exact_match": true,
+          "minimum_ms": 0.202434,
+          "maximum_ms": 18.91,
+          "sample_record_line": 43,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 16,
+          "sample_count": 100,
+          "raw_median_ms": 0.197089,
+          "reported_median_ms": 0.197089,
+          "exact_match": true,
+          "minimum_ms": 0.193985,
+          "maximum_ms": 0.927075,
+          "sample_record_line": 50,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 32,
+          "sample_count": 100,
+          "raw_median_ms": 0.25459350000000003,
+          "reported_median_ms": 0.25459350000000003,
+          "exact_match": true,
+          "minimum_ms": 0.244129,
+          "maximum_ms": 3.356659,
+          "sample_record_line": 70,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 32,
+          "sample_count": 100,
+          "raw_median_ms": 0.241554,
+          "reported_median_ms": 0.241554,
+          "exact_match": true,
+          "minimum_ms": 0.237186,
+          "maximum_ms": 0.64586,
+          "sample_record_line": 77,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 64,
+          "sample_count": 100,
+          "raw_median_ms": 0.293282,
+          "reported_median_ms": 0.293282,
+          "exact_match": true,
+          "minimum_ms": 0.28797,
+          "maximum_ms": 1.370568,
+          "sample_record_line": 97,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 64,
+          "sample_count": 100,
+          "raw_median_ms": 0.272594,
+          "reported_median_ms": 0.272594,
+          "exact_match": true,
+          "minimum_ms": 0.267937,
+          "maximum_ms": 2.04987,
+          "sample_record_line": 104,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 128,
+          "sample_count": 100,
+          "raw_median_ms": 0.325778,
+          "reported_median_ms": 0.325778,
+          "exact_match": true,
+          "minimum_ms": 0.31901,
+          "maximum_ms": 3.388307,
+          "sample_record_line": 124,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 128,
+          "sample_count": 100,
+          "raw_median_ms": 0.307506,
+          "reported_median_ms": 0.307506,
+          "exact_match": true,
+          "minimum_ms": 0.302561,
+          "maximum_ms": 0.502339,
+          "sample_record_line": 131,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 256,
+          "sample_count": 100,
+          "raw_median_ms": 0.394515,
+          "reported_median_ms": 0.394515,
+          "exact_match": true,
+          "minimum_ms": 0.38653,
+          "maximum_ms": 2.048053,
+          "sample_record_line": 151,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 256,
+          "sample_count": 100,
+          "raw_median_ms": 0.310114,
+          "reported_median_ms": 0.310114,
+          "exact_match": true,
+          "minimum_ms": 0.302465,
+          "maximum_ms": 2.474737,
+          "sample_record_line": 158,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 512,
+          "sample_count": 100,
+          "raw_median_ms": 0.374962,
+          "reported_median_ms": 0.374962,
+          "exact_match": true,
+          "minimum_ms": 0.369953,
+          "maximum_ms": 1.289033,
+          "sample_record_line": 178,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 512,
+          "sample_count": 100,
+          "raw_median_ms": 0.3227235,
+          "reported_median_ms": 0.3227235,
+          "exact_match": true,
+          "minimum_ms": 0.319363,
+          "maximum_ms": 1.071658,
+          "sample_record_line": 185,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 1024,
+          "sample_count": 100,
+          "raw_median_ms": 0.4454755,
+          "reported_median_ms": 0.4454755,
+          "exact_match": true,
+          "minimum_ms": 0.433859,
+          "maximum_ms": 3.689678,
+          "sample_record_line": 205,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "013-core-ep4-allreduce-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 1024,
+          "sample_count": 100,
+          "raw_median_ms": 0.353234,
+          "reported_median_ms": 0.353234,
+          "exact_match": true,
+          "minimum_ms": 0.349473,
+          "maximum_ms": 0.873027,
+          "sample_record_line": 212,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        }
+      ],
+      "diagnostics": {
+        "allocator_oom": 0,
+        "traceback": 0,
+        "runtime_error": 0,
+        "error_level": 0,
+        "fallback_text": 0,
+        "futurewarning": 8,
+        "cublas_experimental_warning": 4
+      }
+    },
+    {
+      "job": "015-core-ep8-alltoall-caplive-r1",
+      "ep": 8,
+      "communication": "alltoall",
+      "started_at": "2026-09-20T18:44:53.633699+00:00",
+      "finished_at": "2026-09-20T18:49:13.061904+00:00",
+      "log_sha256": "e9364081a55ffd059519290aa731c5763bb37ab0cb0684193e0687acf3179493",
+      "exit_code": 0,
+      "repeat": 1,
+      "cross_pair": [
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "global_tokens": 16,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00262312058",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00262312058,
+          "status": "FAIL",
+          "log_line": 63
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "global_tokens": 32,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00263643856",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00263643856,
+          "status": "FAIL",
+          "log_line": 118
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "global_tokens": 64,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00264836974",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00264836974,
+          "status": "FAIL",
+          "log_line": 157
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "global_tokens": 128,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00264275902",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00264275902,
+          "status": "FAIL",
+          "log_line": 196
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "global_tokens": 256,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00264102917",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00264102917,
+          "status": "FAIL",
+          "log_line": 235
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "global_tokens": 512,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00263775658",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00263775658,
+          "status": "FAIL",
+          "log_line": 274
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "global_tokens": 1024,
+          "variant": "w4a16_megamoe",
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00263784127",
+          "max_abs": 0.03125,
+          "relative_l2": 0.00263784127,
+          "status": "FAIL",
+          "log_line": 313
+        }
+      ],
+      "oracle_records": [
+        {
+          "log_line": 57,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 64,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 112,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 119,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 151,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 158,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 190,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 197,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 229,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 236,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 268,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 275,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 307,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 314,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        }
+      ],
+      "graph_records": [
+        {
+          "log_line": 58,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 65,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 113,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 120,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 152,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 159,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 191,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 198,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 230,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 237,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 269,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 276,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 308,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        },
+        {
+          "log_line": 315,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 8
+          }
+        }
+      ],
+      "wrapper_finish_records": [
+        {
+          "log_line": 321,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 1,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 322,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 0,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 323,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 7,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 324,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 5,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 325,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 3,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 326,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 2,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 327,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 4,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 328,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 6,
+            "registrations": 14
+          }
+        }
+      ],
+      "timing_checks": [
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 16,
+          "sample_count": 100,
+          "raw_median_ms": 0.137665,
+          "reported_median_ms": 0.137665,
+          "exact_match": true,
+          "minimum_ms": 0.133696,
+          "maximum_ms": 18.586634,
+          "sample_record_line": 59,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 16,
+          "sample_count": 100,
+          "raw_median_ms": 0.1247205,
+          "reported_median_ms": 0.1247205,
+          "exact_match": true,
+          "minimum_ms": 0.119873,
+          "maximum_ms": 2.999957,
+          "sample_record_line": 66,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 32,
+          "sample_count": 100,
+          "raw_median_ms": 0.17022500000000002,
+          "reported_median_ms": 0.17022500000000002,
+          "exact_match": true,
+          "minimum_ms": 0.166433,
+          "maximum_ms": 1.703725,
+          "sample_record_line": 114,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 32,
+          "sample_count": 100,
+          "raw_median_ms": 0.152321,
+          "reported_median_ms": 0.152321,
+          "exact_match": true,
+          "minimum_ms": 0.149666,
+          "maximum_ms": 1.390762,
+          "sample_record_line": 121,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 64,
+          "sample_count": 100,
+          "raw_median_ms": 0.19208150000000002,
+          "reported_median_ms": 0.19208150000000002,
+          "exact_match": true,
+          "minimum_ms": 0.183554,
+          "maximum_ms": 2.596754,
+          "sample_record_line": 153,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 64,
+          "sample_count": 100,
+          "raw_median_ms": 0.1775535,
+          "reported_median_ms": 0.1775535,
+          "exact_match": true,
+          "minimum_ms": 0.174529,
+          "maximum_ms": 3.878742,
+          "sample_record_line": 160,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 128,
+          "sample_count": 100,
+          "raw_median_ms": 0.203232,
+          "reported_median_ms": 0.203232,
+          "exact_match": true,
+          "minimum_ms": 0.19984,
+          "maximum_ms": 2.460041,
+          "sample_record_line": 192,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 128,
+          "sample_count": 100,
+          "raw_median_ms": 0.18368050000000002,
+          "reported_median_ms": 0.18368050000000002,
+          "exact_match": true,
+          "minimum_ms": 0.180354,
+          "maximum_ms": 3.645397,
+          "sample_record_line": 199,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 256,
+          "sample_count": 100,
+          "raw_median_ms": 0.21012999999999998,
+          "reported_median_ms": 0.21012999999999998,
+          "exact_match": true,
+          "minimum_ms": 0.204483,
+          "maximum_ms": 2.334674,
+          "sample_record_line": 231,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 256,
+          "sample_count": 100,
+          "raw_median_ms": 0.18993700000000002,
+          "reported_median_ms": 0.18993700000000002,
+          "exact_match": true,
+          "minimum_ms": 0.186848,
+          "maximum_ms": 3.13973,
+          "sample_record_line": 238,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 512,
+          "sample_count": 100,
+          "raw_median_ms": 0.2104,
+          "reported_median_ms": 0.2104,
+          "exact_match": true,
+          "minimum_ms": 0.20624,
+          "maximum_ms": 2.422067,
+          "sample_record_line": 270,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 512,
+          "sample_count": 100,
+          "raw_median_ms": 0.1923535,
+          "reported_median_ms": 0.1923535,
+          "exact_match": true,
+          "minimum_ms": 0.190401,
+          "maximum_ms": 3.251738,
+          "sample_record_line": 277,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16",
+          "global_tokens": 1024,
+          "sample_count": 100,
+          "raw_median_ms": 0.23259400000000002,
+          "reported_median_ms": 0.23259400000000002,
+          "exact_match": true,
+          "minimum_ms": 0.224706,
+          "maximum_ms": 0.901128,
+          "sample_record_line": 309,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        },
+        {
+          "job": "015-core-ep8-alltoall-caplive-r1",
+          "variant": "w4a16_megamoe",
+          "global_tokens": 1024,
+          "sample_count": 100,
+          "raw_median_ms": 0.2109925,
+          "reported_median_ms": 0.2109925,
+          "exact_match": true,
+          "minimum_ms": 0.20768,
+          "maximum_ms": 2.009171,
+          "sample_record_line": 316,
+          "timer": "cupti",
+          "aggregation": "per_iteration_rank_max",
+          "repeat": 1,
+          "pooled200": false
+        }
+      ],
+      "diagnostics": {
+        "allocator_oom": 0,
+        "traceback": 0,
+        "runtime_error": 0,
+        "error_level": 0,
+        "fallback_text": 0,
+        "futurewarning": 16,
+        "cublas_experimental_warning": 8
+      }
+    }
+  ],
+  "log_diagnostics": {
+    "allocator_oom": 0,
+    "traceback": 0,
+    "runtime_error": 0,
+    "error_level": 0,
+    "fallback_text": 0,
+    "futurewarning": 24,
+    "cublas_experimental_warning": 12
+  },
+  "pooled_200_sample_claim": false,
+  "final_speedup_claim": null,
+  "limitations": [
+    "Both jobs are repeat1 only. No pooled200-sample result, final speedup or full60 completion is claimed.",
+    "All14 original native cross-pair checks FAIL; distinct per-path PASS does not establish backend equivalence.",
+    "No serialized tensors or per-rank raw timestamp arrays are archived. Exact mapping/reference and rank-MAX aggregation are bound to reviewed source plus actual logs.",
+    "56 extra untimed graph replays are checked; every timed replay is not separately validated.",
+    "cuBLASLt and NCCL remain trusted primitives. Other jobs in the72-file snapshot are outside this review."
+  ]
+}

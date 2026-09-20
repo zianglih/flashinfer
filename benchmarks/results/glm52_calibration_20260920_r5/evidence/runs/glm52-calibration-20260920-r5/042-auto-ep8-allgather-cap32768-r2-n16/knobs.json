@@ -1,0 +1,43 @@
+{
+ "version": 1,
+ "entries": [
+  {
+   "device": "NVIDIA B300 SXM6 AC",
+   "dtype": "bf16_nvfp4",
+   "world_size": 8,
+   "hidden": 6144,
+   "intermediate": 2048,
+   "num_experts": 256,
+   "topk": 8,
+   "combine_dtype": "bf16",
+   "max_tokens": 32768,
+   "apply_topk_in_fc1": false,
+   "knobs": {
+    "cluster_shape_mnk": [
+     2,
+     1,
+     1
+    ],
+    "group_hint": 1024,
+    "epi_flag_batch": [
+     2,
+     4
+    ],
+    "load_balance_mode": "atomic_counter",
+    "mma_tiler_mnk": [
+     256,
+     64,
+     256
+    ],
+    "use_2cta_instrs": true,
+    "flag_batch": 4,
+    "token_back_mode": "epi_warps",
+    "in_kernel_fc2_reduce": false,
+    "num_sched_stages": 2
+   },
+   "p50_us": 100.8640006184578,
+   "source": "autotune_graph_events",
+   "tuned_at": "2026-09-20T20:10:05"
+  }
+ ]
+}

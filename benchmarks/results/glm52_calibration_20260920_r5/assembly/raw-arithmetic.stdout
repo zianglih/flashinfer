@@ -1,0 +1,1 @@
+{"status": "parent_direct_raw_arithmetic_passed", "groups": 110, "complete_groups": 110, "raw_performance_samples": 44000, "phase_groups": {"core": 84, "auto": 6, "routing": 12, "prefill": 8}}

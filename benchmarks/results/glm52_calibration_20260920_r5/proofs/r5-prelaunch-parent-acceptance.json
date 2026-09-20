@@ -1,0 +1,26 @@
+{
+  "accepted_at": "2026-09-20T17:50:21.069402+00:00",
+  "source": {
+    "benchmark_commit": "bd8391858db504c8997e704c7952f4d48ccab591",
+    "runtime_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+    "benchmark_sha256": {
+      "benchmarks/bench_cute_dsl_moe_distributed.py": "8d7aa29da0c41348a133273a478acfd871eeea3ef819950c32cde4fe3ec71041",
+      "benchmarks/moe_distributed_layout.py": "a66953bc8db2c38cb6fa23f5fa84c89721a0a09a9aad5b83eeba0c44d1a83d76",
+      "benchmarks/sglang_glm_routing.py": "29016eaa2713851fb09d5c141300ea42d0d7e6d444ec77de9dba2bdd6ffbeac0",
+      "benchmarks/w4a16_contract_reference.py": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+      "tests/moe_ep/w4a16_reference.py": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5"
+    }
+  },
+  "environment_transfer": "artifacts/environment-transfers/20260920T174910Z",
+  "exact_editable_only_change": true,
+  "runtime_identity_validated_by_driver": true,
+  "gpu_unit_gate": "artifacts/contract-reference-timing-r5",
+  "gpu_test_count": 12,
+  "gpu_test_skips": 0,
+  "gpu_idle_after_gate": true,
+  "scope": "Actual independent-reference unit gate passed; distributed correctness/performance still required",
+  "independent_source_review": "artifacts/r4-reference-independent-review.json",
+  "test_correction_review": "artifacts/r4-a2a-counterexample-independent-review.json",
+  "driver_sha256": "2d69224ad7c9a4ef0ad7ae2fb9cd06820f3c496d33232907c507af1a8c898257",
+  "issues": []
+}
