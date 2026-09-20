@@ -85,7 +85,7 @@ The old benchmark's TP mode is not a substitute: it replicates all experts and s
 
 ## Attribution plan
 
-Run on a separate devbox using the same fixed SGLang image, in an isolated source/environment/cache with a new run ID. The existing serving sweep continues unchanged. The requested first calibration uses the same ad0 source for both Split and Mega:
+Run on a separate devbox using the same fixed SGLang image, in an isolated source/environment/cache with a new run ID. The serving sweep completed all48points/30,720requests and is published in [InferenceX PR1](https://github.com/zianglih/InferenceX/pull/1). It was not rerun. The requested first calibration uses the same ad0 source for both Split and Mega:
 
 1. Hold PR5019 source, random inputs, quantized weight bytes, shape, token rows and numerical settings fixed; vary Split all-to-all versus input gather/output reduce-scatter.
 2. Hold that communication contract fixed; change only the H/routing-group preset, then routing inclusion. Router GEMM remains outside this microbenchmark and must be identified as such.
@@ -107,7 +107,7 @@ The original default remains `--model-shape deepseek-v3 --ep-communication allto
 
 The helper initializes/masks collective padding and returns only the original valid local rows. It does not reproduce scheduler-padded rows routed as part of a SGLang graph batch. All required staging/gather/reduction stays in the timed closure; preprocessing weights, compilation and tactic selection remain outside it.
 
-### GPU correctness gate (running; not yet passed)
+### GPU correctness and explicit reference policies
 
 From this branch, in the separately prepared SGLang-image devbox with FlashInfer based on ad0 and CuTe4.7.1:
 
@@ -115,16 +115,21 @@ From this branch, in the separately prepared SGLang-image devbox with FlashInfer
 for ep in 4 8; do
   for comm in allgather allreduce; do
     python -m torch.distributed.run --nproc-per-node="$ep" \
-      --master-port=30327 benchmarks/bench_cute_dsl_moe_distributed.py \
+      --master-addr=127.0.0.1 --master-port=30327 benchmarks/bench_cute_dsl_moe_distributed.py \
       --num-gpus "$ep" --parallel-modes ep --variants w4a16,w4a16_megamoe \
       --model-shape glm-5.2 --ep-communication "$comm" \
-      --num-tokens 1,3,4,5,32 --warmup 1 --iters 3 \
-      --no-fused-finalize --refcheck --timing cuda_event --cuda-graph
+      --num-tokens 1,3,5,32 --warmup 1 --iters 3 \
+      --no-fused-finalize --refcheck --refcheck-policy per-path \
+      --timing cuda_event --cuda-graph
   done
 done
 ```
 
-Then repeat with `--megamoe-max-tokens-per-rank 32768`. The unchanged numerical acceptance is atol=rtol=1e-2; failures must be retained and investigated, not hidden by a wider tolerance.
+Then repeat with `--megamoe-max-tokens-per-rank 32768`. These commands show the native benchmark; the sealed campaign additionally uses its deferred-CUPTI/output-poisoned graph-validation wrapper. The unchanged numerical acceptance is atol=rtol=1e-2; failures are retained.
+
+The original default `--refcheck-policy cross-pair` still requires direct same-weight agreement and fails at captured N3. Explicit `per-path` separately validates each path against independent expert math and its source-traced reduction contract. It still prints the original `REFCHECK_CSV` PASS/FAIL without changing the threshold; passing per-path latency checks do **not** certify cross-path equivalence. Missing capability, input/route mismatch, nonfinite result or failed independent oracle remains a hard error.
+
+`w4a16_contract_reference.py` adapts the unchanged [ad0 independent expert reference](https://github.com/flashinfer-ai/flashinfer/blob/ad0a5e5e78e57070ec7c582efe733cb55cd8839f/tests/moe_ep/w4a16_reference.py), SHA6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5. It decodes canonical packed weights and computes cuBLASLt FC1/FC2 with FP32 accumulation, explicit approximate SwiGLU and BF16 activation/FC2 boundaries. Mega gets ordered FP32 route FMA then BF16; gather Split gets owner BF16 partials plus trusted NCCL SUM; A2A Split gets owner partials placed at first owner slots plus the pinned K8 FP32 addition tree. Native inputs/routes and owner partials are checked too. Production expert/custom-finalize kernels are not used as the oracle. cuBLASLt and NCCL remain trusted primitive boundaries. Temporary precision controls are restored and heavy GPU reference tensors freed before timing. No oracle is inside the timed callable.
 
 ### Performance matrix
 
@@ -132,16 +137,20 @@ After correctness, compare `alltoall`, `allgather`, and `allreduce` at global to
 
 ## Active calibration environment
 
-A separate8×B300 devbox uses the exact SGLang image above, with both kernels from ad0 and benchmark commit `0a9cd944b11fc297737993cfc3f132d3d51fc882`. CuTe providers are4.7.1, CUPTI Python13.2.0/library13.2.86; Torch2.13.0+cu130/CUDA13.0/loaded NCCL2.29.7 and image NVSHMEM3.4.5 are preserved. The environment retains12 pip-check conflicts:9 inherited,3 intentional FlashInfer/CuTe override conflicts;4 prior CuTe4.6.2/protobuf conflicts disappear. This is not a resolver-clean environment.
+A separate8×B300 devbox uses the exact SGLang image above, with both kernels from ad0 and failed r3 benchmark commit `6f88c235b658104053761aad15158e954f439a41`. CuTe providers are4.7.1, CUPTI Python13.2.0/library13.2.86; Torch2.13.0+cu130/CUDA13.0/loaded NCCL2.29.7 and image NVSHMEM3.4.5 are preserved. The environment retains12 pip-check conflicts:9 inherited,3 intentional FlashInfer/CuTe override conflicts;4 prior CuTe4.6.2/protobuf conflicts disappear. This is not a resolver-clean environment.
 
-The first launch stalled before a benchmark case because torchrun standalone rendezvous selected an unresolvable node hostname. Its logs and termination evidence are preserved. A new run uses explicit single-node `--master-addr=127.0.0.1 --master-port=30327`; it entered the first EP4/allgather numerical gate at16:17 UTC and is compiling. No calibration result is claimed yet. The planned serial run includes60 invocations:8 correctness,24 core,12 auto,8 precomputed-routing and8 eager-prefill. Failed numerical checks retain the original tolerance and stop the pipeline.
+The first launch stalled on unresolvable standalone rendezvous; r2 failed in the historical DeepSeek routing guard. r3 used explicit loopback and the pinned SGLang router, passed N1, then failed original direct Mega/Split agreement at N3 before CUPTI. Three-event correctness samples are diagnostic only. Source6f88, frozen helpers, environment receipts and every failure remain preserved. A separate eager-only d1 captured all eight N1/N3 rank payloads with unchanged kernels/tolerance and strict failed exit1.
+
+[Independent numerical diagnosis and raw tensors](../results/glm52_numerics_20260920_d1/README.md) show identical inputs/routes and all49,152/147,456 BF16 FC2 route terms. Exact CPU FP32-FMA replay matches Mega outputs and Split owner partials. Two N3 final elements fail the unchanged threshold due to the distinct partial/collective BF16 rounding; equivalent destination-dependent rank-sum trees reconstruct actual outputs but do not identify the actual NCCL schedule. d1 reproduces r3 aggregate errors, not its unrecorded timing/graph history. This explains the captured numerical difference, not the serving performance gap.
+
+The next reviewed revision uses the explicit per-path policy above in a new source/environment/helper seal. Its actual GPU oracle gate and60-job performance campaign remain pending. The matrix retains8 correctness,24 core,12 auto,8 precomputed-routing and8 eager-prefill invocations; every performance point requires two100-sample CUPTI repeats and raw rank-MAX evidence.
 
 ## Validation boundary
 
-The serving numbers above are measured and their raw token/duration arithmetic is checked. The new benchmark modes have entered GPU setup/compilation but have not yet passed the numerical gates or produced performance evidence. Static/CPU validation of layouts, flags and capacity guards does not establish NCCL CUDA-graph compatibility, numerical parity or performance. Final claims await GPU reference checks and measurement.
+The serving numbers above are measured and their raw token/duration arithmetic is checked. The original cross-pair GPU gate failed; the new independent per-path oracle has not yet passed its GPU gate or produced accepted performance evidence. Static/CPU validation of layouts, flags and capacity guards does not establish NCCL CUDA-graph compatibility, numerical parity or performance. Final claims await GPU reference checks and measurement.
 
 ## GLM routing compatibility correction
 
 The first GLM GPU attempt failed before correctness or timing: the historical FlashInfer DeepSeek routing helper rejects `n_group=1, topk_group=1, topk=8`. GLM parameters remain unchanged. The GLM benchmark now uses the exact Triton routing kernel from SGLang `50eeb742961908afa68f4f523a1a19c5de6eb0b3`, copied with source attribution into `sglang_glm_routing.py`; the original DSV3 routing path is unchanged. It writes existing FP32 weights and int32 expert IDs directly, with bias-only selection, unbiased sigmoid renormalization and scale2.5. Metadata records the reference, kernel AST and adapter hashes.
 
-Six additional CPU contract tests and nineteen layout tests pass. Independent review confirms the complete kernel text matches the pinned source. These are source checks; GPU eager/graph routing parity and distributed MoE validation remain required before reporting calibrated timings. Failed rendezvous and routing attempts contain no performance result and remain archived separately.
+Six additional CPU contract tests and nineteen layout tests pass. Independent review confirms the complete kernel text matches the pinned source. These source checks were followed by an actual B300 routing-only gate:10 cases and18 output-poisoned graph replays passed bitwise against fixed SGLang50eeb. This does not waive the distributed MoE failure or validate the new oracle. Failed rendezvous and routing attempts contain no performance result and remain archived separately.

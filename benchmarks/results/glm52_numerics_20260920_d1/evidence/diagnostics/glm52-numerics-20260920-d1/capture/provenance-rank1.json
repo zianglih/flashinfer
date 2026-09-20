@@ -1,0 +1,46 @@
+{
+  "created_at": "2026-09-20T17:15:57.906867+00:00",
+  "source_commit": "6f88c235b658104053761aad15158e954f439a41",
+  "runtime_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "source_sha256": {
+    "benchmarks/bench_cute_dsl_moe_distributed.py": "66fdc2b041531cdfb203161aa514a007db970deb1d190faec1ce7b5af57617e0",
+    "benchmarks/moe_distributed_layout.py": "a66953bc8db2c38cb6fa23f5fa84c89721a0a09a9aad5b83eeba0c44d1a83d76",
+    "benchmarks/sglang_glm_routing.py": "29016eaa2713851fb09d5c141300ea42d0d7e6d444ec77de9dba2bdd6ffbeac0"
+  },
+  "helper_sha256": "84739673d444b9140f569cff5c6d5fe7cf7239ea6fa3e0112b37d24afe663332",
+  "baseline_invocation": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/runs/glm52-calibration-20260920-r3/001-correctness-ep4-allgather-caplive-r1/invocation.json",
+  "baseline_invocation_sha256": "8f716a8ded884705cc21c62b08c7c6b300ad8f22897f8c42e73ed42f4f03399a",
+  "imports": {
+    "flashinfer": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/sources/flashinfer-ad0/flashinfer/__init__.py",
+    "benchmark": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/sources/flashinfer-ad0/benchmarks/bench_cute_dsl_moe_distributed.py"
+  },
+  "compiled_cache_reused": {
+    "FLASHINFER_WORKSPACE_BASE": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/runs/glm52-calibration-20260920-r3/compiled-cache",
+    "TRITON_CACHE_DIR": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/runs/glm52-calibration-20260920-r3/compiled-cache/triton",
+    "XDG_CACHE_HOME": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/runs/glm52-calibration-20260920-r3/compiled-cache/xdg",
+    "CUDA_CACHE_PATH": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/runs/glm52-calibration-20260920-r3/compiled-cache/cuda"
+  },
+  "new_knob_cache": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/diagnostics/glm52-numerics-20260920-d1/capture/knobs.json",
+  "knob_initially_absent": true,
+  "tokens": [
+    1,
+    3
+  ],
+  "split_tune_max_tokens": 16384,
+  "enable_pdl": true,
+  "world_size": 4,
+  "rank": 1,
+  "gpu": "NVIDIA B300 SXM6 AC",
+  "torch": "2.13.0+cu130",
+  "cuda": "13.0",
+  "nccl": [
+    2,
+    29,
+    7
+  ],
+  "atol": 0.01,
+  "rtol": 0.01,
+  "eager_only": true,
+  "timing_enabled": false,
+  "observer_limitations": "CPU snapshots/synchronization outside autotune perturb scheduling. Native source and strict reference check unchanged. Skipping r3 graph/timing calls does not replay its allocator/autotuner/graph state exactly; diagnostic output is not performance evidence."
+}

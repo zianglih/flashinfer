@@ -1,0 +1,19 @@
+{
+  "scope": "CPU fixture only; no CUDA/NCCL or numerical execution",
+  "helper_sha256": "84739673d444b9140f569cff5c6d5fe7cf7239ea6fa3e0112b37d24afe663332",
+  "checks": [
+    "valid real Git and file hashes",
+    "reject output under source",
+    "reject output under preserved r3",
+    "reject existing output",
+    "reject changed routing job",
+    "reject changed PDL",
+    "reject escaped cache",
+    "reject source identity drift",
+    "reject dirty source",
+    "reject source content digest",
+    "reject production kernel delta"
+  ],
+  "passed": 11,
+  "failed": 0
+}

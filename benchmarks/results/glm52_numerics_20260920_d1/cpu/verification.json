@@ -1,0 +1,46 @@
+{
+  "files": [
+    {
+      "path": "analyses/glm52-numerics-20260920-d1-cpu-r1/analysis.json",
+      "sha256": "4f3731aa852971074a0646d70bca84830ac27656f3fb4747643e8d74b01d8cd0",
+      "bytes": 33144
+    },
+    {
+      "path": "analyses/glm52-numerics-20260920-d1-cpu-r1/analysis.md",
+      "sha256": "e8cc1becb2f007ddbd61f6e562d8283a5a28aeab1bafc6176eca759ee895ee1d",
+      "bytes": 5858
+    },
+    {
+      "path": "analyses/glm52-numerics-20260920-d1-cpu-r1/manifest.json",
+      "sha256": "371222c8560857a0b1476e921919de19ee51104bf30aa25f4ee9898012500b38",
+      "bytes": 254
+    },
+    {
+      "path": "setup/helpers-d1-cpu-analysis-r1/analyze_numerical_capture.py",
+      "sha256": "bf4c6c76f087feaa7d37d5387eef6a3b14f91050b8a82737ac50b7a20ca80cae",
+      "bytes": 16611
+    },
+    {
+      "path": "setup/helpers-d1-cpu-analysis-r1/exit.json",
+      "sha256": "0a577bf776a3ca94c0e74706d4ea08bbeb5fc36fff25e3814c94677a268d733b",
+      "bytes": 102
+    },
+    {
+      "path": "setup/helpers-d1-cpu-analysis-r1/invocation.json",
+      "sha256": "732350bb3d787370aed8a9eb7acc27ee17d069148572386bb56ff388be5b0666",
+      "bytes": 675
+    },
+    {
+      "path": "setup/helpers-d1-cpu-analysis-r1/stderr.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "setup/helpers-d1-cpu-analysis-r1/stdout.log",
+      "sha256": "4128b71a02fdd751961195b5a009008c0ccbfa40bea8b57df6214609c859afb2",
+      "bytes": 490
+    }
+  ],
+  "gpu_after": "0, 0, 0\n1, 0, 0\n2, 0, 0\n3, 0, 0\n4, 0, 0\n5, 0, 0\n6, 0, 0\n7, 0, 0\n",
+  "verified": true
+}

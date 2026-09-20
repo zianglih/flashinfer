@@ -1,0 +1,26 @@
+{
+  "global_tokens": 3,
+  "rank": 2,
+  "local_tokens": 1,
+  "strict_refcheck_status": "FAIL",
+  "error": "AssertionError('W4A16 MegaMoE differs from the same-weight split path at atol=rtol=1e-2 (max_abs=0.03125, rel_l2=0.003435189428632275)')",
+  "payload_sha256": "b456b1acd9811f4638a883339aa7dbf25bd8080adf13da0c7b28431d42850132",
+  "payload_bytes": 813385,
+  "captured_fields": [
+    "split_inputs",
+    "split_activation",
+    "split_tactics",
+    "split_route_fc2",
+    "split_collective",
+    "split_saved_reference",
+    "mega_inputs",
+    "mega_workspace",
+    "refcheck",
+    "strict_refcheck_status",
+    "strict_refcheck_error"
+  ],
+  "mismatch_count": 2,
+  "max_abs": 0.03125,
+  "max_error_over_threshold": 1.213592290878296,
+  "all_finite": true
+}

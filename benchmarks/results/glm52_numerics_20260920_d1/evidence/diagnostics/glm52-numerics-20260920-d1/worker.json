@@ -1,0 +1,20 @@
+{
+  "pid": 8726,
+  "argv": [
+    "/opt/sglang/bin/python3",
+    "-m",
+    "torch.distributed.run",
+    "--master-addr=127.0.0.1",
+    "--master-port=30328",
+    "--nnodes=1",
+    "--nproc-per-node=4",
+    "--max-restarts=0",
+    "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/setup/helpers-glm52-numerics-20260920-d1/capture_r3_numerical_failure.py",
+    "--source-root",
+    "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/sources/flashinfer-ad0",
+    "--output-root",
+    "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/diagnostics/glm52-numerics-20260920-d1/capture",
+    "--baseline-invocation",
+    "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/runs/glm52-calibration-20260920-r3/001-correctness-ep4-allgather-caplive-r1/invocation.json"
+  ]
+}

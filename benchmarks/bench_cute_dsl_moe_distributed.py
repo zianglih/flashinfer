@@ -124,6 +124,7 @@ from moe_distributed_layout import (
     token_layout,
     validate_alignment_options,
 )
+from w4a16_contract_reference import validate_refcheck_policy
 
 DISTRIBUTED_TOKEN_COUNTS = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096]
 _PROFILE_CASE_ENV = "FLASHINFER_CUTE_DSL_MOE_PROFILE_CASE"
@@ -1183,9 +1184,38 @@ def _benchmark_distributed_ep(
     run_setup_phase("CuTe DSL tactic selection", tune_local_moe)
 
     if reference_outputs is not None and variant.name == "w4a16":
-        reference_outputs["w4a16"] = (
-            run_once().reshape(-1, CFG.hidden_size)[:local_num_tokens].clone()
-        )
+        contract = reference_outputs.get("_contract")
+        if contract is None:
+            reference_outputs["w4a16"] = (
+                run_once().reshape(-1, CFG.hidden_size)[:local_num_tokens].clone()
+            )
+        else:
+            from w4a16_contract_reference import (
+                a2a_partial_reference,
+                check_output,
+                validate_inputs,
+            )
+
+            if not args.precomputed_routing:
+                _route_tokens(router_logits, routing_bias, topk_values, topk_indices)
+            validate_inputs(contract, hidden_states, topk_indices, topk_values)
+            received = dispatch()
+            expected_partials = a2a_partial_reference(contract, *received)
+            setup_partials = compute(*received)
+            setup_output = combine(setup_partials).reshape(-1, CFG.hidden_size)[
+                :local_num_tokens
+            ]
+            reference_outputs["w4a16"] = setup_output.clone()
+            check_output(
+                contract,
+                "w4a16",
+                setup_output,
+                num_tokens,
+                partials=setup_partials,
+                expected_partials=expected_partials,
+            )
+            del setup_partials, setup_output, received, expected_partials
+            torch.cuda.empty_cache()
         torch.cuda.synchronize()
         dist.barrier()
 
@@ -1328,7 +1358,27 @@ def _benchmark_distributed_gather_ep(
     torch.cuda.synchronize()
     dist.barrier()
     # Initialize the output collective outside capture even with --warmup 0.
-    setup_output = run_once()
+    contract = (
+        reference_outputs.get("_contract") if reference_outputs is not None else None
+    )
+    if contract is None:
+        setup_output = run_once()
+    else:
+        from w4a16_contract_reference import check_output, validate_inputs
+
+        gather()
+        if not args.precomputed_routing:
+            route()
+        validate_inputs(
+            contract, gathered, topk_indices, topk_values, padded_global=True
+        )
+        setup_partials = compute()
+        setup_output = combine(setup_partials)
+        check_output(
+            contract, "w4a16", setup_output, num_tokens, partials=setup_partials
+        )
+        del setup_partials
+        torch.cuda.empty_cache()
     if reference_outputs is not None:
         reference_outputs["w4a16"] = setup_output.clone()
     torch.cuda.synchronize()
@@ -1345,8 +1395,10 @@ def _benchmark_distributed_gather_ep(
     )
 
 
-def _check_megamoe_output(output, reference, dist, device, rank, num_tokens):
-    """Fail every rank together when the same-weight split comparison differs."""
+def _check_megamoe_output(
+    output, reference, dist, device, rank, num_tokens, *, enforce=True
+):
+    """Always report the original pair check; default to its original failure gate."""
     if _max_rank_sample(float(output.shape != reference.shape), dist, device):
         raise ValueError(
             f"MegaMoE output shape {output.shape} differs from split {reference.shape}"
@@ -1377,7 +1429,7 @@ def _check_megamoe_output(output, reference, dist, device, rank, num_tokens):
             f"{'FAIL' if maxima[0].item() else 'PASS'}",
             flush=True,
         )
-    if maxima[0].item():
+    if maxima[0].item() and enforce:
         raise AssertionError(
             "W4A16 MegaMoE differs from the same-weight split path at "
             f"atol=rtol=1e-2 (max_abs={maxima[1].item()}, rel_l2={relative_l2})"
@@ -1456,6 +1508,15 @@ def _benchmark_distributed_megamoe(
 
     try:
         route()
+        contract = (
+            reference_outputs.get("_contract")
+            if reference_outputs is not None
+            else None
+        )
+        if contract is not None:
+            from w4a16_contract_reference import validate_inputs
+
+            validate_inputs(contract, hidden_states, topk_indices, topk_values)
         layer.warmup(tensors)
         if args.megamoe_knobs == "auto":
             print(
@@ -1476,14 +1537,22 @@ def _benchmark_distributed_megamoe(
                 flush=True,
             )
         if reference_outputs is not None:
+            output = layer.forward(tensors)
             _check_megamoe_output(
-                layer.forward(tensors),
+                output,
                 reference_outputs["w4a16"],
                 dist,
                 device,
                 rank,
                 num_tokens,
+                enforce=contract is None,
             )
+            if contract is not None:
+                from w4a16_contract_reference import check_output
+
+                check_output(contract, "w4a16_megamoe", output, num_tokens)
+                torch.cuda.empty_cache()
+            del output
         return _run_distributed_iterations(
             args,
             run_once,
@@ -1909,6 +1978,7 @@ def _case_metadata(args, mode, variant, num_tokens, world_size, split_capacity):
         "apply_topk_in_fc1": args.apply_topk_in_fc1,
         "megamoe_knobs": args.megamoe_knobs,
         "refcheck": args.refcheck,
+        "refcheck_policy": args.refcheck_policy,
     }
 
 
@@ -1995,6 +2065,36 @@ def _run_parallel_mode(
             else None
         )
         reference_outputs = {} if args.refcheck and mode == "ep" else None
+        if args.refcheck_policy == "per-path":
+            from w4a16_contract_reference import build_reference
+
+            reference_x, reference_logits, _, reference_bias = (
+                _create_distributed_inputs(num_tokens, rank, world_size, device)
+            )
+            reference_scores = torch.empty(
+                (reference_x.shape[0], CFG.top_k), dtype=torch.float32, device=device
+            )
+            reference_ids = torch.empty_like(reference_scores, dtype=torch.int32)
+            _route_tokens(
+                reference_logits, reference_bias, reference_scores, reference_ids
+            )
+            reference_outputs["_contract"] = build_reference(
+                reference_x,
+                reference_ids,
+                reference_scores,
+                shared_weights[1],
+                args.ep_communication,
+            )
+            del (
+                reference_x,
+                reference_logits,
+                reference_bias,
+                reference_scores,
+                reference_ids,
+            )
+            torch.cuda.synchronize()
+            torch.cuda.empty_cache()
+            dist.barrier()
         for variant in variants:
             case_metadata = _case_metadata(
                 args, mode, variant, num_tokens, world_size, max_tokens_per_rank_budget
@@ -2290,6 +2390,13 @@ def main():
         help="Check MegaMoE against split W4A16 at atol=rtol=1e-2 before timing.",
     )
     parser.add_argument(
+        "--refcheck-policy",
+        choices=("cross-pair", "per-path"),
+        default="cross-pair",
+        help="cross-pair preserves the original 1e-2 gate; per-path independently checks "
+        "each reduction contract and still reports the original pair PASS/FAIL.",
+    )
+    parser.add_argument(
         "--num-gpus",
         type=int,
         default=8,
@@ -2403,6 +2510,18 @@ def main():
     ) != len(variant_names):
         parser.error("--variants must contain unique w4a4,w4a16,w4a16_megamoe values")
     parallel_modes = args.parallel_modes.split(",")
+    try:
+        validate_refcheck_policy(
+            args.refcheck_policy,
+            refcheck=args.refcheck,
+            mode=args.mode,
+            modes=parallel_modes,
+            variants=variant_names,
+            fused=args.use_fused_finalize,
+            weighted=args.apply_topk_in_fc1,
+        )
+    except ValueError as error:
+        parser.error(str(error))
     if not set(parallel_modes) <= {"ep", "tp"} or len(set(parallel_modes)) != len(
         parallel_modes
     ):
