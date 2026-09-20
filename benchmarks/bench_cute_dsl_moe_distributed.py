@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Distributed CuTe DSL DeepSeek-V3 MoE benchmark.
+"""Distributed CuTe DSL MoE benchmark (DeepSeek-V3 or GLM-5.2 shape).
 
 Compares two activation contracts over the same routed-MoE workload:
 
@@ -28,6 +28,18 @@ With ``--no-fused-finalize``, both W4A16 paths cast FC2 results to BF16 before
 applying FP32 routing weights. Split EP rounds each rank's weighted partial
 sum to BF16 before combine; MegaMoE reduces all per-route BF16 results at the
 source rank. The refcheck keeps a fixed tolerance for this reduction difference.
+
+For a synthetic GLM-5.2 DP-attention routed-MoE approximation, add
+``--model-shape glm-5.2 --ep-communication allgather`` to the EP W4A16
+comparison. Split then gathers BF16 inputs, computes its E/world_size experts
+with full intermediate width, and SUM reduce-scatters partial outputs. Use
+``--ep-communication allreduce`` for a zero/copy/SUM-reduce gather instead.
+Both use equal padded rank blocks with invalid routes masked, not SGLang's
+variable-size scheduler buffers; neither includes attention, shared experts,
+router GEMM, checkpoint tensors, or MTP. Tokens remain GLOBAL, not per rank.
+``--megamoe-max-tokens-per-rank 32768`` reserves that MegaMoE capacity while
+leaving live input counts unchanged; omission retains the live-sized default.
+New gather modes support W4A16 and Nsight Systems, not NCU's compute simulation.
 
 Both timers measure the full forward, including routing, input staging,
 communication, expert compute, and output handling. CUPTI measures the span
@@ -92,7 +104,7 @@ import sys
 import tempfile
 import time
 import warnings
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, replace
 from importlib.metadata import version
 from pathlib import Path
 
@@ -103,6 +115,13 @@ from bench_moe_deepseek import (
     BASE_INTERMEDIATE_SIZE,
     CFG,
     is_sm100_family,
+)
+from moe_distributed_layout import (
+    alignment_worker_arguments,
+    model_shape,
+    resolve_megamoe_capacity,
+    token_layout,
+    validate_alignment_options,
 )
 
 DISTRIBUTED_TOKEN_COUNTS = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096]
@@ -191,6 +210,11 @@ def _profile_worker_arguments(args, num_tokens):
         "--parallel-modes",
         args.parallel_modes,
     ]
+    arguments.extend(
+        alignment_worker_arguments(
+            args.model_shape, args.ep_communication, args.megamoe_max_tokens_per_rank
+        )
+    )
     if args.megamoe_knobs is not None:
         arguments.extend(
             (
@@ -917,6 +941,9 @@ def _run_distributed_iterations(
                         "global_tokens": num_tokens,
                         "rank": 0,
                         "world_size": dist.get_world_size(),
+                        "model_shape": args.model_shape,
+                        "ep_communication": args.ep_communication,
+                        "megamoe_capacity_override": args.megamoe_max_tokens_per_rank,
                         "timer": args.timing,
                         "warmup_iters": args.warmup,
                         "repeat_iters": args.iters,
@@ -1162,6 +1189,150 @@ def _benchmark_distributed_ep(
     )
 
 
+def _benchmark_distributed_gather_ep(
+    args,
+    variant,
+    num_tokens,
+    max_tokens_per_rank_budget,
+    rank,
+    world_size,
+    device,
+    prepared_weights=None,
+    reference_outputs=None,
+):
+    """Replicate rank inputs, compute owned experts, and SUM-scatter partials.
+
+    This models the routed-MoE boundary of DP attention, using fixed, equal
+    padded rank blocks. The allreduce gather approximates SUM_LEN's zero/copy/
+    reduce operation; it does not reproduce SGLang's variable-size buffers.
+    """
+    import torch.distributed as dist
+
+    from flashinfer.autotuner import autotune
+    from flashinfer.testing.utils import get_l2_cache_size
+
+    layout = token_layout(num_tokens, world_size)
+    local_num_tokens = layout.counts[rank]
+    capacity = layout.per_rank_capacity
+    num_local_experts = CFG.num_experts // world_size
+    layer, weight_pack = _create_distributed_moe_layer(
+        args,
+        variant,
+        CFG.intermediate_size,
+        num_local_experts,
+        rank * num_local_experts,
+        max_tokens_per_rank_budget * world_size,
+        rank,
+        device,
+        prepared_weights=prepared_weights,
+    )
+    hidden_states, _, global_router_logits, routing_bias = _create_distributed_inputs(
+        num_tokens, rank, world_size, device
+    )
+    positions = torch.tensor(layout.padded_positions, dtype=torch.int64, device=device)
+    invalid_rows = ~torch.tensor(layout.valid_mask, dtype=torch.bool, device=device)
+    router_logits = torch.zeros(
+        layout.padded_tokens, CFG.num_experts, dtype=torch.float32, device=device
+    )
+    router_logits.index_copy_(0, positions, global_router_logits)
+    gathered = torch.empty(
+        layout.padded_tokens, CFG.hidden_size, dtype=torch.bfloat16, device=device
+    )
+    padded_local = torch.empty(
+        capacity, CFG.hidden_size, dtype=torch.bfloat16, device=device
+    )
+    reduced = torch.empty_like(padded_local)
+    topk_values = torch.empty(
+        layout.padded_tokens, CFG.top_k, dtype=torch.float32, device=device
+    )
+    topk_indices = torch.empty(
+        layout.padded_tokens, CFG.top_k, dtype=torch.int32, device=device
+    )
+    l2_flush = torch.empty(2 * get_l2_cache_size(), dtype=torch.int8, device=device)
+
+    def gather():
+        if args.ep_communication == "allgather":
+            padded_local.zero_()
+            padded_local[:local_num_tokens].copy_(hidden_states)
+            dist.all_gather_into_tensor(gathered, padded_local)
+        else:
+            gathered.zero_()
+            start = rank * capacity
+            gathered[start : start + local_num_tokens].copy_(hidden_states)
+            dist.all_reduce(gathered, op=dist.ReduceOp.SUM)
+
+    def route():
+        _route_tokens(router_logits, routing_bias, topk_values, topk_indices)
+        # Padding has no expert owner and must contribute zero. Each real row
+        # retains the exact global ID and weight generated for the A2A/Mega case.
+        topk_indices.masked_fill_(invalid_rows[:, None], CFG.num_experts)
+        topk_values.masked_fill_(invalid_rows[:, None], 0)
+
+    def activation_pack():
+        return _make_distributed_activation_pack(
+            args, variant, gathered, topk_indices, topk_values, None
+        )
+
+    def compute():
+        return layer(activation_pack(), weight_pack)
+
+    def combine(partials):
+        dist.reduce_scatter_tensor(reduced, partials, op=dist.ReduceOp.SUM)
+        return reduced[:local_num_tokens]
+
+    def run_once():
+        gather()
+        if not args.precomputed_routing:
+            route()
+        return combine(compute())
+
+    profile_state = {}
+
+    def profile_activation_prep():
+        profile_state["activation_pack"] = activation_pack()
+
+    def profile_local_moe():
+        profile_state["partials"] = layer(profile_state["activation_pack"], weight_pack)
+
+    def profile_once():
+        stages = [("gather", gather)]
+        if not args.precomputed_routing:
+            stages.append(("routing", route))
+        stages.extend(
+            (
+                ("activation prep/quant", profile_activation_prep),
+                ("local MoE", profile_local_moe),
+                ("reduce-scatter", lambda: combine(profile_state["partials"])),
+            )
+        )
+        _run_profile_iteration(stages)
+
+    gather()
+    route()
+    torch.cuda.synchronize()
+    dist.barrier()
+    with autotune(True):
+        compute()
+    torch.cuda.synchronize()
+    dist.barrier()
+    # Initialize the output collective outside capture even with --warmup 0.
+    setup_output = run_once()
+    if reference_outputs is not None:
+        reference_outputs["w4a16"] = setup_output.clone()
+    torch.cuda.synchronize()
+    dist.barrier()
+    return _run_distributed_iterations(
+        args,
+        run_once,
+        profile_once,
+        l2_flush,
+        dist,
+        device,
+        f"ep::{variant.name}",
+        num_tokens,
+    )
+
+
 def _check_megamoe_output(output, reference, dist, device, rank, num_tokens):
     """Fail every rank together when the same-weight split comparison differs."""
     if _max_rank_sample(float(output.shape != reference.shape), dist, device):
@@ -1217,7 +1388,9 @@ def _benchmark_distributed_megamoe(
     from flashinfer.testing.utils import get_l2_cache_size
 
     local_num_tokens, _ = _token_partition(num_tokens, rank, world_size)
-    capacity = (num_tokens + world_size - 1) // world_size
+    capacity = resolve_megamoe_capacity(
+        num_tokens, world_size, args.megamoe_max_tokens_per_rank
+    )
     layer = MoEEpLayer(
         bootstrap=BootstrapConfig(
             world_size=world_size,
@@ -1663,6 +1836,63 @@ def _benchmark_distributed_tp(
         workspace.destroy()
 
 
+def _case_metadata(args, mode, variant, num_tokens, world_size, split_capacity):
+    layout = token_layout(num_tokens, world_size)
+    return {
+        "parallel_mode": mode,
+        "variant": variant.name,
+        "model_shape": args.model_shape,
+        "shape": asdict(CFG),
+        "global_tokens": num_tokens,
+        "world_size": world_size,
+        "live_tokens_per_rank": layout.counts,
+        "padded_tokens_per_rank": layout.per_rank_capacity,
+        "padded_global_tokens": layout.padded_tokens,
+        "split_ep_communication": args.ep_communication if mode == "ep" else None,
+        "actual_communication": (
+            "fused_megamoe"
+            if variant.use_megamoe
+            else args.ep_communication + "+sum_reduce_scatter"
+            if mode == "ep" and args.ep_communication != "alltoall"
+            else "alltoall_dispatch_combine"
+            if mode == "ep"
+            else "allgather+allreduce"
+        ),
+        "split_tune_max_tokens": (
+            split_capacity * world_size
+            if mode == "ep" and not variant.use_megamoe
+            else None
+        ),
+        "megamoe_capacity_override": args.megamoe_max_tokens_per_rank,
+        "megamoe_max_tokens_per_rank": (
+            resolve_megamoe_capacity(
+                num_tokens, world_size, args.megamoe_max_tokens_per_rank
+            )
+            if variant.use_megamoe
+            else None
+        ),
+        "timer": args.timing if args.mode == "benchmark" else "profiler_nvtx_stages",
+        "cuda_graph": args.cuda_graph if args.mode == "benchmark" else False,
+        "precomputed_routing": args.precomputed_routing,
+        "use_fused_finalize": args.use_fused_finalize,
+        "enable_pdl": args.enable_pdl,
+        "apply_topk_in_fc1": args.apply_topk_in_fc1,
+        "megamoe_knobs": args.megamoe_knobs,
+        "refcheck": args.refcheck,
+    }
+
+
+def _result_mode_label(args, mode):
+    if (
+        args.model_shape == "deepseek-v3"
+        and args.ep_communication == "alltoall"
+        and args.megamoe_max_tokens_per_rank is None
+    ):
+        return mode
+    capacity = args.megamoe_max_tokens_per_rank or "live"
+    return f"{mode}:{args.model_shape}:{args.ep_communication}:megacap{capacity}"
+
+
 def _run_parallel_mode(
     args,
     token_counts,
@@ -1736,6 +1966,15 @@ def _run_parallel_mode(
         )
         reference_outputs = {} if args.refcheck and mode == "ep" else None
         for variant in variants:
+            case_metadata = _case_metadata(
+                args, mode, variant, num_tokens, world_size, max_tokens_per_rank_budget
+            )
+            if rank == 0:
+                print(
+                    "DISTRIBUTED_CASE_JSON,"
+                    + json.dumps(case_metadata, sort_keys=True, separators=(",", ":")),
+                    flush=True,
+                )
             if variant.use_megamoe:
                 result = _benchmark_distributed_megamoe(
                     args,
@@ -1747,7 +1986,12 @@ def _run_parallel_mode(
                     reference_outputs,
                 )
             elif mode == "ep":
-                result = _benchmark_distributed_ep(
+                benchmark_ep = (
+                    _benchmark_distributed_ep
+                    if args.ep_communication == "alltoall"
+                    else _benchmark_distributed_gather_ep
+                )
+                result = benchmark_ep(
                     args,
                     variant,
                     num_tokens,
@@ -1773,8 +2017,17 @@ def _run_parallel_mode(
             if rank == 0 and result is not None:
                 row[variant.name] = result
                 print(
+                    "DISTRIBUTED_RESULT_JSON,"
+                    + json.dumps(
+                        {**case_metadata, "median_ms": result},
+                        sort_keys=True,
+                        separators=(",", ":"),
+                    ),
+                    flush=True,
+                )
+                print(
                     "DISTRIBUTED_CSV,"
-                    f"{mode},{variant.name},{num_tokens},{world_size},"
+                    f"{_result_mode_label(args, mode)},{variant.name},{num_tokens},{world_size},"
                     f"{result:.6f}"
                 )
             dist.barrier()
@@ -1793,10 +2046,26 @@ def _run_parallel_mode(
                 + " | ".join(f"{row[v.name]:>11.6f}" for v in variants)
             )
             if "w4a16" in row and "w4a16_megamoe" in row:
-                print(
-                    f"W4A16_SPEEDUP_CSV,{num_tokens},{world_size},"
-                    f"{row['w4a16'] / row['w4a16_megamoe']:.6f}"
-                )
+                speedup = row["w4a16"] / row["w4a16_megamoe"]
+                if _result_mode_label(args, mode) == mode:
+                    print(f"W4A16_SPEEDUP_CSV,{num_tokens},{world_size},{speedup:.6f}")
+                else:
+                    print(
+                        "W4A16_SPEEDUP_JSON,"
+                        + json.dumps(
+                            {
+                                "case": _result_mode_label(args, mode),
+                                "global_tokens": num_tokens,
+                                "world_size": world_size,
+                                "split_ms": row["w4a16"],
+                                "megamoe_ms": row["w4a16_megamoe"],
+                                "split_over_megamoe": speedup,
+                            },
+                            sort_keys=True,
+                            separators=(",", ":"),
+                        ),
+                        flush=True,
+                    )
         del shared_weights, reference_outputs
         gc.collect()
         torch.cuda.empty_cache()
@@ -1846,7 +2115,7 @@ def _run_distributed_benchmark(args, token_counts):
                 f"{args.num_gpus}"
             )
         if rank == 0:
-            print("\nDeepSeek-V3 distributed CuTe DSL MoE benchmark")
+            print(f"\n{args.model_shape} distributed CuTe DSL MoE benchmark")
 
         selected_mode = None
         selected_variant_name = None
@@ -1894,6 +2163,7 @@ def _parse_megamoe_knobs(value):
 
 
 def main():
+    global CFG, BASE_INTERMEDIATE_SIZE
     warnings.filterwarnings(
         "ignore",
         message="cold_l2_cache=True but no GPU tensors found.*",
@@ -1911,6 +2181,31 @@ def main():
     )
     parser.add_argument("--warmup", type=int, default=10)
     parser.add_argument("--iters", type=int, default=100)
+    parser.add_argument(
+        "--model-shape",
+        choices=("deepseek-v3", "glm-5.2"),
+        default="deepseek-v3",
+        help="Synthetic MoE shape preset; does not load a checkpoint.",
+    )
+    parser.add_argument(
+        "--ep-communication",
+        choices=("alltoall", "allgather", "allreduce"),
+        default="alltoall",
+        help=(
+            "Split EP communication: original A2A, or padded BF16 gather via "
+            "allgather/zero-copy-allreduce followed by SUM reduce-scatter. "
+            "Gather modes require EP W4A16; MegaMoE remains fused."
+        ),
+    )
+    parser.add_argument(
+        "--megamoe-max-tokens-per-rank",
+        type=int,
+        default=None,
+        help=(
+            "Override MegaMoE's reserved per-rank capacity, e.g. 32768; "
+            "must cover every case's live count. Default: ceil(global tokens/world size)."
+        ),
+    )
     parser.add_argument(
         "--log-timing-samples",
         action="store_true",
@@ -2067,6 +2362,11 @@ def main():
     )
     args = parser.parse_args()
 
+    # All shape-dependent weight/layer helpers are local to this module. Replace
+    # its imported profile without mutating bench_moe_deepseek's default CFG.
+    CFG = replace(CFG, **model_shape(args.model_shape))
+    BASE_INTERMEDIATE_SIZE = CFG.intermediate_size
+
     variant_names = args.variants.split(",")
     if not set(variant_names) <= {variant.name for variant in BENCH_VARIANTS} or len(
         set(variant_names)
@@ -2077,6 +2377,16 @@ def main():
         parallel_modes
     ):
         parser.error("--parallel-modes must contain unique ep,tp values")
+    try:
+        validate_alignment_options(
+            mode=args.mode,
+            parallel_modes=parallel_modes,
+            variants=variant_names,
+            ep_communication=args.ep_communication,
+            megamoe_capacity=args.megamoe_max_tokens_per_rank,
+        )
+    except ValueError as error:
+        parser.error(str(error))
     if variant_names == ["w4a16_megamoe"] and parallel_modes == ["tp"]:
         parser.error("W4A16 MegaMoE supports expert parallelism only")
     if args.megamoe_knobs is not None and "w4a16_megamoe" not in variant_names:
@@ -2114,16 +2424,25 @@ def main():
         )
     if args.profile_iters < 1:
         parser.error("--profile-iters must be positive")
-    if not is_sm100_family():
-        print("ERROR: Requires SM100 family GPU (Blackwell: SM100, SM103)")
-        return 1
-
     if args.num_tokens:
-        tokens = [int(value) for value in args.num_tokens.split(",")]
+        try:
+            tokens = [int(value) for value in args.num_tokens.split(",")]
+        except ValueError:
+            parser.error("--num-tokens must contain positive integers")
     elif args.mode in _PROFILE_MODES:
         tokens = [32, 4096]
     else:
         tokens = DISTRIBUTED_TOKEN_COUNTS
+    try:
+        for num_tokens in tokens:
+            resolve_megamoe_capacity(
+                num_tokens, args.num_gpus, args.megamoe_max_tokens_per_rank
+            )
+    except ValueError as error:
+        parser.error(str(error))
+    if not is_sm100_family():
+        print("ERROR: Requires SM100 family GPU (Blackwell: SM100, SM103)")
+        return 1
     if (
         args.mode == "profile_ncu"
         and args.ncu_megamoe_replay == "application"
