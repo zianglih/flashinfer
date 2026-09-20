@@ -93,6 +93,7 @@ those ranges rather than matching kernel names.
 import argparse
 import csv
 import gc
+import hashlib
 import itertools
 import json
 import os
@@ -836,6 +837,17 @@ def _route_tokens(router_logits, routing_bias, topk_values, topk_indices):
     from flashinfer.fused_moe import fused_topk_deepseek
 
     if router_logits.shape[0] == 0:
+        return
+    if CFG.n_group == 1 and CFG.topk_group == 1:
+        from sglang_glm_routing import route_glm52
+
+        route_glm52(
+            router_logits,
+            routing_bias,
+            topk_values,
+            topk_indices,
+            CFG.routed_scaling_factor,
+        )
         return
     fused_topk_deepseek(
         scores=router_logits,
@@ -1838,7 +1850,25 @@ def _benchmark_distributed_tp(
 
 def _case_metadata(args, mode, variant, num_tokens, world_size, split_capacity):
     layout = token_layout(num_tokens, world_size)
+    routing_identity = {"provider": "flashinfer.fused_moe.fused_topk_deepseek"}
+    if args.model_shape == "glm-5.2":
+        from sglang_glm_routing import (
+            SGLANG_ROUTING_COMMIT,
+            SGLANG_ROUTING_KERNEL_AST_SHA256,
+            SGLANG_ROUTING_SOURCE_SHA256,
+        )
+
+        routing_identity = {
+            "provider": "benchmark.pinned_sglang_glm52_triton",
+            "sglang_commit": SGLANG_ROUTING_COMMIT,
+            "source_sha256": SGLANG_ROUTING_SOURCE_SHA256,
+            "kernel_ast_sha256": SGLANG_ROUTING_KERNEL_AST_SHA256,
+            "adapter_sha256": hashlib.sha256(
+                Path(__file__).with_name("sglang_glm_routing.py").read_bytes()
+            ).hexdigest(),
+        }
     return {
+        "routing_identity": routing_identity,
         "parallel_mode": mode,
         "variant": variant.name,
         "model_shape": args.model_shape,

@@ -139,3 +139,9 @@ The first launch stalled before a benchmark case because torchrun standalone ren
 ## Validation boundary
 
 The serving numbers above are measured and their raw token/duration arithmetic is checked. The new benchmark modes have entered GPU setup/compilation but have not yet passed the numerical gates or produced performance evidence. Static/CPU validation of layouts, flags and capacity guards does not establish NCCL CUDA-graph compatibility, numerical parity or performance. Final claims await GPU reference checks and measurement.
+
+## GLM routing compatibility correction
+
+The first GLM GPU attempt failed before correctness or timing: the historical FlashInfer DeepSeek routing helper rejects `n_group=1, topk_group=1, topk=8`. GLM parameters remain unchanged. The GLM benchmark now uses the exact Triton routing kernel from SGLang `50eeb742961908afa68f4f523a1a19c5de6eb0b3`, copied with source attribution into `sglang_glm_routing.py`; the original DSV3 routing path is unchanged. It writes existing FP32 weights and int32 expert IDs directly, with bias-only selection, unbiased sigmoid renormalization and scale2.5. Metadata records the reference, kernel AST and adapter hashes.
+
+Six additional CPU contract tests and nineteen layout tests pass. Independent review confirms the complete kernel text matches the pinned source. These are source checks; GPU eager/graph routing parity and distributed MoE validation remain required before reporting calibrated timings. Failed rendezvous and routing attempts contain no performance result and remain archived separately.
