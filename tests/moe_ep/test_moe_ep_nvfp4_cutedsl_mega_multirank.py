@@ -1261,14 +1261,28 @@ def _run_nvfp4_routing_rounds(
     num_experts, topk, capacity = 4, 2, num_tokens
     assert num_experts % world_size == 0
     local_experts = num_experts // world_size
-    w13, w2 = _make_bf16_weights(
-        rank, num_local_experts=local_experts, hidden=hidden, intermediate=intermediate
-    )
-    # Both precision modes share the canonical packed weight/SF input.
-    q13, s13 = nvfp4_quantize_per_block_16(w13.float().reshape(-1, hidden), 1.0)
-    q2, s2 = nvfp4_quantize_per_block_16(w2.float().reshape(-1, intermediate), 1.0)
     alpha1, alpha2 = None, None
-    if mode == "w4a16":
+    if mode == "w4a4":
+        w13, w2 = _make_bf16_weights(
+            rank,
+            num_local_experts=local_experts,
+            hidden=hidden,
+            intermediate=intermediate,
+        )
+        q13, s13 = nvfp4_quantize_per_block_16(w13.float().reshape(-1, hidden), 1.0)
+        q2, s2 = nvfp4_quantize_per_block_16(w2.float().reshape(-1, intermediate), 1.0)
+        weights = PrequantizedMoEWeights(
+            w13=q13.view(torch.uint8).reshape(
+                local_experts, 2 * intermediate, hidden // 2
+            ),
+            w2=q2.view(torch.uint8).reshape(local_experts, hidden, intermediate // 2),
+            w13_scale=s13.reshape(local_experts, 2 * intermediate, hidden // 16),
+            w2_scale=s2.reshape(local_experts, hidden, intermediate // 16),
+        )
+    elif mode == "w4a16":
+        from .w4a16_reference import make_w4a16_weights
+
+        weights = make_w4a16_weights(hidden, intermediate, local_experts, rank)
         # Preserve expert-shard views, including their scalar-only alignment.
         alpha1 = (
             torch.linspace(0.71013, 1.23017, num_experts, device="cuda") / hidden**0.5
@@ -1276,12 +1290,6 @@ def _run_nvfp4_routing_rounds(
         alpha2 = torch.linspace(1.17019, 0.83023, num_experts, device="cuda")[
             rank * local_experts : (rank + 1) * local_experts
         ]
-    weights = PrequantizedMoEWeights(
-        w13=q13.view(torch.uint8).reshape(local_experts, 2 * intermediate, hidden // 2),
-        w2=q2.view(torch.uint8).reshape(local_experts, hidden, intermediate // 2),
-        w13_scale=s13.reshape(local_experts, 2 * intermediate, hidden // 16),
-        w2_scale=s2.reshape(local_experts, hidden, intermediate // 16),
-    )
     alphas = dict(fc1_alpha=alpha1, fc2_alpha=alpha2)
     configs = {
         "w4a4": Sm100_Nvfp4_Nvfp4_Bf16_Cutedsl_MegaMoeConfig,
@@ -1307,20 +1315,17 @@ def _run_nvfp4_routing_rounds(
         ),
     )
     try:
-        # Gather the actual local expert weights rather than rely on equal RNG
-        # states; an empty input rank still owns experts needed by its peers.
-        global_weights = dataclasses.replace(
-            weights,
-            **{
-                field.name: _all_gather_stack(value).flatten(0, 1)
-                for field in dataclasses.fields(weights)
-                if (value := getattr(weights, field.name)) is not None
-            },
-        )
-        global_alphas = {
-            name: _all_gather_stack(value).flatten() if value is not None else None
-            for name, value in alphas.items()
-        }
+        if mode == "w4a4":
+            # Preserve the existing W4A4 global-weight oracle. W4A16 instead
+            # computes on each expert owner and transfers its BF16 route bits.
+            global_weights = dataclasses.replace(
+                weights,
+                **{
+                    field.name: _all_gather_stack(value).flatten(0, 1)
+                    for field in dataclasses.fields(weights)
+                    if (value := getattr(weights, field.name)) is not None
+                },
+            )
         rounds = (("skewed_tiles", num_tokens, True),)
         if changing_batches:
             rounds = (
@@ -1352,13 +1357,22 @@ def _run_nvfp4_routing_rounds(
             )
             if skewed:
                 problem["topk_ids"][:] = torch.tensor([0, 1], device="cuda")
-            reference = (
-                _nvfp4_reference_from_weights(
-                    problem, global_weights, mode=mode, **global_alphas
+            if mode == "w4a16":
+                # Empty source ranks still own experts and join the oracle's
+                # input gathering and raw-bit exchange with every peer.
+                reference = _nvfp4_reference_from_weights(
+                    problem,
+                    weights,
+                    mode=mode,
+                    **alphas,
+                    in_kernel_fc2_reduce=in_kernel_fc2_reduce,
                 )
-                if n
-                else None
-            )
+            elif mode == "w4a4":
+                reference = (
+                    _nvfp4_reference_from_weights(problem, global_weights, mode=mode)
+                    if n
+                    else None
+                )
             tensors = MoEEpTensors(
                 **{
                     key: problem[key]

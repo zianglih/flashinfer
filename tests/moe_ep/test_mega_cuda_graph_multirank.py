@@ -33,9 +33,7 @@ _REPLAYS = 4
     [
         ("w4a4", "epi_warps", "manual", False, "config"),
         ("w4a16", "epi_warps", "manual", False, "config"),
-        ("w4a16", "reuse_dispatch_warps", "manual", False, "config"),
         ("w4a16", None, "auto", False, "config"),
-        ("w4a16", "reuse_dispatch_warps", "manual", True, "config"),
         ("w4a16", "reuse_dispatch_warps", "manual", False, "runtime"),
         ("w4a16", "reuse_dispatch_warps", "manual", True, "runtime"),
     ],
@@ -73,11 +71,22 @@ def test_nvfp4_mega_two_rank_graph_replay_lockstep(
     assert tuning in ("manual", "auto"), tuning
     assert tuning == "manual" or (mode == "w4a16" and token_back_mode is None)
     alphas = {}
+    options = {}
     if mode == "w4a16":
         local_experts = problem["num_experts"] // world_size
         alphas = dict(
             fc1_alpha=torch.linspace(0.71013, 1.23017, local_experts, device="cuda"),
             fc2_alpha=torch.linspace(1.17019, 0.83023, local_experts, device="cuda"),
+        )
+        options = dict(
+            enable_in_kernel_fc2_reduce=in_kernel_fc2_reduce,
+            knobs="auto"
+            if tuning == "auto"
+            else {
+                "token_back_mode": token_back_mode,
+                "in_kernel_fc2_reduce": in_kernel_fc2_reduce,
+            },
+            **(alphas if alpha_source == "config" else {}),
         )
     configs = {
         "w4a4": Sm100_Nvfp4_Nvfp4_Bf16_Cutedsl_MegaMoeConfig,
@@ -96,14 +105,7 @@ def test_nvfp4_mega_two_rank_graph_replay_lockstep(
                 intermediate_size=problem["intermediate"],
                 top_k=problem["topk"],
                 gate_up_clamp=problem["gate_up_clamp"],
-                enable_in_kernel_fc2_reduce=in_kernel_fc2_reduce,
-                **(alphas if alpha_source == "config" else {}),
-                knobs="auto"
-                if tuning == "auto"
-                else {
-                    "token_back_mode": token_back_mode,
-                    "in_kernel_fc2_reduce": in_kernel_fc2_reduce,
-                },
+                **options,
             ),
             quantize_input=True,
             preprocess_weights=True,

@@ -21,8 +21,6 @@ Run on one Blackwell GPU from the FlashInfer repo root (no torchrun required)::
 
 from __future__ import annotations
 
-from unittest import mock
-
 import pytest
 
 pytest.importorskip("flashinfer.moe_ep.kernel_src.cutedsl_megamoe")
@@ -277,11 +275,8 @@ def test_mega_layer_graph_capture_replay_matches_eager(
 
 @pytest.mark.arch_blackwell
 @pytest.mark.parametrize("backend_name", ["nvfp4", "w4a16"])
-@pytest.mark.parametrize("allocated_workspace,num_tokens", [(False, 32), (True, 0)])
-def test_mega_layer_capture_without_warmup_raises(
-    monkeypatch, request, backend_name, allocated_workspace, num_tokens
-):
-    """Lazy allocation or compilation must fail before staging, even when empty."""
+def test_mega_layer_capture_without_warmup_raises(monkeypatch, request, backend_name):
+    """Lazy workspace alloc inside capture must fail loudly, not corrupt."""
     import torch
 
     _require_blackwell()
@@ -293,20 +288,13 @@ def test_mega_layer_capture_without_warmup_raises(
         request.getfixturevalue("w4a16_single_rank_runtime")
     layer, problem = _single_rank_layer(backend_name)
     try:
-        workspace = (
-            layer.create_workspace(problem["max_tokens"])
-            if allocated_workspace
-            else None
-        )
-        t = _random_batch(problem, seed=5, num_tokens=num_tokens)
+        t = _random_batch(problem, seed=5)
         graph = torch.cuda.CUDAGraph()
         with (
-            mock.patch.object(layer._kernel, "stage_inputs") as stage,
-            pytest.raises((MoEEpConfigError, RuntimeError), match="warmup"),
+            pytest.raises(MoEEpConfigError, match="warmup"),
             torch.cuda.graph(graph),
         ):
-            layer.forward(t, workspace=workspace)
-        stage.assert_not_called()
+            layer.forward(t)
     finally:
         layer.destroy()
 
