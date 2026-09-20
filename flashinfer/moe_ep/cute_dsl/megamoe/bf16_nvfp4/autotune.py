@@ -17,16 +17,17 @@ class _CollectiveGraphTimingError(RuntimeError):
 def bf16_nvfp4_candidates(
     *, enable_in_kernel_fc2_reduce: bool = False
 ) -> List[Dict[str, Any]]:
-    """Four M256 W4A16 tactics with flag batch 4 and scheduler depth 2.
+    """M256 W4A16 tactics across geometry, return mode and FC1 group size.
 
     Both geometries use two-CTA instructions and two dequantization warp
-    groups. Explicit M128 configurations remain supported by the kernel.
-    Opting into in-kernel reduction adds two dispatch-return tactics.
+    groups, with flag batch 4 and scheduler depth 2. Group sizes 512/1024
+    trade phase-transition overhead against earlier FC2 work and token return.
+    Opting into in-kernel reduction adds dispatch-return tactics.
     """
     return [
         dict(
             cluster_shape_mnk=(2, 1, 1),
-            group_hint=512,
+            group_hint=group_hint,
             epi_flag_batch=(2, 4),
             load_balance_mode="atomic_counter",
             mma_tiler_mnk=tile,
@@ -37,6 +38,7 @@ def bf16_nvfp4_candidates(
             num_sched_stages=2,
         )
         for in_kernel in ((False, True) if enable_in_kernel_fc2_reduce else (False,))
+        for group_hint in (512, 1024)
         for tile in ((256, 128, 256), (256, 64, 256))
         for token_back in ("epi_warps", "reuse_dispatch_warps")
         if not in_kernel or token_back == "reuse_dispatch_warps"

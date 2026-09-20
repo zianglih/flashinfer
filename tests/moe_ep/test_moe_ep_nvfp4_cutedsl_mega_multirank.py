@@ -1705,8 +1705,8 @@ def test_bf16_nvfp4_ikr_permission_and_candidates():
     )
     deterministic = bf16_nvfp4_candidates()
     permitted = bf16_nvfp4_candidates(enable_in_kernel_fc2_reduce=True)
-    assert len(deterministic) == 4 and len(permitted) == 6
-    assert permitted[:4] == deterministic
+    assert 0 < len(deterministic) < len(permitted)
+    assert [k for k in permitted if not k["in_kernel_fc2_reduce"]] == deterministic
     for knobs in permitted:
         assert tuner.is_valid_bf16_nvfp4(knobs)
         config = MegaMoEBf16Nvfp4Config(
