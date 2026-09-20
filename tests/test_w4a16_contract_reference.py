@@ -221,14 +221,15 @@ class ReductionTests(unittest.TestCase):
             )
 
     def test_a2a_uses_first_owner_slot_tree_not_rank_order(self):
-        # Rank order gives 2; top-k slot tree gives 0 due to FP32 cancellation.
+        # Rank order gives 2; top-k slot tree gives 1: +2**24+1 rounds down,
+        # while -2**24+1 is exactly representable in FP32.
         # Repeated owners in slots4..7 must contribute zero.
         partials = torch.tensor(
             [2**24, -(2**24), 1.0, 1.0], dtype=torch.bfloat16
         ).reshape(4, 1, 1)
         ids = torch.tensor([[0, 128, 64, 192, 1, 65, 129, 193]], dtype=torch.int32)
         actual = ref._a2a_tree_combine(partials, ids, 64)
-        self.assertEqual(actual.item(), 0.0)
+        self.assertEqual(actual.item(), 1.0)
         rank_tree = (partials[0].float() + partials[1].float()) + (
             partials[2].float() + partials[3].float()
         )
