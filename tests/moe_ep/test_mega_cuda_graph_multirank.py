@@ -41,7 +41,7 @@ _REPLAYS = 4
 def test_nvfp4_mega_two_rank_graph_replay_lockstep(
     mode, token_back_mode, tuning, in_kernel_fc2_reduce, alpha_source
 ):
-    pytest.importorskip("flashinfer.moe_ep.kernel_src.cutedsl_megamoe")
+    pytest.importorskip("flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe")
     _require_cuda()
     rank, world_size = _launcher_ranks()
     if world_size < 2:

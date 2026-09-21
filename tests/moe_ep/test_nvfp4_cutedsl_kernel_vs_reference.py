@@ -29,7 +29,7 @@ import pytest
 # Verify only through the cutedsl_megamoe shim public API (plus the FI backend
 # helpers); never import the src/ kernel packages directly, so a new src/ drop
 # can't silently break this test.
-pytest.importorskip("flashinfer.moe_ep.kernel_src.cutedsl_megamoe")
+pytest.importorskip("flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe")
 
 NVFP4_BLOCK = 16
 NVFP4_MODES = ("w4a4", "w4a16")
@@ -184,7 +184,7 @@ def _plain_nvfp4_from_bf16(problem: dict):
     from flashinfer.moe_ep.backends.mega.kernel.sm100.nvfp4_nvfp4_bf16_cutedsl.weights import (
         _interleave_gate_up_16,
     )
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         nvfp4_quantize_per_block_16,
     )
 
@@ -232,12 +232,14 @@ def _torch_nvfp4_mega_reference(
     intermediate,
     gate_up_clamp,
     term_transform=None,
+    swiglu_alpha=None,
+    swiglu_beta=None,
 ):
     """Pure-torch NVFP4 MegaMoE oracle (apply_topk_in_fc1=True graph).
 
     Mirrors the kernel's data path — dequant → fp32 fc1 GEMM → 16-interleaved
     SwiGLU fold (+clamp) → per-token topk weight folded in BEFORE the fc1-out
-    NVFP4 round-trip → fp32 fc2 GEMM — so kernel-vs-oracle disagreement is
+    NVFP4 round-trip → fp32 fc2 GEMM → bf16 terms — so disagreement is
     bounded by NVFP4 RTNE flips at fc1-out plus GEMM accumulation-order noise.
 
     ``term_transform``, when set, is applied to each per-(token, topk) fc2
@@ -246,7 +248,7 @@ def _torch_nvfp4_mega_reference(
     """
     import torch
 
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         nvfp4_quantize_per_block_16,
     )
 
@@ -280,7 +282,11 @@ def _torch_nvfp4_mega_reference(
             limit = abs(float(gate_up_clamp))
             gate = gate.clamp(max=limit)
             up = up.clamp(min=-limit, max=limit)
-        swiglu = (gate * torch.sigmoid(gate) * up).reshape(m, intermediate)
+        alpha = 1.0 if swiglu_alpha is None else swiglu_alpha
+        beta = 0.0 if swiglu_beta is None else swiglu_beta
+        swiglu = (gate * torch.sigmoid(alpha * gate) * (up + beta)).reshape(
+            m, intermediate
+        )
 
         # apply_topk_in_fc1=True: weight folded in before the fp4 round-trip
         # (post-hoc weighting would NOT match — quant changes the magnitude).
@@ -293,6 +299,8 @@ def _torch_nvfp4_mega_reference(
             fc2_weight[expert], fc2_sf[expert], logical_cols=intermediate
         )  # (hidden, I)
         fc2_out = swiglu_rt @ fc2_w.transpose(0, 1)
+        # FC2 stores each expert term in BF16 before the top-k reduction.
+        fc2_out = fc2_out.to(torch.bfloat16).float()
         if term_transform is not None:
             fc2_out = term_transform(fc2_out)
         out[tokens, slots] = fc2_out
@@ -313,7 +321,7 @@ def test_nvfp4_preprocess_fp4_weights_match_plain_quant(
     import torch
 
     from flashinfer.moe_ep import MoEWeightPack
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         nvfp4_quantize_per_block_16,
         to_blocked,
     )
@@ -445,7 +453,55 @@ def test_nvfp4_kernel_matches_torch_reference(
     num_experts,
     topk,
 ):
-    """Single-rank ``nvfp4_mega_moe`` output matches the pure-torch oracle."""
+    """Single-rank ``nvfp4_mega_moe`` output matches the precision oracle."""
+    _check_nvfp4_kernel_matches_torch_reference(
+        monkeypatch,
+        mode=mode,
+        tile_n=tile_n,
+        in_kernel_fc2_reduce=in_kernel_fc2_reduce,
+        token_back_mode=token_back_mode,
+        apply_topk_in_fc1=apply_topk_in_fc1,
+        hidden=hidden,
+        intermediate=intermediate,
+        num_experts=num_experts,
+        topk=topk,
+    )
+
+
+@pytest.mark.arch_blackwell
+@pytest.mark.parametrize("token_back_mode", ["epi_warps", "reuse_dispatch_warps"])
+@pytest.mark.parametrize("activation_clamp", [0.5, None], ids=["clamp", "no-clamp"])
+def test_nvfp4_w4a4_swiglu_parameters(monkeypatch, token_back_mode, activation_clamp):
+    """MiniMax activation configuration and runtime overrides are W4A4-only."""
+    _check_nvfp4_kernel_matches_torch_reference(
+        monkeypatch,
+        mode="w4a4",
+        tile_n=128,
+        in_kernel_fc2_reduce=False,
+        token_back_mode=token_back_mode,
+        apply_topk_in_fc1=False,
+        hidden=2048,
+        intermediate=1024,
+        num_experts=4,
+        topk=4,
+        activation_clamp=activation_clamp,
+    )
+
+
+def _check_nvfp4_kernel_matches_torch_reference(
+    monkeypatch,
+    *,
+    mode,
+    tile_n,
+    in_kernel_fc2_reduce,
+    token_back_mode,
+    apply_topk_in_fc1,
+    hidden,
+    intermediate,
+    num_experts,
+    topk,
+    activation_clamp="standard",
+):
     _require_cuda()
 
     import torch
@@ -466,7 +522,7 @@ def test_nvfp4_kernel_matches_torch_reference(
         from flashinfer.moe_ep import (
             preprocess_nvfp4_cutedsl_mega_weights as preprocess_mega_weights,
         )
-        from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+        from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
             get_symm_buffer_for_mega_moe,
             nvfp4_mega_moe,
         )
@@ -494,6 +550,15 @@ def test_nvfp4_kernel_matches_torch_reference(
         topk=topk,
         make_weights=mode == "w4a4",
     )
+    activation_pairs = [(None, None)]
+    if activation_clamp != "standard":
+        assert mode == "w4a4"
+        problem["gate_up_clamp"] = activation_clamp
+        # Keep gates near zero so ignoring alpha changes the output visibly.
+        # A 0.5 clamp exercises both saturated and unsaturated gate/up values.
+        problem["hidden_states"].mul_(0.1)
+        problem["w13"].mul_(0.1)
+        activation_pairs = [(1.702, 1.0), (1.0, 1.0), (1.0, 0.0), (1.702, 1.0)]
     rank = 0
     world_size = 1
     num_tokens = problem["num_tokens"]
@@ -546,7 +611,14 @@ def test_nvfp4_kernel_matches_torch_reference(
         fc1_alpha=alpha1,
         fc2_alpha=alpha2,
         knobs=knobs,
-        **({"apply_topk_in_fc1": apply_topk_in_fc1} if mode == "w4a16" else {}),
+        **(
+            {"apply_topk_in_fc1": apply_topk_in_fc1}
+            if mode == "w4a16"
+            else dict(
+                swiglu_alpha=activation_pairs[0][0],
+                swiglu_beta=activation_pairs[0][1],
+            )
+        ),
     )
     graph = None
     try:
@@ -565,66 +637,73 @@ def test_nvfp4_kernel_matches_torch_reference(
             symm_buffer.topk_weights,
         )
 
-        if mode == "w4a4":
-            reference = _torch_nvfp4_mega_reference(
-                act_packed=symm_buffer.x[:num_tokens],
-                act_sf=scale_args[0][:num_tokens],
-                topk_idx=symm_buffer.topk_idx[:num_tokens],
-                topk_weights=symm_buffer.topk_weights[:num_tokens],
-                fc1_weight=fc1_plain,
-                fc1_sf=fc1_sf,
-                fc2_weight=fc2_plain,
-                fc2_sf=fc2_sf,
-                hidden=hidden,
-                intermediate=intermediate,
-                gate_up_clamp=problem["gate_up_clamp"],
+        for step, (alpha, beta) in enumerate(activation_pairs):
+            if mode == "w4a4":
+                reference = _torch_nvfp4_mega_reference(
+                    act_packed=symm_buffer.x[:num_tokens],
+                    act_sf=scale_args[0][:num_tokens],
+                    topk_idx=symm_buffer.topk_idx[:num_tokens],
+                    topk_weights=symm_buffer.topk_weights[:num_tokens],
+                    fc1_weight=fc1_plain,
+                    fc1_sf=fc1_sf,
+                    fc2_weight=fc2_plain,
+                    fc2_sf=fc2_sf,
+                    hidden=hidden,
+                    intermediate=intermediate,
+                    gate_up_clamp=problem["gate_up_clamp"],
+                    swiglu_alpha=alpha,
+                    swiglu_beta=beta,
+                )
+            elif mode == "w4a16":
+                reference = _nvfp4_reference_from_weights(
+                    problem,
+                    pack,
+                    mode=mode,
+                    fc1_alpha=alpha1,
+                    fc2_alpha=alpha2,
+                    apply_topk_in_fc1=apply_topk_in_fc1,
+                    in_kernel_fc2_reduce=in_kernel_fc2_reduce,
+                )
+
+            y_kernel = torch.empty(
+                num_tokens, problem["hidden"], dtype=torch.bfloat16, device="cuda"
             )
-        elif mode == "w4a16":
-            reference = _nvfp4_reference_from_weights(
-                problem,
-                pack,
+
+            def launch():
+                nvfp4_mega_moe(
+                    y_kernel,
+                    transformed_l1,
+                    transformed_l2,
+                    symm_buffer,
+                    **({} if step == 0 else dict(swiglu_alpha=alpha, swiglu_beta=beta)),
+                    num_tokens=num_tokens,
+                    gate_up_clamp=problem["gate_up_clamp"],
+                )
+
+            launch()
+            torch.cuda.synchronize()
+            _assert_nvfp4_reference(
+                y_kernel,
+                reference,
                 mode=mode,
-                fc1_alpha=alpha1,
-                fc2_alpha=alpha2,
-                apply_topk_in_fc1=apply_topk_in_fc1,
                 in_kernel_fc2_reduce=in_kernel_fc2_reduce,
             )
-
-        y_kernel = torch.empty(
-            num_tokens, problem["hidden"], dtype=torch.bfloat16, device="cuda"
-        )
-
-        def launch():
-            nvfp4_mega_moe(
-                y_kernel,
-                transformed_l1,
-                transformed_l2,
-                symm_buffer,
-                num_tokens=num_tokens,
-                gate_up_clamp=problem["gate_up_clamp"],
-            )
-
-        launch()
-        torch.cuda.synchronize()
-        _assert_nvfp4_reference(
-            y_kernel, reference, mode=mode, in_kernel_fc2_reduce=in_kernel_fc2_reduce
-        )
-        if in_kernel_fc2_reduce:
-            # BF16 atomic combine may reorder terms; the shared oracle band
-            # covers that rounding while repeated launches catch missing zeroing.
-            for _ in range(2):
-                launch()
-                _assert_nvfp4_reference(
-                    y_kernel, reference, mode=mode, in_kernel_fc2_reduce=True
-                )
-            graph = torch.cuda.CUDAGraph()
-            with torch.cuda.graph(graph):
-                launch()
-            for _ in range(3):
-                graph.replay()
-                _assert_nvfp4_reference(
-                    y_kernel, reference, mode=mode, in_kernel_fc2_reduce=True
-                )
+            if in_kernel_fc2_reduce:
+                # BF16 atomic combine may reorder terms; the shared oracle band
+                # covers that rounding while repeated launches catch missing zeroing.
+                for _ in range(2):
+                    launch()
+                    _assert_nvfp4_reference(
+                        y_kernel, reference, mode=mode, in_kernel_fc2_reduce=True
+                    )
+                graph = torch.cuda.CUDAGraph()
+                with torch.cuda.graph(graph):
+                    launch()
+                for _ in range(3):
+                    graph.replay()
+                    _assert_nvfp4_reference(
+                        y_kernel, reference, mode=mode, in_kernel_fc2_reduce=True
+                    )
     finally:
         if graph is not None:
             graph.reset()
@@ -702,7 +781,9 @@ def _nvfp4_reference_from_weights(
     from flashinfer.moe_ep.backends.mega.kernel.sm100.nvfp4_nvfp4_bf16_cutedsl.weights import (
         _interleave_gate_up_16,
     )
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import nvfp4_quantize_per_block_16
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
+        nvfp4_quantize_per_block_16,
+    )
 
     hidden, intermediate = problem["hidden"], problem["intermediate"]
     fc1 = _interleave_gate_up_16(

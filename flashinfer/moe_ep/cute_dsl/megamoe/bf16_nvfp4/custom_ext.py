@@ -17,8 +17,11 @@ from cutlass._mlir import ir
 
 from cutlass.utils.blockscaled_layout import tile_atom_to_shape_SF
 from .fc1_fc2_fuse_sched import BlockPhase
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import rewrite_tensor_shape, spin_wait
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
+    rewrite_tensor_shape,
+    spin_wait,
+)
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
     MoESchedExtension,
     MoEWorkTileInfo,
 )

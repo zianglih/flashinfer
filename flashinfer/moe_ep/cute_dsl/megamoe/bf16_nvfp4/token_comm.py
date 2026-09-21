@@ -9,7 +9,7 @@ import cutlass
 import cutlass.cute as cute
 from cutlass import Int32
 
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import TokenInPullTokenBackPush
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import TokenInPullTokenBackPush
 
 
 class W4A16TokenComm(TokenInPullTokenBackPush):

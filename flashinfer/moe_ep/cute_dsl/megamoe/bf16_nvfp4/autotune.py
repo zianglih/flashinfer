@@ -155,7 +155,10 @@ def autotune_bf16_nvfp4_mega_moe(
 
     cfg = symm_buffer._frontend.config
     frontend = symm_buffer._frontend
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import _session_candidates, tuner
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
+        _session_candidates,
+        tuner,
+    )
 
     if candidates is None:
         candidates = bf16_nvfp4_candidates(
@@ -169,7 +172,7 @@ def autotune_bf16_nvfp4_mega_moe(
     )
     warmup_iters = max(1, warmup_iters)
     label = "bf16_nvfp4_mega"
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import ensure_not_capturing
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import ensure_not_capturing
 
     # The sweep owns host-side compile, allocation, timing and collectives;
     # it must finish before the caller captures its serving graph.
@@ -207,7 +210,7 @@ def autotune_bf16_nvfp4_mega_moe(
     frontend.apply_knobs(winner)
     p50_s = float(t[best])
     if cfg.rank == 0:
-        from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import record_knobs
+        from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import record_knobs
 
         record_knobs(
             winner,

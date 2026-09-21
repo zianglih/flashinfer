@@ -14,7 +14,7 @@ from unittest import mock
 
 import pytest
 
-pytest.importorskip("flashinfer.moe_ep.kernel_src.cutedsl_megamoe")
+pytest.importorskip("flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe")
 
 
 _KEY = dict(
@@ -41,7 +41,7 @@ def _cache_env(monkeypatch, tmp_path):
 
 
 def test_record_lookup_roundtrip_restores_tuples(monkeypatch, tmp_path):
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         lookup_knobs,
         record_knobs,
     )
@@ -57,7 +57,7 @@ def test_record_lookup_roundtrip_restores_tuples(monkeypatch, tmp_path):
 
 
 def test_lookup_bucket_selection(monkeypatch, tmp_path):
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         lookup_knobs,
         record_knobs,
     )
@@ -77,7 +77,7 @@ def test_lookup_bucket_selection(monkeypatch, tmp_path):
 
 
 def test_lookup_misses_on_any_key_mismatch(monkeypatch, tmp_path):
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         lookup_knobs,
         record_knobs,
     )
@@ -99,7 +99,7 @@ def test_lookup_misses_on_any_key_mismatch(monkeypatch, tmp_path):
 def test_record_upserts_same_key(monkeypatch, tmp_path):
     import json
 
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         lookup_knobs,
         record_knobs,
     )
@@ -117,7 +117,7 @@ def test_ikr_and_deterministic_winners_are_separate_entries(monkeypatch, tmp_pat
     """The two objectives are tuned separately, so neither may evict the other."""
     import json
 
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         lookup_knobs,
         record_knobs,
     )
@@ -144,7 +144,7 @@ def test_ikr_and_deterministic_winners_are_separate_entries(monkeypatch, tmp_pat
 
 def test_permitted_session_falls_back_to_a_deterministic_entry(monkeypatch, tmp_path):
     """The permission is a ceiling, so a non-ikr winner stays usable."""
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         lookup_knobs,
         record_knobs,
     )
@@ -167,7 +167,7 @@ def test_resolve_ignores_an_ikr_entry_for_a_deterministic_session(
     monkeypatch, tmp_path, dtype
 ):
     """Falling back to the heuristic beats serving a knob set never measured."""
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         default_knobs,
         record_knobs,
         resolve_knobs,
@@ -176,7 +176,7 @@ def test_resolve_ignores_an_ikr_entry_for_a_deterministic_session(
     key = {**_KEY, "dtype": dtype}
     _cache_env(monkeypatch, tmp_path)
     with mock.patch(
-        "flashinfer.moe_ep.kernel_src.cutedsl_megamoe.shim.knob_cache."
+        "flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe.shim.knob_cache."
         "_current_device_name",
         return_value="testgpu",
     ):
@@ -191,8 +191,8 @@ def test_resolve_ignores_an_ikr_entry_for_a_deterministic_session(
 
 
 def test_resolve_falls_back_to_heuristic(monkeypatch, tmp_path):
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import resolve_knobs
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import resolve_knobs
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         default_knobs,
     )
 
@@ -207,14 +207,14 @@ def test_resolve_falls_back_to_heuristic(monkeypatch, tmp_path):
 
 
 def test_resolve_prefers_cache_hit(monkeypatch, tmp_path):
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         record_knobs,
         resolve_knobs,
     )
 
     _cache_env(monkeypatch, tmp_path)
     with mock.patch(
-        "flashinfer.moe_ep.kernel_src.cutedsl_megamoe.shim.knob_cache."
+        "flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe.shim.knob_cache."
         "_current_device_name",
         return_value="testgpu",
     ):
@@ -225,7 +225,7 @@ def test_resolve_prefers_cache_hit(monkeypatch, tmp_path):
 
 
 def test_cache_disable_switch(monkeypatch, tmp_path):
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         lookup_knobs,
         record_knobs,
     )
@@ -236,7 +236,7 @@ def test_cache_disable_switch(monkeypatch, tmp_path):
 
 
 def test_corrupt_cache_file_warns_and_misses(monkeypatch, tmp_path):
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import lookup_knobs
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import lookup_knobs
 
     path = _cache_env(monkeypatch, tmp_path)
     path.write_text("{not json")
@@ -275,7 +275,7 @@ def test_symm_buffer_resolves_cached_knobs(
     if cap[0] != 10:
         pytest.skip(f"needs sm_100/sm_103; got sm_{cap[0]}{cap[1]}")
 
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         get_symm_buffer_for_mega_moe,
         record_knobs,
     )
@@ -331,7 +331,7 @@ def test_symm_buffer_resolves_cached_knobs(
 def test_routing_weight_placement_partitions_cache(monkeypatch, tmp_path, legacy):
     import json
 
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe.shim import knob_cache
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe.shim import knob_cache
 
     path = _cache_env(monkeypatch, tmp_path)
     monkeypatch.setattr(knob_cache, "_current_device_name", lambda: "testgpu")

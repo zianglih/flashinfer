@@ -19,10 +19,12 @@ from cutlass.cutlass_dsl import Int64
 from cutlass.cute.nvgpu import tcgen05
 
 from .fc1_fc2_fuse_sched import BlockPhase
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import iket
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import fmin, fmax
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import GpuReleaseFlagBatchTracker
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import iket
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import fmin, fmax
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
+    GpuReleaseFlagBatchTracker,
+)
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
     MoESchedConsumer,
     MoESchedExtension,
 )

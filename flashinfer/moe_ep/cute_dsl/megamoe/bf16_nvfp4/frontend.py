@@ -10,7 +10,7 @@ from typing import Callable, Literal, Optional, Tuple
 
 import torch
 
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
     _CompiledMega,
     _compute_peer_offsets,
     ensure_not_capturing,
@@ -147,7 +147,7 @@ class MegaMoEBf16Nvfp4Frontend:
 
     def apply_knobs(self, knobs: dict) -> None:
         """Apply a validated swapped-MMA tuning configuration and invalidate its compile."""
-        from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import tuner, with_knobs
+        from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import tuner, with_knobs
 
         if not tuner.is_valid_bf16_nvfp4_for_config(self.config, knobs):
             raise ValueError(
@@ -343,7 +343,7 @@ class MegaMoEBf16Nvfp4Frontend:
         self, inputs: MegaMoEBf16Nvfp4Inputs, mega: _CompiledMega
     ) -> dict:
         import cuda.bindings.driver as cuda
-        from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import SymBufferHost
+        from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import SymBufferHost
 
         c = self.config
         mapper = SymBufferHost(
@@ -562,7 +562,7 @@ class MegaMoEBf16Nvfp4Frontend:
             return
         import cutlass.cute as cute
         import cuda.bindings.driver as cuda
-        from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+        from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
             get_cutedsl_target_arch,
             TopkReduce,
             CombineFormat,
@@ -658,7 +658,7 @@ def get_symm_buffer_for_bf16_nvfp4_mega_moe(
     clamp = resolve_gate_up_clamp(
         gate_up_clamp=gate_up_clamp, activation_clamp=activation_clamp
     )
-    from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+    from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         _resolve_per_expert_epilogue,
         resolve_knobs,
         tuner,

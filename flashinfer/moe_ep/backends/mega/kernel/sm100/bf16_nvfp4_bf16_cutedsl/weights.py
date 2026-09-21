@@ -73,7 +73,7 @@ def preprocess_mega_weights(
         w13, w2 = weights.w13, weights.w2
         s13, s2 = weights.w13_scale, weights.w2_scale
     else:
-        from ......kernel_src.cutedsl_megamoe import nvfp4_quantize_per_block_16
+        from ......kernel_src.sm100.cutedsl_megamoe import nvfp4_quantize_per_block_16
 
         if any(
             t.dtype not in (torch.bfloat16, torch.float32)

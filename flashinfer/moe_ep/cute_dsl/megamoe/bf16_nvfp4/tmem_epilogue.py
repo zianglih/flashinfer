@@ -16,14 +16,14 @@ from cutlass.cutlass_dsl import Int64
 from cutlass.cute.nvgpu import tcgen05
 from cutlass.cute.typing import AddressSpace
 
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
     Contract,
     FunctionMapping,
     Space,
     eval_function_mapping,
 )
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import TokenSrcMetadata
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import SymBufferDeviceBase
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import TokenSrcMetadata
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import SymBufferDeviceBase
 
 
 class TmemTranspose16x32:

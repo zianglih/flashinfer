@@ -26,18 +26,18 @@ from flashinfer.fused_moe.cute_dsl.blackwell.moe_w4a16_kernel import (
     Sm100W4A16GroupedGemmKernel,
 )
 from .workspace import _RegionSpec, _layout_regions, _round_up
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import get_cutedsl_target_arch
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import get_cutedsl_target_arch
 from cutlass.cute.typing import AddressSpace
 from cutlass.cutlass_dsl import Int64
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
     CombineFormat,
     TokenSrcMetadata,
 )
 from .custom_ext import W4A16Fc12SchedExtension
 from .fc1_fc2_fuse_sched import BlockPhase, MoEFusedFc12SchedulerParams
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import spin_wait
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import spin_wait
 from .token_comm import W4A16TokenComm
-from flashinfer.moe_ep.kernel_src.cutedsl_megamoe import (
+from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
     TokenCommArgs as ExtractedTokenCommArgs,
 )
 
@@ -316,6 +316,7 @@ class Sm100W4A16MegaMoEKernel:
             use_clc_scheduler=False,
             raster_along_m=True,
             transform_fragment_size=fragment_size,
+            m_cluster_aligned=False,
         )
         mixed.a_dtype = cutlass.Float4E2M1FN
         mixed.a_scale_dtype = cutlass.Float8E4M3FN
