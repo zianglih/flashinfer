@@ -1,0 +1,34 @@
+{
+  "status": "passed",
+  "issue_count": 0,
+  "scope": "Local source and existing focused-fixture review only; no remote/GPU execution or source mutation by reviewer.",
+  "reviewed_files": {
+    "setup/assemble_calibration_publication.py": "51ac0e7a37734805aa7f4c00791c5f858c187bba10f3d946d28cfba4de8de60f",
+    "CALIBRATION_PUBLICATION_GUIDE.md": "be0b8791448528cc44454d99b78e57be3d92cd05554feb1b2f6240396eecc6f2",
+    "setup/check_calibration_raw_arithmetic.py": "6132f83b3d73cdcdaab1c1e6efcc73faa531fdc9ea1007f5e4c127be9b663687",
+    "setup/summarize_calibration.py": "d4ca950362bc1d09f7530253e863b41102220f2f7c524a34d5522cfaabc3f521",
+    "setup/plot_calibration_core.py": "1d1d5537ff2141d5703553de2d99f892b9926fe9677019482b48b300c3c2ac97",
+    "artifacts/publication-assembly-validation/SYNTHETIC-NOT-MEASURED-awi5qkyk/validation.json": "d35782ed4409c19182fef87e2c3d278c12d54097914283deaf76689c0bcb264a"
+  },
+  "checks": [
+    "Preflight runs strict load_evidence(allow_partial=False) before creating output; r5 source/policy and110groups are pinned. Full copied evidence is summarized again.",
+    "Complete collector tree, frozen dispatch,12environment receipts, actual12test component gate, testedsource andoriginal scopedproofs are byte-copied andSHA-checked before/after. No raw logs are edited.",
+    "Exclusive new destination/copy creation rejects overwrites, symlinks andspecialsources. Historical failures andreview scopes remain unchanged.",
+    "Copied accepted plotter reruns strict final gates. Independent rawchecker directly parses52performance logs,44000samples,440repeat medians and220pooled medians onFINAL; it doesnot replace numerical/lifecycle checks.",
+    "Bothlanguages share110rows and18matchedcontrols withSplitcontrol drift; default large-Nprefill, small-NgraphAUTO, nativeFAIL andnon-serving limitations remain explicit.",
+    "Incremental lower/higher/reversal counts are observed coordinate counts, notpooled speedups. Final EN/ZH notation says eacharms latency_us=1000*median andseparates Split/Mega ratio.",
+    "Copied relative evidence/dispatch reproduction andMarkdown navigation are checked. Historical absolute JSONpaths are retained only asprovenance.",
+    "Assembly creates FINAL_PUBLICATION_CANDIDATE requiring final independentreview. Laterreview/parentacceptance/publicationseal remain separate withoutcircular hashes."
+  ],
+  "incremental_versions_reviewed": [
+    "41042a3447316c49073b61f7b110353bc6545e8da3450bb0bf0d66e4c75bdaac",
+    "9a89be03115b14374ef29e7611c2e60776830c6f8885eb5e735e98d480305d7c",
+    "51ac0e7a37734805aa7f4c00791c5f858c187bba10f3d946d28cfba4de8de60f"
+  ],
+  "validation_boundary": "Author8focusedchecks inspected; no broad suite repeated. Final51ac only clarifies2language literals relativeto the8-check9a89version. Actualv2assembly/PNGs/final504rawreview are separate; thisreceipt is sourceacceptance, notpublication.",
+  "pending": [
+    "Actualfinalcandidate byte/link/PNG review andfull504record independent review.",
+    "Parent must verify allraw.log files are Git-tracked duringpublication.",
+    "Remote preservation/cachearchival/deletion/GitHub are separate workflows."
+  ]
+}

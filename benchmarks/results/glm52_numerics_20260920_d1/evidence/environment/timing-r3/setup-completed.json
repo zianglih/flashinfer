@@ -1,0 +1,25 @@
+{
+  "completed_at": "2026-09-20T16:38:09.301068+00:00",
+  "source_head": "6f88c235b658104053761aad15158e954f439a41",
+  "flashinfer_kernel_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "benchmark_sha256": {
+    "benchmarks/bench_cute_dsl_moe_distributed.py": "66fdc2b041531cdfb203161aa514a007db970deb1d190faec1ce7b5af57617e0",
+    "benchmarks/moe_distributed_layout.py": "a66953bc8db2c38cb6fa23f5fa84c89721a0a09a9aad5b83eeba0c44d1a83d76",
+    "benchmarks/sglang_glm_routing.py": "29016eaa2713851fb09d5c141300ea42d0d7e6d444ec77de9dba2bdd6ffbeac0"
+  },
+  "cupti_python": "13.2.0",
+  "cupti_library_dist": "13.2.86",
+  "cupti_timestamp_ok": true,
+  "loaded_cupti_libraries": [
+    "/opt/sglang/lib/python3.12/site-packages/nvidia/cu13/lib/libcupti.so.13"
+  ],
+  "image_torch_cuda_nccl_preserved": true,
+  "package_versions_unchanged": true,
+  "editable_freeze_change": {
+    "before": "-e git+https://github.com/flashinfer-ai/flashinfer.git@0a9cd944b11fc297737993cfc3f132d3d51fc882#egg=flashinfer_python",
+    "after": "-e git+https://github.com/flashinfer-ai/flashinfer.git@6f88c235b658104053761aad15158e954f439a41#egg=flashinfer_python",
+    "only_freeze_change": true
+  },
+  "previous_timing_seal_sha256": "f590de5919ea050db4036fb520fea3ecb8c0c7a76774b48be0002b4bee5624bd",
+  "recovery_reason": "Original preparation incorrectly required byte-identical pip freeze despite authorized editable Git source update; no package mutation occurred."
+}

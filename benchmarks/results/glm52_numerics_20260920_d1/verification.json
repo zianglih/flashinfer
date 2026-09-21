@@ -1,0 +1,67 @@
+{
+  "run_id": "glm52-numerics-20260920-d1",
+  "remote_before_after_equal": true,
+  "archive": {
+    "name": "raw.tar.gz",
+    "bytes": 1430848,
+    "sha256": "c67a2a489063ef2b65c5c6aaf4887374befd5cf9bf9bd3930e8cfb24372f4ce8"
+  },
+  "manifest_sha256": "8e0e10356a9534ab8129daa30f0ad9aa8ac1a6d2e93b4847ddf9f0082a97ecd7",
+  "completion": {
+    "exit_sha256": "e4580f19a8dc01f60e9d8e3405e0fad8bc50ee56fe4694b9641c91c72935ad42",
+    "processes": {
+      "driver": {
+        "pid": 8599,
+        "state": "absent"
+      },
+      "worker": {
+        "pid": 8726,
+        "state": "absent"
+      }
+    },
+    "worker_exit": 1,
+    "strict_numerical_gate_passed": false
+  },
+  "file_count": 38,
+  "payload_bytes": 5599790,
+  "file_sha256": {
+    "diagnostic-launches/glm52-numerics-20260920-d1.json": "7b4309c0322df72b80ded69f4a1076de50f1a8a78d651f8c3ac20d1a5eb2ad77",
+    "diagnostic-launches/glm52-numerics-20260920-d1.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "diagnostics/glm52-numerics-20260920-d1/capture/exit-rank0.json": "f4b8c48a898954c25a8b5de54cb65bb5d372e36d0146dbda3a2dad5353b9c456",
+    "diagnostics/glm52-numerics-20260920-d1/capture/exit-rank1.json": "2f9d73096aebe3b7fe82f9854b612fe574d0088e77e323ebaf5890e3b9eec886",
+    "diagnostics/glm52-numerics-20260920-d1/capture/exit-rank2.json": "8872bf1f4a82d5d0f30dc459127cc13e50433bff2de194585755595d098e80f1",
+    "diagnostics/glm52-numerics-20260920-d1/capture/exit-rank3.json": "d0b9141396f8acb098e908dee3a5dc493b54015820b834024d4913beea07a0cc",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n1/rank0.json": "f2bfebf85fdaf97a1ce1bc405355404da123502156d53e7798a4ab206a722f54",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n1/rank0.pt": "9d1569b6eac71adf48f6d380f1beb57e300f46788049180f26adb3f503b6e137",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n1/rank1.json": "b3360f2fda5e07227e2ebc78dad06a8ba42dc18d19d7c7f76e7c2765a2ace277",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n1/rank1.pt": "424de58ee0a527d3b438d30aaeeeeb2985ddd7c872b74232c93680a3d37bd35e",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n1/rank2.json": "25ae4cd0f72e5b12103aefb41e48d57637d0827d9e9d3f7d9cae4833bdf582b9",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n1/rank2.pt": "8ab2a62d2f4cbbe7fa886e96039c6d40aeed2a456cb28282e48c4486b39cec3b",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n1/rank3.json": "81fca78fdccc0d5d596f63964035eea97744ae48d245e207d7d39a88176a9e09",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n1/rank3.pt": "cb316719628f796e2e65ff7827638c858c8bc9ca933da719180942f27e1eb8e3",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n3/rank0.json": "47a4ca539449710a4f862240c91faaef67e30940525853ce146a755bec18af2d",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n3/rank0.pt": "273425b968b5d2a9143fa4884dbc2b5e8f8ccf19bf1102bc474f26278369bfa8",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n3/rank1.json": "9d7baf2b4259c130eb0b53475bc976b0d6e65fa07578e8b9dc466f7f3175c967",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n3/rank1.pt": "fe6d595c497b194649dda2266e66007b5312324b4bcefc147186e442fc777813",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n3/rank2.json": "788ac161d3209297d37f3571a57d8dfdd855470a162e782047890836db561bc5",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n3/rank2.pt": "b456b1acd9811f4638a883339aa7dbf25bd8080adf13da0c7b28431d42850132",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n3/rank3.json": "9a894935ef1e1e51639fb9f4017d103c1f86dd481e838641ef37ae019ac77efa",
+    "diagnostics/glm52-numerics-20260920-d1/capture/n3/rank3.pt": "5d5bf0587333214add1eb20105b9c00219081acf82bfa77675326e994e1d0af4",
+    "diagnostics/glm52-numerics-20260920-d1/capture/provenance-rank0.json": "a68e2325f90164100993fc485d54a089c1959c2a0888c347ad88f75824ec4a7b",
+    "diagnostics/glm52-numerics-20260920-d1/capture/provenance-rank1.json": "8538957d17ce042f037ec73034c9ce8695ea45b89134cc8b1d86e7bc92ee0951",
+    "diagnostics/glm52-numerics-20260920-d1/capture/provenance-rank2.json": "9b1198a2827f92017011f6c9dc572b6b3666ad597dd005d4073a38440bb82c57",
+    "diagnostics/glm52-numerics-20260920-d1/capture/provenance-rank3.json": "bcca51372f0e57764352d74ea820030a41f5f4e7f5b00d49de494fbeec6afc6d",
+    "diagnostics/glm52-numerics-20260920-d1/diagnostic.log": "5ff3cf80bae46e219702788c1839aa797e9dbcf8089152071afe3ab29b3e92c5",
+    "diagnostics/glm52-numerics-20260920-d1/exit.json": "e4580f19a8dc01f60e9d8e3405e0fad8bc50ee56fe4694b9641c91c72935ad42",
+    "diagnostics/glm52-numerics-20260920-d1/provenance.json": "66603bc0fbeed7e809d731c0b10c734434aa793f921ecf109f3db1cdc56b0ab8",
+    "diagnostics/glm52-numerics-20260920-d1/worker.json": "3fdaf46f8c0fd525de36fea07ecfe5ed535b0b3bb06eb08a5ed94346e0fde13e",
+    "environment/initial/image-before.json": "1e67e2aa37827c5abbc1ab2bb306b5e881666668d816a866a03c29647dbb3c4e",
+    "environment/initial/runtime-after.json": "0bc5f2d3fd71bf257d46bf89a81167153691e0ef70c059831ca026eaf7267620",
+    "environment/initial/setup-completed.json": "10e45d51c62389e603c398730d4b2d3d457cc3852ff5ba37b3e9f7fced288551",
+    "environment/timing-r3/runtime-after.json": "4f4f96cc4704783b4adabaa47237bb1a4d615d1075619169df1929c47cea1825",
+    "environment/timing-r3/setup-completed.json": "65e95b8d12ad0a59cca08bc23be80a723d2704f22b2cc87663622b39223d04e7",
+    "runs/glm52-calibration-20260920-r3/001-correctness-ep4-allgather-caplive-r1/invocation.json": "8f716a8ded884705cc21c62b08c7c6b300ad8f22897f8c42e73ed42f4f03399a",
+    "setup/helpers-glm52-numerics-20260920-d1/capture_r3_numerical_failure.py": "84739673d444b9140f569cff5c6d5fe7cf7239ea6fa3e0112b37d24afe663332",
+    "setup/helpers-glm52-numerics-20260920-d1/run_numerical_diagnostic_remote.py": "2851f5ccfea8131691e4ca5c2d6870750be0ff95e5578686214b94b1ed78685d"
+  }
+}

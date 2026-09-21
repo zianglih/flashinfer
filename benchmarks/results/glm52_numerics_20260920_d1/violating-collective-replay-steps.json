@@ -1,0 +1,14 @@
+[
+  {
+    "hidden": 295,
+    "rank3_plus_rank0_bf16": 2.28125,
+    "plus_rank1_bf16": 2.03125,
+    "plus_rank2_bf16": 0.609375
+  },
+  {
+    "hidden": 3363,
+    "rank3_plus_rank0_bf16": 2.15625,
+    "plus_rank1_bf16": 2.46875,
+    "plus_rank2_bf16": 0.7421875
+  }
+]

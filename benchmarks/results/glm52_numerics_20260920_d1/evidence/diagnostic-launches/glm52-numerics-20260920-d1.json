@@ -1,0 +1,19 @@
+{
+  "run_id": "glm52-numerics-20260920-d1",
+  "pid": 8599,
+  "argv": [
+    "/opt/sglang/bin/python3",
+    "-u",
+    "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/setup/helpers-glm52-numerics-20260920-d1/run_numerical_diagnostic_remote.py",
+    "--task-root",
+    "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment",
+    "--run-id",
+    "glm52-numerics-20260920-d1"
+  ],
+  "helpers_sha256": {
+    "run_numerical_diagnostic_remote.py": "2851f5ccfea8131691e4ca5c2d6870750be0ff95e5578686214b94b1ed78685d",
+    "capture_r3_numerical_failure.py": "84739673d444b9140f569cff5c6d5fe7cf7239ea6fa3e0112b37d24afe663332"
+  },
+  "log": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/diagnostic-launches/glm52-numerics-20260920-d1.log",
+  "launched_at": "2026-09-20T17:15:42.368899+00:00"
+}

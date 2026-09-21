@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "/opt/sglang/bin/python3",
+    "-B",
+    "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/setup/helpers-d1-cpu-analysis-r1/analyze_numerical_capture.py",
+    "--capture-root",
+    "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/diagnostics/glm52-numerics-20260920-d1/capture",
+    "--output",
+    "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/analyses/glm52-numerics-20260920-d1-cpu-r1"
+  ],
+  "helper_sha256": "bf4c6c76f087feaa7d37d5387eef6a3b14f91050b8a82737ac50b7a20ca80cae",
+  "gpu_before": "0, 0, 0\n1, 0, 0\n2, 0, 0\n3, 0, 0\n4, 0, 0\n5, 0, 0\n6, 0, 0\n7, 0, 0\n",
+  "cuda_visible_devices": ""
+}

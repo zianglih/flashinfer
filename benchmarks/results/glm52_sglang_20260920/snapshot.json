@@ -1,0 +1,1244 @@
+{
+  "scope": "Completed 8k1k paired measurements only; the full 3-arm experiment continues. No isolated-kernel or statistical-significance claim.",
+  "source_project": "inferencex-glm52-b300-config-audit",
+  "metric_definitions": {
+    "output_tokens_per_second_per_gpu": "total_output_tokens / entire benchmark duration / TP GPUs",
+    "interactivity_tokens_per_second_per_user": "1000 / reported median_tpot_ms; individual latency arrays were not saved"
+  },
+  "files": [
+    {
+      "file": "mega-8k1k-tp4-c4.json",
+      "sha256": "7c5cbdfb44a1cff2d04739a7e3114260124e19953439e9fbdf1e6ca62415aa73",
+      "bytes": 2057,
+      "source_run": "c2-w4a16-megamoe-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-megamoe-mem80-20260920/8k1k/w4a16-megamoe/tp4_conc4/result.json",
+      "metadata_sha256": "a9d9a3e1a6ca18574b10d49669b3d5a7a89fd522e5a28819f5b590808ee78e0e",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 4,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "86b464d794a8804a05e0c95f679d6bb02e120889",
+        "flashinfer_commit": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+        "num_warmups": 8,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_MOE_EP_KNOB_CACHE": "/data/home/ziangli/inferencex-glm52-b300/caches/megamoe-ad0a5e5e-cute4.7.1-cu13/tp4/knobs.json",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e",
+          "FLASHINFER_VERSION": "0.6.18",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-mem80-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "split-8k1k-tp4-c4.json",
+      "sha256": "af57e3c9776c1fce5831547d555e5817b56f1964a76fec707295755b55033643",
+      "bytes": 2058,
+      "source_run": "c2-w4a16-cutedsl-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-cutedsl-mem80-20260920/8k1k/w4a16-cutedsl/tp4_conc4/result.json",
+      "metadata_sha256": "2c6e54cdbe45e679ed77a3ae21428948f8c4cb571786ca3a498eaec0cdbff65a",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 4,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "3433a0c1169a6b162edf91c7ea193196c08a6386",
+        "flashinfer_commit": "f9dd3c10541e087b716772245a9d033499745048",
+        "num_warmups": 8,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "f9dd3c10541e087b716772245a9d033499745048",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_EXPECTED_VERSION": "0.7.0",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10",
+          "FLASHINFER_VERSION": "0.6.18",
+          "FLASHINFER_WORKSPACE_BASE": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-cutedsl-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_CACHE_DIR": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13/sglang",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_MOE_FUSED_FINALIZE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "mega-8k1k-tp4-c8.json",
+      "sha256": "517766b9c96d26d4ebfb5ce7c38e5d9e0d84e3591b626ff3427e0c76bdc5d505",
+      "bytes": 2507,
+      "source_run": "c2-w4a16-megamoe-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-megamoe-mem80-20260920/8k1k/w4a16-megamoe/tp4_conc8/result.json",
+      "metadata_sha256": "a2580a7bf3bb55dc0b3930fd89030ce671aff1134cc9609f8d937da3ce7de362",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 8,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "86b464d794a8804a05e0c95f679d6bb02e120889",
+        "flashinfer_commit": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+        "num_warmups": 16,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_MOE_EP_KNOB_CACHE": "/data/home/ziangli/inferencex-glm52-b300/caches/megamoe-ad0a5e5e-cute4.7.1-cu13/tp4/knobs.json",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e",
+          "FLASHINFER_VERSION": "0.6.18",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-mem80-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "split-8k1k-tp4-c8.json",
+      "sha256": "7a817c3c32e661b9d72424611a481e0969c79e900de821e1139d3e171e367f01",
+      "bytes": 2512,
+      "source_run": "c2-w4a16-cutedsl-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-cutedsl-mem80-20260920/8k1k/w4a16-cutedsl/tp4_conc8/result.json",
+      "metadata_sha256": "992146bdfb1a1e507b11d3ac3537a4c53d0197eaec786cb3de036ccbf2d06ed7",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 8,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "3433a0c1169a6b162edf91c7ea193196c08a6386",
+        "flashinfer_commit": "f9dd3c10541e087b716772245a9d033499745048",
+        "num_warmups": 16,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "f9dd3c10541e087b716772245a9d033499745048",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_EXPECTED_VERSION": "0.7.0",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10",
+          "FLASHINFER_VERSION": "0.6.18",
+          "FLASHINFER_WORKSPACE_BASE": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-cutedsl-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_CACHE_DIR": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13/sglang",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_MOE_FUSED_FINALIZE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "mega-8k1k-tp4-c16.json",
+      "sha256": "7010d927c8af15cb95615de63b56e1edf5c85ccf72ae1decc43614ade4bba80d",
+      "bytes": 3405,
+      "source_run": "c2-w4a16-megamoe-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-megamoe-mem80-20260920/8k1k/w4a16-megamoe/tp4_conc16/result.json",
+      "metadata_sha256": "3eb756bfcb6c525e3de71047fa27e114ee5c66d90bde1458529eea5d581f4a63",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 16,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "86b464d794a8804a05e0c95f679d6bb02e120889",
+        "flashinfer_commit": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+        "num_warmups": 32,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_MOE_EP_KNOB_CACHE": "/data/home/ziangli/inferencex-glm52-b300/caches/megamoe-ad0a5e5e-cute4.7.1-cu13/tp4/knobs.json",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e",
+          "FLASHINFER_VERSION": "0.6.18",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-mem80-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "split-8k1k-tp4-c16.json",
+      "sha256": "a6062d9fd0442173ac3d20bb136e138327d753b0dd4b170999f99e2f372e5450",
+      "bytes": 3404,
+      "source_run": "c2-w4a16-cutedsl-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-cutedsl-mem80-20260920/8k1k/w4a16-cutedsl/tp4_conc16/result.json",
+      "metadata_sha256": "6d5b2377375afaca004da255bf159a033de73fba2e9e8d275cbfe5d7eae9ff69",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 16,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "3433a0c1169a6b162edf91c7ea193196c08a6386",
+        "flashinfer_commit": "f9dd3c10541e087b716772245a9d033499745048",
+        "num_warmups": 32,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "f9dd3c10541e087b716772245a9d033499745048",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_EXPECTED_VERSION": "0.7.0",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10",
+          "FLASHINFER_VERSION": "0.6.18",
+          "FLASHINFER_WORKSPACE_BASE": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-cutedsl-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_CACHE_DIR": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13/sglang",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_MOE_FUSED_FINALIZE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "mega-8k1k-tp4-c32.json",
+      "sha256": "bc26cc71ca538b5ea2e95e0286e076930f6d62cf7167886eb968810643fdd4d4",
+      "bytes": 5187,
+      "source_run": "c2-w4a16-megamoe-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-megamoe-mem80-20260920/8k1k/w4a16-megamoe/tp4_conc32/result.json",
+      "metadata_sha256": "4f2870f44197442ff0ca4caec92379e8514575558e4857585a497d75e98d3fcf",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 32,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "86b464d794a8804a05e0c95f679d6bb02e120889",
+        "flashinfer_commit": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+        "num_warmups": 64,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_MOE_EP_KNOB_CACHE": "/data/home/ziangli/inferencex-glm52-b300/caches/megamoe-ad0a5e5e-cute4.7.1-cu13/tp4/knobs.json",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e",
+          "FLASHINFER_VERSION": "0.6.18",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-mem80-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "split-8k1k-tp4-c32.json",
+      "sha256": "0a0c5952d98fcc3b51df72248bcf12be76bc5b8d19bf1fe7f503cf4c9a509628",
+      "bytes": 5182,
+      "source_run": "c2-w4a16-cutedsl-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-cutedsl-mem80-20260920/8k1k/w4a16-cutedsl/tp4_conc32/result.json",
+      "metadata_sha256": "735bbf0b7efbfb1cb8f0897d55fdfc14fa58a347bb000263e91594ffbe86a284",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 32,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "3433a0c1169a6b162edf91c7ea193196c08a6386",
+        "flashinfer_commit": "f9dd3c10541e087b716772245a9d033499745048",
+        "num_warmups": 64,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "f9dd3c10541e087b716772245a9d033499745048",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_EXPECTED_VERSION": "0.7.0",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10",
+          "FLASHINFER_VERSION": "0.6.18",
+          "FLASHINFER_WORKSPACE_BASE": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-cutedsl-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_CACHE_DIR": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13/sglang",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_MOE_FUSED_FINALIZE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "mega-8k1k-tp4-c64.json",
+      "sha256": "d742fba2327204ac2a5292a926db98766b7a751a2d896ed8c1853e562582580d",
+      "bytes": 8725,
+      "source_run": "c2-w4a16-megamoe-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-megamoe-mem80-20260920/8k1k/w4a16-megamoe/tp4_conc64/result.json",
+      "metadata_sha256": "7d22a3eb20ddbf024e79a5c00291d8df8c8b98037e17ecac3c39d5271da74913",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 64,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "86b464d794a8804a05e0c95f679d6bb02e120889",
+        "flashinfer_commit": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+        "num_warmups": 128,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_MOE_EP_KNOB_CACHE": "/data/home/ziangli/inferencex-glm52-b300/caches/megamoe-ad0a5e5e-cute4.7.1-cu13/tp4/knobs.json",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e",
+          "FLASHINFER_VERSION": "0.6.18",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-mem80-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "split-8k1k-tp4-c64.json",
+      "sha256": "5c44b95e73580290394e6bd695e606c788310608b4dad79eb0b60a998ad79977",
+      "bytes": 8727,
+      "source_run": "c2-w4a16-cutedsl-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-cutedsl-mem80-20260920/8k1k/w4a16-cutedsl/tp4_conc64/result.json",
+      "metadata_sha256": "29cf326752b89e4f625a23a6f615f4c0d47f0c91d54e637a9cbdc593b0579591",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 64,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "3433a0c1169a6b162edf91c7ea193196c08a6386",
+        "flashinfer_commit": "f9dd3c10541e087b716772245a9d033499745048",
+        "num_warmups": 128,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "f9dd3c10541e087b716772245a9d033499745048",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_EXPECTED_VERSION": "0.7.0",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10",
+          "FLASHINFER_VERSION": "0.6.18",
+          "FLASHINFER_WORKSPACE_BASE": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-cutedsl-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_CACHE_DIR": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13/sglang",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_MOE_FUSED_FINALIZE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "mega-8k1k-tp4-c128.json",
+      "sha256": "be6a34acf3a3ccd1358564d9856ec5e43951d81e7c519d34df4bf734379772e5",
+      "bytes": 15858,
+      "source_run": "c2-w4a16-megamoe-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-megamoe-mem80-20260920/8k1k/w4a16-megamoe/tp4_conc128/result.json",
+      "metadata_sha256": "dcc9b2b2025d5299e4cffbd04ca2b9efe72eaeeb43d9b6a757a31db4becc3990",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 128,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "86b464d794a8804a05e0c95f679d6bb02e120889",
+        "flashinfer_commit": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+        "num_warmups": 256,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_MOE_EP_KNOB_CACHE": "/data/home/ziangli/inferencex-glm52-b300/caches/megamoe-ad0a5e5e-cute4.7.1-cu13/tp4/knobs.json",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e",
+          "FLASHINFER_VERSION": "0.6.18",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-mem80-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "split-8k1k-tp4-c128.json",
+      "sha256": "3f7aa59be29df5d14c5093975826bf8edca8fbc072f1033148dfd0352cf5697c",
+      "bytes": 15855,
+      "source_run": "c2-w4a16-cutedsl-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-cutedsl-mem80-20260920/8k1k/w4a16-cutedsl/tp4_conc128/result.json",
+      "metadata_sha256": "31b75b525705b03f56b003449c7dd20602d8c79135d305a2838c33e1e89394f5",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 128,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "3433a0c1169a6b162edf91c7ea193196c08a6386",
+        "flashinfer_commit": "f9dd3c10541e087b716772245a9d033499745048",
+        "num_warmups": 256,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "f9dd3c10541e087b716772245a9d033499745048",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_EXPECTED_VERSION": "0.7.0",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10",
+          "FLASHINFER_VERSION": "0.6.18",
+          "FLASHINFER_WORKSPACE_BASE": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-cutedsl-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_CACHE_DIR": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13/sglang",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_MOE_FUSED_FINALIZE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "mega-8k1k-tp4-c256.json",
+      "sha256": "bc2ab96d83b945762e3ce8c403d67e48dae97b2638c4d875fa9bb977125f7f8a",
+      "bytes": 30101,
+      "source_run": "c2-w4a16-megamoe-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-megamoe-mem80-20260920/8k1k/w4a16-megamoe/tp4_conc256/result.json",
+      "metadata_sha256": "39d902bef0c32f514383130d5e428a557cf820d9be8b805ac356be792139840c",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 256,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "86b464d794a8804a05e0c95f679d6bb02e120889",
+        "flashinfer_commit": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+        "num_warmups": 512,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_MOE_EP_KNOB_CACHE": "/data/home/ziangli/inferencex-glm52-b300/caches/megamoe-ad0a5e5e-cute4.7.1-cu13/tp4/knobs.json",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e",
+          "FLASHINFER_VERSION": "0.6.18",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-mem80-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "split-8k1k-tp4-c256.json",
+      "sha256": "3fa14f313b419312d89893946add81ba4bc52d46539f845fddbc56a15ce5eb45",
+      "bytes": 30102,
+      "source_run": "c2-w4a16-cutedsl-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-cutedsl-mem80-20260920/8k1k/w4a16-cutedsl/tp4_conc256/result.json",
+      "metadata_sha256": "156fd07b16190960ce4dded64d3c37a96a0aa626a957a5dd6b58fe69039b5fbd",
+      "configuration": {
+        "tp": 4,
+        "dp": 4,
+        "ep": 4,
+        "gpu_count": 4,
+        "concurrency": 256,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "3433a0c1169a6b162edf91c7ea193196c08a6386",
+        "flashinfer_commit": "f9dd3c10541e087b716772245a9d033499745048",
+        "num_warmups": 512,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3",
+          "FLASHINFER_COMMIT": "f9dd3c10541e087b716772245a9d033499745048",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_EXPECTED_VERSION": "0.7.0",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10",
+          "FLASHINFER_VERSION": "0.6.18",
+          "FLASHINFER_WORKSPACE_BASE": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-cutedsl-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_CACHE_DIR": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13/sglang",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_MOE_FUSED_FINALIZE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "mega-8k1k-tp8-c4.json",
+      "sha256": "db2cc4cc6c2dcc909516c86fd33453490ef0c769e75e54e7313e14b6cd5bb898",
+      "bytes": 2053,
+      "source_run": "c2-w4a16-megamoe-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-megamoe-mem80-20260920/8k1k/w4a16-megamoe/tp8_conc4/result.json",
+      "metadata_sha256": "0abd1cf2ae71add1ee3a21cfd9786d5c16cab7a612f60933c890923bb45f2479",
+      "configuration": {
+        "tp": 8,
+        "dp": 8,
+        "ep": 8,
+        "gpu_count": 8,
+        "concurrency": 4,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "86b464d794a8804a05e0c95f679d6bb02e120889",
+        "flashinfer_commit": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+        "num_warmups": 8,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7",
+          "FLASHINFER_COMMIT": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_MOE_EP_KNOB_CACHE": "/data/home/ziangli/inferencex-glm52-b300/caches/megamoe-ad0a5e5e-cute4.7.1-cu13/tp8/knobs.json",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e",
+          "FLASHINFER_VERSION": "0.6.18",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-ad0a5e5e:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-mem80-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    },
+    {
+      "file": "split-8k1k-tp8-c4.json",
+      "sha256": "ce9110452b1f46d78d204f8914cf599f1a1dda82e964f5d585486de0515d043d",
+      "bytes": 2056,
+      "source_run": "c2-w4a16-cutedsl-mem80-20260920",
+      "source_relative": "artifacts/measured/c2-w4a16-cutedsl-mem80-20260920/8k1k/w4a16-cutedsl/tp8_conc4/result.json",
+      "metadata_sha256": "0af75be6e1650490d3e841d4ff6f43f4b49220787b92cbbd7b0271bf631eee13",
+      "configuration": {
+        "tp": 8,
+        "dp": 8,
+        "ep": 8,
+        "gpu_count": 8,
+        "concurrency": 4,
+        "isl": 8192,
+        "osl": 1024,
+        "image": "lmsysorg/sglang:nightly-dev-cu13-20260918-20518d85",
+        "model": "nvidia/GLM-5.2-NVFP4",
+        "model_revision": "53e0691e21895a3863a606dfd12910c69eba94ab",
+        "sglang_commit": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+        "inferencex_commit": "3433a0c1169a6b162edf91c7ea193196c08a6386",
+        "flashinfer_commit": "f9dd3c10541e087b716772245a9d033499745048",
+        "num_warmups": 8,
+        "random_range_ratio": 0.8,
+        "mem_fraction_static": 0.8,
+        "parallel_topology": "dp-ep",
+        "prefill_cuda_graph_policy": "disabled",
+        "environment": {
+          "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7",
+          "FLASHINFER_COMMIT": "f9dd3c10541e087b716772245a9d033499745048",
+          "FLASHINFER_CUDA_ARCH_LIST": "10.3a",
+          "FLASHINFER_EXPECTED_VERSION": "0.7.0",
+          "FLASHINFER_NVCC_THREADS": "2",
+          "FLASHINFER_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10",
+          "FLASHINFER_VERSION": "0.6.18",
+          "FLASHINFER_WORKSPACE_BASE": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13",
+          "PORT": "30000",
+          "PYTHONNOUSERSITE": "1",
+          "PYTHONPATH": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang/python:/data/home/ziangli/inferencex-glm52-b300/sources/flashinfer-f9dd3c10:/data/home/ziangli/inferencex-glm52-b300/sources/inferencex-cutedsl-20260920",
+          "SGLANG_BUILD_COMMIT": "20518d8518375f49be0d14ead7ea474dbc2721d0",
+          "SGLANG_BUILD_URL": "https://github.com/sgl-project/sglang/actions/runs/35291047036",
+          "SGLANG_CACHE_DIR": "/data/home/ziangli/inferencex-glm52-b300/caches/cutedsl-f9dd3c10-cute4.7.1-cu13/sglang",
+          "SGLANG_COMMIT": "50eeb742961908afa68f4f523a1a19c5de6eb0b3",
+          "SGLANG_ENABLE_JIT_DEEPGEMM": "1",
+          "SGLANG_FLASHINFER_CUTEDSL_NVFP4_W4A16": "1",
+          "SGLANG_FLASHINFER_MEGAMOE_COMBINE_DTYPE": "bf16",
+          "SGLANG_FLASHINFER_MEGAMOE_IN_KERNEL_FC2_REDUCE": "0",
+          "SGLANG_FLASHINFER_MOE_FUSED_FINALIZE": "0",
+          "SGLANG_FLASHINFER_NVFP4_PER_TOKEN_ACTIVATION": "0",
+          "SGLANG_IMAGE_TAG": "lmsysorg/sglang:nightly-dev-20260918-20518d85",
+          "SGLANG_RUST_BUILD_MODE": "never",
+          "SGLANG_SOURCE_ROOT": "/data/home/ziangli/inferencex-glm52-b300/sources/sglang"
+        },
+        "cute_dsl_compiler": {
+          "version": "4.7.1",
+          "library_versions": {
+            "nvidia-cutlass-dsl-libs-cu12": "4.7.1",
+            "nvidia-cutlass-dsl-libs-cu13": "4.7.1",
+            "nvidia-cutlass-dsl-libs-core": "4.7.1",
+            "nvidia-cutlass-dsl-libs-base": "4.7.1"
+          },
+          "import_paths": {
+            "cutlass": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+            "cutlass.cute": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cute/__init__.py",
+            "cutlass.cutlass_dsl": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/cutlass_dsl/__init__.py"
+          }
+        }
+      }
+    }
+  ],
+  "rows": [
+    {
+      "workload": "8k1k",
+      "tp": 4,
+      "dp": 4,
+      "ep": 4,
+      "concurrency": 4,
+      "requests_per_arm": 40,
+      "identical_token_length_arrays": true,
+      "mega": {
+        "output_tokens_per_second_per_gpu": 107.45900103943751,
+        "interactivity_tokens_per_second_per_user": 120.77398221503769
+      },
+      "split": {
+        "output_tokens_per_second_per_gpu": 107.98807612171942,
+        "interactivity_tokens_per_second_per_user": 124.4689651481836
+      },
+      "mega_vs_split_percent": {
+        "output_tokens_per_second_per_gpu": -0.48993842772562246,
+        "interactivity_tokens_per_second_per_user": -2.9685977775640193
+      }
+    },
+    {
+      "workload": "8k1k",
+      "tp": 4,
+      "dp": 4,
+      "ep": 4,
+      "concurrency": 8,
+      "requests_per_arm": 80,
+      "identical_token_length_arrays": true,
+      "mega": {
+        "output_tokens_per_second_per_gpu": 162.4194262454451,
+        "interactivity_tokens_per_second_per_user": 93.22422224416353
+      },
+      "split": {
+        "output_tokens_per_second_per_gpu": 171.71157100028128,
+        "interactivity_tokens_per_second_per_user": 97.03867105515053
+      },
+      "mega_vs_split_percent": {
+        "output_tokens_per_second_per_gpu": -5.411484328462035,
+        "interactivity_tokens_per_second_per_user": -3.930854338286549
+      }
+    },
+    {
+      "workload": "8k1k",
+      "tp": 4,
+      "dp": 4,
+      "ep": 4,
+      "concurrency": 16,
+      "requests_per_arm": 160,
+      "identical_token_length_arrays": true,
+      "mega": {
+        "output_tokens_per_second_per_gpu": 222.7716970530058,
+        "interactivity_tokens_per_second_per_user": 63.508029125626166
+      },
+      "split": {
+        "output_tokens_per_second_per_gpu": 227.67657116294643,
+        "interactivity_tokens_per_second_per_user": 65.85836064290567
+      },
+      "mega_vs_split_percent": {
+        "output_tokens_per_second_per_gpu": -2.1543165749936755,
+        "interactivity_tokens_per_second_per_user": -3.5687671152693334
+      }
+    },
+    {
+      "workload": "8k1k",
+      "tp": 4,
+      "dp": 4,
+      "ep": 4,
+      "concurrency": 32,
+      "requests_per_arm": 320,
+      "identical_token_length_arrays": true,
+      "mega": {
+        "output_tokens_per_second_per_gpu": 304.2088528377286,
+        "interactivity_tokens_per_second_per_user": 41.14721059499691
+      },
+      "split": {
+        "output_tokens_per_second_per_gpu": 334.2634045499297,
+        "interactivity_tokens_per_second_per_user": 46.11676729357254
+      },
+      "mega_vs_split_percent": {
+        "output_tokens_per_second_per_gpu": -8.991277927258645,
+        "interactivity_tokens_per_second_per_user": -10.77603004334663
+      }
+    },
+    {
+      "workload": "8k1k",
+      "tp": 4,
+      "dp": 4,
+      "ep": 4,
+      "concurrency": 64,
+      "requests_per_arm": 640,
+      "identical_token_length_arrays": true,
+      "mega": {
+        "output_tokens_per_second_per_gpu": 391.1660908151006,
+        "interactivity_tokens_per_second_per_user": 25.67180353101539
+      },
+      "split": {
+        "output_tokens_per_second_per_gpu": 418.5595117371654,
+        "interactivity_tokens_per_second_per_user": 27.337966216940455
+      },
+      "mega_vs_split_percent": {
+        "output_tokens_per_second_per_gpu": -6.544689620926958,
+        "interactivity_tokens_per_second_per_user": -6.094684120622695
+      }
+    },
+    {
+      "workload": "8k1k",
+      "tp": 4,
+      "dp": 4,
+      "ep": 4,
+      "concurrency": 128,
+      "requests_per_arm": 1280,
+      "identical_token_length_arrays": true,
+      "mega": {
+        "output_tokens_per_second_per_gpu": 470.6245292728877,
+        "interactivity_tokens_per_second_per_user": 15.073434212312717
+      },
+      "split": {
+        "output_tokens_per_second_per_gpu": 509.86380709828427,
+        "interactivity_tokens_per_second_per_user": 16.45506039471804
+      },
+      "mega_vs_split_percent": {
+        "output_tokens_per_second_per_gpu": -7.696031230126632,
+        "interactivity_tokens_per_second_per_user": -8.396360446351292
+      }
+    },
+    {
+      "workload": "8k1k",
+      "tp": 4,
+      "dp": 4,
+      "ep": 4,
+      "concurrency": 256,
+      "requests_per_arm": 2560,
+      "identical_token_length_arrays": true,
+      "mega": {
+        "output_tokens_per_second_per_gpu": 550.2485677577309,
+        "interactivity_tokens_per_second_per_user": 8.757005155635662
+      },
+      "split": {
+        "output_tokens_per_second_per_gpu": 584.8281493614129,
+        "interactivity_tokens_per_second_per_user": 9.30387774443731
+      },
+      "mega_vs_split_percent": {
+        "output_tokens_per_second_per_gpu": -5.9127765381061455,
+        "interactivity_tokens_per_second_per_user": -5.8778995578334765
+      }
+    },
+    {
+      "workload": "8k1k",
+      "tp": 8,
+      "dp": 8,
+      "ep": 8,
+      "concurrency": 4,
+      "requests_per_arm": 40,
+      "identical_token_length_arrays": true,
+      "mega": {
+        "output_tokens_per_second_per_gpu": 56.23113378650235,
+        "interactivity_tokens_per_second_per_user": 121.9603997590904
+      },
+      "split": {
+        "output_tokens_per_second_per_gpu": 53.23744533985354,
+        "interactivity_tokens_per_second_per_user": 116.31666525607622
+      },
+      "mega_vs_split_percent": {
+        "output_tokens_per_second_per_gpu": 5.62327592456382,
+        "interactivity_tokens_per_second_per_user": 4.852042904246989
+      }
+    }
+  ]
+}

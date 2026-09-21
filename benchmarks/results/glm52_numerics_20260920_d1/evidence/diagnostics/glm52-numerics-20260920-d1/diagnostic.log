@@ -1,0 +1,115 @@
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  return func(*args, **kwargs)
+2026-09-20 17:15:59,366 - INFO - autotuner.py:1046 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+2026-09-20 17:15:59,366 - INFO - autotuner.py:1046 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+2026-09-20 17:15:59,366 - INFO - autotuner.py:1046 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+2026-09-20 17:15:59,366 - INFO - autotuner.py:1046 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+[AutoTuner]: Tuning moe_cute_dsl:   0%|          | 0/3 [00:00<?, ?profile/s][AutoTuner]: Tuning moe_cute_dsl:   0%|          | 0/3 [00:00<?, ?profile/s][AutoTuner]: Tuning moe_cute_dsl:   0%|          | 0/3 [00:00<?, ?profile/s][AutoTuner]: Tuning moe_cute_dsl:   0%|          | 0/3 [00:00<?, ?profile/s][AutoTuner]: Tuning moe_cute_dsl:  33%|███▎      | 1/3 [00:16<00:32, 16.35s/profile][AutoTuner]: Tuning moe_cute_dsl:  67%|██████▋   | 2/3 [00:16<00:06,  6.83s/profile][AutoTuner]: Tuning moe_cute_dsl: 100%|██████████| 3/3 [00:16<00:00,  3.79s/profile][AutoTuner]: Tuning moe_cute_dsl: 100%|██████████| 3/3 [00:16<00:00,  5.56s/profile]
+/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/sources/flashinfer-ad0/flashinfer/testing/utils.py:1678: UserWarning: cold_l2_cache=True but no GPU tensors found in input_args/input_kwargs. Cold L2 benchmarking disabled.
+  return bench_gpu_time_with_cudagraph(
+[AutoTuner]: Tuning moe_cute_dsl:  33%|███▎      | 1/3 [00:17<00:34, 17.24s/profile][AutoTuner]: Tuning moe_cute_dsl:  67%|██████▋   | 2/3 [00:17<00:07,  7.20s/profile][AutoTuner]: Tuning moe_cute_dsl: 100%|██████████| 3/3 [00:17<00:00,  4.00s/profile][AutoTuner]: Tuning moe_cute_dsl: 100%|██████████| 3/3 [00:17<00:00,  5.87s/profile]
+/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/sources/flashinfer-ad0/flashinfer/testing/utils.py:1678: UserWarning: cold_l2_cache=True but no GPU tensors found in input_args/input_kwargs. Cold L2 benchmarking disabled.
+  return bench_gpu_time_with_cudagraph(
+[AutoTuner]: Tuning moe_cute_dsl:  33%|███▎      | 1/3 [00:30<01:00, 30.00s/profile][AutoTuner]: Tuning moe_cute_dsl:  33%|███▎      | 1/3 [00:30<01:00, 30.08s/profile][AutoTuner]: Tuning moe_cute_dsl:  67%|██████▋   | 2/3 [00:30<00:12, 12.46s/profile][AutoTuner]: Tuning moe_cute_dsl:  67%|██████▋   | 2/3 [00:30<00:12, 12.49s/profile][AutoTuner]: Tuning moe_cute_dsl: 100%|██████████| 3/3 [00:30<00:00,  6.85s/profile][AutoTuner]: Tuning moe_cute_dsl: 100%|██████████| 3/3 [00:30<00:00, 10.12s/profile]
+/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/sources/flashinfer-ad0/flashinfer/testing/utils.py:1678: UserWarning: cold_l2_cache=True but no GPU tensors found in input_args/input_kwargs. Cold L2 benchmarking disabled.
+  return bench_gpu_time_with_cudagraph(
+[AutoTuner]: Tuning moe_cute_dsl: 100%|██████████| 3/3 [00:30<00:00,  6.87s/profile][AutoTuner]: Tuning moe_cute_dsl: 100%|██████████| 3/3 [00:30<00:00, 10.15s/profile]
+/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/sources/flashinfer-ad0/flashinfer/testing/utils.py:1678: UserWarning: cold_l2_cache=True but no GPU tensors found in input_args/input_kwargs. Cold L2 benchmarking disabled.
+  return bench_gpu_time_with_cudagraph(
+2026-09-20 17:16:29,956 - INFO - autotuner.py:1069 - flashinfer.jit: [Autotuner]: Autotuning process ends
+2026-09-20 17:16:29,956 - INFO - autotuner.py:1069 - flashinfer.jit: [Autotuner]: Autotuning process ends
+2026-09-20 17:16:29,957 - INFO - autotuner.py:1069 - flashinfer.jit: [Autotuner]: Autotuning process ends
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  return func(*args, **kwargs)
+2026-09-20 17:16:29,958 - INFO - autotuner.py:1069 - flashinfer.jit: [Autotuner]: Autotuning process ends
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.all_gather_into_tensor` is deprecated. Please use `torch.distributed.all_gather_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.reduce_scatter_tensor` is deprecated. Please use `torch.distributed.reduce_scatter_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.reduce_scatter_tensor` is deprecated. Please use `torch.distributed.reduce_scatter_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.reduce_scatter_tensor` is deprecated. Please use `torch.distributed.reduce_scatter_single` instead.
+  return func(*args, **kwargs)
+/opt/sglang/lib/python3.12/site-packages/torch/distributed/c10d_logger.py:83: FutureWarning: `torch.distributed.reduce_scatter_tensor` is deprecated. Please use `torch.distributed.reduce_scatter_single` instead.
+  return func(*args, **kwargs)
+REFCHECK_CSV,w4a16_megamoe,1,0.03125,0.00336396664,PASS
+2026-09-20 17:16:50,634 - INFO - autotuner.py:1046 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+2026-09-20 17:16:50,634 - INFO - autotuner.py:1046 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+2026-09-20 17:16:50,634 - INFO - autotuner.py:1046 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+2026-09-20 17:16:50,634 - INFO - autotuner.py:1046 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+2026-09-20 17:16:50,717 - INFO - autotuner.py:1069 - flashinfer.jit: [Autotuner]: Autotuning process ends
+2026-09-20 17:16:50,717 - INFO - autotuner.py:1069 - flashinfer.jit: [Autotuner]: Autotuning process ends
+2026-09-20 17:16:50,718 - INFO - autotuner.py:1069 - flashinfer.jit: [Autotuner]: Autotuning process ends
+2026-09-20 17:16:50,718 - INFO - autotuner.py:1069 - flashinfer.jit: [Autotuner]: Autotuning process ends
+REFCHECK_CSV,w4a16_megamoe,3,0.03125,0.00343518943,FAIL
+W0920 17:17:06.186000 8726 torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 8730 closing signal SIGTERM
+W0920 17:17:06.188000 8726 torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 8732 closing signal SIGTERM
+W0920 17:17:06.188000 8726 torch/distributed/elastic/multiprocessing/api.py:1028] Sending process 8733 closing signal SIGTERM
+E0920 17:17:06.803000 8726 torch/distributed/elastic/multiprocessing/api.py:1002] failed (exitcode: 1) local_rank: 1 (pid: 8731) of binary: /opt/sglang/bin/python3
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/opt/sglang/lib/python3.12/site-packages/torch/distributed/run.py", line 1032, in <module>
+    main()
+  File "/opt/sglang/lib/python3.12/site-packages/torch/distributed/elastic/multiprocessing/errors/__init__.py", line 367, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/torch/distributed/run.py", line 1028, in main
+    run(args)
+  File "/opt/sglang/lib/python3.12/site-packages/torch/distributed/run.py", line 1019, in run
+    elastic_launch(
+  File "/opt/sglang/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 194, in __call__
+    return launch_agent(
+           ^^^^^^^^^^^^^
+  File "/opt/sglang/lib/python3.12/site-packages/torch/distributed/launcher/api.py", line 383, in launch_agent
+    raise ChildFailedError(
+torch.distributed.elastic.multiprocessing.errors.ChildFailedError: 
+============================================================
+/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/setup/helpers-glm52-numerics-20260920-d1/capture_r3_numerical_failure.py FAILED
+------------------------------------------------------------
+Failures:
+[1]:
+  time      : 2026-09-20_17:17:06
+  host      : hu-pdx-83
+  rank      : 0 (local_rank: 0)
+  exitcode  : 1 (pid: 8730) 
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[2]:
+  time      : 2026-09-20_17:17:06
+  host      : hu-pdx-83
+  rank      : 2 (local_rank: 2)
+  exitcode  : 1 (pid: 8732) 
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+[3]:
+  time      : 2026-09-20_17:17:06
+  host      : hu-pdx-83
+  rank      : 3 (local_rank: 3)
+  exitcode  : 1 (pid: 8733) 
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+------------------------------------------------------------
+Root Cause (first observed failure):
+[0]:
+  time      : 2026-09-20_17:17:06
+  host      : hu-pdx-83
+  rank      : 1 (local_rank: 1)
+  exitcode  : 1 (pid: 8731) 
+  error_file: <N/A>
+  traceback : To enable traceback see: https://pytorch.org/docs/stable/elastic/errors.html
+============================================================

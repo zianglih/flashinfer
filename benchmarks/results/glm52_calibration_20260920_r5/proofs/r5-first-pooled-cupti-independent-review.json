@@ -1,0 +1,4094 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-20T19:20:45.628562+00:00",
+  "status": "passed",
+  "issue_count": 0,
+  "issues": [],
+  "scope": "Independent local raw review of009+021 EP4/A2A/live and010+022 EP4/A2A/32768 only, including their14 pooled groups. Reuses accepted source/environment/full-gate; no validator/summarizer invoked as proof.",
+  "snapshot": "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T191641Z",
+  "snapshot_total_files": 96,
+  "audited_job_files": 16,
+  "audited_shared_files": 8,
+  "transfer_receipt_sha256": "be75a36f858c8f887a7851bfa8f4377186bcd5b003e2d50647391d87cec53256",
+  "bound_raw_sha256": {
+    "runs/glm52-calibration-20260920-r5/provenance.json": "e20aedfc4de39101ab6d1d83898557a2d6c68860e262fcf2f6225d16fcea3a2f",
+    "runs/glm52-calibration-20260920-r5/plan.json": "93e65d1b7f7c4aac14bb409b8a2bcf6ea205985cba3b71a492df873b251ce480",
+    "runs/glm52-calibration-20260920-r5/gate-receipt.json": "a12515be4816704d5c650b256113f436c7960ded76e59c95ebc4afa54fefd14d",
+    "runs/glm52-calibration-20260920-r5/environment/initial/image-before.json": "1e67e2aa37827c5abbc1ab2bb306b5e881666668d816a866a03c29647dbb3c4e",
+    "runs/glm52-calibration-20260920-r5/environment/initial/runtime-after.json": "0bc5f2d3fd71bf257d46bf89a81167153691e0ef70c059831ca026eaf7267620",
+    "runs/glm52-calibration-20260920-r5/environment/initial/setup-completed.json": "10e45d51c62389e603c398730d4b2d3d457cc3852ff5ba37b3e9f7fced288551",
+    "runs/glm52-calibration-20260920-r5/environment/timing-r5/runtime-after.json": "4f4f96cc4704783b4adabaa47237bb1a4d615d1075619169df1929c47cea1825",
+    "runs/glm52-calibration-20260920-r5/environment/timing-r5/setup-completed.json": "41a3f784c392d9adca79b52b9e76956ebc45228f23323ea4142851955f1a4268",
+    "runs/glm52-calibration-20260920-r5/009-core-ep4-alltoall-caplive-r1/benchmark.log": "c43928e31233d0918c7b4f6e6401570c3c0e1ff2cd231d9a204085a5c46df7e7",
+    "runs/glm52-calibration-20260920-r5/009-core-ep4-alltoall-caplive-r1/invocation.json": "6ace902c2e803c34609657a61f3d38211801d4c2f6c506a94b2cf268611cd5ce",
+    "runs/glm52-calibration-20260920-r5/009-core-ep4-alltoall-caplive-r1/exit.json": "f9acff10283a41a4543de4fd7f58435bb0bd3561cb32d2a81dfb0068f2ed5ad7",
+    "runs/glm52-calibration-20260920-r5/009-core-ep4-alltoall-caplive-r1/validation.json": "433aec5814d8ccbaee072298868f38b5e0f07bbaf40afdaa3eb587a58e133c01",
+    "runs/glm52-calibration-20260920-r5/010-core-ep4-alltoall-cap32768-r1/benchmark.log": "3507a151a001de35702535159d08aee203f9ae7263977c61e3107b76fda45843",
+    "runs/glm52-calibration-20260920-r5/010-core-ep4-alltoall-cap32768-r1/invocation.json": "e5b7cf15d0d3b1dc4c4b2dab585f82fa19395db414b668324b9b51c3e8dfc922",
+    "runs/glm52-calibration-20260920-r5/010-core-ep4-alltoall-cap32768-r1/exit.json": "29016885db6d828428c6dcd9d07694b1d41986392e09b37d7b6109958e8d5a58",
+    "runs/glm52-calibration-20260920-r5/010-core-ep4-alltoall-cap32768-r1/validation.json": "ab67da07c0ab8a6f43f79e3ce2b1cd120f72fe9ac6a5d54080193f86d8b718a3",
+    "runs/glm52-calibration-20260920-r5/021-core-ep4-alltoall-caplive-r2/benchmark.log": "27f9bc1bf436e97eb48ef7d384d246ed1b910779ee74c31c7aac6a8887b62fce",
+    "runs/glm52-calibration-20260920-r5/021-core-ep4-alltoall-caplive-r2/invocation.json": "a861dfb75f6b87a83cae76863b35e5c0ba56383e4acdf9f39f41c9a7eba9a6df",
+    "runs/glm52-calibration-20260920-r5/021-core-ep4-alltoall-caplive-r2/exit.json": "08648d1fcf97955d82f2d0ed92e1b0f254b4907677ae29c35b12109bb184ce0d",
+    "runs/glm52-calibration-20260920-r5/021-core-ep4-alltoall-caplive-r2/validation.json": "fccdbfa388a845bffe813b196df8e694b95e17f9f7c718da277c6227afb68114",
+    "runs/glm52-calibration-20260920-r5/022-core-ep4-alltoall-cap32768-r2/benchmark.log": "dce62a8633e135480b6f7ce8412a3d0ea349d5bb60da66c07f58f1a8bc9e7f8d",
+    "runs/glm52-calibration-20260920-r5/022-core-ep4-alltoall-cap32768-r2/invocation.json": "2fdabe269b7455d0e2a7f085ec2cc85b703fac357cc735216f40b5c8def431e7",
+    "runs/glm52-calibration-20260920-r5/022-core-ep4-alltoall-cap32768-r2/exit.json": "cf0cab4e4a24f23c79598b4fd0f1859c64d1e4540a86b968b0f5a52aa175ae84",
+    "runs/glm52-calibration-20260920-r5/022-core-ep4-alltoall-cap32768-r2/validation.json": "be7d45a1084e6cb3f790b010fe3a31b38982790321b79524e70a9d3bdb16d436"
+  },
+  "reused_review_sha256": {
+    "artifacts/r5-full-correctness-independent-review.json": "dc7bf5e2c20fe6240a0bef634d5ebc6fa0ee05de9730f81e9b99c212cb7e6d51",
+    "artifacts/r5-first-cupti-independent-review.json": "61bcce1d3aad5f37b1737fb5109b87a9cbffbc0c8c57882d1be68d0be15522ad",
+    "artifacts/r4-reference-independent-review.json": "0ff08194419b2e0c417d5f9b51f7055dd9d95083dd892091dd6392ee4c36ceed"
+  },
+  "source_commit": "bd8391858db504c8997e704c7952f4d48ccab591",
+  "runtime_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "compared_summary": "artifacts/r5-twentytwo-jobs-partial-summary",
+  "summary_sha256": {
+    "summary.json": "28a7e5e16268a34ca617ea6920cc42baf3081829318050c8c9c8bdacc5c18399",
+    "paired_latency.csv": "90a396242207fb4754bc378925294adc6e034c9c6f18640479cad73dfc2c560d",
+    "summary.md": "e2de79f0825fec00911059dd53de3e1152f1b082be30ca7493c5cdaf3336d8f0",
+    "raw_manifest.json": "9a75125cf1d2237101bcc274301d2517df4c6f5d6b9519248218acf7ef961083"
+  },
+  "snapshot_scope": {
+    "reported_completed_jobs": 22,
+    "total_required_jobs": 60,
+    "audited_pooled_groups": 14,
+    "total_required_pooled_groups": 110,
+    "final_matrix": false
+  },
+  "totals": {
+    "jobs": 4,
+    "oracle_outputs": 56,
+    "split_partials": 28,
+    "graph_checks": 56,
+    "checked_untimed_graph_replays": 112,
+    "raw_samples": 5600,
+    "native_pair_FAIL": 28,
+    "rank_completions": 16,
+    "registrations": 224,
+    "deferred_finalizes": 224,
+    "final_detaches": 16
+  },
+  "numerical_checks": {
+    "oracle_outputs": 56,
+    "split_partials": 28,
+    "graph_checks": 56,
+    "all_reference_max_abs": 0,
+    "all_reference_relative_l2": 0,
+    "all_reference_bitwise_mismatches": 0,
+    "all_reference_nonfinite_count": 0,
+    "all_graph_max_abs": 0,
+    "atol": 0.01,
+    "rtol": 0.01,
+    "native_cross_pair_PASS": 0,
+    "native_cross_pair_FAIL": 28,
+    "repeat_cross_pair_values_identical": true
+  },
+  "pooling_method": "For each exact EP4/A2A/capacity/N/variant, concatenate repeat1 100 raw rank-MAX CUPTI samples and repeat2 100 raw samples, then median(all200)*1000 to microseconds. No trimming, no median-of-medians, no mixing capacity/N/communication.",
+  "derived_metric_definitions": {
+    "ratio": "Split_us / Mega_us",
+    "signed_change_percent": "100 * (Mega_us / Split_us - 1); negative means lower Mega latency"
+  },
+  "pooled_groups": [
+    {
+      "capacity": null,
+      "global_tokens": 16,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "009-core-ep4-alltoall-caplive-r1",
+        "021-core-ep4-alltoall-caplive-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "009-core-ep4-alltoall-caplive-r1",
+          "split_us": 181.937,
+          "mega_us": 195.969,
+          "speedup_split_over_mega": 0.9283968382754416,
+          "mega_latency_change_percent": 7.712559842143141
+        },
+        {
+          "repeat": 2,
+          "job": "021-core-ep4-alltoall-caplive-r2",
+          "split_us": 182.53,
+          "mega_us": 197.602,
+          "speedup_split_over_mega": 0.9237254683657048,
+          "mega_latency_change_percent": 8.257272777077752
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.182241,
+          0.182241
+        ],
+        "w4a16_megamoe": [
+          0.196737,
+          0.196833
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "5f553027aa45d454d8e045fce8f9ed4aab423890948716f90dab75d029d55239",
+        "w4a16_megamoe": "9fea82b352c1a7f0a9f9e163d55885846f49f5d979047308d13d49a114133850"
+      },
+      "split_us": 182.24099999999999,
+      "mega_us": 196.785,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9260919277383947,
+      "mega_latency_change_percent": 7.980641019309598,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": null,
+      "global_tokens": 32,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "009-core-ep4-alltoall-caplive-r1",
+        "021-core-ep4-alltoall-caplive-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "009-core-ep4-alltoall-caplive-r1",
+          "split_us": 241.072,
+          "mega_us": 241.248,
+          "speedup_split_over_mega": 0.9992704602732458,
+          "mega_latency_change_percent": 0.07300723435321732
+        },
+        {
+          "repeat": 2,
+          "job": "021-core-ep4-alltoall-caplive-r2",
+          "split_us": 231.906,
+          "mega_us": 243.857,
+          "speedup_split_over_mega": 0.9509917697667075,
+          "mega_latency_change_percent": 5.1533811113123384
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.238913,
+          0.238913
+        ],
+        "w4a16_megamoe": [
+          0.242528,
+          0.242528
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "fdc07086eebac67ce20af1edaac29ed847cb4ff54024280756cb7394ea0e22b2",
+        "w4a16_megamoe": "be8a3f53759039e5011158212947b1e18e6cb84bcbbcf6338cca24d935f44747"
+      },
+      "split_us": 238.91299999999998,
+      "mega_us": 242.528,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9850945045520517,
+      "mega_latency_change_percent": 1.5131030961061276,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": null,
+      "global_tokens": 64,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "009-core-ep4-alltoall-caplive-r1",
+        "021-core-ep4-alltoall-caplive-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "009-core-ep4-alltoall-caplive-r1",
+          "split_us": 271.5535,
+          "mega_us": 274.29,
+          "speedup_split_over_mega": 0.9900233329687556,
+          "mega_latency_change_percent": 1.0077203939555357
+        },
+        {
+          "repeat": 2,
+          "job": "021-core-ep4-alltoall-caplive-r2",
+          "split_us": 273.169,
+          "mega_us": 271.9545,
+          "speedup_split_over_mega": 1.0044658205692496,
+          "mega_latency_change_percent": -0.4445965684246711
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.272354,
+          0.272385
+        ],
+        "w4a16_megamoe": [
+          0.273314,
+          0.273347
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "2ecb46cf5f3c22fba1e3c88386bdb523b27cd421293394392f1699ee17200a0d",
+        "w4a16_megamoe": "4f797a0c54db3fc4a90b29f498e6002879a2dd5b2c5272ea8a146b0f59fa4d83"
+      },
+      "split_us": 272.36949999999996,
+      "mega_us": 273.33050000000003,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9964841098962609,
+      "mega_latency_change_percent": 0.352829520192266,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": null,
+      "global_tokens": 128,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "009-core-ep4-alltoall-caplive-r1",
+        "021-core-ep4-alltoall-caplive-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "009-core-ep4-alltoall-caplive-r1",
+          "split_us": 309.2825,
+          "mega_us": 306.3055,
+          "speedup_split_over_mega": 1.0097190549957478,
+          "mega_latency_change_percent": -0.9625504191152157
+        },
+        {
+          "repeat": 2,
+          "job": "021-core-ep4-alltoall-caplive-r2",
+          "split_us": 298.9775,
+          "mega_us": 306.961,
+          "speedup_split_over_mega": 0.9739918100344995,
+          "mega_latency_change_percent": 2.6702678295189353
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.305026,
+          0.305027
+        ],
+        "w4a16_megamoe": [
+          0.306561,
+          0.306561
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "936fb71a897c8ef188824783775e8ccdae6c5bc2575ef9184a059770a7e05b9e",
+        "w4a16_megamoe": "973ad78975eeb2e36482dd66d924459262eb473f6f6a938c817454f549e01343"
+      },
+      "split_us": 305.0265,
+      "mega_us": 306.561,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9949944709209587,
+      "mega_latency_change_percent": 0.50307104464693,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": null,
+      "global_tokens": 256,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "009-core-ep4-alltoall-caplive-r1",
+        "021-core-ep4-alltoall-caplive-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "009-core-ep4-alltoall-caplive-r1",
+          "split_us": 302.9775,
+          "mega_us": 308.659,
+          "speedup_split_over_mega": 0.981592955332584,
+          "mega_latency_change_percent": 1.87522175739121
+        },
+        {
+          "repeat": 2,
+          "job": "021-core-ep4-alltoall-caplive-r2",
+          "split_us": 311.873,
+          "mega_us": 309.092,
+          "speedup_split_over_mega": 1.0089973211859253,
+          "mega_latency_change_percent": -0.8917091251887777
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.308769,
+          0.308993
+        ],
+        "w4a16_megamoe": [
+          0.308771,
+          0.308771
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "33cae761721b5a1f218e3065352ac0cfe7a5039cc3628a5986c37bfa99e74f6b",
+        "w4a16_megamoe": "2eebc7da13f56e556fd96f9b7f0a57a089a7f11f340cdc9a5049d4a1954f8ca2"
+      },
+      "split_us": 308.88100000000003,
+      "mega_us": 308.771,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 1.0003562510728015,
+      "mega_latency_change_percent": -0.03561242031721035,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": null,
+      "global_tokens": 512,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "009-core-ep4-alltoall-caplive-r1",
+        "021-core-ep4-alltoall-caplive-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "009-core-ep4-alltoall-caplive-r1",
+          "split_us": 312.75450000000006,
+          "mega_us": 316.835,
+          "speedup_split_over_mega": 0.9871210567014379,
+          "mega_latency_change_percent": 1.3046974543931222
+        },
+        {
+          "repeat": 2,
+          "job": "021-core-ep4-alltoall-caplive-r2",
+          "split_us": 309.8255,
+          "mega_us": 323.139,
+          "speedup_split_over_mega": 0.9587994640077488,
+          "mega_latency_change_percent": 4.297096268706113
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.311362,
+          0.311425
+        ],
+        "w4a16_megamoe": [
+          0.321058,
+          0.321153
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "1319ffc1400c2eb20ace8b3d97e648fae6d4c8ecad3a0b0f9719d3d077a075aa",
+        "w4a16_megamoe": "977abb6266fc96b3fdba9833deaf8e439b0a7edb53c20922b60f94a3677afd40"
+      },
+      "split_us": 311.3935,
+      "mega_us": 321.10550000000006,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9697544887895099,
+      "mega_latency_change_percent": 3.118883342137857,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": null,
+      "global_tokens": 1024,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "009-core-ep4-alltoall-caplive-r1",
+        "021-core-ep4-alltoall-caplive-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "009-core-ep4-alltoall-caplive-r1",
+          "split_us": 354.467,
+          "mega_us": 357.2035,
+          "speedup_split_over_mega": 0.9923391008206806,
+          "mega_latency_change_percent": 0.772004163998341
+        },
+        {
+          "repeat": 2,
+          "job": "021-core-ep4-alltoall-caplive-r2",
+          "split_us": 348.49850000000004,
+          "mega_us": 353.779,
+          "speedup_split_over_mega": 0.9850740151337418,
+          "mega_latency_change_percent": 1.5152145561601937
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.3521,
+          0.352226
+        ],
+        "w4a16_megamoe": [
+          0.355874,
+          0.355908
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "788bf7c069c93f819ed46acd6c83c5db064e1832d1b3dc249943976d98755f5c",
+        "w4a16_megamoe": "0a46de229bf7c367b8af9cf63382ce153cc70bf3ad20915c84da25148e6ebf56"
+      },
+      "split_us": 352.163,
+      "mega_us": 355.891,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9895248826185545,
+      "mega_latency_change_percent": 1.0586007047872714,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": 32768,
+      "global_tokens": 16,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "010-core-ep4-alltoall-cap32768-r1",
+        "022-core-ep4-alltoall-cap32768-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "010-core-ep4-alltoall-cap32768-r1",
+          "split_us": 196.8495,
+          "mega_us": 195.554,
+          "speedup_split_over_mega": 1.0066247686061138,
+          "mega_latency_change_percent": -0.6581169878511317
+        },
+        {
+          "repeat": 2,
+          "job": "022-core-ep4-alltoall-cap32768-r2",
+          "split_us": 189.31300000000002,
+          "mega_us": 197.856,
+          "speedup_split_over_mega": 0.95682213326864,
+          "mega_latency_change_percent": 4.512632518633142
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.194049,
+          0.194146
+        ],
+        "w4a16_megamoe": [
+          0.196833,
+          0.196833
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "4c458e74ee4009d8f9f0f3b058d3af1a42fc8182bd73fa9d4dbc6084a33281ec",
+        "w4a16_megamoe": "fb871e87156595b4f80c4b21e32bfed63e612d666807939b2f6c3b8bc21c15bc"
+      },
+      "split_us": 194.0975,
+      "mega_us": 196.833,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9861024320108924,
+      "mega_latency_change_percent": 1.4093432424425956,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": 32768,
+      "global_tokens": 32,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "010-core-ep4-alltoall-cap32768-r1",
+        "022-core-ep4-alltoall-cap32768-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "010-core-ep4-alltoall-cap32768-r1",
+          "split_us": 234.24099999999999,
+          "mega_us": 245.922,
+          "speedup_split_over_mega": 0.9525011995673425,
+          "mega_latency_change_percent": 4.986744421343836
+        },
+        {
+          "repeat": 2,
+          "job": "022-core-ep4-alltoall-cap32768-r2",
+          "split_us": 247.554,
+          "mega_us": 248.24200000000002,
+          "speedup_split_over_mega": 0.9972285108885683,
+          "mega_latency_change_percent": 0.2779191610719378
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.24461,
+          0.244738
+        ],
+        "w4a16_megamoe": [
+          0.247042,
+          0.247073
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "1ce5bbaed79e7a2f4673330e7c09467588ea711c301871b06c4c246082d609fa",
+        "w4a16_megamoe": "e5fa039ac9be1f7f4a584519f573eca658dd911b4b5062059dce85b9021dc0cb"
+      },
+      "split_us": 244.674,
+      "mega_us": 247.05749999999998,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9903524483166876,
+      "mega_latency_change_percent": 0.9741533632506849,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": 32768,
+      "global_tokens": 64,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "010-core-ep4-alltoall-cap32768-r1",
+        "022-core-ep4-alltoall-cap32768-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "010-core-ep4-alltoall-cap32768-r1",
+          "split_us": 279.825,
+          "mega_us": 277.329,
+          "speedup_split_over_mega": 1.0090001406271973,
+          "mega_latency_change_percent": -0.8919860627177645
+        },
+        {
+          "repeat": 2,
+          "job": "022-core-ep4-alltoall-cap32768-r2",
+          "split_us": 273.84200000000004,
+          "mega_us": 281.0105,
+          "speedup_split_over_mega": 0.9744902770537046,
+          "mega_latency_change_percent": 2.617750381606898
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.277922,
+          0.277953
+        ],
+        "w4a16_megamoe": [
+          0.279682,
+          0.279714
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "faf910c75cf268b48e01757b8f0a83910e0c1faf572b29166a11c5acfa67b8a5",
+        "w4a16_megamoe": "58626da2bbe4e3dd74a5991f50db74e6e0873091faac0efb07cc00c70426f70c"
+      },
+      "split_us": 277.9375,
+      "mega_us": 279.698,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9937057111598939,
+      "mega_latency_change_percent": 0.633415785923086,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": 32768,
+      "global_tokens": 128,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "010-core-ep4-alltoall-cap32768-r1",
+        "022-core-ep4-alltoall-cap32768-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "010-core-ep4-alltoall-cap32768-r1",
+          "split_us": 298.0505,
+          "mega_us": 309.649,
+          "speedup_split_over_mega": 0.9625430729632584,
+          "mega_latency_change_percent": 3.8914546360432123
+        },
+        {
+          "repeat": 2,
+          "job": "022-core-ep4-alltoall-cap32768-r2",
+          "split_us": 328.56350000000003,
+          "mega_us": 308.803,
+          "speedup_split_over_mega": 1.063990634806009,
+          "mega_latency_change_percent": -6.014210342901761
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.32314,
+          0.324067
+        ],
+        "w4a16_megamoe": [
+          0.309185,
+          0.309187
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "9f560d960114d61e998c3f6e54e2766cc35ac2b58c996bc2773f1e1b9c4c2192",
+        "w4a16_megamoe": "b6020cb8113935afdf5a05a2749edc563c91f0d24b4c6e37d6357ed1f1ba89f2"
+      },
+      "split_us": 323.6035,
+      "mega_us": 309.186,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 1.0466305072027842,
+      "mega_latency_change_percent": -4.455297918594825,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": 32768,
+      "global_tokens": 256,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "010-core-ep4-alltoall-cap32768-r1",
+        "022-core-ep4-alltoall-cap32768-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "010-core-ep4-alltoall-cap32768-r1",
+          "split_us": 293.234,
+          "mega_us": 306.722,
+          "speedup_split_over_mega": 0.9560253258651157,
+          "mega_latency_change_percent": 4.599739457225294
+        },
+        {
+          "repeat": 2,
+          "job": "022-core-ep4-alltoall-cap32768-r2",
+          "split_us": 302.6255,
+          "mega_us": 318.658,
+          "speedup_split_over_mega": 0.9496874391981371,
+          "mega_latency_change_percent": 5.297802068893742
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.299521,
+          0.30013
+        ],
+        "w4a16_megamoe": [
+          0.31677,
+          0.31677
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "bc4328a9c5e7f3cc220ab7446fddca209aff58f7a2c1e3d742ba61ba3565688d",
+        "w4a16_megamoe": "00582788829d0d7fc8c2f2554f07773a1085827df150031701d900ef2030d4ba"
+      },
+      "split_us": 299.8255,
+      "mega_us": 316.77,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9465085077501025,
+      "mega_latency_change_percent": 5.651453929035388,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": 32768,
+      "global_tokens": 512,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "010-core-ep4-alltoall-cap32768-r1",
+        "022-core-ep4-alltoall-cap32768-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "010-core-ep4-alltoall-cap32768-r1",
+          "split_us": 310.706,
+          "mega_us": 330.034,
+          "speedup_split_over_mega": 0.9414363368622628,
+          "mega_latency_change_percent": 6.220671631703278
+        },
+        {
+          "repeat": 2,
+          "job": "022-core-ep4-alltoall-cap32768-r2",
+          "split_us": 308.8825,
+          "mega_us": 331.3305,
+          "speedup_split_over_mega": 0.9322489176215291,
+          "mega_latency_change_percent": 7.2674884462538225
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.310018,
+          0.31005
+        ],
+        "w4a16_megamoe": [
+          0.330978,
+          0.330978
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "48e3e5b23a0be3bd0b6f997c174736250da299ef489191726956c3dbcbe80933",
+        "w4a16_megamoe": "0077a794695b507dbd540ed1b4c5bd012972a6ec2e983a22d802bd2889bac44e"
+      },
+      "split_us": 310.03400000000005,
+      "mega_us": 330.978,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9367208696650534,
+      "mega_latency_change_percent": 6.75538811872245,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    },
+    {
+      "capacity": 32768,
+      "global_tokens": 1024,
+      "ep": 4,
+      "communication": "alltoall",
+      "samples_per_arm": 200,
+      "concatenation_jobs": [
+        "010-core-ep4-alltoall-cap32768-r1",
+        "022-core-ep4-alltoall-cap32768-r2"
+      ],
+      "repeats": [
+        {
+          "repeat": 1,
+          "job": "010-core-ep4-alltoall-cap32768-r1",
+          "split_us": 341.473,
+          "mega_us": 359.4895,
+          "speedup_split_over_mega": 0.9498830981155222,
+          "mega_latency_change_percent": 5.276112606267547
+        },
+        {
+          "repeat": 2,
+          "job": "022-core-ep4-alltoall-cap32768-r2",
+          "split_us": 353.074,
+          "mega_us": 351.2185,
+          "speedup_split_over_mega": 1.0052830360587497,
+          "mega_latency_change_percent": -0.5255272265870636
+        }
+      ],
+      "sorted_central_values_ms": {
+        "w4a16": [
+          0.34925,
+          0.349378
+        ],
+        "w4a16_megamoe": [
+          0.357345,
+          0.357347
+        ]
+      },
+      "joined_sample_sha256": {
+        "w4a16": "9640fa2b102b1589854f5200f0be4e81e6ba7d96fb3d3920209bd60171cd2d32",
+        "w4a16_megamoe": "17b10a3c9b26002978685f792ebf340f3663ac55879e28d663490d26d07beea9"
+      },
+      "split_us": 349.314,
+      "mega_us": 357.34600000000006,
+      "sample_count_per_arm": 200,
+      "speedup_split_over_mega": 0.9775231848124786,
+      "mega_latency_change_percent": 2.299363896093487,
+      "summary_json_exact_match": true,
+      "summary_csv_exact_match": true,
+      "native_cross_pair_r1": "FAIL",
+      "native_cross_pair_r2": "FAIL"
+    }
+  ],
+  "job_checks": [
+    {
+      "job": "009-core-ep4-alltoall-caplive-r1",
+      "capacity": null,
+      "repeat": 1,
+      "started_at": "2026-09-20T18:23:49.611779+00:00",
+      "finished_at": "2026-09-20T18:29:49.141791+00:00",
+      "log_sha256": "c43928e31233d0918c7b4f6e6401570c3c0e1ff2cd231d9a204085a5c46df7e7",
+      "oracle_records": [
+        {
+          "log_line": 34,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 41,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 69,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 76,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 96,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 103,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 123,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 130,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 150,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 157,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 177,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 184,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 204,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 211,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        }
+      ],
+      "graph_records": [
+        {
+          "log_line": 35,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 42,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 70,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 77,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 97,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 104,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 124,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 131,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 151,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 158,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 178,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 185,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 205,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 212,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        }
+      ],
+      "wrapper_finish_records": [
+        {
+          "log_line": 218,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 3,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 219,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 1,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 220,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 2,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 221,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 0,
+            "registrations": 14
+          }
+        }
+      ],
+      "native_cross_pair": [
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 16,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00265977632,
+          "status": "FAIL",
+          "log_line": 40,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00265977632"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 32,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269310771,
+          "status": "FAIL",
+          "log_line": 75,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269310771"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 64,
+          "max_abs": 0.03125,
+          "relative_l2": 0.0026897881,
+          "status": "FAIL",
+          "log_line": 102,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.0026897881"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 128,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269237727,
+          "status": "FAIL",
+          "log_line": 129,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269237727"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 256,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269243705,
+          "status": "FAIL",
+          "log_line": 156,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269243705"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 512,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00268805095,
+          "status": "FAIL",
+          "log_line": 183,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00268805095"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 1024,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00268944737,
+          "status": "FAIL",
+          "log_line": 210,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00268944737"
+        }
+      ],
+      "diagnostics": {
+        "allocator_oom": 0,
+        "traceback": 0,
+        "runtime_error": 0,
+        "error_level": 0,
+        "fallback_text": 0,
+        "futurewarning": 8,
+        "cublas_experimental_warning": 4
+      }
+    },
+    {
+      "job": "010-core-ep4-alltoall-cap32768-r1",
+      "capacity": 32768,
+      "repeat": 1,
+      "started_at": "2026-09-20T18:29:50.249132+00:00",
+      "finished_at": "2026-09-20T18:32:52.429861+00:00",
+      "log_sha256": "3507a151a001de35702535159d08aee203f9ae7263977c61e3107b76fda45843",
+      "oracle_records": [
+        {
+          "log_line": 33,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 40,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 68,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 75,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 95,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 102,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 122,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 129,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 149,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 156,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 176,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 183,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 203,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 210,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        }
+      ],
+      "graph_records": [
+        {
+          "log_line": 34,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 41,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 69,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 76,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 96,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 103,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 123,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 130,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 150,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 157,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 177,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 184,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 204,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 211,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        }
+      ],
+      "wrapper_finish_records": [
+        {
+          "log_line": 217,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 3,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 218,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 2,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 219,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 0,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 220,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 1,
+            "registrations": 14
+          }
+        }
+      ],
+      "native_cross_pair": [
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 16,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00265977632,
+          "status": "FAIL",
+          "log_line": 39,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00265977632"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 32,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269310771,
+          "status": "FAIL",
+          "log_line": 74,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269310771"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 64,
+          "max_abs": 0.03125,
+          "relative_l2": 0.0026897881,
+          "status": "FAIL",
+          "log_line": 101,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.0026897881"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 128,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269237727,
+          "status": "FAIL",
+          "log_line": 128,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269237727"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 256,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269243705,
+          "status": "FAIL",
+          "log_line": 155,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269243705"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 512,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00268805095,
+          "status": "FAIL",
+          "log_line": 182,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00268805095"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 1024,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00268944737,
+          "status": "FAIL",
+          "log_line": 209,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00268944737"
+        }
+      ],
+      "diagnostics": {
+        "allocator_oom": 0,
+        "traceback": 0,
+        "runtime_error": 0,
+        "error_level": 0,
+        "fallback_text": 0,
+        "futurewarning": 8,
+        "cublas_experimental_warning": 4
+      }
+    },
+    {
+      "job": "021-core-ep4-alltoall-caplive-r2",
+      "capacity": null,
+      "repeat": 2,
+      "started_at": "2026-09-20T19:10:09.625707+00:00",
+      "finished_at": "2026-09-20T19:13:09.209998+00:00",
+      "log_sha256": "27f9bc1bf436e97eb48ef7d384d246ed1b910779ee74c31c7aac6a8887b62fce",
+      "oracle_records": [
+        {
+          "log_line": 33,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 40,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 68,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 75,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 95,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 102,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 122,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 129,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 149,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 156,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 176,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 183,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 203,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 210,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        }
+      ],
+      "graph_records": [
+        {
+          "log_line": 34,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 41,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 69,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 76,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 96,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 103,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 123,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 130,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 150,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 157,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 177,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 184,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 204,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 211,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        }
+      ],
+      "wrapper_finish_records": [
+        {
+          "log_line": 217,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 3,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 218,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 0,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 219,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 1,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 220,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 2,
+            "registrations": 14
+          }
+        }
+      ],
+      "native_cross_pair": [
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 16,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00265977632,
+          "status": "FAIL",
+          "log_line": 39,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00265977632"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 32,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269310771,
+          "status": "FAIL",
+          "log_line": 74,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269310771"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 64,
+          "max_abs": 0.03125,
+          "relative_l2": 0.0026897881,
+          "status": "FAIL",
+          "log_line": 101,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.0026897881"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 128,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269237727,
+          "status": "FAIL",
+          "log_line": 128,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269237727"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 256,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269243705,
+          "status": "FAIL",
+          "log_line": 155,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269243705"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 512,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00268805095,
+          "status": "FAIL",
+          "log_line": 182,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00268805095"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 1024,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00268944737,
+          "status": "FAIL",
+          "log_line": 209,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00268944737"
+        }
+      ],
+      "diagnostics": {
+        "allocator_oom": 0,
+        "traceback": 0,
+        "runtime_error": 0,
+        "error_level": 0,
+        "fallback_text": 0,
+        "futurewarning": 8,
+        "cublas_experimental_warning": 4
+      }
+    },
+    {
+      "job": "022-core-ep4-alltoall-cap32768-r2",
+      "capacity": 32768,
+      "repeat": 2,
+      "started_at": "2026-09-20T19:13:10.322515+00:00",
+      "finished_at": "2026-09-20T19:16:16.964022+00:00",
+      "log_sha256": "dce62a8633e135480b6f7ce8412a3d0ea349d5bb60da66c07f58f1a8bc9e7f8d",
+      "oracle_records": [
+        {
+          "log_line": 33,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 40,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 16,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 68,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 75,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 32,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 95,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 102,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 64,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 122,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 129,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 128,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 149,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 156,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 256,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 176,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 183,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 512,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        },
+        {
+          "log_line": 203,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "owner_fp32_fma_bf16_then_topk_slot_fp32_tree_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": {
+              "atol": 0.01,
+              "bitwise_mismatches": 0,
+              "max_abs": 0.0,
+              "nonfinite_count": 0,
+              "relative_l2": 0.0,
+              "rtol": 0.01,
+              "status": "PASS"
+            },
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16"
+          }
+        },
+        {
+          "log_line": 210,
+          "raw": {
+            "atol": 0.01,
+            "bitwise_mismatches": 0,
+            "communication": "alltoall",
+            "contract": "unweighted_bf16_routes_ordered_fp32_fma_bf16",
+            "global_tokens": 1024,
+            "input_contract_passed": true,
+            "max_abs": 0.0,
+            "nonfinite_count": 0,
+            "partial_validation": null,
+            "reference_module_sha256": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+            "reference_provider": "benchmark.w4a16_independent_contract",
+            "reference_source_sha256": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5",
+            "relative_l2": 0.0,
+            "rtol": 0.01,
+            "status": "PASS",
+            "trusted_primitives": [
+              "cuBLASLt BF16 inputs / FP32 accumulation",
+              "NCCL integer-bit transport"
+            ],
+            "variant": "w4a16_megamoe"
+          }
+        }
+      ],
+      "graph_records": [
+        {
+          "log_line": 34,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 41,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 16,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 69,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 76,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 32,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 96,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 103,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 64,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 123,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 130,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 128,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 150,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 157,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 256,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 177,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 184,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 512,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 204,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        },
+        {
+          "log_line": 211,
+          "raw": {
+            "all_ranks_checked": true,
+            "atol": 0.01,
+            "checked_untimed_replays": 2,
+            "extra_untimed_captures": 1,
+            "extra_untimed_eager_forwards": 3,
+            "global_tokens": 1024,
+            "max_abs": 0.0,
+            "outputs_poisoned_before_each_replay": true,
+            "profile_label": "ep::w4a16_megamoe",
+            "rtol": 0.01,
+            "status": "PASS",
+            "timed_replays_checked": false,
+            "world_size": 4
+          }
+        }
+      ],
+      "wrapper_finish_records": [
+        {
+          "log_line": 217,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 3,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 218,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 1,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 219,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 0,
+            "registrations": 14
+          }
+        },
+        {
+          "log_line": 220,
+          "raw": {
+            "cupti_used": true,
+            "deferred_finalizes": 14,
+            "final_detaches": 1,
+            "graph_output_validation_requested": true,
+            "rank": 2,
+            "registrations": 14
+          }
+        }
+      ],
+      "native_cross_pair": [
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 16,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00265977632,
+          "status": "FAIL",
+          "log_line": 39,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00265977632"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 32,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269310771,
+          "status": "FAIL",
+          "log_line": 74,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269310771"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 64,
+          "max_abs": 0.03125,
+          "relative_l2": 0.0026897881,
+          "status": "FAIL",
+          "log_line": 101,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.0026897881"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 128,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269237727,
+          "status": "FAIL",
+          "log_line": 128,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269237727"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 256,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00269243705,
+          "status": "FAIL",
+          "log_line": 155,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00269243705"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 512,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00268805095,
+          "status": "FAIL",
+          "log_line": 182,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00268805095"
+        },
+        {
+          "variant": "w4a16_megamoe",
+          "tokens": 1024,
+          "max_abs": 0.03125,
+          "relative_l2": 0.00268944737,
+          "status": "FAIL",
+          "log_line": 209,
+          "max_abs_raw": "0.03125",
+          "relative_l2_raw": "0.00268944737"
+        }
+      ],
+      "diagnostics": {
+        "allocator_oom": 0,
+        "traceback": 0,
+        "runtime_error": 0,
+        "error_level": 0,
+        "fallback_text": 0,
+        "futurewarning": 8,
+        "cublas_experimental_warning": 4
+      }
+    }
+  ],
+  "log_diagnostics": {
+    "allocator_oom": 0,
+    "traceback": 0,
+    "runtime_error": 0,
+    "error_level": 0,
+    "fallback_text": 0,
+    "futurewarning": 32,
+    "cublas_experimental_warning": 16
+  },
+  "final_performance_claim": null,
+  "limitations": [
+    "This verifies14of110 paired groups in a22of60-job partial snapshot; it does not certify the full matrix or final performance conclusions.",
+    "Both repeats retain native cross-path FAIL at every N. Per-path/reference PASS is not cross-backend equivalence.",
+    "Reference errors and all-rank rank-MAX behavior are source-bound logged evidence; no input tensors, per-rank timestamp arrays or CUPTI activity buffers are replayed locally.",
+    "112 additional untimed graph replays pass; every timed replay is not separately numerically checked.",
+    "Pool medians use all200 values per arm unchanged; sample variability/outliers remain represented and two repeats are not a statistical confidence analysis.",
+    "Seven of14 groups reverse the sign of Mega latency change between repeats; pooled sign is a descriptive summary, not evidence of stable/statistically significant advantage or serving causality."
+  ],
+  "repeat_variability": {
+    "opposite_signed_repeat_groups": 7,
+    "groups": [
+      {
+        "capacity": null,
+        "global_tokens": 64,
+        "repeat1_change_percent": 1.0077203939555357,
+        "repeat2_change_percent": -0.4445965684246711,
+        "pooled_change_percent": 0.352829520192266
+      },
+      {
+        "capacity": null,
+        "global_tokens": 128,
+        "repeat1_change_percent": -0.9625504191152157,
+        "repeat2_change_percent": 2.6702678295189353,
+        "pooled_change_percent": 0.50307104464693
+      },
+      {
+        "capacity": null,
+        "global_tokens": 256,
+        "repeat1_change_percent": 1.87522175739121,
+        "repeat2_change_percent": -0.8917091251887777,
+        "pooled_change_percent": -0.03561242031721035
+      },
+      {
+        "capacity": 32768,
+        "global_tokens": 16,
+        "repeat1_change_percent": -0.6581169878511317,
+        "repeat2_change_percent": 4.512632518633142,
+        "pooled_change_percent": 1.4093432424425956
+      },
+      {
+        "capacity": 32768,
+        "global_tokens": 64,
+        "repeat1_change_percent": -0.8919860627177645,
+        "repeat2_change_percent": 2.617750381606898,
+        "pooled_change_percent": 0.633415785923086
+      },
+      {
+        "capacity": 32768,
+        "global_tokens": 128,
+        "repeat1_change_percent": 3.8914546360432123,
+        "repeat2_change_percent": -6.014210342901761,
+        "pooled_change_percent": -4.455297918594825
+      },
+      {
+        "capacity": 32768,
+        "global_tokens": 1024,
+        "repeat1_change_percent": 5.276112606267547,
+        "repeat2_change_percent": -0.5255272265870636,
+        "pooled_change_percent": 2.299363896093487
+      }
+    ],
+    "pooled_descriptive_counts": {
+      "higher_Mega_latency": 12,
+      "lower_Mega_latency": 2
+    },
+    "pooled_change_range_percent": [
+      -4.455297918594825,
+      7.980641019309598
+    ],
+    "interpretation": "Observed sign reversals in7of14 paired groups. Pooled signs alone do not establish a stable or statistically significant advantage; no serving causality is inferred."
+  }
+}

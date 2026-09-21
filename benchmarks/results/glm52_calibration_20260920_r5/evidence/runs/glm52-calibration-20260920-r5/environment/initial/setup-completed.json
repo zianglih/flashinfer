@@ -1,0 +1,8 @@
+{
+  "completed_at": "2026-09-20T15:58:55.171412+00:00",
+  "flashinfer_commit": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "flashinfer_import": "/data/home/ziangli/flashinfer-sglang-megamoe-benchmark-alignment/sources/flashinfer-ad0/flashinfer/__init__.py",
+  "cutlass_import": "/opt/sglang/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/__init__.py",
+  "preserved_image_torch_cuda_nccl": true,
+  "gpu_performance_validated": false
+}

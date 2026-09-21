@@ -1,0 +1,15 @@
+# Independent final r5 publication review
+
+**Passed, 0 issues.** This review binds the frozen [candidate-v2](r5-final-publication-candidate-v2/README.md) and [machine-readable findings](r5-final-publication-independent-review.json). No remote, GPU, GitHub, source, package, or cache changes were performed.
+
+- Bundle manifest: `9b8edd2291de2f3fa68e96ca9524da62e1d4046b16c28b22026749ec237c1829`; completion: `404f03cb3bd67374e0a11098c90988721a01071dd8fca88cd1ba2192ec247ecd`.
+- Rehashed all **350 files: 348 manifest payloads plus manifest/completion**; all **324 copied files** match their source bytes. All **263 final collector files**, including every byte of **60 full raw logs**, match the sealed final transfer. No extra files or links occur in the tree.
+- Independently resolved **961 relative Markdown links** inside the bundle, with no missing or escaping target. Both language switches, all raw-log links, and the proof/source/environment navigation work. The 21 external links were inventoried but not fetched.
+- Parsed the complete raw logs and independently recalculated all **110 exact paired 100+100-sample medians, ratios, and signed changes**. Both 110-row language tables, their precise coordinates and raw-log identities, 16 distribution rows and 18 matched-default control rows agree. The copied summary differs from the accepted final summary only in its portable `evidence_root_relative`.
+- Confirmed **504 passing independent per-path outputs, 252 passing Split partials**, all reported numerical errors zero; **44,000 CUPTI performance samples + 192 diagnostic CUDA-event samples**. Original native cross-pair outcomes remain **8 PASS / 244 FAIL**.
+- Checked all **84 plotted core groups** and their underlying raw-log/source/helper hashes. Both PNGs were visually inspected: correct global N/log2 x-axis, pooled latency in µs, live/32768 and A2A/AG/AR panels, readable legends/labels without clipping, and prominent numerical/serving boundaries. The SVG/PNG payload hashes match the figure manifest.
+- Rechecked the current PR draft's **110 rows** against the final unrounded summary. The documentation correctly scopes the AG/AR advantage to core routing-included graph controls, records the eager EP4/AR N16384 repeat sign reversal, and retains environment/source pins and native failures. The remaining PR sentence about a pending publication seal is a workflow placeholder for the parent to replace after acceptance.
+
+The v1 latency-formula notation was corrected in v2 to define each arm's latency separately; all measured raw files and numerical values remain unchanged. Historical reviews and failures remain unmodified.
+
+This reuses the accepted [final matrix review](r5-final-matrix-independent-review.json) through matching raw bytes for detailed source, numerical-contract, graph and CUPTI lifecycle boundaries. It does not claim new GPU validation, cross-backend equivalence, statistical significance from two repeats, serving causality, or cache archival/cleanup. Per-rank timestamp arrays and r5 input tensors were not saved. The 96 lower / 14 higher pooled observations and 9 repeat-direction reversals are descriptive only.

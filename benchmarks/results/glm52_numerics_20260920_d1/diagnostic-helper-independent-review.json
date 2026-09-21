@@ -1,0 +1,109 @@
+{
+  "reviewed_at": "2026-09-20T17:16:54.553336+00:00",
+  "review_status": "passed_for_bounded_diagnostic_execution",
+  "issue_count": 0,
+  "issues": [],
+  "scope": "Independent local static/source and CPU-only review. No GPU, HAI, package, cache, Git, launcher, benchmark-source, or raw-result mutations by reviewer.",
+  "source_commit": "6f88c235b658104053761aad15158e954f439a41",
+  "runtime_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "file_sha256": {
+    "setup/capture_r3_numerical_failure.py": "84739673d444b9140f569cff5c6d5fe7cf7239ea6fa3e0112b37d24afe663332",
+    "setup/run_numerical_diagnostic_remote.py": "2851f5ccfea8131691e4ca5c2d6870750be0ff95e5578686214b94b1ed78685d",
+    "setup/dispatch_numerical_diagnostic.py": "befbbabe8bbc278e1573aa66f1fee6eee3fdb3f2f66351c1858159df9d3a0b6a",
+    "setup/status_numerical_diagnostic.py": "f974462e4afe56dd42c181f883c5ec19642631ec3052c7d429baeb5cf080b1e6",
+    "flashinfer/benchmarks/bench_cute_dsl_moe_distributed.py": "66fdc2b041531cdfb203161aa514a007db970deb1d190faec1ce7b5af57617e0",
+    "flashinfer/benchmarks/moe_distributed_layout.py": "a66953bc8db2c38cb6fa23f5fa84c89721a0a09a9aad5b83eeba0c44d1a83d76",
+    "flashinfer/benchmarks/sglang_glm_routing.py": "29016eaa2713851fb09d5c141300ea42d0d7e6d444ec77de9dba2bdd6ffbeac0",
+    "flashinfer/flashinfer/moe_ep/backends/mega/kernel/sm100/bf16_nvfp4_bf16_cutedsl/weights.py": "8af0ad49271704d1196070cfae4c2b86d00b753fb47aeda4435868c4578707c6",
+    "flashinfer/flashinfer/moe_ep/backends/mega/kernel/sm100/nvfp4_nvfp4_bf16_cutedsl/weights.py": "5b6fc760fc3bd2826ce66920faf160f0fcb3a0a4a6ac4951b534b641845e164c",
+    "flashinfer/flashinfer/fused_moe/prepare.py": "4e641652bf8ae3b116da3563655fbd6d2e41e9983b94c726edd62ea8873f498b",
+    "flashinfer/flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16.py": "cd11e0c1c37653b0a58403de04fa31ea20ae75a6ebab1b8330e7091e32d729f7",
+    "flashinfer/flashinfer/fused_moe/cute_dsl/moe_utils.py": "cbc7a5b246e39f8bdd439066ccafd027667eb2b437cf3cd7767ba386b7e16409",
+    "flashinfer/flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/topk_reduce.py": "9ee82cf73fa5fb1d60d932cc7df825b8244b7ff0650f630576a5550d5af8340f",
+    "artifacts/numerical-capture-contract-validation.json": "68d57efbb5a1c1d1b5dd7bdd5b3ef6fcf71209e6aea21228d99df5188aab0718",
+    "artifacts/validate_numerical_capture_contract.py": "3c5095d70b067d1035fc5348608bf1bb6de6087c17259480d88e7611d1a0a1b4"
+  },
+  "baseline_evidence": {
+    "artifacts/run-transfers/glm52-calibration-20260920-r3-20260920T165707Z/runs/glm52-calibration-20260920-r3/001-correctness-ep4-allgather-caplive-r1/invocation.json": "8f716a8ded884705cc21c62b08c7c6b300ad8f22897f8c42e73ed42f4f03399a",
+    "artifacts/run-transfers/glm52-calibration-20260920-r3-20260920T165707Z/runs/glm52-calibration-20260920-r3/001-correctness-ep4-allgather-caplive-r1/benchmark.log": "6ea1095c898f229970a5f1e735dcbdb0ae20036fb814b3449331e946344f9a17"
+  },
+  "executable_local_checks": [
+    {
+      "name": "setup/capture_r3_numerical_failure.py syntax without import/execution",
+      "passed": true
+    },
+    {
+      "name": "setup/run_numerical_diagnostic_remote.py syntax without import/execution",
+      "passed": true
+    },
+    {
+      "name": "setup/dispatch_numerical_diagnostic.py syntax without import/execution",
+      "passed": true
+    },
+    {
+      "name": "setup/dispatch_numerical_diagnostic.py embedded remote syntax without execution",
+      "passed": true
+    },
+    {
+      "name": "setup/status_numerical_diagnostic.py syntax without import/execution",
+      "passed": true
+    },
+    {
+      "name": "setup/status_numerical_diagnostic.py embedded remote syntax without execution",
+      "passed": true
+    },
+    {
+      "name": "N1 EP4 counts (1,0,0,0), padded mask (1,0,0,0), live capacity1",
+      "passed": true
+    },
+    {
+      "name": "N3 EP4 counts (1,1,1,0), padded mask (1,1,1,0), live capacity1",
+      "passed": true
+    },
+    {
+      "name": "GLM4096 FC1 row permutation is bijective for split up/gate64 and Mega gate/up16",
+      "passed": true
+    },
+    {
+      "name": "All three benchmark source SHA equal preserved failed r3 invocation",
+      "passed": true
+    }
+  ],
+  "manual_source_checks": [
+    "Exact frozen benchmark6f88 source pins and runtime ad0 unchanged; baseline full job/precision/PDL assertions before CUDA initialization.",
+    "Shared weight generator seed1000+rank is recreated per N; BF16 w13 then w2 consume this generator once, quantized once and shared across both arms.",
+    "Input generator seed42+rank, global routing generator137, bias generator911 recreated inside each original input factory call. Helper invokes original factories N1 split\u2192Mega then N3 split\u2192Mega.",
+    "Packed FC1 bytes and scale rows receive identical split up/gate64 permutation; Mega receives original canonical packed bytes/scales and gate/up16 permutation. No independent requantization or obvious layout/seed mismatch found by source tracing.",
+    "Original operator wrappers execute original function first; CPU snapshots detach/copy/clone. Split masked_fill_ touches only an index_select copy; no operator input/output mutation introduced.",
+    "Capture skips AutoTuner tuning mode and CUDA graph capture. Native split autotune remains enabled and native Mega warmup/refcheck are retained.",
+    "Split -1 mapping sentinel masked; both N1/N3 have four padded global rows; captured per-expert route terms retain top-k slot and ownership validity.",
+    "Split full rank partial and reduced padded output captured after the synchronous collective. N3 rank3 native output is valid empty(0,6144), with zero max/error diagnostics.",
+    "Mega capture asserts external reduction and capacity1\u00d7K8\u00d7H6144 combine buffer, slicing with native output length to permit empty rank.",
+    "Native _check_megamoe_output is called unmodified, failed comparison re-raised, every rank records FAIL and helper returns1. Wrapper computes .01+.01*abs(reference) only for diagnostic locations.",
+    "Launcher requires preserved failed r3, idle GPUs, original source_proof and full validate_environment, baseline env, new exclusive output/knob, and original compiled-cache location.",
+    "Timeout1800s targets owned process group TERM then KILL after30s. Eight payload hashes required for complete capture; expected mismatch is not accepted as numerical pass.",
+    "Dispatcher uploads only two named helpers with SHA validation, exclusively creates helper/run/log/receipt paths, and preserves local request/helper/stdout/stderr evidence. No secret discovery or output.",
+    "Status reads only diagnostic receipts/log tails/GPU status; no process/package/cache mutation. Parent separately verified command-v h prerequisite."
+  ],
+  "author_cpu_contract_tests": {
+    "passed": 11,
+    "failed": 0,
+    "reviewed_script_and_output": true,
+    "rerun_by_independent_reviewer": false
+  },
+  "native_prior_outcome": {
+    "N1": "PASS",
+    "N3": "FAIL",
+    "max_abs_both": 0.03125,
+    "N3_relative_l2": 0.003435189428632275,
+    "atol": 0.01,
+    "rtol": 0.01
+  },
+  "boundaries": [
+    "The diagnostic skips r3 timing, graph validation/replays and CUPTI wrapper. Per-call seeded input generation matches, but allocator/autotuner/graph history and scheduling are not exact replay.",
+    "CPU snapshots and synchronization alter scheduling; evidence cannot be used for latency or a root-cause conclusion.",
+    "No GPU execution of this diagnostic was performed or validated in this review. Original N3 failure remains unresolved.",
+    "A later FP32 replay is exploratory: native Mega uses ordered FP32 mul then FMA; a generic FP32 sum changes arithmetic. Offline replay helper not yet included in this review.",
+    "No tolerance change, kernel modification, full benchmark continuation, or numerical success is approved by this review."
+  ]
+}

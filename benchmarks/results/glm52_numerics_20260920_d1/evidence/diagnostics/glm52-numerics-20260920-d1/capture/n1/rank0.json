@@ -1,0 +1,25 @@
+{
+  "global_tokens": 1,
+  "rank": 0,
+  "local_tokens": 1,
+  "strict_refcheck_status": "PASS",
+  "error": null,
+  "payload_sha256": "9d1569b6eac71adf48f6d380f1beb57e300f46788049180f26adb3f503b6e137",
+  "payload_bytes": 809033,
+  "captured_fields": [
+    "split_inputs",
+    "split_activation",
+    "split_tactics",
+    "split_route_fc2",
+    "split_collective",
+    "split_saved_reference",
+    "mega_inputs",
+    "mega_workspace",
+    "refcheck",
+    "strict_refcheck_status"
+  ],
+  "mismatch_count": 0,
+  "max_abs": 0.03125,
+  "max_error_over_threshold": 0.9174311757087708,
+  "all_finite": true
+}

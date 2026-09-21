@@ -1,0 +1,15 @@
+# Independent review: r3 N1→N3 numerical capture
+
+**Ready for bounded diagnostic execution; 0 blockers.** This is a local source/CPU review, not a GPU numerical pass. The original N3 native `atol=rtol=1e-2` failure remains unresolved.
+
+Reviewed [capture helper](evidence/setup/helpers-glm52-numerics-20260920-d1/capture_r3_numerical_failure.py), [remote launcher](evidence/setup/helpers-glm52-numerics-20260920-d1/run_numerical_diagnostic_remote.py), [dispatcher](context/dispatch_numerical_diagnostic.py) and [read-only status helper](context/status_numerical_diagnostic.py). Exact source/evidence SHA bindings and individual checks are in [review JSON](diagnostic-helper-independent-review.json).
+
+- Frozen benchmark `6f88c235b658104053761aad15158e954f439a41`, runtime `ad0a5e5e78e57070ec7c582efe733cb55cd8839f`; final capture SHA `84739673d444b9140f569cff5c6d5fe7cf7239ea6fa3e0112b37d24afe663332`.
+- Native order is N1 split→Mega, then N3 split→Mega. Each N creates shared weights using seed `1000+rank` (w13 then w2); each input factory resets independent generators `42+rank`, `137`, and `911`. Both arms share one quantization of the same weights. Split and Mega apply intentional paired byte/scale row permutations; source tracing found no obvious duplicate quantization, gate/up mismatch, or seed mismatch.
+- N3/EP4 counts are `(1,1,1,0)`, capacity1 with four padded rows. Invalid split routes are masked; rank3 output `(0,6144)` is accepted. Route-term capture preserves expert ownership masks and top-k slot order.
+- Hooks invoke originals first and snapshot copies. The only masking write touches an `index_select` copy. Native inputs/results and strict reference checker are unchanged; mismatch is re-raised and remains exit1. Launcher never treats expected failure as pass.
+- Baseline flags/PDL, clean source and unchanged runtime guards remain active. New output/knob/receipt paths are exclusive; compilation cache is reused. The launcher has an owned-process-group timeout and validates payload hashes. The dispatcher uploads only the two named helpers; status is read-only. Parent verified `/usr/local/bin/h` before dispatch.
+
+Local checks: four Python and two embedded-remote programs compile without execution; N1/N3 layout/capacity and GLM row-permutation checks pass; all three benchmark hashes match the preserved failed invocation. Reviewed the author's [11 CPU contract checks](numerical-capture-contract-validation.json), including source drift, dirty checkout, kernel delta, PDL mismatch and output/cache boundaries; 0 failures. These are not GPU tests.
+
+The eager diagnostic deliberately skips original timing, graph validation/replay and CUPTI wrapping. Fixed per-call generators preserve input generation, but it does **not** reproduce the original allocator/autotuner/graph state or scheduling exactly. CPU snapshots also perturb scheduling, so outputs are diagnostic rather than performance evidence. A later FP32 replay must remain exploratory: native Mega uses ordered FP32 multiplication/FMA; a generic FP32 reduction is not exact emulation. No root cause or numerical pass is claimed.

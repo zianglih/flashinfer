@@ -1,0 +1,35 @@
+{
+  "status": "source_audit_completed_root_cause_unproven",
+  "failed_global_tokens": 3,
+  "passed_global_tokens": [
+    1
+  ],
+  "failure_max_abs": 0.03125,
+  "failure_rel_l2": 0.003435189428632275,
+  "atol": 0.01,
+  "rtol": 0.01,
+  "source_head": "6f88c235b658104053761aad15158e954f439a41",
+  "runtime_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "source_sha256": {
+    "benchmarks/bench_cute_dsl_moe_distributed.py": "66fdc2b041531cdfb203161aa514a007db970deb1d190faec1ce7b5af57617e0",
+    "benchmarks/sglang_glm_routing.py": "29016eaa2713851fb09d5c141300ea42d0d7e6d444ec77de9dba2bdd6ffbeac0",
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16.py": "cd11e0c1c37653b0a58403de04fa31ea20ae75a6ebab1b8330e7091e32d729f7",
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py": "a92267936c99501687c35f9539375f0c1c33f6d6655f5d98a30e1b6ce6b2177f",
+    "csrc/nv_internal/tensorrt_llm/kernels/cuteDslKernels/moeUtils.cu": "acc436044b4755d6ed42f461931156614b1e4f53f8fe820086eb04793b372e94",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/tmem_epilogue.py": "2093de641b8e416196b56df2671d2e48eab31a65b68e35f8a507e6b8790f53a5",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/topk_reduce.py": "9ee82cf73fa5fb1d60d932cc7df825b8244b7ff0650f630576a5550d5af8340f",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py": "98020c41634d0373d41b8bd35f835db52a3fc6d5e4294c26146188c7fe446c50"
+  },
+  "evidence_sha256": {
+    "artifacts/run-transfers/glm52-calibration-20260920-r3-20260920T165707Z/runs/glm52-calibration-20260920-r3/001-correctness-ep4-allgather-caplive-r1/benchmark.log": "6ea1095c898f229970a5f1e735dcbdb0ae20036fb814b3449331e946344f9a17",
+    "artifacts/run-transfers/glm52-calibration-20260920-r3-20260920T165707Z/runs/glm52-calibration-20260920-r3/001-correctness-ep4-allgather-caplive-r1/invocation.json": "8f716a8ded884705cc21c62b08c7c6b300ad8f22897f8c42e73ed42f4f03399a",
+    "artifacts/run-transfers/glm52-calibration-20260920-r3-20260920T165707Z/runs/glm52-calibration-20260920-r3/001-correctness-ep4-allgather-caplive-r1/exit.json": "ac89c7d32b5f3d5212139c2fecf7b2773170a76a46716a7913c7653872e5b9b8",
+    "artifacts/run-transfers/glm52-calibration-20260920-r3-20260920T165707Z/verification.json": "810950c27dfeb5f126c89027f0b6f89166d1bf5ed732f9c4cf4bc1eb1b9eb12f"
+  },
+  "missing_evidence": [
+    "Mismatching element coordinates and actual/reference values",
+    "Per-route FC2 terms before weighted reduction",
+    "Actual Split rank-local BF16 partials and NCCL reduced output",
+    "Executed tactic identity and matching input/routes for this exact case"
+  ]
+}

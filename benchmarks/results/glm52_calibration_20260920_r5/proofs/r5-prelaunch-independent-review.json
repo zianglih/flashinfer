@@ -1,0 +1,116 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-20T17:54:02.461094+00:00",
+  "status": "passed",
+  "issue_count": 0,
+  "issues": [],
+  "pending_publication_preparation": [],
+  "scope": "Read-only independent review of actual unit evidence, sealed runtime, frozen dispatch and collected startup provenance. Not distributed-correctness or performance acceptance.",
+  "run_id": "glm52-calibration-20260920-r5",
+  "source_commit": "bd8391858db504c8997e704c7952f4d48ccab591",
+  "runtime_base": "ad0a5e5e78e57070ec7c582efe733cb55cd8839f",
+  "checks": {
+    "run_receipt_file_count": 7,
+    "environment_receipt_file_count": 12,
+    "actual_unit_gate": {
+      "tests": 12,
+      "passed": 12,
+      "skipped": 0,
+      "runtime_cuda_integration_test_passed": true,
+      "exit_code": 0
+    },
+    "frozen_dispatch_helpers_bound": {
+      "run_calibration_remote.py": "2d69224ad7c9a4ef0ad7ae2fb9cd06820f3c496d33232907c507af1a8c898257",
+      "run_deferred_cupti.py": "b191e92e056671348cc61c27dc0117a197e12750f0e29092f688eccd881d5532",
+      "probe_runtime.py": "cc996f68f0be557e702797e64693ec8c067e12545aa26964c38d00860eebb3b8"
+    },
+    "pinned_source_has_no_runtime_changes": true,
+    "source_files_bound": 5,
+    "frozen_driver_environment_validation": true,
+    "only_freeze_change": {
+      "old": "-e git+https://github.com/flashinfer-ai/flashinfer.git@2358f6cafe4a407f198dbe99c1c056abe5e24d6f#egg=flashinfer_python",
+      "new": "-e git+https://github.com/flashinfer-ai/flashinfer.git@bd8391858db504c8997e704c7952f4d48ccab591#egg=flashinfer_python"
+    },
+    "runtime_r4_to_r5_byte_identical": true,
+    "planned_matrix": {
+      "total": 60,
+      "phase_counts": {
+        "correctness": 8,
+        "core": 24,
+        "auto": 12,
+        "routing": 8,
+        "prefill": 8
+      },
+      "measured_samples_per_repeat": 100,
+      "performance_repeats": 2
+    },
+    "launch_snapshot": {
+      "at": "2026-09-20T17:50:39.954924+00:00",
+      "pid": 12416,
+      "job": "001-correctness-ep4-allgather-caplive-r1",
+      "completed_jobs_at_collection": 0,
+      "full_run_complete": false
+    },
+    "local_frozen_helpers_materialized": true,
+    "actual_empty_progress_summarizer": {
+      "status": "PARTIAL_INTERNAL_ONLY",
+      "successful_jobs": 0,
+      "missing_jobs": 60,
+      "failed_jobs": 0,
+      "performance_groups": 0,
+      "cross_pair_diagnostics": {
+        "FAIL": 0,
+        "PASS": 0
+      },
+      "path": "artifacts/r5-prelaunch-empty-progress-summary",
+      "summary_sha256": "9263d7ba9e479b193323f8fa66d443cb42d3368109b3a7f702214260db9fb92a"
+    }
+  },
+  "methodology": [
+    "New per-path policy is explicit in the frozen argv, plan, provenance and per-case metadata; it changes the acceptance question and is not equivalent to the original cross-path gate.",
+    "Every N/variant needs exactly one PASS ORACLE_REFCHECK_JSON, original reference and new module SHA, atol=rtol=.01, finite error metrics, zero nonfinite values and exact input/communication/reduction contract. Split additionally requires owner-partial validation.",
+    "Original cross-pair CSV remains required exactly once per N; PASS and FAIL are both preserved with actual error metrics. The summary stores failure counts/records and states equivalence_claim=false.",
+    "Every graph arm separately requires strict same-backend eager-versus-graph checks, poisoned outputs before two untimed replays and all-rank agreement. Timed replays themselves are not numerically checked.",
+    "Timed callables/runtime kernels are unchanged. Untimed oracle setup and its cache/allocator effects belong to the new methodology. cuBLASLt and NCCL remain trusted primitives.",
+    "Final summary still requires all60 jobs, completed final exit, sealed8-job correctness gate, 110 complete paired groups, two100-sample repeats for performance, and fresh log/SHA revalidation. Historical frozen driver interfaces remain supported."
+  ],
+  "source_sha256": {
+    "benchmarks/bench_cute_dsl_moe_distributed.py": "8d7aa29da0c41348a133273a478acfd871eeea3ef819950c32cde4fe3ec71041",
+    "benchmarks/moe_distributed_layout.py": "a66953bc8db2c38cb6fa23f5fa84c89721a0a09a9aad5b83eeba0c44d1a83d76",
+    "benchmarks/sglang_glm_routing.py": "29016eaa2713851fb09d5c141300ea42d0d7e6d444ec77de9dba2bdd6ffbeac0",
+    "benchmarks/w4a16_contract_reference.py": "b25576fb75b550554deb453b051793c56495f80d866fd53694c5b27fa801914d",
+    "tests/moe_ep/w4a16_reference.py": "6282388bf42df1cc2580c79ce1cf58644943f958decd2ebf99ff2228629d25a5"
+  },
+  "bound_evidence_sha256": {
+    "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T175155Z/runs/glm52-calibration-20260920-r5/environment/initial/image-before.json": "1e67e2aa37827c5abbc1ab2bb306b5e881666668d816a866a03c29647dbb3c4e",
+    "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T175155Z/runs/glm52-calibration-20260920-r5/environment/initial/runtime-after.json": "0bc5f2d3fd71bf257d46bf89a81167153691e0ef70c059831ca026eaf7267620",
+    "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T175155Z/runs/glm52-calibration-20260920-r5/environment/initial/setup-completed.json": "10e45d51c62389e603c398730d4b2d3d457cc3852ff5ba37b3e9f7fced288551",
+    "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T175155Z/runs/glm52-calibration-20260920-r5/environment/timing-r5/runtime-after.json": "4f4f96cc4704783b4adabaa47237bb1a4d615d1075619169df1929c47cea1825",
+    "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T175155Z/runs/glm52-calibration-20260920-r5/environment/timing-r5/setup-completed.json": "41a3f784c392d9adca79b52b9e76956ebc45228f23323ea4142851955f1a4268",
+    "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T175155Z/runs/glm52-calibration-20260920-r5/plan.json": "93e65d1b7f7c4aac14bb409b8a2bcf6ea205985cba3b71a492df873b251ce480",
+    "artifacts/run-transfers/glm52-calibration-20260920-r5-20260920T175155Z/runs/glm52-calibration-20260920-r5/provenance.json": "e20aedfc4de39101ab6d1d83898557a2d6c68860e262fcf2f6225d16fcea3a2f",
+    "artifacts/environment-transfers/20260920T174910Z/environment/initial/image-before.json": "1e67e2aa37827c5abbc1ab2bb306b5e881666668d816a866a03c29647dbb3c4e",
+    "artifacts/environment-transfers/20260920T174910Z/environment/initial/packages-before.txt": "daf2f918c4d87a4086274d9ac916771d14a2d7e3bf1fbbbe447623f343fb6232",
+    "artifacts/environment-transfers/20260920T174910Z/environment/initial/pip-check-before.txt": "d6825220f3e41f3694fb2bef944f745d67e4f0c015e875c2a4c6fcaffab264bd",
+    "artifacts/environment-transfers/20260920T174910Z/environment/initial/runtime-after.json": "0bc5f2d3fd71bf257d46bf89a81167153691e0ef70c059831ca026eaf7267620",
+    "artifacts/environment-transfers/20260920T174910Z/environment/initial/packages-after.txt": "201411a853d64eaa7eb9b0391aff79536d58ba55b5b56c94335d848d584ab6e7",
+    "artifacts/environment-transfers/20260920T174910Z/environment/initial/pip-check-after.txt": "f98fafb544af8238f9cf9983bff7ea7c7058bb5c6a845c3917d03472aabf478a",
+    "artifacts/environment-transfers/20260920T174910Z/environment/initial/setup-completed.json": "10e45d51c62389e603c398730d4b2d3d457cc3852ff5ba37b3e9f7fced288551",
+    "artifacts/environment-transfers/20260920T174910Z/environment/timing-r5/packages-before.txt": "aed981513bcff3f74ed2432d5f06edcbbb7d5c107f58854a394c18a468d405a7",
+    "artifacts/environment-transfers/20260920T174910Z/environment/timing-r5/packages-after.txt": "abe3cfe82980bb29088b3429f94a0eb60152723174cd0d87b9c9a15b40d3912d",
+    "artifacts/environment-transfers/20260920T174910Z/environment/timing-r5/pip-check-after.txt": "f98fafb544af8238f9cf9983bff7ea7c7058bb5c6a845c3917d03472aabf478a",
+    "artifacts/environment-transfers/20260920T174910Z/environment/timing-r5/runtime-after.json": "4f4f96cc4704783b4adabaa47237bb1a4d615d1075619169df1929c47cea1825",
+    "artifacts/environment-transfers/20260920T174910Z/environment/timing-r5/setup-completed.json": "41a3f784c392d9adca79b52b9e76956ebc45228f23323ea4142851955f1a4268",
+    "artifacts/contract-reference-timing-r5/invocation.json": "47c487971dca5264198330d84073c52852aef1272ab33758b78222e52b649efd",
+    "artifacts/contract-reference-timing-r5/stdout.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "artifacts/contract-reference-timing-r5/stderr.log": "4522febb3ba03ac528e17256b5b622c52667a68b501ecfd4efc9b37b4bca05f6",
+    "artifacts/contract-reference-timing-r5/exit.json": "2a313ecd1f417f5e499328f9692961704a671b5d623758dfeb1ea343fd4517d9",
+    "artifacts/dispatches/glm52-calibration-20260920-r5/request.json": "630158ec0e7ffa4ef7750fe4678a4a078f7a13712d2a0a5d9483aac63def1f4e",
+    "artifacts/dispatches/glm52-calibration-20260920-r5/receipt.json": "fe86a80f7684d15b1fe04bd95f4455af04cc025055ed44a15f2a902f3af670f5",
+    "artifacts/r5-prelaunch-parent-acceptance.json": "6a7aaefca4e13fb7abcf90230ae823499bdd108fe7592742b13e99de33f09dd0",
+    "artifacts/status/20260920T175040Z.json": "26e867c9ad4c601e89487bccab2d993c17b61d2253faa3ddfc94830091b23860",
+    "setup/summarize_calibration.py": "d4ca950362bc1d09f7530253e863b41102220f2f7c524a34d5522cfaabc3f521",
+    "setup/collect_calibration_metadata.py": "7837c0b8f94332af22b6f24b556cf48d9d46ec5afd621d61004a02500869e8fd"
+  },
+  "remote_activity": "One /usr/local/bin/h read-only metadata collection after command-v verification; seven immutable JSON files, no active logs and no package/process/cache/source mutation."
+}
