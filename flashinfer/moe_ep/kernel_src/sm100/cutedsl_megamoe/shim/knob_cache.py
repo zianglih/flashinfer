@@ -167,7 +167,7 @@ def lookup_knobs(
         e
         for e in _load_entries(path)
         if all(e.get(f) == key[f] for f in _KEY_FIELDS)
-        and e.get("apply_topk_in_fc1", False) == apply_topk_in_fc1
+        and e.get("apply_topk_in_fc1") == apply_topk_in_fc1
         and isinstance(e.get("knobs"), dict)
         and isinstance(e.get("max_tokens"), int)
         and (enable_in_kernel_fc2_reduce or not _entry_needs_ikr(e))
@@ -244,7 +244,7 @@ def record_knobs(
             if not (
                 all(e.get(f) == entry[f] for f in _KEY_FIELDS)
                 and e.get("max_tokens") == max_tokens
-                and e.get("apply_topk_in_fc1", False) == apply_topk_in_fc1
+                and e.get("apply_topk_in_fc1") == apply_topk_in_fc1
                 and _entry_needs_ikr(e) == _entry_needs_ikr(entry)
             )
         ]

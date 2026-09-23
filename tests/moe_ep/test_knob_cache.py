@@ -327,8 +327,7 @@ def test_symm_buffer_resolves_cached_knobs(
         buf.destroy()
 
 
-@pytest.mark.parametrize("legacy", [False, True])
-def test_routing_weight_placement_partitions_cache(monkeypatch, tmp_path, legacy):
+def test_routing_weight_placement_partitions_cache(monkeypatch, tmp_path):
     import json
 
     from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe.shim import knob_cache
@@ -337,10 +336,6 @@ def test_routing_weight_placement_partitions_cache(monkeypatch, tmp_path, legacy
     monkeypatch.setattr(knob_cache, "_current_device_name", lambda: "testgpu")
     key = dict(max_tokens=2048, **{**_KEY, "dtype": "bf16_nvfp4"})
     knob_cache.record_knobs(_KNOBS, **key)
-    if legacy:
-        data = json.loads(path.read_text())
-        del data["entries"][0]["apply_topk_in_fc1"]
-        path.write_text(json.dumps(data))
     assert knob_cache.lookup_knobs(**key) == _KNOBS
     assert knob_cache.lookup_knobs(apply_topk_in_fc1=False, **key) == _KNOBS
     assert knob_cache.lookup_knobs(apply_topk_in_fc1=True, **key) is None
