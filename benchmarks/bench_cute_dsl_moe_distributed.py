@@ -30,7 +30,8 @@ sum to BF16 before combine; MegaMoE reduces all per-route BF16 results at the
 source rank. The refcheck keeps a fixed tolerance for this reduction difference.
 
 Both timers measure the full forward, including routing, input staging,
-communication, expert compute, and output handling. CUPTI measures the span
+communication, expert compute, and output handling. MegaMoE also stages runtime
+per-expert FP32 alphas on each forward. CUPTI measures the span
 from the first GPU activity's start to the last activity's end on each rank,
 then takes the maximum rank span per iteration and the median across
 iterations. This includes gaps and overlap; it is not a sum of kernel times.
@@ -1249,8 +1250,14 @@ def _benchmark_distributed_megamoe(
     topk_indices = torch.empty(
         local_num_tokens, CFG.top_k, dtype=torch.int32, device=device
     )
+    # Shared-workspace serving stages per-layer expert scales on every forward.
+    local_experts = CFG.num_experts // world_size
     tensors = MoEEpTensors(
-        hidden_states=hidden_states, topk_ids=topk_indices, topk_weights=topk_values
+        hidden_states=hidden_states,
+        topk_ids=topk_indices,
+        topk_weights=topk_values,
+        fc1_alpha=torch.ones(local_experts, dtype=torch.float32, device=device),
+        fc2_alpha=torch.ones(local_experts, dtype=torch.float32, device=device),
     )
     l2_flush = torch.empty(2 * get_l2_cache_size(), dtype=torch.int8, device=device)
 

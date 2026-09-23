@@ -122,7 +122,7 @@ def test_nvfp4_mega_two_rank_graph_replay_lockstep(
         )
 
         # Collective warmup: compile + workspace + one real launch, all ranks.
-        mega.warmup()
+        mega.warmup(t)
         dist.barrier()
 
         y_eager = mega.forward(t).clone()
@@ -149,6 +149,25 @@ def test_nvfp4_mega_two_rank_graph_replay_lockstep(
                 f"rank {rank}: lockstep graph replay diverged from eager"
             )
 
+        if alpha_source == "runtime":
+            # Change only scales, then replay before eager can pre-stage them.
+            alpha_ptrs = (t.fc1_alpha.data_ptr(), t.fc2_alpha.data_ptr())
+            t.fc1_alpha.mul_(0.5)
+            t.fc2_alpha.mul_(1.25)
+            assert (t.fc1_alpha.data_ptr(), t.fc2_alpha.data_ptr()) == alpha_ptrs
+            graph.replay()
+            torch.cuda.synchronize()
+            dist.barrier()
+            y_alpha_replay = y_graph.clone()
+            y_alpha_eager = mega.forward(t)
+            torch.cuda.synchronize()
+            dist.barrier()
+            assert not torch.equal(y_alpha_eager, y_eager)
+            if in_kernel_fc2_reduce:
+                _assert_ikr_close(y_alpha_replay, y_alpha_eager, topk=problem["topk"])
+            else:
+                assert torch.equal(y_alpha_replay, y_alpha_eager)
+
         # Replay over mutated inputs (fresh values, same buffers).
         g = torch.Generator(device="cuda").manual_seed(1234 + rank)
         t.hidden_states.copy_(
@@ -159,10 +178,6 @@ def test_nvfp4_mega_two_rank_graph_replay_lockstep(
                 generator=g,
             )
         )
-        if alpha_source == "runtime":
-            # Capture must read each new override's contents on replay.
-            t.fc1_alpha.mul_(0.5)
-            t.fc2_alpha.mul_(1.25)
         graph.replay()
         torch.cuda.synchronize()
         dist.barrier()

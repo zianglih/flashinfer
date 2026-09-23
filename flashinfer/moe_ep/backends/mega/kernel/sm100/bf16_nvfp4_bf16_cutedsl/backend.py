@@ -215,10 +215,29 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
             raise MoEEpConfigError(
                 "MegaMoE inputs must not alias its staging workspace"
             )
-        if t.fc1_alpha is not None:
-            workspace.fc1_alpha.copy_(t.fc1_alpha)
-        if t.fc2_alpha is not None:
-            workspace.fc2_alpha.copy_(t.fc2_alpha)
+        destinations = []
+        alpha_sources = []
+        for source, destination in (
+            (t.fc1_alpha, workspace.fc1_alpha),
+            (t.fc2_alpha, workspace.fc2_alpha),
+        ):
+            if source is not None:
+                destinations.append(destination)
+                alpha_sources.append(source)
+        if alpha_sources:
+            # Workspace aliases preserve the ordering of the individual copies.
+            if any(
+                torch._C._overlaps(source, destination)
+                for source in alpha_sources
+                for destination in destinations
+            ):
+                for destination, source in zip(
+                    destinations, alpha_sources, strict=True
+                ):
+                    destination.copy_(source)
+            else:
+                # Batch the common contiguous CUDA copies into one launch.
+                torch._foreach_copy_(destinations, alpha_sources)
         # Keep the same sources through every autotune capture and final call.
         workspace._staging_inputs = sources
 
