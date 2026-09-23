@@ -126,6 +126,8 @@ def autotune_bf16_nvfp4_mega_moe(
     warmup_iters: int = 3,
     timed_iters: int = 10,
     process_group: Any = None,
+    swiglu_alpha: Optional[float] = None,
+    swiglu_beta: Optional[float] = None,
 ) -> Dict[str, Any]:
     """Collectively tune W4A16 on staged BF16 inputs and prepared NVFP4 weights.
 
@@ -148,13 +150,17 @@ def autotune_bf16_nvfp4_mega_moe(
             transformed_l2,
             symm_buffer,
             num_tokens=num_tokens,
+            swiglu_alpha=swiglu_alpha,
+            swiglu_beta=swiglu_beta,
             gate_up_clamp=gate_up_clamp,
             activation_clamp=activation_clamp,
             sync=sync,
         )
 
-    cfg = symm_buffer._frontend.config
     frontend = symm_buffer._frontend
+    if swiglu_alpha is not None or swiglu_beta is not None:
+        frontend.set_swiglu_params(swiglu_alpha, swiglu_beta)
+    cfg = frontend.config
     from flashinfer.moe_ep.kernel_src.sm100.cutedsl_megamoe import (
         _session_candidates,
         tuner,

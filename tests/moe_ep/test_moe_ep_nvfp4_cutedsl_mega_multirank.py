@@ -1248,6 +1248,10 @@ def _run_nvfp4_routing_rounds(
     num_tokens=257,
     in_kernel_fc2_reduce=False,
     alpha_source="config",
+    activation_params=None,
+    with_norm=False,
+    apply_topk_in_fc1=False,
+    check_graph=False,
 ):
     """One public layer reuses its workspace across skew, empty sources and refill."""
     import dataclasses
@@ -1277,7 +1281,9 @@ def _run_nvfp4_routing_rounds(
     assert alpha_source in ("config", "runtime"), alpha_source
     bootstrap = BootstrapConfig(world_size=world_size, rank=rank)
     ensure_moe_ep_cuda_device(bootstrap)
-    num_experts, topk, capacity = 4, 2, num_tokens
+    activation_params = {} if activation_params is None else activation_params
+    clamp = None if activation_params.get("activation") == "situ" else 1.5
+    num_experts, topk, capacity = max(4, world_size), 2, num_tokens
     assert num_experts % world_size == 0
     local_experts = num_experts // world_size
     alpha1, alpha2 = None, None
@@ -1310,6 +1316,11 @@ def _run_nvfp4_routing_rounds(
             rank * local_experts : (rank + 1) * local_experts
         ]
     alphas = dict(fc1_alpha=alpha1, fc2_alpha=alpha2)
+    if with_norm:
+        assert mode == "w4a16"
+        alphas["fc1_norm_const"] = torch.linspace(
+            0.67123, 1.31017, num_experts, device="cuda"
+        )[rank * local_experts : (rank + 1) * local_experts]
     configs = {
         "w4a4": Sm100_Nvfp4_Nvfp4_Bf16_Cutedsl_MegaMoeConfig,
         "w4a16": Sm100_Bf16_Nvfp4_Bf16_Cutedsl_MegaMoeConfig,
@@ -1326,13 +1337,16 @@ def _run_nvfp4_routing_rounds(
             megakernel=configs[mode](
                 intermediate_size=intermediate,
                 top_k=topk,
-                gate_up_clamp=1.5,
+                gate_up_clamp=clamp,
                 enable_in_kernel_fc2_reduce=in_kernel_fc2_reduce,
                 knobs={**knobs, "in_kernel_fc2_reduce": in_kernel_fc2_reduce},
+                **activation_params,
+                **({"apply_topk_in_fc1": apply_topk_in_fc1} if mode == "w4a16" else {}),
                 **(alphas if alpha_source == "config" else {}),
             )
         ),
     )
+    graph = None
     try:
         if mode == "w4a4":
             # Preserve the existing W4A4 global-weight oracle. W4A16 instead
@@ -1345,7 +1359,7 @@ def _run_nvfp4_routing_rounds(
                     if (value := getattr(weights, field.name)) is not None
                 },
             )
-        rounds = (("skewed_tiles", num_tokens, True),)
+        rounds = (("skewed_tiles", num_tokens, not check_graph),)
         if changing_batches:
             rounds = (
                 ("balanced", 17, False),
@@ -1369,10 +1383,11 @@ def _run_nvfp4_routing_rounds(
             problem = dict(
                 hidden=hidden,
                 intermediate=intermediate,
-                gate_up_clamp=1.5,
+                gate_up_clamp=clamp,
                 hidden_states=hidden_states,
                 topk_weights=topk_weights,
                 topk_ids=topk_ids,
+                **activation_params,
             )
             if skewed:
                 problem["topk_ids"][:] = torch.tensor([0, 1], device="cuda")
@@ -1384,6 +1399,7 @@ def _run_nvfp4_routing_rounds(
                     weights,
                     mode=mode,
                     **alphas,
+                    apply_topk_in_fc1=apply_topk_in_fc1,
                     in_kernel_fc2_reduce=in_kernel_fc2_reduce,
                 )
             elif mode == "w4a4":
@@ -1412,10 +1428,100 @@ def _run_nvfp4_routing_rounds(
                     mode=mode,
                     in_kernel_fc2_reduce=in_kernel_fc2_reduce,
                 )
+            if check_graph:
+                assert mode == "w4a16" and not in_kernel_fc2_reduce
+                graph = torch.cuda.CUDAGraph()
+                with torch.cuda.graph(graph):
+                    captured = layer.forward(tensors)
+                if with_norm and alpha_source == "runtime":
+                    # Change only the captured norm source; no eager call may
+                    # pre-stage its new contents before replay.
+                    alphas["fc1_norm_const"].mul_(1.13)
+                    reference = _nvfp4_reference_from_weights(
+                        problem,
+                        weights,
+                        mode=mode,
+                        **alphas,
+                        apply_topk_in_fc1=apply_topk_in_fc1,
+                    )
+                    assert not torch.equal(y, reference)
+                graph.replay()
+                torch.cuda.synchronize()
+                dist.barrier()
+                _assert_nvfp4_reference(captured, reference, mode=mode)
+                graph.reset()
+                graph = None
     finally:
+        if graph is not None:
+            graph.reset()
         layer.destroy()
         torch.cuda.synchronize()
         dist.barrier()
+
+
+@pytest.mark.gpu_4
+@pytest.mark.arch_blackwell
+@pytest.mark.parametrize(
+    "activation_params,with_norm,alpha_source,apply_topk_in_fc1,token_back_mode",
+    [
+        pytest.param({}, True, "runtime", False, "epi_warps", id="swiglu-norm"),
+        pytest.param(
+            {"swiglu_alpha": 1.702, "swiglu_beta": 1.0},
+            False,
+            "config",
+            False,
+            "epi_warps",
+            id="minimax",
+        ),
+        pytest.param(
+            {"swiglu_alpha": 1.702, "swiglu_beta": 1.0},
+            True,
+            "runtime",
+            True,
+            "reuse_dispatch_warps",
+            id="minimax-norm-topk",
+        ),
+        pytest.param(
+            {"activation": "situ", "situ_beta": 4.0},
+            True,
+            "config",
+            False,
+            "epi_warps",
+            id="situ-norm",
+        ),
+        pytest.param(
+            {"activation": "situ", "situ_beta": 4.0, "situ_linear_beta": 25.0},
+            True,
+            "runtime",
+            True,
+            "reuse_dispatch_warps",
+            id="situ-linear-norm-topk",
+        ),
+    ],
+)
+def test_nvfp4_w4a16_epilogue_contract(
+    activation_params, with_norm, alpha_source, apply_topk_in_fc1, token_back_mode
+):
+    """Opt-in activations and normalization retain the EP-aware bit-exact contract."""
+    _require_cuda()
+    rank, world_size = _launcher_ranks()
+    if world_size not in (4, 8):
+        pytest.skip("requires four or eight ranks")
+    _run_nvfp4_routing_rounds(
+        rank,
+        world_size,
+        mode="w4a16",
+        hidden=256,
+        intermediate=256,
+        knobs={"token_back_mode": token_back_mode},
+        changing_batches=False,
+        num_tokens=17,
+        activation_params=activation_params,
+        with_norm=with_norm,
+        alpha_source=alpha_source,
+        apply_topk_in_fc1=apply_topk_in_fc1,
+        check_graph=True,
+    )
 
 
 @pytest.mark.gpu_2

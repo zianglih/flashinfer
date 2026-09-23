@@ -142,6 +142,10 @@ class Sm100W4A16MegaMoEKernel:
         combine_format=None,
         non_ubulk_fc2_store=True,
         scenario="2Dx3D",
+        swiglu_alpha=None,
+        swiglu_beta=None,
+        situ_beta=None,
+        situ_linear_beta=None,
     ):
         if not force_static_sched or scenario != "2Dx3D":
             raise ValueError("W4A16 requires forward 2Dx3D scheduler records.")
@@ -205,6 +209,10 @@ class Sm100W4A16MegaMoEKernel:
         self.arch = get_cutedsl_target_arch()
         self.ab_dtype = cutlass.BFloat16
         self.gate_up_clamp = gate_up_clamp
+        self.swiglu_alpha = swiglu_alpha
+        self.swiglu_beta = swiglu_beta
+        self.situ_beta = situ_beta
+        self.situ_linear_beta = situ_linear_beta
         self.epi_flag_batch = epi_flag_batch
         self.flag_batch = flag_batch
 
@@ -294,6 +302,8 @@ class Sm100W4A16MegaMoEKernel:
             f"_return{self.token_back_mode}_epiflag{self.epi_flag_batch}"
             f"_clamp{self.gate_up_clamp}_ep{self.world_size}_topk{self.num_topk}"
             f"_tokens{self.max_tokens_per_rank}_flag{self.flag_batch}"
+            f"_swiglua{self.swiglu_alpha}_swiglub{self.swiglu_beta}"
+            f"_situb{self.situ_beta}_situlinb{self.situ_linear_beta}"
             + ("_ikr" if self.in_kernel_fc2_reduce else "")
             + ("_topk_fc1" if self.apply_topk_in_fc1 else "")
         )
@@ -435,6 +445,7 @@ class Sm100W4A16MegaMoEKernel:
         # Codegen / runtime.
         max_active_clusters: cutlass.Constexpr,
         stream,
+        fc1_norm_const: Optional[cute.Tensor] = None,
     ) -> None:
         """Launch the BF16 MegaMoE-complete fused kernel.
 
@@ -639,6 +650,7 @@ class Sm100W4A16MegaMoEKernel:
             fc1_weight_sf=fc1_weight_sf,
             fc1_alpha=fc1_alpha,
             fc2_alpha=fc2_alpha,
+            fc1_norm_const=fc1_norm_const,
             fc1_output=fc1_output,
             fc2_weight=fc2_weight,
             fc2_weight_sf=fc2_weight_sf,
@@ -662,6 +674,7 @@ class Sm100W4A16MegaMoEKernel:
         fc1_weight_sf,
         fc1_alpha,
         fc2_alpha,
+        fc1_norm_const: Optional[cute.Tensor],
         fc1_output,
         fc2_weight,
         fc2_weight_sf,
@@ -747,6 +760,10 @@ class Sm100W4A16MegaMoEKernel:
             epi_flag_batch=self.epi_flag_batch,
             static_expert_shape=self.static_expert_shape,
             gate_up_clamp=self.gate_up_clamp,
+            swiglu_alpha=self.swiglu_alpha,
+            swiglu_beta=self.swiglu_beta,
+            situ_beta=self.situ_beta,
+            situ_linear_beta=self.situ_linear_beta,
         )
         assert self.epilogue.acc_tmem_cols * self.num_acc_stage == mix.num_acc_tmem_cols
         tiled_mma = sm100_utils.make_trivial_tiled_mma(
@@ -844,6 +861,7 @@ class Sm100W4A16MegaMoEKernel:
             reduced_output,
             staging_inputs,
             recv_counter_bank,
+            fc1_norm_const,
         ).launch(
             grid=grid,
             block=(self.threads_per_cta, 1, 1),
@@ -1043,6 +1061,7 @@ class Sm100W4A16MegaMoEKernel:
         reduced_output: Optional[cute.Tensor],
         staging_inputs: Optional[Tuple[cute.Tensor, cute.Tensor, cute.Tensor]],
         recv_counter_bank: cute.Tensor,
+        fc1_norm_const: Optional[cute.Tensor],
     ):
         mix = self.mixed_fc1
         tidx = cute.arch.thread_idx()[0]
@@ -1360,6 +1379,7 @@ class Sm100W4A16MegaMoEKernel:
                 optional_epi_args=W4A16EpiArgs(
                     fc1_alpha=fc1_alpha,
                     fc2_alpha=fc2_alpha,
+                    fc1_norm_const=fc1_norm_const,
                 ),
                 token_comm_args=token_comm_args,
             )

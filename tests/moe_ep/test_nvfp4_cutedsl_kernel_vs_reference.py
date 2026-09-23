@@ -755,6 +755,7 @@ def _nvfp4_reference_from_weights(
     mode,
     fc1_alpha=None,
     fc2_alpha=None,
+    fc1_norm_const=None,
     apply_topk_in_fc1=False,
     in_kernel_fc2_reduce=False,
 ):
@@ -771,11 +772,12 @@ def _nvfp4_reference_from_weights(
             weights,
             fc1_alpha=fc1_alpha,
             fc2_alpha=fc2_alpha,
+            fc1_norm_const=fc1_norm_const,
             apply_topk_in_fc1=apply_topk_in_fc1,
             in_kernel_fc2_reduce=in_kernel_fc2_reduce,
         )
     assert mode == "w4a4"
-    assert fc1_alpha is None and fc2_alpha is None
+    assert fc1_alpha is None and fc2_alpha is None and fc1_norm_const is None
     assert not apply_topk_in_fc1
     import torch
     from flashinfer.moe_ep.backends.mega.kernel.sm100.nvfp4_nvfp4_bf16_cutedsl.weights import (
@@ -843,6 +845,7 @@ def test_nvfp4_w4a16_fp32_scales_and_routing(
     alphas = dict(
         fc1_alpha=torch.full((4,), 1.00390625, device="cuda"),
         fc2_alpha=torch.full((4,), 1.001953125, device="cuda"),
+        fc1_norm_const=torch.full((4,), 1.1318359375, device="cuda"),
     )
     problem["hidden_states"].zero_()
     problem["hidden_states"][:, 0] = torch.tensor([0.5, 1.0, 2.0, 4.0], device="cuda")
@@ -868,7 +871,7 @@ def test_nvfp4_w4a16_fp32_scales_and_routing(
             )
         ),
     )
-    graph = None
+    graph = unnormalized_graph = None
     try:
         inputs = {
             key: problem[key] for key in ("hidden_states", "topk_ids", "topk_weights")
@@ -881,8 +884,24 @@ def test_nvfp4_w4a16_fp32_scales_and_routing(
         tensors = MoEEpTensors(
             **inputs, **(alphas if alpha_source == "runtime" else {})
         )
+        if alpha_source == "runtime" and token_back_mode == "epi_warps":
+            # A previously captured no-norm specialization must stay live when
+            # the same workspace later prepares its normalized specialization.
+            plain_alphas = {name: alphas[name] for name in ("fc1_alpha", "fc2_alpha")}
+            plain = MoEEpTensors(**inputs, **plain_alphas)
+            plain_reference = _nvfp4_reference_from_weights(
+                problem, weights, mode="w4a16", **plain_alphas
+            )
+            layer.forward(plain)
+            unnormalized_graph = torch.cuda.CUDAGraph()
+            with torch.cuda.graph(unnormalized_graph):
+                plain_captured = layer.forward(plain)
         actual = layer.forward(tensors)
         assert_w4a16_bits(actual, expected)
+        if unnormalized_graph is not None:
+            assert not torch.equal(plain_reference, expected)
+            unnormalized_graph.replay()
+            assert_w4a16_bits(plain_captured, plain_reference)
         graph = torch.cuda.CUDAGraph()
         with torch.cuda.graph(graph):
             actual_graph = layer.forward(tensors)
@@ -890,6 +909,7 @@ def test_nvfp4_w4a16_fp32_scales_and_routing(
             if alpha_source == "runtime" and step == 1:
                 alphas["fc1_alpha"].mul_(2.0)
                 alphas["fc2_alpha"].mul_(0.5)
+                alphas["fc1_norm_const"].mul_(1.13)
                 reference = _nvfp4_reference_from_weights(
                     problem, weights, mode="w4a16", **alphas
                 )
@@ -910,4 +930,6 @@ def test_nvfp4_w4a16_fp32_scales_and_routing(
     finally:
         if graph is not None:
             graph.reset()
+        if unnormalized_graph is not None:
+            unnormalized_graph.reset()
         layer.destroy()

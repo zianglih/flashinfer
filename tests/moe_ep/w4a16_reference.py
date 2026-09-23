@@ -62,11 +62,16 @@ def _swiglu_kernel():
     def kernel(
         FC1,
         SCORES,
+        NORM,
         OUT,
         I: tl.constexpr,
         N: tl.constexpr,
         CLAMP: tl.constexpr,
         WEIGHTED: tl.constexpr,
+        SWIGLU_ALPHA: tl.constexpr,
+        SWIGLU_BETA: tl.constexpr,
+        SITU_BETA: tl.constexpr,
+        SITU_LINEAR_BETA: tl.constexpr,
     ):
         index = tl.program_id(0) * 256 + tl.arange(0, 256)
         offset = (index // I) * (2 * I) + index % I
@@ -91,9 +96,87 @@ def _swiglu_kernel():
                 is_pure=True,
                 pack=1,
             )
-        # Match epilogue.py::_swiglu_act, including operation association.
-        activated = tl.inline_asm_elementwise(
-            """{
+        if SITU_BETA is not None:
+            # Match the upstream exp2/rcp tanh approximation, not libdevice tanh.
+            tanh_asm: tl.constexpr = """{
+                .reg .f32 x, exponent, denominator, inverse, result;
+                mul.rn.f32 x, $1, $3;
+                mul.rn.f32 x, x, 0fC038AA3B;
+                ex2.approx.ftz.f32 exponent, x;
+                add.rn.f32 denominator, exponent, 0f3F800000;
+                rcp.approx.ftz.f32 inverse, denominator;
+                mul.rn.f32 result, inverse, 0f40000000;
+                sub.rn.f32 result, result, 0f3F800000;
+                mul.rn.f32 $0, $2, result;
+            }"""
+            bounded_gate = tl.inline_asm_elementwise(
+                tanh_asm,
+                constraints="=f,f,f,f",
+                args=[
+                    gate,
+                    tl.full((), SITU_BETA, tl.float32),
+                    tl.full((), 1.0 / SITU_BETA, tl.float32),
+                ],
+                dtype=tl.float32,
+                is_pure=True,
+                pack=1,
+            )
+            if SITU_LINEAR_BETA is not None:
+                up = tl.inline_asm_elementwise(
+                    tanh_asm,
+                    constraints="=f,f,f,f",
+                    args=[
+                        up,
+                        tl.full((), SITU_LINEAR_BETA, tl.float32),
+                        tl.full((), 1.0 / SITU_LINEAR_BETA, tl.float32),
+                    ],
+                    dtype=tl.float32,
+                    is_pure=True,
+                    pack=1,
+                )
+            activated = tl.inline_asm_elementwise(
+                """{
+                    .reg .f32 neg, exponent, denominator, sigmoid, bounded;
+                    mul.rn.f32 neg, $1, 0fBFB8AA3B;
+                    ex2.approx.ftz.f32 exponent, neg;
+                    add.rn.f32 denominator, exponent, 0f3F800000;
+                    rcp.approx.ftz.f32 sigmoid, denominator;
+                    mul.rn.f32 bounded, $3, sigmoid;
+                    mul.rn.f32 $0, $2, bounded;
+                }""",
+                constraints="=f,f,f,f",
+                args=[gate, up, bounded_gate],
+                dtype=tl.float32,
+                is_pure=True,
+                pack=1,
+            )
+        elif SWIGLU_ALPHA is not None:
+            activated = tl.inline_asm_elementwise(
+                """{
+                    .reg .f32 neg, exponent, denominator, sigmoid, shifted, product;
+                    mul.rn.f32 neg, $1, $3;
+                    ex2.approx.ftz.f32 exponent, neg;
+                    add.rn.f32 denominator, exponent, 0f3F800000;
+                    rcp.approx.ftz.f32 sigmoid, denominator;
+                    add.rn.f32 shifted, $2, $4;
+                    mul.rn.f32 product, shifted, $1;
+                    mul.rn.f32 $0, product, sigmoid;
+                }""",
+                constraints="=f,f,f,f,f",
+                args=[
+                    gate,
+                    up,
+                    tl.full((), -SWIGLU_ALPHA * 1.4426950408889634, tl.float32),
+                    tl.full((), SWIGLU_BETA, tl.float32),
+                ],
+                dtype=tl.float32,
+                is_pure=True,
+                pack=1,
+            )
+        else:
+            # Preserve the original default SwiGLU operation association.
+            activated = tl.inline_asm_elementwise(
+                """{
                 .reg .f32 neg, exponent, denominator, sigmoid, silu;
                 mul.rn.f32 neg, $1, 0fBFB8AA3B;
                 ex2.approx.ftz.f32 exponent, neg;
@@ -102,18 +185,27 @@ def _swiglu_kernel():
                 mul.rn.f32 silu, $1, sigmoid;
                 mul.rn.f32 $0, $2, silu;
             }""",
-            constraints="=f,f,f",
-            args=[gate, up],
-            dtype=tl.float32,
-            is_pure=True,
-            pack=1,
-        )
+                constraints="=f,f,f",
+                args=[gate, up],
+                dtype=tl.float32,
+                is_pure=True,
+                pack=1,
+            )
         if WEIGHTED:
             score = tl.load(SCORES + index // I, index < N, other=0)
             activated = tl.inline_asm_elementwise(
                 "mul.rn.f32 $0, $1, $2;",
                 constraints="=f,f,f",
                 args=[activated, score],
+                dtype=tl.float32,
+                is_pure=True,
+                pack=1,
+            )
+        if NORM is not None:
+            activated = tl.inline_asm_elementwise(
+                "mul.rn.f32 $0, $1, $2;",
+                constraints="=f,f,f",
+                args=[activated, tl.load(NORM)],
                 dtype=tl.float32,
                 is_pure=True,
                 pack=1,
@@ -146,6 +238,7 @@ def w4a16_reference(
     *,
     fc1_alpha=None,
     fc2_alpha=None,
+    fc1_norm_const=None,
     apply_topk_in_fc1=False,
     in_kernel_fc2_reduce=False,
 ):
@@ -154,6 +247,9 @@ def w4a16_reference(
     IKR returns weighted BF16 route terms for a separate atomic-rounding band;
     deterministic mode returns the finite, ordered FP32-combine BF16 result.
     """
+    activation_kind = problem.get("activation", "swiglu")
+    assert activation_kind in ("swiglu", "situ"), activation_kind
+    assert (problem.get("situ_beta") is not None) == (activation_kind == "situ")
     matmul = torch.backends.cuda.matmul
     if not hasattr(matmul, "allow_bf16_reduced_precision_reduction_split_k"):
         pytest.skip("Bit-exact W4A16 oracle requires PyTorch 2.12 BF16 split-K control")
@@ -214,11 +310,16 @@ def w4a16_reference(
                 _swiglu_kernel()[((activation.numel() + 255) // 256,)](
                     fc1,
                     routing,
+                    fc1_norm_const[expert] if fc1_norm_const is not None else None,
                     activation,
                     intermediate,
                     activation.numel(),
                     problem["gate_up_clamp"],
                     apply_topk_in_fc1,
+                    problem.get("swiglu_alpha"),
+                    problem.get("swiglu_beta"),
+                    problem.get("situ_beta"),
+                    problem.get("situ_linear_beta"),
                 )
                 fc2 = torch.mm(activation, w2.T, out_dtype=torch.float32)
                 fc2.mul_(fc2_alpha[expert])

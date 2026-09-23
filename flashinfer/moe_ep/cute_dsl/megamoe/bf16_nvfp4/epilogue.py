@@ -60,11 +60,19 @@ class W4A16Epilogue:
         apply_topk_in_fc1=False,
         gate_up_clamp=None,
         epi_flag_batch=(1, 1),
+        swiglu_alpha=None,
+        swiglu_beta=None,
+        situ_beta=None,
+        situ_linear_beta=None,
     ):
         self.token_back_by_dispatch = token_back_by_dispatch
         self.in_kernel_fc2_reduce = in_kernel_fc2_reduce
         self.apply_topk_in_fc1 = apply_topk_in_fc1
         self.gate_up_clamp = gate_up_clamp
+        self.swiglu_alpha = swiglu_alpha
+        self.swiglu_beta = swiglu_beta
+        self.situ_beta = situ_beta
+        self.situ_linear_beta = situ_linear_beta
         fc1_batch, fc2_batch = (1, 1) if epi_flag_batch is None else epi_flag_batch
         self.fc1_epi_flag_batch = max(1, min(32, int(fc1_batch)))
         self.fc2_epi_flag_batch = max(1, min(32, int(fc2_batch)))
@@ -395,9 +403,15 @@ class W4A16Fc1Epilogue(EpilogueContext):
         # association before the BF16 FC1 handoff.
         for i in cutlass.range_constexpr(0, cute.size(t_swiglu), 2):
             gate = (t_gate[i], t_gate[i + 1])
-            gate_log2e = cute.arch.mul_packed_f32x2(
-                gate, (-1.4426950408889634, -1.4426950408889634)
-            )
+            if cutlass.const_expr(self.swiglu_alpha is not None):
+                neg_alpha_log2e = -self.swiglu_alpha * 1.4426950408889634
+                gate_log2e = cute.arch.mul_packed_f32x2(
+                    gate, (neg_alpha_log2e, neg_alpha_log2e)
+                )
+            else:
+                gate_log2e = cute.arch.mul_packed_f32x2(
+                    gate, (-1.4426950408889634, -1.4426950408889634)
+                )
             denominator = cute.arch.add_packed_f32x2(
                 (
                     cute.math.exp2(gate_log2e[0], fastmath=True),
@@ -409,10 +423,46 @@ class W4A16Fc1Epilogue(EpilogueContext):
                 cute.arch.rcp_approx(denominator[0]),
                 cute.arch.rcp_approx(denominator[1]),
             )
-            silu = cute.arch.mul_packed_f32x2(gate, sigmoid)
-            t_swiglu[i], t_swiglu[i + 1] = cute.arch.mul_packed_f32x2(
-                (t_up[i], t_up[i + 1]), silu
-            )
+            if cutlass.const_expr(self.situ_beta is not None):
+                beta = cutlass.Float32(self.situ_beta)
+                inv_beta = cutlass.Float32(1.0 / self.situ_beta)
+                gate_activated = (
+                    beta * self._tanh(gate[0] * inv_beta) * sigmoid[0],
+                    beta * self._tanh(gate[1] * inv_beta) * sigmoid[1],
+                )
+                if cutlass.const_expr(self.situ_linear_beta is not None):
+                    linear_beta = cutlass.Float32(self.situ_linear_beta)
+                    inv_linear_beta = cutlass.Float32(1.0 / self.situ_linear_beta)
+                    up = (
+                        linear_beta * self._tanh(t_up[i] * inv_linear_beta),
+                        linear_beta * self._tanh(t_up[i + 1] * inv_linear_beta),
+                    )
+                else:
+                    up = (t_up[i], t_up[i + 1])
+                t_swiglu[i], t_swiglu[i + 1] = cute.arch.mul_packed_f32x2(
+                    up, gate_activated
+                )
+            elif cutlass.const_expr(self.swiglu_alpha is not None):
+                up = cute.arch.add_packed_f32x2(
+                    (t_up[i], t_up[i + 1]), (self.swiglu_beta, self.swiglu_beta)
+                )
+                up_gate = cute.arch.mul_packed_f32x2(up, gate)
+                t_swiglu[i], t_swiglu[i + 1] = cute.arch.mul_packed_f32x2(
+                    up_gate, sigmoid
+                )
+            else:
+                # Preserve the original default association and instructions.
+                silu = cute.arch.mul_packed_f32x2(gate, sigmoid)
+                t_swiglu[i], t_swiglu[i + 1] = cute.arch.mul_packed_f32x2(
+                    (t_up[i], t_up[i + 1]), silu
+                )
+
+    @cute.jit
+    def _tanh(self, x: cutlass.Float32) -> cutlass.Float32:
+        exp = cute.math.exp2(x * cutlass.Float32(-2.8853900817779268), fastmath=True)
+        return cutlass.Float32(2.0) * cute.arch.rcp_approx(
+            cutlass.Float32(1.0) + exp
+        ) - cutlass.Float32(1.0)
 
     def __init__(
         self,
@@ -447,6 +497,11 @@ class W4A16Fc1Epilogue(EpilogueContext):
             "c", self.fc1_output, work_tile_info
         )
         weight_alpha = self.optional_epi_args.fc1_alpha[work_tile_info.expert_idx]
+        norm_const = None
+        if cutlass.const_expr(self.optional_epi_args.fc1_norm_const is not None):
+            norm_const = self.optional_epi_args.fc1_norm_const[
+                work_tile_info.expert_idx
+            ]
         acc_pipeline.consumer_wait(acc_consumer_state)
         iket.range_push("fc1_epi")
         # Keep prior subtiles in the established loop and specialize only the
@@ -465,6 +520,7 @@ class W4A16Fc1Epilogue(EpilogueContext):
                         acc_pipeline=acc_pipeline,
                         acc_consumer_state=acc_consumer_state,
                         release_after_scratch=False,
+                        norm_const=norm_const,
                     )
         last_subtile_idx = cutlass.Int32(self.subtile_cnt - 1)
         if last_subtile_idx * 64 < work_tile_info.valid_tokens_in_cta_tile:
@@ -479,6 +535,7 @@ class W4A16Fc1Epilogue(EpilogueContext):
                 acc_pipeline=acc_pipeline,
                 acc_consumer_state=acc_consumer_state,
                 release_after_scratch=True,
+                norm_const=norm_const,
             )
         else:
             # Includes zero tokens and N128 tiles with only the first
@@ -499,6 +556,7 @@ class W4A16Fc1Epilogue(EpilogueContext):
         acc_pipeline,
         acc_consumer_state,
         release_after_scratch: cutlass.Constexpr[bool],
+        norm_const=None,
     ):
         lane = tidx % 32
         # Prepared gate16/up16 rows keep both operands within one warp.
@@ -606,6 +664,16 @@ class W4A16Fc1Epilogue(EpilogueContext):
                             cute.arch.mul_packed_f32x2(
                                 (transposed_output[i], transposed_output[i + 1]),
                                 (topk_score, topk_score),
+                            )
+                        )
+                if cutlass.const_expr(norm_const is not None):
+                    # Match the decoded W4A4 handoff scale, retaining BF16 storage.
+                    # fc2_alpha remains independent; no reciprocal is inserted.
+                    for i in cutlass.range_constexpr(0, 16, 2):
+                        transposed_output[i], transposed_output[i + 1] = (
+                            cute.arch.mul_packed_f32x2(
+                                (transposed_output[i], transposed_output[i + 1]),
+                                (norm_const, norm_const),
                             )
                         )
                 output = cute.make_rmem_tensor((16,), cutlass.BFloat16)

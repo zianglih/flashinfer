@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import dataclasses
+import math
 from dataclasses import dataclass, field
 from typing import Callable, Literal, Optional, Tuple
 
@@ -49,8 +50,36 @@ class MegaMoEBf16Nvfp4Config:
     gate_up_clamp: Optional[float] = None
     apply_topk_in_fc1: bool = False
     enable_iket: bool = False
+    swiglu_alpha: Optional[float] = None
+    swiglu_beta: Optional[float] = None
+    activation: Literal["swiglu", "situ"] = "swiglu"
+    situ_beta: Optional[float] = None
+    situ_linear_beta: Optional[float] = None
 
     def __post_init__(self) -> None:
+        if (self.swiglu_alpha is None) != (self.swiglu_beta is None):
+            raise ValueError("swiglu_alpha and swiglu_beta must be set together.")
+        if self.activation not in ("swiglu", "situ"):
+            raise ValueError(
+                f"activation must be 'swiglu' or 'situ', got {self.activation!r}."
+            )
+        if self.activation == "situ":
+            if self.swiglu_alpha is not None:
+                raise ValueError("SwiGLU parameters are not supported with SiTU.")
+            if self.situ_beta is None:
+                raise ValueError("activation='situ' requires situ_beta.")
+            if not math.isfinite(self.situ_beta) or self.situ_beta <= 0:
+                raise ValueError("situ_beta must be positive and finite.")
+            if self.situ_linear_beta is not None and (
+                not math.isfinite(self.situ_linear_beta) or self.situ_linear_beta <= 0
+            ):
+                raise ValueError(
+                    "situ_linear_beta must be positive and finite when set."
+                )
+            if self.gate_up_clamp is not None:
+                raise ValueError("gate_up_clamp is not supported with SiTU.")
+        elif self.situ_beta is not None or self.situ_linear_beta is not None:
+            raise ValueError("SiTU parameters require activation='situ'.")
         # Geometry knobs also arrive as JSON arrays from the benchmark.
         object.__setattr__(self, "mma_tiler_mnk", tuple(self.mma_tiler_mnk))
         object.__setattr__(self, "cluster_shape_mnk", tuple(self.cluster_shape_mnk))
@@ -123,6 +152,7 @@ class MegaMoEBf16Nvfp4Inputs:
     combine_output: torch.Tensor
     reduced_output: Optional[torch.Tensor] = None
     staging_inputs: Optional[Tuple[torch.Tensor, torch.Tensor, torch.Tensor]] = None
+    fc1_norm_const: Optional[torch.Tensor] = None
 
 
 class MegaMoEBf16Nvfp4Frontend:
@@ -132,7 +162,8 @@ class MegaMoEBf16Nvfp4Frontend:
         self._config = config
         self._mega: Optional[_CompiledMega] = None
         self._reduce = None
-        self._staging_variants: dict[tuple[torch.dtype, bool], Callable] = {}
+        self._staging_variants: dict[tuple[torch.dtype, bool, bool], Callable] = {}
+        self._unstaged_variants: dict[bool, Callable] = {}
         self._launch_inputs: Optional[MegaMoEBf16Nvfp4Inputs] = None
 
     @property
@@ -141,9 +172,20 @@ class MegaMoEBf16Nvfp4Frontend:
 
     def set_gate_up_clamp(self, clamp: Optional[float]) -> None:
         if self._config.gate_up_clamp != clamp:
+            new_config = dataclasses.replace(self._config, gate_up_clamp=clamp)
             ensure_not_capturing("set_gate_up_clamp (clamp change)")
             self.release()
-            self._config = dataclasses.replace(self._config, gate_up_clamp=clamp)
+            self._config = new_config
+
+    def set_swiglu_params(self, alpha: Optional[float], beta: Optional[float]) -> None:
+        """Change uniform activation constants outside capture, then re-warm."""
+        new_config = dataclasses.replace(
+            self._config, swiglu_alpha=alpha, swiglu_beta=beta
+        )
+        if new_config != self._config:
+            ensure_not_capturing("set_swiglu_params (activation change)")
+            self.release()
+            self._config = new_config
 
     def apply_knobs(self, knobs: dict) -> None:
         """Apply a validated swapped-MMA tuning configuration and invalidate its compile."""
@@ -162,6 +204,11 @@ class MegaMoEBf16Nvfp4Frontend:
                 "gate_up_clamp": self.config.gate_up_clamp,
                 "apply_topk_in_fc1": self.config.apply_topk_in_fc1,
                 "enable_in_kernel_fc2_reduce": self.config.enable_in_kernel_fc2_reduce,
+                "swiglu_alpha": self.config.swiglu_alpha,
+                "swiglu_beta": self.config.swiglu_beta,
+                "activation": self.config.activation,
+                "situ_beta": self.config.situ_beta,
+                "situ_linear_beta": self.config.situ_linear_beta,
             },
         )
         if new_config != self._config:
@@ -175,6 +222,7 @@ class MegaMoEBf16Nvfp4Frontend:
             free_sym_tensor(self._mega.shared_workspace)
         self._mega = None
         self._staging_variants.clear()
+        self._unstaged_variants.clear()
         self._launch_inputs = None
 
     @staticmethod
@@ -228,6 +276,10 @@ class MegaMoEBf16Nvfp4Frontend:
                 flag_batch=c.flag_batch,
                 gate_up_clamp=c.gate_up_clamp,
                 apply_topk_in_fc1=c.apply_topk_in_fc1,
+                swiglu_alpha=c.swiglu_alpha,
+                swiglu_beta=c.swiglu_beta,
+                situ_beta=c.situ_beta,
+                situ_linear_beta=c.situ_linear_beta,
             )
             local_bytes, shared_bytes = kernel.get_workspace_sizes()
             local_workspace = torch.zeros(local_bytes, dtype=torch.uint8, device="cuda")
@@ -245,11 +297,13 @@ class MegaMoEBf16Nvfp4Frontend:
             )
             self._mega = mega
         mega = self._mega
+        use_norm = inputs.fc1_norm_const is not None
         if inputs.staging_inputs is None:
-            if mega.compiled is None:
-                mega.compiled = self._compile(inputs, mega)
+            if use_norm not in self._unstaged_variants:
+                self._unstaged_variants[use_norm] = self._compile(inputs, mega)
+            mega.compiled = self._unstaged_variants[use_norm]
         else:
-            key = self._staging_key(inputs.staging_inputs)
+            key = (*self._staging_key(inputs.staging_inputs), use_norm)
             if key not in self._staging_variants:
                 self._staging_variants[key] = self._compile(inputs, mega, key)
         return mega
@@ -265,15 +319,22 @@ class MegaMoEBf16Nvfp4Frontend:
         assert self._mega is not None
         for dtype in (torch.int32, torch.int64):
             for vector_copy in (False, True):
-                key = (dtype, vector_copy)
+                key = (dtype, vector_copy, inputs.fc1_norm_const is not None)
                 if key not in self._staging_variants:
                     self._staging_variants[key] = self._compile(inputs, self._mega, key)
+
+    def staging_variants_ready(self, use_norm: bool) -> bool:
+        return self._mega is not None and all(
+            (dtype, vector_copy, use_norm) in self._staging_variants
+            for dtype in (torch.int32, torch.int64)
+            for vector_copy in (False, True)
+        )
 
     def _compile(
         self,
         inputs: MegaMoEBf16Nvfp4Inputs,
         mega: _CompiledMega,
-        staging_key: Optional[tuple[torch.dtype, bool]] = None,
+        staging_key: Optional[tuple[torch.dtype, bool, bool]] = None,
     ):
         ensure_not_capturing("MegaMoE input specialization cute.compile")
         import cutlass.cute as cute
@@ -286,7 +347,7 @@ class MegaMoEBf16Nvfp4Frontend:
         kwargs = self._runtime_kwargs(inputs, mega)
         if staging_key is not None:
             # Typed null pointers are compile descriptors, never launch inputs.
-            kwargs["staging_inputs"] = self._staging_args(None, staging_key)
+            kwargs["staging_inputs"] = self._staging_args(None, staging_key[:2])
         kwargs["max_active_clusters"] = max(1, sm_count // cluster_size)
         # Start with 61440 registers per CTA; the kernel redistributes this
         # pool among the five warpgroup roles.
@@ -378,6 +439,9 @@ class MegaMoEBf16Nvfp4Frontend:
             "fc2_weight": self._to_cute(inputs.fc2_weight),
             "fc2_weight_sf": self._to_cute(inputs.fc2_weight_sf),
             "fc2_alpha": self._to_cute(inputs.fc2_alpha, assumed_align=4),
+            "fc1_norm_const": None
+            if inputs.fc1_norm_const is None
+            else self._to_cute(inputs.fc1_norm_const, assumed_align=4),
             "combine_output": self._to_cute(inputs.combine_output, static_layout=True),
             "reduced_output": reduced_output,
             "local_workspace": self._to_cute(mega.local_workspace, static_layout=True),
@@ -412,6 +476,7 @@ class MegaMoEBf16Nvfp4Frontend:
             inputs.fc2_weight.data_ptr(),
             inputs.fc2_weight_sf.data_ptr(),
             inputs.fc2_alpha.data_ptr(),
+            None if inputs.fc1_norm_const is None else inputs.fc1_norm_const.data_ptr(),
             inputs.combine_output.data_ptr(),
             (
                 inputs.reduced_output.data_ptr(),
@@ -431,7 +496,12 @@ class MegaMoEBf16Nvfp4Frontend:
         compiled = (
             mega.compiled
             if inputs.staging_inputs is None
-            else self._staging_variants[self._staging_key(inputs.staging_inputs)]
+            else self._staging_variants[
+                (
+                    *self._staging_key(inputs.staging_inputs),
+                    inputs.fc1_norm_const is not None,
+                )
+            ]
         )
         compiled(**mega.launch_kwargs)
         if sync:
@@ -451,7 +521,12 @@ class MegaMoEBf16Nvfp4Frontend:
         compiled = (
             mega.compiled
             if inputs.staging_inputs is None
-            else self._staging_variants[self._staging_key(inputs.staging_inputs)]
+            else self._staging_variants[
+                (
+                    *self._staging_key(inputs.staging_inputs),
+                    inputs.fc1_norm_const is not None,
+                )
+            ]
         )
         if self.config.in_kernel_fc2_reduce:
 
@@ -503,6 +578,16 @@ class MegaMoEBf16Nvfp4Frontend:
         ):
             raise ValueError("topk_idx/topk_weights must be int64/float32.")
         packed_dtypes = (torch.uint8, getattr(torch, "float4_e2m1fn_x2", None))
+        norm = inputs.fc1_norm_const
+        if norm is not None and (
+            norm.shape != (c.num_experts_per_rank,)
+            or norm.dtype != torch.float32
+            or norm.device != inputs.activation.device
+            or not norm.is_contiguous()
+        ):
+            raise ValueError(
+                "fc1_norm_const must be contiguous FP32 [local_experts] on the activation device."
+            )
         for weight, scale, alpha in (
             (inputs.fc1_weight, inputs.fc1_weight_sf, inputs.fc1_alpha),
             (inputs.fc2_weight, inputs.fc2_weight_sf, inputs.fc2_alpha),
@@ -613,6 +698,8 @@ class MegaMoEBf16Nvfp4SymmBuffer:
     _staging_inputs: Optional[Tuple[torch.Tensor, torch.Tensor, torch.Tensor]] = field(
         default=None, repr=False
     )
+    fc1_norm_const: Optional[torch.Tensor] = None
+    _use_fc1_norm_const: bool = False
 
     @property
     def kernel_combine_output(self) -> torch.Tensor:
@@ -654,7 +741,23 @@ def get_symm_buffer_for_bf16_nvfp4_mega_moe(
         Literal["epi_warps", "standalone_warps", "reuse_dispatch_warps"]
     ] = None,
     knobs: Optional[dict] = None,
+    fc1_norm_const: torch.Tensor | int | float | None = None,
+    swiglu_alpha: Optional[float] = None,
+    swiglu_beta: Optional[float] = None,
+    activation: Literal["swiglu", "situ"] = "swiglu",
+    situ_beta: Optional[float] = None,
+    situ_linear_beta: Optional[float] = None,
 ) -> MegaMoEBf16Nvfp4SymmBuffer:
+    """Allocate stable per-expert scales and BF16 transport buffers.
+
+    ``fc1_norm_const`` multiplies the post-activation/top-k values before their
+    BF16 handoff, with no automatic reciprocal in ``fc2_alpha``. Omission keeps
+    the unnormalized kernel specialization. Runtime overrides can enable the
+    normalized specialization during eager warmup, using the same allocation.
+    Later omission retains the last staged normalization. A captured graph
+    retains its normalization mode; enabling it requires warmup and recapture.
+    A normalized graph observes in-place updates to its captured source tensor.
+    """
     clamp = resolve_gate_up_clamp(
         gate_up_clamp=gate_up_clamp, activation_clamp=activation_clamp
     )
@@ -663,6 +766,23 @@ def get_symm_buffer_for_bf16_nvfp4_mega_moe(
         resolve_knobs,
         tuner,
         with_knobs,
+    )
+
+    cfg = MegaMoEBf16Nvfp4Config(
+        rank=rank,
+        world_size=world_size,
+        num_tokens_per_rank=num_max_tokens,
+        num_topk=num_topk,
+        num_total_experts=num_total_experts,
+        hidden=hidden,
+        intermediate=intermediate,
+        enable_in_kernel_fc2_reduce=enable_in_kernel_fc2_reduce,
+        gate_up_clamp=clamp,
+        swiglu_alpha=swiglu_alpha,
+        swiglu_beta=swiglu_beta,
+        activation=activation,
+        situ_beta=situ_beta,
+        situ_linear_beta=situ_linear_beta,
     )
 
     # Match the existing Mega cache contract: None is a pure capacity-keyed
@@ -684,22 +804,17 @@ def get_symm_buffer_for_bf16_nvfp4_mega_moe(
         resolved_knobs = {}
     optional_config = {
         **resolved_knobs,
-        "gate_up_clamp": clamp,
         **({"token_back_mode": token_back_mode} if token_back_mode is not None else {}),
         **(knobs or {}),
+        "gate_up_clamp": clamp,
         "enable_in_kernel_fc2_reduce": enable_in_kernel_fc2_reduce,
         "apply_topk_in_fc1": apply_topk_in_fc1,
+        "swiglu_alpha": swiglu_alpha,
+        "swiglu_beta": swiglu_beta,
+        "activation": activation,
+        "situ_beta": situ_beta,
+        "situ_linear_beta": situ_linear_beta,
     }
-    cfg = MegaMoEBf16Nvfp4Config(
-        rank=rank,
-        world_size=world_size,
-        num_tokens_per_rank=num_max_tokens,
-        num_topk=num_topk,
-        num_total_experts=num_total_experts,
-        hidden=hidden,
-        intermediate=intermediate,
-        enable_in_kernel_fc2_reduce=enable_in_kernel_fc2_reduce,
-    )
     if not tuner.is_valid_bf16_nvfp4_for_config(cfg, optional_config):
         raise ValueError(
             f"unsupported BF16/NVFP4 MegaMoE knobs {optional_config}: "
@@ -711,6 +826,10 @@ def get_symm_buffer_for_bf16_nvfp4_mega_moe(
     )
     fc2_alpha = _resolve_per_expert_epilogue(
         "fc2_alpha", fc2_alpha, cfg.num_experts_per_rank
+    )
+    use_norm = fc1_norm_const is not None
+    fc1_norm_const = _resolve_per_expert_epilogue(
+        "fc1_norm_const", fc1_norm_const, cfg.num_experts_per_rank
     )
     x = sym_zeros((num_max_tokens, hidden), torch.bfloat16)
     topk_idx = sym_zeros((num_max_tokens, num_topk), torch.int64)
@@ -736,6 +855,8 @@ def get_symm_buffer_for_bf16_nvfp4_mega_moe(
         fc2_alpha,
         MegaMoEBf16Nvfp4Frontend(cfg),
         [x, topk_idx, topk_weights, combine_output],
+        fc1_norm_const=fc1_norm_const,
+        _use_fc1_norm_const=use_norm,
     )
 
 
@@ -749,6 +870,8 @@ def bf16_nvfp4_mega_moe(
     gate_up_clamp: Optional[float] = None,
     activation_clamp: Optional[float] = None,
     sync: bool = False,
+    swiglu_alpha: Optional[float] = None,
+    swiglu_beta: Optional[float] = None,
 ) -> None:
     if symm_buffer._destroyed:
         raise RuntimeError("symm_buffer.destroy() was already called.")
@@ -762,6 +885,8 @@ def bf16_nvfp4_mega_moe(
     )
     if clamp is not None:
         symm_buffer._frontend.set_gate_up_clamp(clamp)
+    if swiglu_alpha is not None or swiglu_beta is not None:
+        symm_buffer._frontend.set_swiglu_params(swiglu_alpha, swiglu_beta)
     result = symm_buffer._frontend.run(
         MegaMoEBf16Nvfp4Inputs(
             symm_buffer.x,
@@ -776,6 +901,7 @@ def bf16_nvfp4_mega_moe(
             symm_buffer.kernel_combine_output,
             None if symm_buffer._frontend.config.in_kernel_fc2_reduce else y,
             symm_buffer._staging_inputs,
+            symm_buffer.fc1_norm_const if symm_buffer._use_fc1_norm_const else None,
         ),
         num_tokens=n,
     )
@@ -812,6 +938,9 @@ def bf16_nvfp4_mega_launch_thunk(
             symm_buffer.fc2_alpha,
             symm_buffer.kernel_combine_output,
             reduced_output,
+            fc1_norm_const=(
+                symm_buffer.fc1_norm_const if symm_buffer._use_fc1_norm_const else None
+            ),
         )
     )
 

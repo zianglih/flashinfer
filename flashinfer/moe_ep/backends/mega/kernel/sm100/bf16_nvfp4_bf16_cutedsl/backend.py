@@ -29,6 +29,14 @@ if TYPE_CHECKING:
     from ......tensors import MoEEpTensors
 
 
+def _resolve_gate_up_clamp(config):
+    return (
+        config.gate_up_clamp
+        if config.gate_up_clamp is not None
+        else config.activation_clamp
+    )
+
+
 @register_mega_kernel("sm100_bf16_nvfp4_bf16_cutedsl")
 class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
     @classmethod
@@ -106,10 +114,17 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
             self.ep_rank,
             self.ep_world_size,
             gate_up_clamp=config.gate_up_clamp,
+            activation_clamp=config.activation_clamp,
             apply_topk_in_fc1=config.apply_topk_in_fc1,
             enable_in_kernel_fc2_reduce=config.enable_in_kernel_fc2_reduce,
             fc1_alpha=config.fc1_alpha,
             fc2_alpha=config.fc2_alpha,
+            fc1_norm_const=config.fc1_norm_const,
+            swiglu_alpha=config.swiglu_alpha,
+            swiglu_beta=config.swiglu_beta,
+            activation=config.activation,
+            situ_beta=config.situ_beta,
+            situ_linear_beta=config.situ_linear_beta,
             knobs=config.knobs if isinstance(config.knobs, dict) else None,
         )
 
@@ -130,11 +145,17 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
             fleet_params.token_hidden_size,
             config.intermediate_size,
             config.top_k,
-            config.gate_up_clamp,
+            _resolve_gate_up_clamp(config),
             config.apply_topk_in_fc1,
             config.enable_in_kernel_fc2_reduce,
             epilogue_pool_key(config.fc1_alpha),
             epilogue_pool_key(config.fc2_alpha),
+            epilogue_pool_key(config.fc1_norm_const),
+            config.swiglu_alpha,
+            config.swiglu_beta,
+            config.activation,
+            config.situ_beta,
+            config.situ_linear_beta,
             knobs_pool_key(config.knobs),
         )
 
@@ -142,7 +163,7 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
         self, t: MoEEpTensors, fleet_params: FleetParams, *, quantize_input: bool
     ) -> None:
         del quantize_input
-        if t.scales is not None or t.fc1_norm_const is not None:
+        if t.scales is not None:
             raise MoEEpConfigError(
                 "W4A16 MegaMoE does not accept activation quantization fields"
             )
@@ -168,7 +189,7 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
             raise MoEEpConfigError(
                 "W4A16 activations and routing must share a CUDA device"
             )
-        for name in ("fc1_alpha", "fc2_alpha"):
+        for name in ("fc1_alpha", "fc2_alpha", "fc1_norm_const"):
             alpha = getattr(t, name)
             if alpha is not None and (
                 alpha.dtype != torch.float32
@@ -182,8 +203,9 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
     def validate_capture_ready(
         self, workspace: Any, transformed_weights: TransformedMegaWeights
     ) -> None:
-        mega = workspace._frontend._mega
-        if mega is None or len(workspace._frontend._staging_variants) != 4:
+        if not workspace._frontend.staging_variants_ready(
+            workspace._use_fc1_norm_const
+        ):
             raise RuntimeError(
                 "MegaMoE workspace is not warmed for CUDA graph capture; "
                 "call layer.warmup(..., workspace=workspace) first"
@@ -215,29 +237,44 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
             raise MoEEpConfigError(
                 "MegaMoE inputs must not alias its staging workspace"
             )
+        if t.fc1_norm_const is not None:
+            # A new optional-pointer specialization must be warmed before capture.
+            # Previously captured variants retain their code and workspace storage.
+            if (
+                torch.cuda.is_available()
+                and torch.cuda.is_current_stream_capturing()
+                and not (workspace._frontend.staging_variants_ready(True))
+            ):
+                raise RuntimeError(
+                    "MegaMoE normalization is not warmed for CUDA graph capture; "
+                    "call layer.warmup(...) with fc1_norm_const first"
+                )
         destinations = []
-        alpha_sources = []
+        epilogue_sources = []
         for source, destination in (
             (t.fc1_alpha, workspace.fc1_alpha),
             (t.fc2_alpha, workspace.fc2_alpha),
+            (t.fc1_norm_const, workspace.fc1_norm_const),
         ):
             if source is not None:
                 destinations.append(destination)
-                alpha_sources.append(source)
-        if alpha_sources:
+                epilogue_sources.append(source)
+        if epilogue_sources:
             # Workspace aliases preserve the ordering of the individual copies.
             if any(
                 torch._C._overlaps(source, destination)
-                for source in alpha_sources
+                for source in epilogue_sources
                 for destination in destinations
             ):
                 for destination, source in zip(
-                    destinations, alpha_sources, strict=True
+                    destinations, epilogue_sources, strict=True
                 ):
                     destination.copy_(source)
             else:
                 # Batch the common contiguous CUDA copies into one launch.
-                torch._foreach_copy_(destinations, alpha_sources)
+                torch._foreach_copy_(destinations, epilogue_sources)
+        if t.fc1_norm_const is not None:
+            workspace._use_fc1_norm_const = True
         # Keep the same sources through every autotune capture and final call.
         workspace._staging_inputs = sources
 
@@ -263,7 +300,7 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
                         transformed_weights[1],
                         workspace,
                         num_tokens=output.shape[0],
-                        gate_up_clamp=self._kernel_config.gate_up_clamp,
+                        gate_up_clamp=_resolve_gate_up_clamp(self._kernel_config),
                         process_group=(
                             self.ep_comm_group
                             if torch.distributed.is_initialized()
@@ -278,7 +315,9 @@ class Bf16Nvfp4CutedslMegaKernelBackend(MegaKernelBackend):
                 transformed_weights[1],
                 workspace,
                 num_tokens=output.shape[0],
-                gate_up_clamp=self._kernel_config.gate_up_clamp,
+                gate_up_clamp=_resolve_gate_up_clamp(self._kernel_config),
+                swiglu_alpha=self._kernel_config.swiglu_alpha,
+                swiglu_beta=self._kernel_config.swiglu_beta,
             )
             workspace._frontend._warm_staging_variants()
             return output
