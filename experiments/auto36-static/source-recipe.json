@@ -1,0 +1,27 @@
+{
+  "analysis_helpers": {
+    "audit_scheduler_modes.py": "e29d810e5b627ea525ff05ea140d6f48f53fcbb201307345f0365da559bed80d",
+    "auto_rankings.py": "5745d251fbe097fc1dd4da58ac845eacef6b3aa3b8bf4ec895784ddba5574dd8"
+  },
+  "captured_static_pair_helper_sha256": "7be9e9c8bf6375a6f6f6086509733d0e3595ae4a5f070077194a1901afe3f0a8",
+  "changed_files": {
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/autotune.py": "3b14d47a8f7b45e0a022fe5d36915492da5093a1be8f008e350ffcd34534d6a6",
+    "tests/moe_ep/test_w4a16_mixed_cluster_config.py": "054b4e2110d4dcb77bebd309c118edfd10153f08f632c779576a2539d41acdc6"
+  },
+  "expected_mixed_only_candidate_count": 36,
+  "expected_mixed_scheduler_modes": {
+    "atomic_counter": 18,
+    "static": 18
+  },
+  "expected_product_catalog_count": 52,
+  "experiment_commit": "f14e4bae9379703fd5693d8ee993faae23e130d5",
+  "parent_commit": "3d047d3f8e7923118ffea8b8d36151504ab1fa3d",
+  "source_identity": "Exact two-file git diff from the public 3d parent; patch reproduction need not create the unpublished commit object.",
+  "source_patch_sha256": "8fcb508e12dd4891ee65264f25ddf741214a357ec9f56d18ac074f4f28a8eebe",
+  "tokens": [
+    64,
+    128,
+    4096
+  ],
+  "unchanged_kernel_sha256": "664a74fde4f0d60957a2ddb07839c95f393d477f7ee84d5ce4415bb56bf4d939"
+}

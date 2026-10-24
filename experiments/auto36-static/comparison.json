@@ -1,0 +1,33 @@
+{
+  "points": [
+    {
+      "baseline_median_us": 159.601,
+      "baseline_over_candidate": 0.9809195140914105,
+      "baseline_sample_zero_ms": 45.564776,
+      "candidate_median_us": 162.7055,
+      "candidate_sample_zero_ms": 51.454919,
+      "global_tokens": 64,
+      "samples_per_arm": 100
+    },
+    {
+      "baseline_median_us": 171.0255,
+      "baseline_over_candidate": 0.9987852844215647,
+      "baseline_sample_zero_ms": 23.451835,
+      "candidate_median_us": 171.2335,
+      "candidate_sample_zero_ms": 18.736086,
+      "global_tokens": 128,
+      "samples_per_arm": 100
+    },
+    {
+      "baseline_median_us": 403.3325,
+      "baseline_over_candidate": 1.007073666758635,
+      "baseline_sample_zero_ms": 31.294465,
+      "candidate_median_us": 400.4995,
+      "candidate_sample_zero_ms": 38.827247,
+      "global_tokens": 4096,
+      "samples_per_arm": 100
+    }
+  ],
+  "pooled_with_primary": false,
+  "scope": "One separate three-point AUTO16/all versus AUTO36/mixed-only screen; descriptive, not a significance test."
+}

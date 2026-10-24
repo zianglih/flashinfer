@@ -1,0 +1,21 @@
+{
+  "activation": "swiglu",
+  "gate_up_clamp": null,
+  "hidden_size": 6144,
+  "input_seed": "42 + rank",
+  "intermediate_size": 2048,
+  "model": "glm5",
+  "n_group": 8,
+  "num_experts": 256,
+  "precomputed_routing": true,
+  "routed_scaling_factor": 2.5,
+  "router_logit_seed": 137,
+  "routing_backend": "fused_deepseek",
+  "routing_bias_seed": 911,
+  "scope": "synthetic_nvfp4_routed_expert_core",
+  "situ_beta": null,
+  "situ_linear_beta": null,
+  "top_k": 8,
+  "topk_group": 4,
+  "weight_seed": "1000 + rank"
+}

@@ -1,0 +1,52 @@
+{
+  "expected_catalog_counts": {
+    "mixed_only": 36,
+    "product": 52
+  },
+  "final_branch_selection": {
+    "rationale": "All three selected tactics used atomic scheduling; no retained benefit warrants doubling the mixed AUTO catalog.",
+    "selected_commit": "3d047d3f8e7923118ffea8b8d36151504ab1fa3d",
+    "status": "rejected"
+  },
+  "outcome": "completed_pair",
+  "parent_commit": "3d047d3f8e7923118ffea8b8d36151504ab1fa3d",
+  "pooled_with_primary": false,
+  "restoration_receipt": {
+    "receipt": "restoration.json",
+    "status": "verified"
+  },
+  "runs": [
+    {
+      "arm": "baseline",
+      "capture_label": "glm5-baseline-main-auto16-all-static-screen-a1",
+      "complete": true,
+      "files": [
+        "source-manifest.json",
+        "source-before.patch",
+        "source-status.txt",
+        "raw-records.json",
+        "summary.json"
+      ],
+      "path": "experiments/auto36-static/baseline"
+    },
+    {
+      "arm": "candidate4s",
+      "capture_label": "glm5-candidate4s-auto36-mixed-only-static-screen-a1",
+      "complete": true,
+      "files": [
+        "source-manifest.json",
+        "source-before.patch",
+        "source-status.txt",
+        "raw-records.json",
+        "summary.json"
+      ],
+      "path": "experiments/auto36-static/candidate4s"
+    }
+  ],
+  "source_commit": "f14e4bae9379703fd5693d8ee993faae23e130d5",
+  "tokens": [
+    64,
+    128,
+    4096
+  ]
+}

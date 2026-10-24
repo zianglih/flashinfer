@@ -1,0 +1,87 @@
+diff --git a/flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/autotune.py b/flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/autotune.py
+index 526407c..b8e12c9 100644
+--- a/flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/autotune.py
++++ b/flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/autotune.py
+@@ -25,6 +25,7 @@ def bf16_nvfp4_candidates(
+     trade phase-transition overhead against earlier FC2 work and token return.
+     Preferred4/fallback2 adds M256 tactics with the same group/return choices,
+     plus group size 256 to match cluster2/group512's channel work per group.
++    Static work-ID copies of the mixed tactics follow the atomic choices.
+     Opting into in-kernel reduction adds dispatch-return tactics.
+     """
+     uniform_candidates = [
+@@ -66,7 +67,13 @@ def bf16_nvfp4_candidates(
+         for candidate in mixed_candidates
+         if candidate["group_hint"] == 512
+     ]
+-    return uniform_candidates + mixed_candidates + smaller_mixed_groups
++    # Keep every existing tactic in order; append only mixed static copies.
++    atomic_mixed_candidates = mixed_candidates + smaller_mixed_groups
++    static_mixed_candidates = [
++        dict(candidate, load_balance_mode="static")
++        for candidate in atomic_mixed_candidates
++    ]
++    return uniform_candidates + atomic_mixed_candidates + static_mixed_candidates
+ 
+ 
+ def _cluster_candidates(
+diff --git a/tests/moe_ep/test_w4a16_mixed_cluster_config.py b/tests/moe_ep/test_w4a16_mixed_cluster_config.py
+index 1df6615..6d66d23 100644
+--- a/tests/moe_ep/test_w4a16_mixed_cluster_config.py
++++ b/tests/moe_ep/test_w4a16_mixed_cluster_config.py
+@@ -152,17 +152,19 @@ def test_uniform_candidates_clear_previous_mixed_geometry():
+ 
+ 
+ @pytest.mark.parametrize(
+-    "enable_in_kernel,uniform_count,original_count,total_count",
+-    [(False, 16, 28, 34), (True, 24, 42, 51)],
++    "enable_in_kernel,uniform_count,original_count,atomic_count,total_count",
++    [(False, 16, 28, 34, 52), (True, 24, 42, 51, 78)],
+ )
+ def test_auto_catalog_preserves_uniform_and_adds_mixed_tactics(
+-    enable_in_kernel, uniform_count, original_count, total_count
++    enable_in_kernel, uniform_count, original_count, atomic_count, total_count
+ ):
+     candidates = bf16_nvfp4_candidates(enable_in_kernel_fc2_reduce=enable_in_kernel)
+     assert len(candidates) == total_count
+     assert len({tuple(sorted(c.items())) for c in candidates}) == total_count
+     uniform = candidates[:uniform_count]
+     mixed = candidates[uniform_count:]
++    atomic_mixed = candidates[uniform_count:atomic_count]
++    static_mixed = candidates[atomic_count:]
+     assert all(c["cluster_shape_mnk"] == (2, 1, 1) for c in uniform)
+     assert all(c["fallback_cluster_shape_mnk"] is None for c in uniform)
+     assert {c["mma_tiler_mnk"] for c in uniform} == {
+@@ -189,7 +191,7 @@ def test_auto_catalog_preserves_uniform_and_adds_mixed_tactics(
+     }
+     # Append only the smaller mixed groups; preserve every prior entry and
+     # change no math, return mode or reduction permission on the new suffix.
+-    assert candidates[original_count:] == [
++    assert candidates[original_count:atomic_count] == [
+         {
+             **candidate,
+             "cluster_shape_mnk": (4, 1, 1),
+@@ -199,6 +201,14 @@ def test_auto_catalog_preserves_uniform_and_adds_mixed_tactics(
+         for candidate in uniform
+         if candidate["mma_tiler_mnk"][0] == 256 and candidate["group_hint"] == 512
+     ]
++    # Static mode is the only changed field in the appended mixed suffix.
++    assert static_mixed == [
++        {**candidate, "load_balance_mode": "static"} for candidate in atomic_mixed
++    ]
++    assert all(
++        c["load_balance_mode"] == "atomic_counter" for c in candidates[:atomic_count]
++    )
++    assert all(c["load_balance_mode"] == "static" for c in static_mixed)
+     assert {c["group_hint"] for c in uniform} == {512, 1024}
+     assert {c["group_hint"] for c in mixed} == {256, 512, 1024}
+     assert {c["token_back_mode"] for c in mixed} == {
+@@ -208,7 +218,7 @@ def test_auto_catalog_preserves_uniform_and_adds_mixed_tactics(
+     assert all(c["use_2cta_instrs"] for c in mixed)
+     assert all(tuner.is_valid_bf16_nvfp4(c) for c in candidates)
+     reduced = [c for c in candidates if c["in_kernel_fc2_reduce"]]
+-    assert len(reduced) == (17 if enable_in_kernel else 0)
++    assert len(reduced) == (26 if enable_in_kernel else 0)
+     assert all(c["token_back_mode"] == "reuse_dispatch_warps" for c in reduced)
+     if enable_in_kernel:
+         assert [c for c in candidates if not c["in_kernel_fc2_reduce"]] == (

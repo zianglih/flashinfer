@@ -1,0 +1,12 @@
+{
+  "complete_rankings_preserved_and_mode_counts_checked": true,
+  "final_branch_selection": "rejected",
+  "new_capture_hardware_matches_primary": true,
+  "outcome": "completed_pair",
+  "passed": true,
+  "primary_files_unchanged": true,
+  "restoration": "verified",
+  "samples_pooled_with_primary": false,
+  "scope": "CPU-only evidence integrity; overall bundle privacy scanning is performed by validate_current_draft.py",
+  "source_and_raw_linkage": true
+}

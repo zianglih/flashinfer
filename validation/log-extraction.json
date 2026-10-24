@@ -1,0 +1,21 @@
+{
+  "rules": [
+    {
+      "input": "evidence/remote/tests/host-contracts-candidate3r-after-middle-a1/pytest.log",
+      "input_sha256": "3748333708bb9678b0f0cb8824a757de43f5e969a15c5b61a19de48c93ec7c9c",
+      "output": "validation/host/pytest.log",
+      "output_sha256": "b3a2cff9f20fc4fb8714e3881fea504eb3ff69b2da114471ba9742442a1ac1b7",
+      "replacement_count": 2,
+      "rule": "Replace the captured absolute source checkout prefix with ${SOURCE}/; every other character retained"
+    },
+    {
+      "input": "evidence/precommit-candidate3r-final.log",
+      "input_sha256": "87bd1c345e4ae6dd22c74b419eba5c052e7d4f1ad45e4add9eba2627621ef694",
+      "output": "validation/precommit/precommit.log",
+      "output_sha256": "87bd1c345e4ae6dd22c74b419eba5c052e7d4f1ad45e4add9eba2627621ef694",
+      "replacement_count": 0,
+      "rule": "Replace the captured absolute source checkout prefix with ${SOURCE}/; every other character retained"
+    }
+  ],
+  "scope": "machine-path-only log transformations; no outcome, warning or failure text removed"
+}

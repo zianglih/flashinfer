@@ -1,0 +1,23 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-m",
+    "pytest",
+    "-q",
+    "tests/moe_ep/test_w4a16_mixed_cluster_config.py",
+    "tests/moe_ep/test_mega_workspace_knobs.py"
+  ],
+  "commit": "316faec37a4706a2ecc7d46265087f8190b40baa",
+  "complete": true,
+  "exit_code": 0,
+  "finished_at": "2026-10-24T22:27:52.166402+00:00",
+  "frozen_capture_sha256": "7d5ad307b24f0a1ec79f9815a6defe9e17fb3c8733169f1b9aa47cf7a9c4065f",
+  "launcher_sha256": "9453bf0148e826cd169af04b6a778afd6e88a05af726e12e0a68c669bd6a8320",
+  "original_capture_sha256": "b25642f664f3cddf413a3c5149f43db1e0cefa854127d2c995d2ece99268ee6d",
+  "source_identity_note": "Capture HEAD was the baseline with candidate edits; source manifests and unchanged commit freeze link tested bytes to candidate commit.",
+  "source_unchanged": true,
+  "started_at": "2026-10-24T22:27:22.950826+00:00",
+  "tested_source_matches_candidate_commit": "3d047d3f8e7923118ffea8b8d36151504ab1fa3d",
+  "timed_out": false,
+  "timeout_seconds": 180
+}

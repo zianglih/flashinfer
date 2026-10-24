@@ -1,0 +1,8 @@
+torch==2.12.0a0+5aff3928d8.nv26.5.50603568
+nvidia-cutlass-dsl==4.7.1
+cuda-python==13.2.0
+cuda-bindings==13.2.0
+cupti-python==13.2.0
+nvidia-cuda-cupti==13.2.86
+nvshmem4py-cu13==0.3.1
+nvidia-nvshmem-cu13==3.6.5

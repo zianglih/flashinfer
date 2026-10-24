@@ -1,0 +1,811 @@
+{
+  "points": [
+    {
+      "baseline_median_us": 71.105,
+      "baseline_over_candidate": 0.9600351043002768,
+      "baseline_sample_zero_ms": 41.063923,
+      "candidate_median_us": 74.065,
+      "candidate_sample_zero_ms": 56.300408,
+      "global_tokens": 1,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            64,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 81.2325,
+      "baseline_over_candidate": 0.901296482244795,
+      "baseline_sample_zero_ms": 36.692615,
+      "candidate_median_us": 90.1285,
+      "candidate_sample_zero_ms": 74.727444,
+      "global_tokens": 2,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": false
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 95.473,
+      "baseline_over_candidate": 0.9469930666455063,
+      "baseline_sample_zero_ms": 27.236236,
+      "candidate_median_us": 100.817,
+      "candidate_sample_zero_ms": 26.890335,
+      "global_tokens": 4,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": false
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 112.56150000000001,
+      "baseline_over_candidate": 1.0144285579102474,
+      "baseline_sample_zero_ms": 22.803018,
+      "candidate_median_us": 110.9605,
+      "candidate_sample_zero_ms": 25.814731,
+      "global_tokens": 8,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": false
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 256,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 128.545,
+      "baseline_over_candidate": 0.9972691373732513,
+      "baseline_sample_zero_ms": 23.120913,
+      "candidate_median_us": 128.89700000000002,
+      "candidate_sample_zero_ms": 83.503262,
+      "global_tokens": 16,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 146.177,
+      "baseline_over_candidate": 0.9831089828735914,
+      "baseline_sample_zero_ms": 32.887114,
+      "candidate_median_us": 148.6885,
+      "candidate_sample_zero_ms": 31.431644,
+      "global_tokens": 32,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 165.873,
+      "baseline_over_candidate": 1.025214239138161,
+      "baseline_sample_zero_ms": 43.7319,
+      "candidate_median_us": 161.79349999999997,
+      "candidate_sample_zero_ms": 41.637697,
+      "global_tokens": 64,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 162.8335,
+      "baseline_over_candidate": 0.9486395241465893,
+      "baseline_sample_zero_ms": 22.356326,
+      "candidate_median_us": 171.64950000000002,
+      "candidate_sample_zero_ms": 45.497813,
+      "global_tokens": 128,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 166.51399999999998,
+      "baseline_over_candidate": 1.0058989654912027,
+      "baseline_sample_zero_ms": 12.017075,
+      "candidate_median_us": 165.5375,
+      "candidate_sample_zero_ms": 54.522839,
+      "global_tokens": 256,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 171.889,
+      "baseline_over_candidate": 1.0117694148255187,
+      "baseline_sample_zero_ms": 62.92621,
+      "candidate_median_us": 169.88950000000003,
+      "candidate_sample_zero_ms": 21.287768,
+      "global_tokens": 512,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "epi_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 397.05999999999995,
+      "baseline_over_candidate": 0.989121309727547,
+      "baseline_sample_zero_ms": 103.928961,
+      "candidate_median_us": 401.42699999999996,
+      "candidate_sample_zero_ms": 29.630227,
+      "global_tokens": 4096,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "reuse_dispatch_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 512,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "reuse_dispatch_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 657.5260000000001,
+      "baseline_over_candidate": 0.9964100349297995,
+      "baseline_sample_zero_ms": 39.996096,
+      "candidate_median_us": 659.895,
+      "candidate_sample_zero_ms": 23.022847,
+      "global_tokens": 8192,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "reuse_dispatch_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "reuse_dispatch_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    },
+    {
+      "baseline_median_us": 1241.288,
+      "baseline_over_candidate": 0.9986853559595855,
+      "baseline_sample_zero_ms": 35.030599,
+      "candidate_median_us": 1242.922,
+      "candidate_sample_zero_ms": 62.920035,
+      "global_tokens": 16384,
+      "samples_per_arm": 100,
+      "selected_tactics": {
+        "baseline": {
+          "cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "flag_batch": 4,
+          "group_hint": 1024,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "reuse_dispatch_warps",
+          "use_2cta_instrs": true
+        },
+        "candidate3r": {
+          "cluster_shape_mnk": [
+            4,
+            1,
+            1
+          ],
+          "epi_flag_batch": [
+            2,
+            4
+          ],
+          "fallback_cluster_shape_mnk": [
+            2,
+            1,
+            1
+          ],
+          "flag_batch": 4,
+          "group_hint": 256,
+          "in_kernel_fc2_reduce": false,
+          "load_balance_mode": "atomic_counter",
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "num_sched_stages": 2,
+          "token_back_mode": "reuse_dispatch_warps",
+          "use_2cta_instrs": true
+        }
+      }
+    }
+  ],
+  "scope": "One ordered full13 screen, same-arm samples untrimmed; no earlier-run pooling or statistical significance claim"
+}

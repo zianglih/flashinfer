@@ -1,0 +1,185 @@
+{
+  "measurement_transformations": [],
+  "omissions": [
+    "private raw logs and command prologues",
+    "host/process/NIC inventories",
+    "unobserved outcomes"
+  ],
+  "operations": [
+    {
+      "excluded_fields": [],
+      "input": "evidence/restoration-local-after-static.json",
+      "input_sha256": "484eefc439ba69d26bb013bd52a1d45b474d479ff55dc8000eba0ea89a6ba419",
+      "operation": "Allowlist scope, restored commit, clean status, exact14 file hashes and optional timestamp; omit private source/host metadata",
+      "output": "experiments/auto36-static/restoration.json"
+    },
+    {
+      "excluded_fields": [
+        "compute_apps",
+        "gpus",
+        "locks_available",
+        "restored_from"
+      ],
+      "input": "evidence/candidate4s-remote-restoration.json",
+      "input_sha256": "1e57fc01bf12ecc8006cc270e8a9e603c7b7c6f7002f3c4567558c0b6310cff0",
+      "operation": "Allowlist scope, restored commit, clean status, exact14 file hashes and optional timestamp; omit private source/host metadata",
+      "output": "experiments/auto36-static/restoration.json"
+    },
+    {
+      "input": "publication/static-screen-preparation/source-recipe.json",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/source-recipe.json",
+      "sha256": "68894aad12cc1cd370c398e02e47dc320c4b6c397b89947bb636df3e8f681743"
+    },
+    {
+      "input": "publication/static-screen-preparation/recipe/auto36-static-on-3d.patch",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/recipe/auto36-static-on-3d.patch",
+      "sha256": "8fcb508e12dd4891ee65264f25ddf741214a357ec9f56d18ac074f4f28a8eebe"
+    },
+    {
+      "input": "publication/static-screen-preparation/recipe/auto_rankings.py",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/recipe/auto_rankings.py",
+      "sha256": "5745d251fbe097fc1dd4da58ac845eacef6b3aa3b8bf4ec895784ddba5574dd8"
+    },
+    {
+      "input": "publication/static-screen-preparation/recipe/audit_scheduler_modes.py",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/recipe/audit_scheduler_modes.py",
+      "sha256": "e29d810e5b627ea525ff05ea140d6f48f53fcbb201307345f0365da559bed80d"
+    },
+    {
+      "input": "publication/static-screen-preparation/recipe/reproduce-static.sh",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/recipe/reproduce-static.sh",
+      "sha256": "2e10057bb514df9be84f1dc2ce6fcb53fb75d32a2c8f28047d0ce878b3ec3d5c"
+    },
+    {
+      "input": "publication/static-screen-preparation/recipe/audit-published-modes.sh",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/recipe/audit-published-modes.sh",
+      "sha256": "d618a19484332b0a7f74b14fdbf25a468b8fcd2585fee9fe9f5a7f98ebb3ed40"
+    },
+    {
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-static-screen-a1",
+      "input_hashes": {
+        "gpu-before.txt": "6b28748bc703c30d54fe0799ecb71cec522ec2514ae1a62472dfc62835844aca",
+        "gpu-topology.txt": "8845065eae3b520f0a4c6793e331a0bcdb13459602e85cb3d61cfc61e9164553"
+      },
+      "operation": "Extract GPU model/count, host driver and GPU-only topology; verify against primary, omit private inventory fields",
+      "output": "experiments/auto36-static/baseline/hardware.json"
+    },
+    {
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-static-screen-a1/run.json",
+      "input_sha256": "4fbd528bb24954bd6c9be003ff25b76dd5f6c88484526ba258a2743d970f048f",
+      "operation": "Use primary metadata allowlist, copy only fields present in this capture, normalize source/cache paths; missing source-unchanged state stays null",
+      "output": "experiments/auto36-static/baseline/metadata.json"
+    },
+    {
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-static-screen-a1/source-manifest.json",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/baseline/source-manifest.json",
+      "sha256": "394d97ffc5f6c594fe66c8877c9a9c9f5a688595248fb813a4337a5d22f6afe0"
+    },
+    {
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-static-screen-a1/source-before.patch",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/baseline/source-before.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-static-screen-a1/source-status.txt",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/baseline/source-status.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-static-screen-a1/raw-records.json",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/baseline/raw-records.json",
+      "sha256": "e775f305e6b98efb45959f9c6d2abf6a957d4407242ae08034468d16577354d9"
+    },
+    {
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-static-screen-a1/summary.json",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/baseline/summary.json",
+      "sha256": "57c60b02277fb7d2c89032eba20f6d2ec2006729ec77098955928bf548b2a86c"
+    },
+    {
+      "input": "evidence/remote/queues/glm5-baseline-main-auto16-all-static-screen-a1/auto-rankings.json",
+      "input_sha256": "e477c30083749c348631d68e4a7f9432c9b1c9ee6f530e0c938925062e4d3f80",
+      "operation": "Replace only top-level absolute capture path with explicit parameter; preserve every group, tactic, rounded diagnostic score and log hash",
+      "output": "experiments/auto36-static/baseline/auto-rankings.json",
+      "output_sha256": "d766349202038d932c7390068bcdd4b79a2509b23041577a5b80e847358baf17"
+    },
+    {
+      "input": "evidence/publication/static-screen-publication-v1/baseline-scheduler-modes.json",
+      "operation": "Replace absolute capture path with explicit parameter; retain every coverage/selection field",
+      "output": "experiments/auto36-static/baseline/scheduler-modes.json"
+    },
+    {
+      "input": "evidence/remote/glm5-candidate4s-auto36-mixed-only-static-screen-a1",
+      "input_hashes": {
+        "gpu-before.txt": "dacdf4cb894e6110bf17021eee0f76bdc773de561991197cb6d4f09054f8aefb",
+        "gpu-topology.txt": "8845065eae3b520f0a4c6793e331a0bcdb13459602e85cb3d61cfc61e9164553"
+      },
+      "operation": "Extract GPU model/count, host driver and GPU-only topology; verify against primary, omit private inventory fields",
+      "output": "experiments/auto36-static/candidate4s/hardware.json"
+    },
+    {
+      "input": "evidence/remote/glm5-candidate4s-auto36-mixed-only-static-screen-a1/run.json",
+      "input_sha256": "c8745b1f8f4b2044349769d93884d3f328d7a2826a340c5bf2a3a6bea71ca654",
+      "operation": "Use primary metadata allowlist, copy only fields present in this capture, normalize source/cache paths; missing source-unchanged state stays null",
+      "output": "experiments/auto36-static/candidate4s/metadata.json"
+    },
+    {
+      "input": "evidence/remote/glm5-candidate4s-auto36-mixed-only-static-screen-a1/source-manifest.json",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/candidate4s/source-manifest.json",
+      "sha256": "9033935142e5d0111967faa730d6defecb6a7ac0d80d50d4a0a7bad1029d246e"
+    },
+    {
+      "input": "evidence/remote/glm5-candidate4s-auto36-mixed-only-static-screen-a1/source-before.patch",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/candidate4s/source-before.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "input": "evidence/remote/glm5-candidate4s-auto36-mixed-only-static-screen-a1/source-status.txt",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/candidate4s/source-status.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "input": "evidence/remote/glm5-candidate4s-auto36-mixed-only-static-screen-a1/raw-records.json",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/candidate4s/raw-records.json",
+      "sha256": "7e02ed9d0453dcdf9e00ecee957fbb105e53948659936be218591a1bf8b67baf"
+    },
+    {
+      "input": "evidence/remote/glm5-candidate4s-auto36-mixed-only-static-screen-a1/summary.json",
+      "operation": "byte-for-byte copy",
+      "output": "experiments/auto36-static/candidate4s/summary.json",
+      "sha256": "bb68cd84823875d8c78ac9902cf9cb8ec21e4df478ed935dfcccdb3b08abfec7"
+    },
+    {
+      "input": "evidence/remote/queues/glm5-candidate4s-auto36-mixed-only-static-screen-a1/auto-rankings.json",
+      "input_sha256": "4c9910774d58918e4d5bf0d523a435cc7bed39fdf252d36e36d2c9204f4cc13f",
+      "operation": "Replace only top-level absolute capture path with explicit parameter; preserve every group, tactic, rounded diagnostic score and log hash",
+      "output": "experiments/auto36-static/candidate4s/auto-rankings.json",
+      "output_sha256": "faaf44a3a94bcaa4aea93c958418713888b490cb4962034246c5460577aff8de"
+    },
+    {
+      "input": "evidence/publication/static-screen-publication-v1/candidate4s-scheduler-modes.json",
+      "operation": "Replace absolute capture path with explicit parameter; retain every coverage/selection field",
+      "output": "experiments/auto36-static/candidate4s/scheduler-modes.json"
+    },
+    {
+      "input": "evidence/publication/static-screen-publication-v1/native-comparison.json",
+      "input_sha256": "3ca1ce6b5e0ffc94384749d0e44fbf79f8d77d29ccea12c91c8a06f5a87300fa",
+      "operation": "Allowlist native protocol, fixture, relative source differences and input hashes; exclude machine paths and duplicated process/sample objects",
+      "output": "experiments/auto36-static/audit.json"
+    }
+  ]
+}

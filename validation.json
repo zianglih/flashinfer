@@ -1,0 +1,251 @@
+{
+  "allowed_public_addresses": [
+    "loopback address in exact captured native driver and recipe",
+    "https://github.com/zianglih/flashinfer.git"
+  ],
+  "excluded_private_content_matches": 0,
+  "final13_checks": {
+    "clean_pinned_sources": true,
+    "frozen_native_comparison_audit_linkage": true,
+    "full13_per_arm": true,
+    "host_and_precommit_source_linkage": true,
+    "log_byte_checks": [
+      {
+        "path": "validation/host/pytest.log",
+        "path_only_replacements": 2
+      },
+      {
+        "path": "validation/precommit/precommit.log",
+        "path_only_replacements": 0
+      }
+    ],
+    "rigorous_numerical_sanitizer_or_ikr_qualification_claimed": false,
+    "separate_flashinfer_workspace_shared_other_caches": true
+  },
+  "independent_confirmation_checks": [],
+  "limitations": [
+    "Static pattern checks are supplemented by metadata allowlisting; no complete secret detector is claimed.",
+    "No new performance, numerical, sanitizer, or GPU execution was performed."
+  ],
+  "measurement_checks": [
+    {
+      "global_tokens": 1,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 41.063923,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 2,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 36.692615,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 4,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 27.236236,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 8,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 22.803018,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 16,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 23.120913,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 32,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 32.887114,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 64,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 43.7319,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 128,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 22.356326,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 256,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 12.017075,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 512,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 62.92621,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 4096,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 103.928961,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 8192,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 39.996096,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 16384,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/baseline-full13",
+      "sample_zero_ms": 35.030599,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 1,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 56.300408,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 2,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 74.727444,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 4,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 26.890335,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 8,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 25.814731,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 16,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 83.503262,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 32,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 31.431644,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 64,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 41.637697,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 128,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 45.497813,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 256,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 54.522839,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 512,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 21.287768,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 4096,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 29.630227,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 8192,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 23.022847,
+      "samples_preserved": 100
+    },
+    {
+      "global_tokens": 16384,
+      "rank_receipts": 8,
+      "raw_and_summary_byte_identity": true,
+      "run": "runs/candidate3r-full13",
+      "sample_zero_ms": 62.920035,
+      "samples_preserved": 100
+    }
+  ],
+  "passed": true,
+  "scan_categories": [
+    "private_filesystem_root",
+    "private_account_identifier",
+    "remote_host_identifier",
+    "cloud_internal_hostname",
+    "gpu_uuid",
+    "RFC1918 IPv4 literals"
+  ],
+  "scanned_files": 75,
+  "scope": "Local artifact byte/hash/sample preservation and public-content scan; not kernel tests or GPU qualification"
+}

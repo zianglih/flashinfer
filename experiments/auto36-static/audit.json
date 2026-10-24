@@ -1,0 +1,119 @@
+{
+  "changed_source_files": [
+    "benchmarks/bench_cute_dsl_moe_distributed.py",
+    "flashinfer/moe_ep/backends/mega/kernel/sm100/bf16_nvfp4_bf16_cutedsl/backend.py",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/autotune.py",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/fc1_fc2_fuse_sched.py",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/frontend.py",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py",
+    "flashinfer/moe_ep/kernel_src/sm100/cutedsl_megamoe/shim/tuner.py",
+    "flashinfer/moe_ep/kernel_src/sm100/next_cutedsl_megamoe/__init__.py",
+    "flashinfer/moe_ep/kernel_src/sm100/next_cutedsl_megamoe/shim/mixed_cluster.py",
+    "flashinfer/moe_ep/kernel_src/sm100/next_cutedsl_megamoe/shim/scheduler_helpers.py"
+  ],
+  "fixture": {
+    "activation": "swiglu",
+    "gate_up_clamp": null,
+    "hidden_size": 6144,
+    "input_seed": "42 + rank",
+    "intermediate_size": 2048,
+    "model": "glm5",
+    "n_group": 8,
+    "num_experts": 256,
+    "precomputed_routing": true,
+    "routed_scaling_factor": 2.5,
+    "router_logit_seed": 137,
+    "routing_backend": "fused_deepseek",
+    "routing_bias_seed": 911,
+    "scope": "synthetic_nvfp4_routed_expert_core",
+    "situ_beta": null,
+    "situ_linear_beta": null,
+    "top_k": 8,
+    "topk_group": 4,
+    "weight_seed": "1000 + rank"
+  },
+  "inputs": [
+    {
+      "commit": "316faec37a4706a2ecc7d46265087f8190b40baa",
+      "sha256": {
+        "raw-records.json": "e775f305e6b98efb45959f9c6d2abf6a957d4407242ae08034468d16577354d9",
+        "run.json": "4fbd528bb24954bd6c9be003ff25b76dd5f6c88484526ba258a2743d970f048f",
+        "source-manifest.json": "394d97ffc5f6c594fe66c8877c9a9c9f5a688595248fb813a4337a5d22f6afe0",
+        "summary.json": "57c60b02277fb7d2c89032eba20f6d2ec2006729ec77098955928bf548b2a86c"
+      }
+    },
+    {
+      "commit": "f14e4bae9379703fd5693d8ee993faae23e130d5",
+      "sha256": {
+        "raw-records.json": "7e02ed9d0453dcdf9e00ecee957fbb105e53948659936be218591a1bf8b67baf",
+        "run.json": "c8745b1f8f4b2044349769d93884d3f328d7a2826a340c5bf2a3a6bea71ca654",
+        "source-manifest.json": "9033935142e5d0111967faa730d6defecb6a7ac0d80d50d4a0a7bad1029d246e",
+        "summary.json": "bb68cd84823875d8c78ac9902cf9cb8ec21e4df478ed935dfcccdb3b08abfec7"
+      }
+    }
+  ],
+  "original_audit_relative_path": "evidence/publication/static-screen-publication-v1/native-comparison.json",
+  "original_audit_sha256": "3ca1ce6b5e0ffc94384749d0e44fbf79f8d77d29ccea12c91c8a06f5a87300fa",
+  "passed": true,
+  "protocol": {
+    "benchmark_driver_sha256": "90502a5eb9f8f402b3f8959b7065d319bc106d14de623c860a23610d3ac119d9",
+    "benchmark_policy_wrapper_sha256": "debc1f10711482235ecf152ffc5747a5fc4b1de2bf2275c9f9788bfeb7f048ef",
+    "compiled_cache_policy": "separate-flashinfer-workspace-v1",
+    "controlled_environment": {
+      "BUILD_NVEP": "0",
+      "CUDA_ARCH_LIST": "7.5 8.0 8.6 9.0 10.0 12.0",
+      "CUDA_BINARY_LOADER_THREAD_COUNT": "8",
+      "CUDA_CACHE_DISABLE": "0",
+      "CUDA_COMPONENT_LIST": "cccl crt nvrtc driver-dev culibos-dev cudart cudart-dev nvcc tileiras",
+      "CUDA_DRIVER_VERSION": "595.58.03",
+      "CUDA_HOME": "/usr/local/cuda",
+      "CUDA_MODULE_LOADING": "LAZY",
+      "CUDA_VERSION": "13.2.1.009",
+      "CUDA_VISIBLE_DEVICES": "0,1,2,3,4,5,6,7",
+      "CUTE_DSL_NO_CACHE": "0",
+      "FLASHINFER_BUILD_NO_PIP": "1",
+      "FLASHINFER_CUTE_DSL_DISABLE_CACHE": "0",
+      "FLASHINFER_DISABLE_FP4_QUANT_FAST_MATH": "1",
+      "FLASHINFER_DIST_AWARE_AUTOTUNE": "0",
+      "FLASHINFER_MOE_EP_KNOB_CACHE": "0",
+      "FLASHINFER_NVFP4_4OVER6": "1",
+      "FLASHINFER_NVFP4_4OVER6_E4M3_USE_256": "1",
+      "FLASHINFER_NVFP4_4OVER6_ERR_MODE": "MSE",
+      "FLASHINFER_NVFP4_4OVER6_ERR_USE_FAST_MATH": "1",
+      "MAX_JOBS": "8",
+      "TRITON_CUDACRT_PATH": "/usr/local/cuda/include",
+      "TRITON_CUDART_PATH": "/usr/local/cuda/include",
+      "TRITON_CUOBJDUMP_PATH": "/usr/local/cuda/bin/cuobjdump",
+      "TRITON_CUPTI_INCLUDE_PATH": "/usr/local/cuda/include",
+      "TRITON_CUPTI_LIB_PATH": "/usr/local/cuda/lib64",
+      "TRITON_NVDISASM_PATH": "/usr/local/cuda/bin/nvdisasm",
+      "TRITON_PTXAS_PATH": "/usr/local/cuda/bin/ptxas"
+    },
+    "fused_tma_reduce": false,
+    "image": "nvcr.io/nvidia/pytorch:26.05-py3",
+    "iters": 100,
+    "model": "glm5",
+    "pdl": true,
+    "runtime_versions": {
+      "cuda-bindings": "13.2.0",
+      "cuda-python": "13.2.0",
+      "cupti-python": "13.2.0",
+      "nvidia-cuda-cupti": "13.2.86",
+      "nvidia-cutlass-dsl": "4.7.1",
+      "nvidia-nvshmem-cu13": "3.6.5",
+      "nvshmem4py-cu13": "0.3.1",
+      "torch": "2.12.0a0+5aff3928d8.nv26.5.50603568"
+    },
+    "tokens": [
+      64,
+      128,
+      4096
+    ],
+    "variants": [
+      "w4a16_megamoe"
+    ],
+    "w4a16_megamoe_fused_deterministic_combine": true,
+    "warmup": 3
+  },
+  "statistical_boundary": "Descriptive raw-sample pooling; not an independence or significance claim."
+}

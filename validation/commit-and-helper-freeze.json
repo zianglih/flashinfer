@@ -1,0 +1,25 @@
+{
+  "commit": "3d047d3f8e7923118ffea8b8d36151504ab1fa3d",
+  "complete": true,
+  "finished_at": "2026-10-24T22:30:15.193619+00:00",
+  "head_before": "316faec37a4706a2ecc7d46265087f8190b40baa",
+  "helpers": {
+    "harness/compare.py": {
+      "after": "e9bb07254085e00ef383eb70f717f73fff603bd0ed56171d8156aee165f1d81a",
+      "before": "418a5918e131b20a06770d21e7a7b2290ad983c2b6cb08e5489fd26e8f27f53d"
+    },
+    "harness/run.py": {
+      "after": "04139d1a2a776485c7bac62534723afb6f0b1ad9547efc2fdd9b161f978e5398",
+      "before": "7d5ad307b24f0a1ec79f9815a6defe9e17fb3c8733169f1b9aa47cf7a9c4065f"
+    },
+    "remote/full_pair.sh": {
+      "after": "c529e9693f362f8afdbd23ae928e4fae269ee426ec13e1d0413960c68082d498",
+      "before": null
+    }
+  },
+  "parent": "316faec37a4706a2ecc7d46265087f8190b40baa",
+  "source_bytes_unchanged": true,
+  "started_at": "2026-10-24T22:30:02.789371+00:00",
+  "status_after": "",
+  "status_before": "M benchmarks/bench_cute_dsl_moe_distributed.py\n M flashinfer/moe_ep/backends/mega/kernel/sm100/bf16_nvfp4_bf16_cutedsl/backend.py\n M flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/autotune.py\n M flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/fc1_fc2_fuse_sched.py\n M flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/frontend.py\n M flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py\n M flashinfer/moe_ep/kernel_src/sm100/cutedsl_megamoe/shim/tuner.py\n M flashinfer/moe_ep/kernel_src/sm100/next_cutedsl_megamoe/__init__.py\n M tests/moe_ep/test_mega_workspace_knobs.py\n M tests/moe_ep/test_moe_ep_nvfp4_cutedsl_mega_multirank.py\n?? flashinfer/moe_ep/kernel_src/sm100/next_cutedsl_megamoe/shim/mixed_cluster.py\n?? flashinfer/moe_ep/kernel_src/sm100/next_cutedsl_megamoe/shim/scheduler_helpers.py\n?? tests/moe_ep/test_w4a16_mixed_cluster_config.py\n?? tests/moe_ep/test_w4a16_mixed_cluster_scheduler.py"
+}

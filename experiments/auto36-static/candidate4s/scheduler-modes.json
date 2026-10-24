@@ -1,0 +1,149 @@
+{
+  "capture": "${CANDIDATE4S_STATIC_CAPTURE}",
+  "commit": "f14e4bae9379703fd5693d8ee993faae23e130d5",
+  "original_audit_sha256": "e6aeab575a2829169f2c465bdf16f36c58ed2ed2e7090b4d9d3e7ed414d8d15f",
+  "points": [
+    {
+      "catalog_scheduler_modes": {
+        "atomic_counter": 18,
+        "static": 18
+      },
+      "global_tokens": 64,
+      "ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "winner_knobs": {
+        "cluster_shape_mnk": [
+          4,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "fallback_cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "winner_scheduler_mode": "atomic_counter"
+    },
+    {
+      "catalog_scheduler_modes": {
+        "atomic_counter": 18,
+        "static": 18
+      },
+      "global_tokens": 128,
+      "ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "winner_knobs": {
+        "cluster_shape_mnk": [
+          4,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "fallback_cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "winner_scheduler_mode": "atomic_counter"
+    },
+    {
+      "catalog_scheduler_modes": {
+        "atomic_counter": 18,
+        "static": 18
+      },
+      "global_tokens": 4096,
+      "ranks": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "winner_knobs": {
+        "cluster_shape_mnk": [
+          4,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "fallback_cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "winner_scheduler_mode": "atomic_counter"
+    }
+  ],
+  "published_rankings_sha256": "faaf44a3a94bcaa4aea93c958418713888b490cb4962034246c5460577aff8de",
+  "ranking_file_sha256": "4c9910774d58918e4d5bf0d523a435cc7bed39fdf252d36e36d2c9204f4cc13f",
+  "scope": "Coverage and selected-mode evidence from native AUTO; internal ranking scores are not cold-L2 CUPTI timings.",
+  "tactic_policy": "mixed-only"
+}

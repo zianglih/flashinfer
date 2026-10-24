@@ -1,0 +1,104 @@
+{
+  "baseline_auto_policy": "original16/all",
+  "candidate_auto_policy": "new18/mixed-only from product34",
+  "captured_tokens": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    4096,
+    8192,
+    16384
+  ],
+  "compiled_cache_policy": "separate-flashinfer-workspace-v1",
+  "default_full_grid": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    4096,
+    8192,
+    16384
+  ],
+  "excluded_inputs": [
+    "raw sweep logs and command prologues",
+    "raw run metadata with machine paths",
+    "remote orchestration and connection metadata",
+    "raw GPU/process/NIC inventories",
+    "incomplete captures",
+    "older candidate experiments",
+    "profiler captures"
+  ],
+  "independent_experiments": [
+    {
+      "kind": "auto36-static",
+      "outcome": "completed_pair",
+      "path": "experiments/auto36-static"
+    }
+  ],
+  "measurement_bytes": "raw-records.json and summary.json copied unchanged; every sample retained",
+  "pending": [],
+  "prior_iteration_data_included": false,
+  "runs": [
+    {
+      "arm": "baseline",
+      "capture_label": "glm5-baseline-main-auto16-all-full13-a1",
+      "path": "runs/baseline-full13",
+      "pointset": "full13",
+      "raw_records_sha256": "3a78d8ba617e0a9e5a16bfe9fffe7715860a5b5b29cd9aab52d02175af23e168",
+      "summary_sha256": "f6e5530cf68a128c8823994ad7aef1d2a8d8b0dc53a703f63bc228c6e8d383a1",
+      "tokens": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        4096,
+        8192,
+        16384
+      ]
+    },
+    {
+      "arm": "candidate3r",
+      "capture_label": "glm5-candidate3r-auto18-mixed-only-full13-a1",
+      "path": "runs/candidate3r-full13",
+      "pointset": "full13",
+      "raw_records_sha256": "69f8fd2e5b1c103789c3297ac5e2c22348184171870403fc8460f23dd2bff449",
+      "summary_sha256": "a1dcd800b5427983826f947fe588b8a38b495c835342c91e9c7539c0f70c33f5",
+      "tokens": [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32,
+        64,
+        128,
+        256,
+        512,
+        4096,
+        8192,
+        16384
+      ]
+    }
+  ],
+  "schema_version": 1,
+  "status": "complete final full13 performance pair; no rigorous correctness qualification claim"
+}
