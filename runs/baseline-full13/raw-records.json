@@ -1,0 +1,6618 @@
+[
+  {
+    "kind": "DISTRIBUTED_MODEL_JSON",
+    "sweep": 1,
+    "value": {
+      "activation": "swiglu",
+      "gate_up_clamp": null,
+      "hidden_size": 6144,
+      "input_seed": "42 + rank",
+      "intermediate_size": 2048,
+      "model": "glm5",
+      "n_group": 8,
+      "num_experts": 256,
+      "precomputed_routing": true,
+      "routed_scaling_factor": 2.5,
+      "router_logit_seed": 137,
+      "routing_backend": "fused_deepseek",
+      "routing_bias_seed": 911,
+      "scope": "synthetic_nvfp4_routed_expert_core",
+      "situ_beta": null,
+      "situ_linear_beta": null,
+      "top_k": 8,
+      "topk_group": 4,
+      "weight_seed": "1000 + rank"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 1,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 1,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 1,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 1,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 1,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 1,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 1,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 1,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 1,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          64,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 1,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          64,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 1,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          64,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 1,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          64,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 1,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          64,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 1,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          64,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 1,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          64,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 1,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          64,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 1,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        41.063923,
+        0.120704,
+        0.069728,
+        0.071169,
+        0.07088,
+        0.07056,
+        0.070016,
+        0.069889,
+        0.081089,
+        0.069152,
+        0.069473,
+        0.070529,
+        0.068865,
+        0.071232,
+        0.077472,
+        0.070817,
+        0.068609,
+        0.074977,
+        0.06688,
+        0.06928,
+        0.069601,
+        0.070145,
+        0.066273,
+        0.070081,
+        0.068993,
+        0.070017,
+        0.068096,
+        0.069472,
+        0.069601,
+        0.071745,
+        0.069984,
+        0.0728,
+        0.071296,
+        0.069345,
+        0.071489,
+        0.069696,
+        0.068672,
+        0.071969,
+        0.071968,
+        0.071392,
+        0.072001,
+        0.070049,
+        0.071169,
+        0.069824,
+        0.068449,
+        0.072865,
+        0.0696,
+        0.069984,
+        0.069185,
+        0.070273,
+        0.066912,
+        0.07056,
+        0.070208,
+        0.072129,
+        0.071328,
+        0.071936,
+        0.069537,
+        0.071745,
+        0.068673,
+        0.068992,
+        0.073569,
+        0.073377,
+        0.072161,
+        0.073024,
+        0.072608,
+        0.071809,
+        0.073057,
+        0.072609,
+        0.071969,
+        0.075233,
+        0.073121,
+        0.072192,
+        0.072896,
+        0.074593,
+        0.070592,
+        0.072192,
+        0.070208,
+        0.073089,
+        0.072704,
+        0.071232,
+        0.06976,
+        0.071232,
+        0.071041,
+        0.068736,
+        0.068672,
+        0.071969,
+        0.075393,
+        0.072928,
+        0.07008,
+        0.076481,
+        0.07152,
+        0.06912,
+        0.070848,
+        0.072289,
+        0.073601,
+        0.073697,
+        0.068704,
+        0.072129,
+        0.069088,
+        0.071392
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.5334895779960789,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 2,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 2,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 2,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 2,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 2,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 2,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 2,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 2,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 2,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 2,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 2,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 2,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 2,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 2,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 2,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 2,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 2,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        36.692615,
+        0.093376,
+        0.080001,
+        0.081088,
+        0.078881,
+        0.080737,
+        0.081889,
+        0.079905,
+        0.080321,
+        0.077984,
+        0.079073,
+        0.079873,
+        0.079136,
+        0.079105,
+        0.080065,
+        0.078496,
+        0.078401,
+        0.080161,
+        0.081536,
+        0.077025,
+        0.078784,
+        0.080992,
+        0.078273,
+        0.082369,
+        0.072577,
+        0.079361,
+        0.079457,
+        0.080928,
+        0.079361,
+        0.081473,
+        0.079904,
+        0.080929,
+        0.080704,
+        0.078368,
+        0.079841,
+        0.078433,
+        0.091457,
+        0.080129,
+        0.081312,
+        0.081153,
+        0.078625,
+        0.079264,
+        0.080577,
+        0.08016,
+        0.080416,
+        0.080961,
+        0.081056,
+        0.077216,
+        0.079809,
+        0.082049,
+        0.078688,
+        0.079457,
+        0.080769,
+        0.08144,
+        0.081633,
+        0.08432,
+        0.082241,
+        0.081761,
+        0.082528,
+        0.091745,
+        0.081857,
+        0.082081,
+        0.082817,
+        0.081312,
+        0.083521,
+        0.081761,
+        0.083104,
+        0.080705,
+        0.081888,
+        0.081697,
+        0.082305,
+        0.083296,
+        0.081729,
+        0.084481,
+        0.081697,
+        0.082625,
+        0.087105,
+        0.081697,
+        0.082689,
+        0.084257,
+        0.081953,
+        0.081313,
+        0.081121,
+        0.082177,
+        0.079361,
+        0.083425,
+        0.081088,
+        0.082657,
+        0.083009,
+        0.083296,
+        0.080961,
+        0.08352,
+        0.082432,
+        0.082337,
+        0.084992,
+        0.081697,
+        0.084224,
+        0.080673,
+        0.082881,
+        0.082336
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.45951112802140415,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 3,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 3,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 3,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 3,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 3,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 3,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 3,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 3,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 0,
+      "max_tokens_per_rank": 1,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 4,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        27.236236,
+        0.093697,
+        0.093665,
+        0.095136,
+        0.091681,
+        0.092128,
+        0.089985,
+        0.091041,
+        0.089409,
+        0.097633,
+        0.08976,
+        0.09024,
+        0.088673,
+        0.088641,
+        0.08784,
+        0.091745,
+        0.09104,
+        0.092897,
+        0.090081,
+        0.091808,
+        0.104609,
+        0.091744,
+        0.093921,
+        0.091553,
+        0.091489,
+        0.096321,
+        0.092096,
+        0.091969,
+        0.092256,
+        0.091233,
+        0.107201,
+        0.094977,
+        0.089825,
+        0.093344,
+        0.089281,
+        0.091617,
+        0.092512,
+        0.092097,
+        0.093248,
+        0.094529,
+        0.092897,
+        0.101761,
+        0.093377,
+        0.096512,
+        0.094657,
+        0.095809,
+        0.097345,
+        0.097505,
+        0.091968,
+        0.096673,
+        0.096864,
+        0.103617,
+        0.09408,
+        0.097633,
+        0.093793,
+        0.098945,
+        0.097601,
+        0.098464,
+        0.096097,
+        0.097089,
+        0.095649,
+        0.099681,
+        0.094113,
+        0.095457,
+        0.090368,
+        0.100001,
+        0.097185,
+        0.093953,
+        0.095489,
+        0.097089,
+        0.093696,
+        0.100193,
+        0.094849,
+        0.096961,
+        0.096289,
+        0.099424,
+        0.092065,
+        0.100224,
+        0.096961,
+        0.10288,
+        0.095009,
+        0.103329,
+        0.107681,
+        0.097632,
+        0.098209,
+        0.097985,
+        0.098209,
+        0.10688,
+        0.097088,
+        0.096257,
+        0.098529,
+        0.096289,
+        0.095873,
+        0.098113,
+        0.096928,
+        0.100097,
+        0.094337,
+        0.096705,
+        0.098656,
+        0.101089
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.4650576790445484,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 4,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 4,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 4,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 4,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 4,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 4,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 4,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 4,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          128,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": false
+      },
+      "local_tokens": 1,
+      "max_tokens_per_rank": 1,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 8,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        22.803018,
+        0.110209,
+        0.108897,
+        0.110049,
+        0.109377,
+        0.108449,
+        0.108801,
+        0.108609,
+        0.106497,
+        0.109634,
+        0.109121,
+        0.109153,
+        0.108385,
+        0.111649,
+        0.107777,
+        0.102593,
+        0.107617,
+        0.110657,
+        0.108161,
+        0.110017,
+        0.110977,
+        0.118497,
+        0.111169,
+        0.111394,
+        0.114146,
+        0.111393,
+        0.111585,
+        0.112193,
+        0.116833,
+        0.111265,
+        0.108,
+        0.111618,
+        0.110849,
+        0.113601,
+        0.113761,
+        0.110369,
+        0.122593,
+        0.112578,
+        0.111521,
+        0.114753,
+        0.111873,
+        0.112898,
+        0.113474,
+        0.113793,
+        0.112225,
+        0.112257,
+        0.111297,
+        0.115073,
+        0.110689,
+        0.114529,
+        0.112545,
+        0.114465,
+        0.109409,
+        0.111873,
+        0.109089,
+        0.115745,
+        0.111489,
+        0.108481,
+        0.116385,
+        0.113441,
+        0.115553,
+        0.113633,
+        0.115329,
+        0.117282,
+        0.112673,
+        0.113058,
+        0.111201,
+        0.112129,
+        0.111489,
+        0.114401,
+        0.113697,
+        0.112481,
+        0.114881,
+        0.120193,
+        0.115873,
+        0.116097,
+        0.113185,
+        0.114337,
+        0.110818,
+        0.113857,
+        0.113569,
+        0.113825,
+        0.113665,
+        0.115266,
+        0.111234,
+        0.118721,
+        0.112129,
+        0.117409,
+        0.114722,
+        0.118433,
+        0.113249,
+        0.114721,
+        0.113025,
+        0.114754,
+        0.116513,
+        0.111553,
+        0.113889,
+        0.114721,
+        0.116769,
+        0.118241
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.4805844509974122,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 5,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 5,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 5,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 5,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 5,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 5,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 5,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 5,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2,
+      "max_tokens_per_rank": 2,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2,
+      "max_tokens_per_rank": 2,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2,
+      "max_tokens_per_rank": 2,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2,
+      "max_tokens_per_rank": 2,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2,
+      "max_tokens_per_rank": 2,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2,
+      "max_tokens_per_rank": 2,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2,
+      "max_tokens_per_rank": 2,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2,
+      "max_tokens_per_rank": 2,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 16,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        23.120913,
+        0.128769,
+        0.12368,
+        0.128577,
+        0.121985,
+        0.121537,
+        0.122817,
+        0.129633,
+        0.125377,
+        0.124097,
+        0.125793,
+        0.126145,
+        0.125761,
+        0.124417,
+        0.122753,
+        0.124897,
+        0.116737,
+        0.132289,
+        0.126401,
+        0.124001,
+        0.126017,
+        0.125281,
+        0.126209,
+        0.126272,
+        0.126529,
+        0.130529,
+        0.127521,
+        0.12496,
+        0.129409,
+        0.128161,
+        0.129376,
+        0.128161,
+        0.129889,
+        0.128321,
+        0.134977,
+        0.135169,
+        0.130305,
+        0.130113,
+        0.130433,
+        0.134721,
+        0.129953,
+        0.129665,
+        0.128801,
+        0.128385,
+        0.133825,
+        0.129888,
+        0.130112,
+        0.129057,
+        0.128545,
+        0.129602,
+        0.127745,
+        0.128129,
+        0.127777,
+        0.128001,
+        0.131777,
+        0.132481,
+        0.12845,
+        0.141633,
+        0.128897,
+        0.127873,
+        0.131008,
+        0.138304,
+        0.130497,
+        0.130209,
+        0.130624,
+        0.128641,
+        0.130593,
+        0.127361,
+        0.128417,
+        0.129537,
+        0.132833,
+        0.128224,
+        0.126209,
+        0.125985,
+        0.127009,
+        0.125312,
+        0.129313,
+        0.127041,
+        0.128512,
+        0.127009,
+        0.133345,
+        0.132641,
+        0.130752,
+        0.131201,
+        0.130625,
+        0.128545,
+        0.129568,
+        0.129217,
+        0.138017,
+        0.127361,
+        0.130305,
+        0.126689,
+        0.137313,
+        0.125825,
+        0.126753,
+        0.127713,
+        0.129888,
+        0.128001,
+        0.129249,
+        0.127329
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.48897947696968913,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 6,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 6,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 6,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 6,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 6,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 6,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 6,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 6,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 32,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 4,
+      "max_tokens_per_rank": 4,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 32,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 4,
+      "max_tokens_per_rank": 4,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 32,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 4,
+      "max_tokens_per_rank": 4,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 32,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 4,
+      "max_tokens_per_rank": 4,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 32,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 4,
+      "max_tokens_per_rank": 4,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 32,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 4,
+      "max_tokens_per_rank": 4,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 32,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 4,
+      "max_tokens_per_rank": 4,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 32,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 4,
+      "max_tokens_per_rank": 4,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 32,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        32.887114,
+        0.141793,
+        0.144737,
+        0.141249,
+        0.139201,
+        0.141665,
+        0.14096,
+        0.139842,
+        0.141537,
+        0.141761,
+        0.144129,
+        0.142049,
+        0.142946,
+        0.147425,
+        0.141441,
+        0.142465,
+        0.145921,
+        0.144609,
+        0.145185,
+        0.143329,
+        0.142817,
+        0.144385,
+        0.146337,
+        0.144801,
+        0.14336,
+        0.146465,
+        0.146529,
+        0.146881,
+        0.144769,
+        0.144097,
+        0.145121,
+        0.145697,
+        0.145185,
+        0.14528,
+        0.146593,
+        0.144609,
+        0.145378,
+        0.146849,
+        0.144545,
+        0.145377,
+        0.145729,
+        0.156737,
+        0.144706,
+        0.145185,
+        0.146945,
+        0.146849,
+        0.147649,
+        0.148354,
+        0.145954,
+        0.150465,
+        0.145602,
+        0.146049,
+        0.144993,
+        0.146113,
+        0.149377,
+        0.14941,
+        0.14749,
+        0.150433,
+        0.149121,
+        0.146304,
+        0.148897,
+        0.156001,
+        0.147265,
+        0.150562,
+        0.150721,
+        0.154145,
+        0.150625,
+        0.147104,
+        0.148385,
+        0.144706,
+        0.144833,
+        0.14781,
+        0.148001,
+        0.144993,
+        0.147137,
+        0.147201,
+        0.148481,
+        0.145953,
+        0.147041,
+        0.149282,
+        0.146561,
+        0.143521,
+        0.145217,
+        0.14416,
+        0.148353,
+        0.149857,
+        0.148001,
+        0.146562,
+        0.146081,
+        0.146241,
+        0.147104,
+        0.145761,
+        0.146337,
+        0.147937,
+        0.151873,
+        0.150145,
+        0.14605,
+        0.147168,
+        0.164034,
+        0.147937
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.5043577710166574,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 7,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 7,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 7,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 7,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 7,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 7,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 7,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 7,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 64,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 8,
+      "max_tokens_per_rank": 8,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 64,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 8,
+      "max_tokens_per_rank": 8,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 64,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 8,
+      "max_tokens_per_rank": 8,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 64,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 8,
+      "max_tokens_per_rank": 8,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 64,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 8,
+      "max_tokens_per_rank": 8,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 64,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 8,
+      "max_tokens_per_rank": 8,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 64,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 8,
+      "max_tokens_per_rank": 8,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 64,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 8,
+      "max_tokens_per_rank": 8,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 64,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        43.7319,
+        0.165121,
+        0.163361,
+        0.160065,
+        0.161697,
+        0.161217,
+        0.160833,
+        0.159649,
+        0.16317,
+        0.161793,
+        0.160577,
+        0.161697,
+        0.160961,
+        0.167297,
+        0.165985,
+        0.171169,
+        0.16189,
+        0.161985,
+        0.161281,
+        0.164257,
+        0.162561,
+        0.163202,
+        0.164002,
+        0.165314,
+        0.163585,
+        0.177217,
+        0.163266,
+        0.161153,
+        0.165121,
+        0.161185,
+        0.163233,
+        0.164385,
+        0.163617,
+        0.174978,
+        0.16445,
+        0.165441,
+        0.163425,
+        0.167649,
+        0.164449,
+        0.165441,
+        0.166561,
+        0.163841,
+        0.167169,
+        0.166114,
+        0.165249,
+        0.166849,
+        0.164673,
+        0.166273,
+        0.165857,
+        0.165697,
+        0.166145,
+        0.164737,
+        0.168866,
+        0.167618,
+        0.167202,
+        0.168481,
+        0.165249,
+        0.167617,
+        0.166113,
+        0.167425,
+        0.165889,
+        0.168897,
+        0.168866,
+        0.167906,
+        0.166369,
+        0.168065,
+        0.164641,
+        0.159841,
+        0.169025,
+        0.164897,
+        0.167457,
+        0.168513,
+        0.169089,
+        0.167618,
+        0.167233,
+        0.166338,
+        0.168577,
+        0.168481,
+        0.167009,
+        0.166849,
+        0.167745,
+        0.165953,
+        0.163553,
+        0.170913,
+        0.16557,
+        0.16637,
+        0.163105,
+        0.168033,
+        0.164897,
+        0.166209,
+        0.163873,
+        0.166849,
+        0.164033,
+        0.167425,
+        0.168257,
+        0.16765,
+        0.164322,
+        0.169665,
+        0.172897,
+        0.167105
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.48213458800455555,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 8,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 8,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 8,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 8,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 8,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 8,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 8,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 8,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 128,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 16,
+      "max_tokens_per_rank": 16,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 128,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 16,
+      "max_tokens_per_rank": 16,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 128,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 16,
+      "max_tokens_per_rank": 16,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 128,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 16,
+      "max_tokens_per_rank": 16,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 128,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 16,
+      "max_tokens_per_rank": 16,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 128,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 16,
+      "max_tokens_per_rank": 16,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 128,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 16,
+      "max_tokens_per_rank": 16,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 128,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 16,
+      "max_tokens_per_rank": 16,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 128,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        22.356326,
+        0.162177,
+        0.157057,
+        0.155457,
+        0.156865,
+        0.157089,
+        0.157057,
+        0.156865,
+        0.174273,
+        0.159361,
+        0.163137,
+        0.159873,
+        0.15725,
+        0.159233,
+        0.159681,
+        0.167393,
+        0.159266,
+        0.166721,
+        0.15949,
+        0.160865,
+        0.160642,
+        0.160769,
+        0.161698,
+        0.169793,
+        0.161121,
+        0.164641,
+        0.162786,
+        0.162945,
+        0.164514,
+        0.161697,
+        0.168737,
+        0.164161,
+        0.165698,
+        0.165762,
+        0.162274,
+        0.164961,
+        0.165313,
+        0.163137,
+        0.161281,
+        0.161313,
+        0.163169,
+        0.162081,
+        0.162145,
+        0.166977,
+        0.163457,
+        0.162401,
+        0.160289,
+        0.162401,
+        0.162497,
+        0.164129,
+        0.16813,
+        0.167681,
+        0.163329,
+        0.162242,
+        0.164385,
+        0.161505,
+        0.164097,
+        0.165377,
+        0.162017,
+        0.163234,
+        0.163009,
+        0.162049,
+        0.16301,
+        0.163106,
+        0.161954,
+        0.160706,
+        0.158945,
+        0.163489,
+        0.16493,
+        0.164385,
+        0.163298,
+        0.162306,
+        0.163266,
+        0.162594,
+        0.163042,
+        0.163585,
+        0.160801,
+        0.164642,
+        0.163777,
+        0.165569,
+        0.164833,
+        0.162433,
+        0.162177,
+        0.163969,
+        0.160577,
+        0.163489,
+        0.161697,
+        0.164449,
+        0.178305,
+        0.164289,
+        0.163905,
+        0.161953,
+        0.162753,
+        0.162657,
+        0.162273,
+        0.162913,
+        0.162273,
+        0.164769,
+        0.161345,
+        0.162881
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.5028367349877954,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 9,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 9,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 9,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 9,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 9,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 9,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 9,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 9,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 256,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 32,
+      "max_tokens_per_rank": 32,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 256,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 32,
+      "max_tokens_per_rank": 32,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 256,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 32,
+      "max_tokens_per_rank": 32,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 256,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 32,
+      "max_tokens_per_rank": 32,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 256,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 32,
+      "max_tokens_per_rank": 32,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 256,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 32,
+      "max_tokens_per_rank": 32,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 256,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 32,
+      "max_tokens_per_rank": 32,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 256,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 512,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 32,
+      "max_tokens_per_rank": 32,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 256,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        12.017075,
+        0.172386,
+        0.16477,
+        0.168866,
+        0.163523,
+        0.163075,
+        0.159874,
+        0.163458,
+        0.16253,
+        0.162082,
+        0.16637,
+        0.165826,
+        0.168162,
+        0.165026,
+        0.162658,
+        0.16445,
+        0.161314,
+        0.164674,
+        0.162818,
+        0.166114,
+        0.16477,
+        0.161986,
+        0.164226,
+        0.163362,
+        0.16717,
+        0.168834,
+        0.162754,
+        0.171778,
+        0.16621,
+        0.162241,
+        0.165153,
+        0.163458,
+        0.16397,
+        0.167841,
+        0.166306,
+        0.16413,
+        0.166241,
+        0.166594,
+        0.17165,
+        0.165506,
+        0.166755,
+        0.167202,
+        0.167042,
+        0.168418,
+        0.168994,
+        0.166626,
+        0.168386,
+        0.169602,
+        0.166242,
+        0.16525,
+        0.165634,
+        0.168322,
+        0.175138,
+        0.161634,
+        0.165794,
+        0.166082,
+        0.165922,
+        0.166434,
+        0.16845,
+        0.167362,
+        0.167682,
+        0.165281,
+        0.16701,
+        0.165858,
+        0.164418,
+        0.164322,
+        0.168002,
+        0.16877,
+        0.166497,
+        0.168258,
+        0.169154,
+        0.173666,
+        0.16669,
+        0.167874,
+        0.165826,
+        0.166914,
+        0.165953,
+        0.168386,
+        0.167138,
+        0.169026,
+        0.166882,
+        0.168514,
+        0.168322,
+        0.167619,
+        0.169826,
+        0.167362,
+        0.166531,
+        0.168578,
+        0.170594,
+        0.169186,
+        0.16941,
+        0.170178,
+        0.16925,
+        0.168802,
+        0.165762,
+        0.16973,
+        0.163139,
+        0.165377,
+        0.165122,
+        0.16541
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.49247210600879043,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 10,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 10,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 10,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 10,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 10,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 10,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 10,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 10,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 512,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 64,
+      "max_tokens_per_rank": 64,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 512,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 64,
+      "max_tokens_per_rank": 64,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 512,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 64,
+      "max_tokens_per_rank": 64,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 512,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 64,
+      "max_tokens_per_rank": 64,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 512,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 64,
+      "max_tokens_per_rank": 64,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 512,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 64,
+      "max_tokens_per_rank": 64,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 512,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 64,
+      "max_tokens_per_rank": 64,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 512,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          32,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "epi_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 64,
+      "max_tokens_per_rank": 64,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 512,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        62.92621,
+        0.252418,
+        0.167169,
+        0.167489,
+        0.163713,
+        0.168481,
+        0.167585,
+        0.180577,
+        0.168705,
+        0.168865,
+        0.168802,
+        0.167617,
+        0.169281,
+        0.170721,
+        0.172129,
+        0.169857,
+        0.167201,
+        0.169793,
+        0.170113,
+        0.170529,
+        0.168769,
+        0.175425,
+        0.171426,
+        0.171425,
+        0.174305,
+        0.176513,
+        0.179393,
+        0.176866,
+        0.176737,
+        0.171297,
+        0.17245,
+        0.173761,
+        0.177122,
+        0.175169,
+        0.172065,
+        0.172354,
+        0.173345,
+        0.172513,
+        0.172897,
+        0.173569,
+        0.169793,
+        0.171137,
+        0.170209,
+        0.172097,
+        0.174561,
+        0.168865,
+        0.172737,
+        0.172801,
+        0.175361,
+        0.172129,
+        0.171521,
+        0.171617,
+        0.170337,
+        0.171458,
+        0.173377,
+        0.172994,
+        0.173634,
+        0.173122,
+        0.170818,
+        0.172482,
+        0.171746,
+        0.170114,
+        0.167266,
+        0.172929,
+        0.173953,
+        0.172865,
+        0.176674,
+        0.172226,
+        0.169377,
+        0.171745,
+        0.171425,
+        0.171873,
+        0.171905,
+        0.177281,
+        0.168737,
+        0.171169,
+        0.171169,
+        0.171873,
+        0.171425,
+        0.173473,
+        0.170721,
+        0.177345,
+        0.173441,
+        0.171809,
+        0.171105,
+        0.176481,
+        0.173409,
+        0.173665,
+        0.171585,
+        0.173761,
+        0.173121,
+        0.173345,
+        0.170337,
+        0.174113,
+        0.17357,
+        0.169217,
+        0.172866,
+        0.170306,
+        0.169282,
+        0.170978
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.5495505909784697,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 11,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 11,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 11,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 11,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 11,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 11,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 11,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 11,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4096,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 512,
+      "max_tokens_per_rank": 512,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4096,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 512,
+      "max_tokens_per_rank": 512,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4096,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 512,
+      "max_tokens_per_rank": 512,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4096,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 512,
+      "max_tokens_per_rank": 512,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4096,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 512,
+      "max_tokens_per_rank": 512,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4096,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 512,
+      "max_tokens_per_rank": 512,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4096,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 512,
+      "max_tokens_per_rank": 512,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 4096,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 512,
+      "max_tokens_per_rank": 512,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 4096,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        103.928961,
+        0.397316,
+        0.388803,
+        0.396676,
+        0.388933,
+        0.39402,
+        0.398308,
+        0.391908,
+        0.396996,
+        0.393412,
+        0.393829,
+        0.393988,
+        0.396517,
+        0.386755,
+        0.38858,
+        0.395428,
+        0.397797,
+        0.390244,
+        0.390723,
+        0.387268,
+        0.396612,
+        0.399748,
+        0.398274,
+        0.398724,
+        0.428004,
+        0.399716,
+        0.3977,
+        0.397924,
+        0.402116,
+        0.394851,
+        0.394084,
+        0.390084,
+        0.398917,
+        0.40138,
+        0.397797,
+        0.392164,
+        0.399908,
+        0.395364,
+        0.398596,
+        0.398052,
+        0.399876,
+        0.396612,
+        0.404452,
+        0.398949,
+        0.400515,
+        0.403044,
+        0.396548,
+        0.403748,
+        0.395076,
+        0.393348,
+        0.406148,
+        0.387396,
+        0.39962,
+        0.399556,
+        0.402116,
+        0.392579,
+        0.3953,
+        0.390468,
+        0.394755,
+        0.396644,
+        0.398436,
+        0.394116,
+        0.398436,
+        0.400868,
+        0.396836,
+        0.395972,
+        0.392996,
+        0.3993,
+        0.389604,
+        0.395747,
+        0.40986,
+        0.39546,
+        0.40026,
+        0.39546,
+        0.395044,
+        0.398628,
+        0.39914,
+        0.399459,
+        0.397667,
+        0.397124,
+        0.39466,
+        0.391717,
+        0.395524,
+        0.398437,
+        0.394436,
+        0.4001,
+        0.393892,
+        0.399876,
+        0.400068,
+        0.392708,
+        0.39882,
+        0.402052,
+        0.399844,
+        0.396772,
+        0.404068,
+        0.395619,
+        0.400996,
+        0.39658,
+        0.402564,
+        0.399588
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.4958591909962706,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 12,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 12,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 12,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 12,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 12,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 12,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 12,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 12,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8192,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 1024,
+      "max_tokens_per_rank": 1024,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8192,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 1024,
+      "max_tokens_per_rank": 1024,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8192,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 1024,
+      "max_tokens_per_rank": 1024,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8192,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 1024,
+      "max_tokens_per_rank": 1024,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8192,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 1024,
+      "max_tokens_per_rank": 1024,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8192,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 1024,
+      "max_tokens_per_rank": 1024,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8192,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 1024,
+      "max_tokens_per_rank": 1024,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 8192,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 1024,
+      "max_tokens_per_rank": 1024,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 8192,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        39.996096,
+        0.650151,
+        0.642502,
+        0.633223,
+        0.645254,
+        0.637895,
+        0.638214,
+        0.64743,
+        0.638631,
+        0.635718,
+        0.649447,
+        0.648998,
+        0.655302,
+        0.648678,
+        0.645095,
+        0.652742,
+        0.644902,
+        0.645927,
+        0.64631,
+        0.647975,
+        0.646182,
+        0.647207,
+        0.656487,
+        0.647366,
+        0.653351,
+        0.647014,
+        0.656327,
+        0.65655,
+        0.643111,
+        0.65703,
+        0.649895,
+        0.65895,
+        0.645543,
+        0.647206,
+        0.645255,
+        0.645606,
+        0.648487,
+        0.65015,
+        0.645159,
+        0.649927,
+        0.644198,
+        0.648646,
+        0.650407,
+        0.649127,
+        0.647303,
+        0.650182,
+        0.648102,
+        0.640742,
+        0.64727,
+        0.647367,
+        0.647558,
+        0.659942,
+        0.653894,
+        0.659111,
+        0.678054,
+        0.658022,
+        0.661607,
+        0.663623,
+        0.669383,
+        0.676902,
+        0.684231,
+        0.664775,
+        0.667367,
+        0.665606,
+        0.679207,
+        0.678279,
+        0.664711,
+        0.670695,
+        0.675078,
+        0.666855,
+        0.674759,
+        0.668775,
+        0.666437,
+        0.664358,
+        0.669221,
+        0.661573,
+        0.664038,
+        0.672135,
+        0.668679,
+        0.6657,
+        0.678375,
+        0.676229,
+        0.665542,
+        0.674917,
+        0.665159,
+        0.666919,
+        0.677959,
+        0.661479,
+        0.667271,
+        0.664231,
+        0.673991,
+        0.680935,
+        0.688295,
+        0.681319,
+        0.686535,
+        0.679879,
+        0.687239,
+        0.685575,
+        0.683111,
+        0.676359
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.5575443049892783,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 13,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 7,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 13,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 4,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 13,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 6,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 13,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 3,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 13,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 2,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 13,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 5,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 13,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 1,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_POLICY_JSON",
+    "sweep": 1,
+    "value": {
+      "available_candidates": 16,
+      "call_index": 13,
+      "candidate_count": 16,
+      "candidate_sha256": "727f12fb46e6af11361d44d430d029aa354f2471e9546b378e679a1cf4bc7cef",
+      "enable_in_kernel_fc2_reduce": false,
+      "rank": 0,
+      "tactic_policy": "all"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16384,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2048,
+      "max_tokens_per_rank": 2048,
+      "rank": 4,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16384,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2048,
+      "max_tokens_per_rank": 2048,
+      "rank": 3,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16384,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2048,
+      "max_tokens_per_rank": 2048,
+      "rank": 6,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16384,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2048,
+      "max_tokens_per_rank": 2048,
+      "rank": 0,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16384,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2048,
+      "max_tokens_per_rank": 2048,
+      "rank": 7,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16384,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2048,
+      "max_tokens_per_rank": 2048,
+      "rank": 5,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16384,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2048,
+      "max_tokens_per_rank": 2048,
+      "rank": 1,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "MEGAMOE_TACTIC_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "global_tokens": 16384,
+      "knobs": {
+        "cluster_shape_mnk": [
+          2,
+          1,
+          1
+        ],
+        "epi_flag_batch": [
+          2,
+          4
+        ],
+        "flag_batch": 4,
+        "group_hint": 1024,
+        "in_kernel_fc2_reduce": false,
+        "load_balance_mode": "atomic_counter",
+        "mma_tiler_mnk": [
+          256,
+          128,
+          256
+        ],
+        "num_sched_stages": 2,
+        "token_back_mode": "reuse_dispatch_warps",
+        "use_2cta_instrs": true
+      },
+      "local_tokens": 2048,
+      "max_tokens_per_rank": 2048,
+      "rank": 2,
+      "variant": "w4a16_megamoe"
+    }
+  },
+  {
+    "kind": "DISTRIBUTED_TIMING_SAMPLES_JSON",
+    "sweep": 1,
+    "value": {
+      "apply_routing_weights_before_fc2": false,
+      "cold_l2_cache": true,
+      "cuda_graph": true,
+      "global_tokens": 16384,
+      "precomputed_routing": true,
+      "profile_label": "ep::w4a16_megamoe",
+      "rank": 0,
+      "repeat_iters": 100,
+      "sample_aggregation": "per_iteration_rank_max",
+      "sample_count": 100,
+      "samples_ms": [
+        35.030599,
+        1.142792,
+        1.146023,
+        1.141959,
+        1.144199,
+        1.143783,
+        1.152455,
+        1.144648,
+        1.139367,
+        1.149927,
+        1.145607,
+        1.143399,
+        1.148423,
+        1.162983,
+        1.152743,
+        1.142119,
+        1.143879,
+        1.144968,
+        1.152775,
+        1.142824,
+        1.149771,
+        1.144583,
+        1.150058,
+        1.14484,
+        1.143719,
+        1.14033,
+        1.147495,
+        1.138792,
+        1.148455,
+        1.139819,
+        1.145511,
+        1.158215,
+        1.161832,
+        1.160743,
+        1.15892,
+        1.16804,
+        1.218248,
+        1.224488,
+        1.227912,
+        1.211305,
+        1.211784,
+        1.21604,
+        1.219847,
+        1.213704,
+        1.23492,
+        1.240904,
+        1.252489,
+        1.242316,
+        1.238856,
+        1.242025,
+        1.249832,
+        1.241416,
+        1.241772,
+        1.245736,
+        1.23998,
+        1.233004,
+        1.243948,
+        1.244552,
+        1.245704,
+        1.24814,
+        1.241992,
+        1.256008,
+        1.247372,
+        1.239048,
+        1.24116,
+        1.247497,
+        1.253608,
+        1.247337,
+        1.272937,
+        1.273865,
+        1.274187,
+        1.26324,
+        1.272492,
+        1.27284,
+        1.272072,
+        1.27278,
+        1.267757,
+        1.27188,
+        1.282888,
+        1.27646,
+        1.281865,
+        1.263692,
+        1.269577,
+        1.270088,
+        1.276585,
+        1.266184,
+        1.26772,
+        1.269448,
+        1.288808,
+        1.276424,
+        1.268909,
+        1.279625,
+        1.275757,
+        1.2778,
+        1.267881,
+        1.267976,
+        1.273545,
+        1.278408,
+        1.276008,
+        1.278568
+      ],
+      "timer": "cupti",
+      "wall_scope": "bench_gpu_time",
+      "wall_seconds": 0.6233949420275167,
+      "warmup_iters": 3,
+      "world_size": 8
+    }
+  }
+]

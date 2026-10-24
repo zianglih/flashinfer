@@ -1,0 +1,387 @@
+{
+  "log_transformations": [
+    {
+      "input": "evidence/remote/tests/host-contracts-candidate3r-after-middle-a1/pytest.log",
+      "input_sha256": "3748333708bb9678b0f0cb8824a757de43f5e969a15c5b61a19de48c93ec7c9c",
+      "output": "validation/host/pytest.log",
+      "output_sha256": "b3a2cff9f20fc4fb8714e3881fea504eb3ff69b2da114471ba9742442a1ac1b7",
+      "replacement_count": 2,
+      "rule": "Replace the captured absolute source checkout prefix with ${SOURCE}/; every other character retained"
+    },
+    {
+      "input": "evidence/precommit-candidate3r-final.log",
+      "input_sha256": "87bd1c345e4ae6dd22c74b419eba5c052e7d4f1ad45e4add9eba2627621ef694",
+      "output": "validation/precommit/precommit.log",
+      "output_sha256": "87bd1c345e4ae6dd22c74b419eba5c052e7d4f1ad45e4add9eba2627621ef694",
+      "replacement_count": 0,
+      "rule": "Replace the captured absolute source checkout prefix with ${SOURCE}/; every other character retained"
+    }
+  ],
+  "measurement_transformations": [],
+  "operations": [
+    {
+      "bytes": 147638,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/raw-records.json",
+      "operation": "byte-for-byte copy",
+      "output": "runs/baseline-full13/raw-records.json",
+      "sha256": "3a78d8ba617e0a9e5a16bfe9fffe7715860a5b5b29cd9aab52d02175af23e168"
+    },
+    {
+      "bytes": 23904,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/summary.json",
+      "operation": "byte-for-byte copy",
+      "output": "runs/baseline-full13/summary.json",
+      "sha256": "f6e5530cf68a128c8823994ad7aef1d2a8d8b0dc53a703f63bc228c6e8d383a1"
+    },
+    {
+      "bytes": 912985,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/source-manifest.json",
+      "operation": "byte-for-byte copy",
+      "output": "sources/baseline/source-manifest.json",
+      "sha256": "394d97ffc5f6c594fe66c8877c9a9c9f5a688595248fb813a4337a5d22f6afe0"
+    },
+    {
+      "bytes": 0,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/source-before.patch",
+      "operation": "byte-for-byte copy",
+      "output": "sources/baseline/source-before.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/source-status.txt",
+      "operation": "byte-for-byte copy",
+      "output": "sources/baseline/source-status.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 270,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/submodules.txt",
+      "operation": "byte-for-byte copy",
+      "output": "sources/baseline/submodules.txt",
+      "sha256": "ac36f3451574b7ed3abab6c1920eafb9be156f1ab9f62be8d9adc270338ad63c"
+    },
+    {
+      "bytes": 19636,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/recipe/run.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/run.py",
+      "sha256": "04139d1a2a776485c7bac62534723afb6f0b1ad9547efc2fdd9b161f978e5398"
+    },
+    {
+      "bytes": 3150,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/recipe/policy_driver.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/policy_driver.py",
+      "sha256": "debc1f10711482235ecf152ffc5747a5fc4b1de2bf2275c9f9788bfeb7f048ef"
+    },
+    {
+      "bytes": 9411,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/recipe/compare.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/compare.py",
+      "sha256": "e9bb07254085e00ef383eb70f717f73fff603bd0ed56171d8156aee165f1d81a"
+    },
+    {
+      "bytes": 82929,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/benchmark-driver.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/benchmarks/bench_cute_dsl_moe_distributed.py",
+      "sha256": "90502a5eb9f8f402b3f8959b7065d319bc106d14de623c860a23610d3ac119d9"
+    },
+    {
+      "bytes": 3150,
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/benchmark-policy-wrapper.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/policy_driver.py",
+      "sha256": "debc1f10711482235ecf152ffc5747a5fc4b1de2bf2275c9f9788bfeb7f048ef"
+    },
+    {
+      "excluded_fields": [],
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1/run.json",
+      "input_sha256": "25abed30531b5cc39b344040306f8133badf3055dfe00b168cc04d239217a0b1",
+      "operation": "allowlist metadata extraction and path parameterization",
+      "output": "runs/baseline-full13/metadata.json",
+      "path_fields_parameterized": [
+        "source",
+        "benchmark_driver",
+        "benchmark_policy_wrapper",
+        "environment.CUDA_CACHE_PATH",
+        "environment.CUTE_DSL_CACHE_DIR",
+        "environment.FLASHINFER_WORKSPACE_BASE",
+        "environment.MIXED_CLUSTER_SOURCE_DIR",
+        "environment.TRITON_CACHE_DIR"
+      ],
+      "preserved_fields": [
+        "apply_routing_weights_before_fc2",
+        "arm",
+        "benchmark_driver_sha256",
+        "benchmark_policy_wrapper_sha256",
+        "candidate_counts",
+        "compiled_cache_policy",
+        "complete",
+        "correctness_requested",
+        "exit_codes",
+        "finished_at",
+        "fused_tma_reduce",
+        "image",
+        "iters",
+        "knobs",
+        "model",
+        "pdl",
+        "recipe_sha256",
+        "runtime_versions",
+        "schema_version",
+        "source_commit",
+        "source_patch_sha256",
+        "source_unchanged_during_capture",
+        "started_at",
+        "sweeps",
+        "tactic_policy",
+        "tokens",
+        "tuning_policy",
+        "variants",
+        "w4a16_megamoe_fused_deterministic_combine",
+        "warmup"
+      ]
+    },
+    {
+      "input": "evidence/remote/glm5-baseline-main-auto16-all-full13-a1",
+      "operation": "extract GPU model/count, driver and GPU-only topology; exclude raw inventory/log text",
+      "output": "runs/baseline-full13/hardware.json"
+    },
+    {
+      "bytes": 157599,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/raw-records.json",
+      "operation": "byte-for-byte copy",
+      "output": "runs/candidate3r-full13/raw-records.json",
+      "sha256": "69f8fd2e5b1c103789c3297ac5e2c22348184171870403fc8460f23dd2bff449"
+    },
+    {
+      "bytes": 23963,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/summary.json",
+      "operation": "byte-for-byte copy",
+      "output": "runs/candidate3r-full13/summary.json",
+      "sha256": "a1dcd800b5427983826f947fe588b8a38b495c835342c91e9c7539c0f70c33f5"
+    },
+    {
+      "bytes": 913291,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/source-manifest.json",
+      "operation": "byte-for-byte copy",
+      "output": "sources/candidate3r/source-manifest.json",
+      "sha256": "ce9acfebdd32b6b91df2c12cd75370864c5c8f4ca2222e7fc4a0ea77c64a7476"
+    },
+    {
+      "bytes": 0,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/source-before.patch",
+      "operation": "byte-for-byte copy",
+      "output": "sources/candidate3r/source-before.patch",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 0,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/source-status.txt",
+      "operation": "byte-for-byte copy",
+      "output": "sources/candidate3r/source-status.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "bytes": 270,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/submodules.txt",
+      "operation": "byte-for-byte copy",
+      "output": "sources/candidate3r/submodules.txt",
+      "sha256": "ac36f3451574b7ed3abab6c1920eafb9be156f1ab9f62be8d9adc270338ad63c"
+    },
+    {
+      "bytes": 19636,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/recipe/run.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/run.py",
+      "sha256": "04139d1a2a776485c7bac62534723afb6f0b1ad9547efc2fdd9b161f978e5398"
+    },
+    {
+      "bytes": 3150,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/recipe/policy_driver.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/policy_driver.py",
+      "sha256": "debc1f10711482235ecf152ffc5747a5fc4b1de2bf2275c9f9788bfeb7f048ef"
+    },
+    {
+      "bytes": 9411,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/recipe/compare.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/compare.py",
+      "sha256": "e9bb07254085e00ef383eb70f717f73fff603bd0ed56171d8156aee165f1d81a"
+    },
+    {
+      "bytes": 82929,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/benchmark-driver.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/benchmarks/bench_cute_dsl_moe_distributed.py",
+      "sha256": "90502a5eb9f8f402b3f8959b7065d319bc106d14de623c860a23610d3ac119d9"
+    },
+    {
+      "bytes": 3150,
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/benchmark-policy-wrapper.py",
+      "operation": "byte-for-byte copy",
+      "output": "recipe/policy_driver.py",
+      "sha256": "debc1f10711482235ecf152ffc5747a5fc4b1de2bf2275c9f9788bfeb7f048ef"
+    },
+    {
+      "excluded_fields": [],
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1/run.json",
+      "input_sha256": "4eff5c971f58499f6460e6be987711adba8361e2b936b2fc7d1274533553d0f6",
+      "operation": "allowlist metadata extraction and path parameterization",
+      "output": "runs/candidate3r-full13/metadata.json",
+      "path_fields_parameterized": [
+        "source",
+        "benchmark_driver",
+        "benchmark_policy_wrapper",
+        "environment.CUDA_CACHE_PATH",
+        "environment.CUTE_DSL_CACHE_DIR",
+        "environment.FLASHINFER_WORKSPACE_BASE",
+        "environment.MIXED_CLUSTER_SOURCE_DIR",
+        "environment.TRITON_CACHE_DIR"
+      ],
+      "preserved_fields": [
+        "apply_routing_weights_before_fc2",
+        "arm",
+        "benchmark_driver_sha256",
+        "benchmark_policy_wrapper_sha256",
+        "candidate_counts",
+        "compiled_cache_policy",
+        "complete",
+        "correctness_requested",
+        "exit_codes",
+        "finished_at",
+        "fused_tma_reduce",
+        "image",
+        "iters",
+        "knobs",
+        "model",
+        "pdl",
+        "recipe_sha256",
+        "runtime_versions",
+        "schema_version",
+        "source_commit",
+        "source_patch_sha256",
+        "source_unchanged_during_capture",
+        "started_at",
+        "sweeps",
+        "tactic_policy",
+        "tokens",
+        "tuning_policy",
+        "variants",
+        "w4a16_megamoe_fused_deterministic_combine",
+        "warmup"
+      ]
+    },
+    {
+      "input": "evidence/remote/glm5-candidate3r-auto18-mixed-only-full13-a1",
+      "operation": "extract GPU model/count, driver and GPU-only topology; exclude raw inventory/log text",
+      "output": "runs/candidate3r-full13/hardware.json"
+    },
+    {
+      "bytes": 62093,
+      "input": "publication/final13-preparation/recipe/benchmarks/bench_moe_deepseek.py",
+      "operation": "copy bytes verified against captured source manifest",
+      "output": "recipe/benchmarks/bench_moe_deepseek.py",
+      "sha256": "9561d42c798eecbdbc2e3edd31889c0475ff1a56dcd6be7b164ffa7068a86371"
+    },
+    {
+      "bytes": 1666,
+      "input": "evidence/remote/setup/runtime.json",
+      "operation": "byte-for-byte setup runtime receipt; no host or private paths",
+      "output": "runtime.json",
+      "sha256": "6355d68389627c49f31ec34be6a5f559a96807012394b523f5f73341aec94c4c"
+    },
+    {
+      "input": "runtime.json",
+      "operation": "extract package pins; preserve container PyTorch, omit pytest from performance reproduction",
+      "output": "recipe/runtime-requirements.txt"
+    },
+    {
+      "bytes": 2568,
+      "input": "publication/final13-preparation/recipe/setup.sh",
+      "operation": "parameterized reproduction helper; not executed for publication",
+      "output": "recipe/setup.sh",
+      "sha256": "1096bf7c921ed1ed9c3f3821a668fd011cad36618b95710b7698ecd6dba0d997"
+    },
+    {
+      "bytes": 1817,
+      "input": "publication/final13-preparation/recipe/reproduce.sh",
+      "operation": "parameterized reproduction helper; not executed for publication",
+      "output": "recipe/reproduce.sh",
+      "sha256": "c006ce1e71a37d6603e7d409688407dc3da415158c4591cb79e5ce0b88eaf371"
+    },
+    {
+      "bytes": 209,
+      "input": "publication/final13-preparation/recipe/runtime-constraints.txt",
+      "operation": "parameterized reproduction helper; not executed for publication",
+      "output": "recipe/runtime-constraints.txt",
+      "sha256": "2f9369dfad3791c5446d1446cae66a350e36b0fcd993e8001725305c2fc680e0"
+    },
+    {
+      "bytes": 913527,
+      "input": "evidence/remote/tests/host-contracts-candidate3r-after-middle-a1/source-before.json",
+      "operation": "byte-for-byte copy",
+      "output": "validation/host/source-manifest.json",
+      "sha256": "3623695a52fdfd1eb5286835998f54e535bb4c805099f270539ca855842d6f40"
+    },
+    {
+      "bytes": 913527,
+      "input": "evidence/remote/tests/host-contracts-candidate3r-after-middle-a1/source-after.json",
+      "operation": "byte-for-byte copy",
+      "output": "validation/host/source-manifest.json",
+      "sha256": "3623695a52fdfd1eb5286835998f54e535bb4c805099f270539ca855842d6f40"
+    },
+    {
+      "bytes": 58371,
+      "input": "evidence/remote/tests/host-contracts-candidate3r-after-middle-a1/source.patch",
+      "operation": "byte-for-byte copy",
+      "output": "validation/host/source.patch",
+      "sha256": "26d316b659538c36db33076716b7e9f8686d31a506d0e665506393c10c804165"
+    },
+    {
+      "bytes": 3006,
+      "input": "evidence/precommit-candidate3r-final.json",
+      "operation": "byte-for-byte copy",
+      "output": "validation/precommit/metadata.json",
+      "sha256": "162fd81f3fd7bbd6dde2b476923ac2554418d1da68944e65af935d596b04c419"
+    },
+    {
+      "bytes": 2100,
+      "input": "evidence/remote/setup/full13-freeze-a1/candidate3r-commit-freeze.json",
+      "operation": "byte-for-byte copy",
+      "output": "validation/candidate-commit-freeze.json",
+      "sha256": "d0d6ea37790c553cd039bef3e1599a3af6209d60fd5c384cd59e9ed5f42f63bc"
+    },
+    {
+      "bytes": 1854,
+      "input": "evidence/remote/setup/full13-freeze-a1/receipt.json",
+      "operation": "byte-for-byte copy",
+      "output": "validation/commit-and-helper-freeze.json",
+      "sha256": "d7875c9198961a4b1cd436a5ca0a43012ff21dc3bcee3a8ed6628e2a8e3fdc5f"
+    },
+    {
+      "input": "evidence/remote/tests/host-contracts-candidate3r-after-middle-a1/capture.json",
+      "input_sha256": "b25642f664f3cddf413a3c5149f43db1e0cefa854127d2c995d2ece99268ee6d",
+      "operation": "Allowlist command, completion, timing and source-identity fields; exclude process IDs, absolute source and redundant machine-path environment",
+      "output": "validation/host/metadata.json"
+    },
+    {
+      "bytes": 1889,
+      "input": "evidence/remote/setup/full13-freeze-a1/file-hashes-after.json",
+      "operation": "byte-for-byte copy",
+      "output": "validation/committed-source-hashes.json",
+      "sha256": "1d36dc15552c534d474a6bef99b2194085381276a67fb1449742406c5e890865"
+    },
+    {
+      "input": "evidence/publication/final13-a1-native-compare.json",
+      "input_sha256": "626875253790925335a504c156ec6fa1862ad8f38e251b3fd113fd666ef3df1e",
+      "operation": "Allowlist native audit protocol, fixture, relative changed sources and input hashes; exclude machine paths and duplicated sample/process objects",
+      "output": "validation/native-comparison-audit.json"
+    }
+  ],
+  "redaction_policy": "Measurement files are byte-identical. Metadata is allowlisted/parameterized; logs change only the captured machine-specific source prefix. Raw orchestration/host inventories are excluded."
+}

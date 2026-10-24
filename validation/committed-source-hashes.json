@@ -1,0 +1,16 @@
+{
+  "benchmarks/bench_cute_dsl_moe_distributed.py": "90502a5eb9f8f402b3f8959b7065d319bc106d14de623c860a23610d3ac119d9",
+  "flashinfer/moe_ep/backends/mega/kernel/sm100/bf16_nvfp4_bf16_cutedsl/backend.py": "68b0634941474e6cb1646a75241e8fca07bef870a9413b58d89b96f3fa8238d8",
+  "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/autotune.py": "feea41a6bd666ff0b92c77cdd507645354d82589f577e32ba6677a8fe5ed168e",
+  "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/fc1_fc2_fuse_sched.py": "63845f704d7b7ee425f7059b24b9f318bbfdf24eaf1e99ce3a1092b7d1a5ea47",
+  "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/frontend.py": "573b290dbdff466327cf45555cd3b3f20ac2ac0ecf4eefb9949e4ced87af8a99",
+  "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py": "664a74fde4f0d60957a2ddb07839c95f393d477f7ee84d5ce4415bb56bf4d939",
+  "flashinfer/moe_ep/kernel_src/sm100/cutedsl_megamoe/shim/tuner.py": "fc185e211521cd8b5c974d50f72e6724c79746a9fa66e675c0dcf5a1dd93e894",
+  "flashinfer/moe_ep/kernel_src/sm100/next_cutedsl_megamoe/__init__.py": "955c4dfb92b31efcb571c30f906e1ec0a4d2752a4f0caedac0ebd945c6e2c3d7",
+  "flashinfer/moe_ep/kernel_src/sm100/next_cutedsl_megamoe/shim/mixed_cluster.py": "e5281cffb6138d635dccb6828178f5412ff357736c608e562eb569893608d3d7",
+  "flashinfer/moe_ep/kernel_src/sm100/next_cutedsl_megamoe/shim/scheduler_helpers.py": "a2db194eceea9bddc8480515f047c0000d6313c444ab42bc740819c40998e35c",
+  "tests/moe_ep/test_mega_workspace_knobs.py": "8a24fd42cf413f17da8bf9a71847a3a12032e157182def5f0ca2050be70915ba",
+  "tests/moe_ep/test_moe_ep_nvfp4_cutedsl_mega_multirank.py": "8c5ec25d0a86190a1da577f5a753e1170ef5d532ecd2aa0a8fae0e77e8573219",
+  "tests/moe_ep/test_w4a16_mixed_cluster_config.py": "822fc7dc03e15f88f52c7a3371c08186358206f306fe40ba9002184e7a5dfc41",
+  "tests/moe_ep/test_w4a16_mixed_cluster_scheduler.py": "84bce88d4d65ab226eb37b60834ce97f1c6e868d4a0583e274c4913b59b01564"
+}
