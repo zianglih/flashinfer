@@ -520,10 +520,10 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             dtype without MXFP8 scale generation.
         mma_tiler_mn: Physical MMA tile shape (M, N). For Blackwell, M
             covers weight channels and N covers routed tokens; supported shapes
-            are (128, 16), (128, 32), (128, 64), and (128, 128).
+            are M128 with N16/32/64/128/256 and M256 with N128/256.
             Default: (128, 128).
-        cluster_shape_mn: Cluster shape (ClusterM, ClusterN). Default: (1, 1).
-            Blackwell requires (1, 1).
+        cluster_shape_mn: Cluster shape (ClusterM, ClusterN). Blackwell uses
+            (1, 1) with M128 or (2, 1) with M256. Default: (1, 1).
         vectorized_f32: Use vectorized f32x2 operations. Default: True
         raster_along_m: If True, raster tiles along M dimension. Default: False
         sm_count: Number of SMs to use. Default: max available.

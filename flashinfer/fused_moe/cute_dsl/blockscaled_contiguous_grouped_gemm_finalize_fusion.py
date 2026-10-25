@@ -112,12 +112,14 @@ def _run_blockscaled_gemm(
     sf_vec_size,
     sm_count=None,
 ):
-    if cluster_shape_mn != (1, 1):
-        raise ValueError(
-            "The block-scaled runtime-N kernel requires cluster_shape_mn=(1, 1)"
-        )
     mma_m, route_tile = mma_tiler_mn
-    if mma_m != 128 or route_tile not in (16, 32, 64, 128, 256):
+    if mma_m == 128:
+        valid_tile = cluster_shape_mn == (1, 1) and route_tile in (16, 32, 64, 128, 256)
+    elif mma_m == 256:
+        valid_tile = cluster_shape_mn == (2, 1) and route_tile in (128, 256)
+    else:
+        valid_tile = False
+    if not valid_tile:
         raise ValueError(f"Unsupported block-scaled runtime-N tile {mma_tiler_mn}")
     if output.dtype == torch.uint8:
         output_dtype = cutlass.Float4E2M1FN
@@ -174,6 +176,7 @@ def _run_blockscaled_gemm(
     key = (
         activation.device.index,
         mma_tiler_mn,
+        cluster_shape_mn,
         output_dtype,
         activation_dtype,
         weight_dtype,
@@ -564,7 +567,9 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
         sf_vec_size: Scale factor vector size. Use 16 for W4A4 or 32 for W4A8.
         mma_tiler_mn: Physical MMA tile shape (M, N). Blackwell uses channels on M
             and routed tokens on N. Default: (128, 128).
-        cluster_shape_mn: Cluster shape (ClusterM, ClusterN). Default: (1, 1)
+        cluster_shape_mn: Cluster shape (ClusterM, ClusterN). Blackwell uses
+            (1, 1) with M128 or (2, 1) with M256. M256 supports N128/N256.
+            Default: (1, 1).
         raster_along_m: If True, raster tiles along M dimension. Default: False
         sm_count: Number of SMs to use. Default: max available.
         domain_id: Locality-domain index (0 or 1), or -1 for ordinary output.

@@ -498,11 +498,122 @@ class Sm100BlockScaledMoeEpilogue:
                 cute.make_copy_atom(
                     cute.nvgpu.CopyUniversalOp(),
                     self.output_dtype,
-                    num_bits_per_copy=min(128, self.output_dtype.width * 16),
+                    num_bits_per_copy=min(256, self.output_dtype.width * 16),
                 ),
                 converted,
                 cute.coalesce(target),
             )
+
+    @cute.jit
+    def _run_token_group(
+        self,
+        acc_tensor,
+        output_tensor,
+        output_sf_tensor,
+        alpha,
+        norm_const,
+        per_token_scale,
+        token_mapping,
+        channel_start,
+        route_start,
+        valid_tokens,
+        tidx,
+        smem_scratch,
+        token_start,
+        fc2_output_row,
+        fc2_scale,
+    ):
+        warp = (tidx // 32) % 4
+        lane = tidx % 32
+        ptr = acc_tensor.iterator + cute.assume(token_start, divby=32)
+        scratch = ptr + cute.assume(warp * (32 << 16), divby=32)
+        if cutlass.const_expr(self.gated):
+            # The prepared up16/gate16 groups both belong to this
+            # warp's 32-row TMEM datapath. Load both before reusing
+            # the accumulator as transpose scratch.
+            up = _blockscaled_load16x32(scratch)
+            gate = _blockscaled_load16x32(scratch + (16 << 16))
+            if cutlass.const_expr(self.use_per_token_scale):
+                up = _blockscaled_transpose16x32(up, scratch)
+                gate = _blockscaled_transpose16x32(gate, scratch, True)
+                row = route_start + token_start + lane
+                token_alpha = alpha
+                if token_start + lane < valid_tokens:
+                    token_alpha = (
+                        alpha * per_token_scale[token_mapping[row] // self.top_k]
+                    )
+                values = self._activate(up, gate, token_alpha)
+            else:
+                values = self._activate(up, gate, alpha)
+                values = _blockscaled_transpose16x32(values, scratch)
+            absmax = cutlass.Float32(0.0)
+            if cutlass.const_expr(self.generate_sfc):
+                if cutlass.const_expr(self.sf_vec_size == 32):
+                    absmax = self._gated_sf32_absmax(values, smem_scratch, warp, lane)
+                elif cutlass.const_expr(self.sf_vec_size == 16):
+                    absmax = self._absmax(values)
+            channel = channel_start // 2 + warp * 16
+            if token_start + lane < valid_tokens:
+                if channel < output_tensor.shape[1]:
+                    self._store(
+                        values,
+                        output_tensor,
+                        output_sf_tensor,
+                        route_start + token_start + lane,
+                        channel,
+                        norm_const,
+                        absmax,
+                    )
+        elif cutlass.const_expr(
+            self.activation_type == ActivationType.Relu2.value
+            or self.activation_type is None
+        ):
+            top = _blockscaled_load16x32(scratch)
+            bottom = _blockscaled_load16x32(scratch + (16 << 16))
+            top = _blockscaled_transpose16x32(top, scratch)
+            bottom = _blockscaled_transpose16x32(bottom, scratch, True)
+            row = route_start + token_start + lane
+            scale = alpha
+            output_row = row
+            if token_start + lane < valid_tokens:
+                if cutlass.const_expr(
+                    self.use_per_token_scale
+                    and self.activation_type == ActivationType.Relu2.value
+                ):
+                    scale = scale * per_token_scale[token_mapping[row] // self.top_k]
+                if cutlass.const_expr(self.activation_type is None):
+                    output_row = fc2_output_row
+                    scale = fc2_scale
+            if cutlass.const_expr(self.activation_type == ActivationType.Relu2.value):
+                top = self._activate(top, None, scale)
+                bottom = self._activate(bottom, None, scale)
+            elif cutlass.const_expr(self.activation_type is None):
+                for i in cutlass.range_constexpr(0, 16, 2):
+                    top[i], top[i + 1] = cute.arch.mul_packed_f32x2(
+                        (top[i], top[i + 1]), (scale, scale)
+                    )
+                    bottom[i], bottom[i + 1] = cute.arch.mul_packed_f32x2(
+                        (bottom[i], bottom[i + 1]), (scale, scale)
+                    )
+            absmax = cutlass.Float32(0.0)
+            if cutlass.const_expr(self.generate_sfc and self.sf_vec_size == 32):
+                absmax = cute.arch.fmax(self._absmax(top), self._absmax(bottom))
+            for half in cutlass.range_constexpr(2):
+                values = top if half == 0 else bottom
+                if cutlass.const_expr(self.generate_sfc and self.sf_vec_size == 16):
+                    absmax = self._absmax(values)
+                channel = channel_start + warp * 32 + half * 16
+                if token_start + lane < valid_tokens:
+                    if channel < output_tensor.shape[1]:
+                        self._store(
+                            values,
+                            output_tensor,
+                            output_sf_tensor,
+                            output_row,
+                            channel,
+                            norm_const,
+                            absmax,
+                        )
 
     @cute.jit
     def run(
@@ -523,125 +634,76 @@ class Sm100BlockScaledMoeEpilogue:
         tidx,
         smem_scratch,
     ):
-        warp = (tidx // 32) % 4
         lane = tidx % 32
-        for token_start in cutlass.range(0, self.tile_n, 32, unroll=1):
-            if token_start < valid_tokens:
-                ptr = acc_tensor.iterator + cute.assume(token_start, divby=32)
-                scratch = ptr + cute.assume(warp * (32 << 16), divby=32)
-                if cutlass.const_expr(self.gated):
-                    # The prepared up16/gate16 groups both belong to this
-                    # warp's 32-row TMEM datapath. Load both before reusing
-                    # the accumulator as transpose scratch.
-                    up = _blockscaled_load16x32(scratch)
-                    gate = _blockscaled_load16x32(scratch + (16 << 16))
+        if cutlass.const_expr(self.activation_type is None):
+            # Fetch the whole tile's routing metadata before its stores. Keeping
+            # the slab indices static preserves these values in registers.
+            groups = max(1, self.tile_n // 32)
+            output_rows = cute.make_rmem_tensor((groups,), cutlass.Int32)
+            output_scales = cute.make_rmem_tensor((groups,), cutlass.Float32)
+            for group in cutlass.range_constexpr(groups):
+                output_rows[group] = 0
+                output_scales[group] = alpha
+                row = route_start + group * 32 + lane
+                if group * 32 + lane < valid_tokens:
+                    expanded = token_mapping[row]
+                    output_row = expanded
+                    route_scale = cutlass.Float32(1.0)
+                    if cutlass.const_expr(self.use_fused_finalize):
+                        output_row = expanded // self.top_k
+                        route_scale = cutlass.Float32(
+                            token_final_scales[output_row, expanded % self.top_k]
+                        )
                     if cutlass.const_expr(self.use_per_token_scale):
-                        up = _blockscaled_transpose16x32(up, scratch)
-                        gate = _blockscaled_transpose16x32(gate, scratch, True)
-                        row = route_start + token_start + lane
-                        token_alpha = alpha
-                        if token_start + lane < valid_tokens:
-                            token_alpha = (
-                                alpha
-                                * per_token_scale[token_mapping[row] // self.top_k]
-                            )
-                        values = self._activate(up, gate, token_alpha)
-                    else:
-                        values = self._activate(up, gate, alpha)
-                        values = _blockscaled_transpose16x32(values, scratch)
-                    absmax = cutlass.Float32(0.0)
-                    if cutlass.const_expr(self.generate_sfc):
-                        if cutlass.const_expr(self.sf_vec_size == 32):
-                            absmax = self._gated_sf32_absmax(
-                                values, smem_scratch, warp, lane
-                            )
-                        elif cutlass.const_expr(self.sf_vec_size == 16):
-                            absmax = self._absmax(values)
-                    channel = channel_start // 2 + warp * 16
-                    if token_start + lane < valid_tokens:
-                        if channel < output_tensor.shape[1]:
-                            self._store(
-                                values,
-                                output_tensor,
-                                output_sf_tensor,
-                                route_start + token_start + lane,
-                                channel,
-                                norm_const,
-                                absmax,
-                            )
-                elif cutlass.const_expr(
-                    self.activation_type == ActivationType.Relu2.value
-                    or self.activation_type is None
-                ):
-                    top = _blockscaled_load16x32(scratch)
-                    bottom = _blockscaled_load16x32(scratch + (16 << 16))
-                    top = _blockscaled_transpose16x32(top, scratch)
-                    bottom = _blockscaled_transpose16x32(bottom, scratch, True)
-                    row = route_start + token_start + lane
-                    scale = alpha
-                    output_row = row
-                    if token_start + lane < valid_tokens:
-                        if cutlass.const_expr(
-                            self.use_per_token_scale
-                            and self.activation_type == ActivationType.Relu2.value
-                        ):
-                            scale = (
-                                scale
-                                * per_token_scale[token_mapping[row] // self.top_k]
-                            )
-                        if cutlass.const_expr(self.activation_type is None):
-                            expanded = token_mapping[row]
-                            output_row = expanded
-                            route_scale = cutlass.Float32(1.0)
-                            if cutlass.const_expr(self.use_fused_finalize):
-                                output_row = expanded // self.top_k
-                                route_scale = cutlass.Float32(
-                                    token_final_scales[
-                                        output_row, expanded % self.top_k
-                                    ]
-                                )
-                            if cutlass.const_expr(self.use_per_token_scale):
-                                route_scale = route_scale * per_token_scale[row]
-                            scale = alpha * route_scale
-                            if cutlass.const_expr(
-                                self.final_scale_dtype
-                                in (cutlass.BFloat16, cutlass.Float16)
-                            ):
-                                # Preserve the former metadata buffer's rounding
-                                # before applying the scale to FP32 accumulators.
-                                scale = cutlass.Float32(self.final_scale_dtype(scale))
+                        route_scale = route_scale * per_token_scale[row]
+                    scale = alpha * route_scale
                     if cutlass.const_expr(
-                        self.activation_type == ActivationType.Relu2.value
+                        self.final_scale_dtype in (cutlass.BFloat16, cutlass.Float16)
                     ):
-                        top = self._activate(top, None, scale)
-                        bottom = self._activate(bottom, None, scale)
-                    elif cutlass.const_expr(self.activation_type is None):
-                        for i in cutlass.range_constexpr(0, 16, 2):
-                            top[i], top[i + 1] = cute.arch.mul_packed_f32x2(
-                                (top[i], top[i + 1]), (scale, scale)
-                            )
-                            bottom[i], bottom[i + 1] = cute.arch.mul_packed_f32x2(
-                                (bottom[i], bottom[i + 1]), (scale, scale)
-                            )
-                    absmax = cutlass.Float32(0.0)
-                    if cutlass.const_expr(self.generate_sfc and self.sf_vec_size == 32):
-                        absmax = cute.arch.fmax(self._absmax(top), self._absmax(bottom))
-                    for half in cutlass.range_constexpr(2):
-                        values = top if half == 0 else bottom
-                        if cutlass.const_expr(
-                            self.generate_sfc and self.sf_vec_size == 16
-                        ):
-                            absmax = self._absmax(values)
-                        channel = channel_start + warp * 32 + half * 16
-                        if token_start + lane < valid_tokens:
-                            if channel < output_tensor.shape[1]:
-                                self._store(
-                                    values,
-                                    output_tensor,
-                                    output_sf_tensor,
-                                    output_row,
-                                    channel,
-                                    norm_const,
-                                    absmax,
-                                )
+                        # Match the former metadata buffer's rounding before
+                        # multiplying the FP32 accumulator.
+                        scale = cutlass.Float32(self.final_scale_dtype(scale))
+                    output_rows[group] = output_row
+                    output_scales[group] = scale
+            for group in cutlass.range_constexpr(groups):
+                if group * 32 < valid_tokens:
+                    self._run_token_group(
+                        acc_tensor,
+                        output_tensor,
+                        output_sf_tensor,
+                        alpha,
+                        norm_const,
+                        per_token_scale,
+                        token_mapping,
+                        channel_start,
+                        route_start,
+                        valid_tokens,
+                        tidx,
+                        smem_scratch,
+                        group * 32,
+                        output_rows[group],
+                        output_scales[group],
+                    )
+        elif cutlass.const_expr(
+            self.gated or self.activation_type == ActivationType.Relu2.value
+        ):
+            for token_start in cutlass.range(0, self.tile_n, 32, unroll=1):
+                if token_start < valid_tokens:
+                    self._run_token_group(
+                        acc_tensor,
+                        output_tensor,
+                        output_sf_tensor,
+                        alpha,
+                        norm_const,
+                        per_token_scale,
+                        token_mapping,
+                        channel_start,
+                        route_start,
+                        valid_tokens,
+                        tidx,
+                        smem_scratch,
+                        token_start,
+                        cutlass.Int32(0),
+                        alpha,
+                    )
         cute.arch.fence_view_async_tmem_load()
