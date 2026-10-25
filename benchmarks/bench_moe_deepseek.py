@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""DeepSeek MoE Performance Benchmark - CuteDSL vs CUTLASS vs TRTLLM.
+"""DeepSeek MoE Performance Benchmark - CuteDSL vs TRTLLM.
 
 Compares NVFP4, MXFP8, MXFP4 x MXFP8, and BF16 MoE backends:
 - CuteDSL W4A4: NVFP4 activations and weights
 - CuteDSL W4A16: BF16 activations with NVFP4 weights decoded online
 - CuteDSL MXFP8 / W4A8 (opt-in): MXFP8 activations with MXFP8 / MXFP4 weights,
   using the generic split kernels and deterministic unfused combine
-- CUTLASS: NVIDIA CUTLASS-based implementation
+- CUTLASS (explicit --backends cutlass only): NVIDIA CUTLASS implementation
 - TRTLLM NVFP4: TensorRT-LLM's NVFP4 implementation
 - TRTLLM MXFP8 / MXFP4 x MXFP8 (opt-in): native block-scaled MoE baselines
 - TRTLLM BF16: unquantized BF16 activations and weights
@@ -1504,7 +1504,7 @@ class BenchResult:
 
 def _family_backends(quant_family):
     if quant_family == "nvfp4":
-        return ("cutedsl", "cutlass", "trtllm-nvfp4", "trtllm-bf16")
+        return ("cutedsl", "trtllm-nvfp4", "trtllm-bf16")
     elif quant_family == "mxfp":
         return (
             "cute-dsl-w4a8",
@@ -1812,14 +1812,10 @@ def _table_layout(quant_family, use_per_token_activation):
             ("CuteDSL W4A4", "CuteDSL W4A4", 15),
             ("CuteDSL W4A16", "CuteDSL W4A16", 15),
         ]
-        baselines = []
-        if not use_per_token_activation:
-            backends.append(("CUTLASS", "CUTLASS", 15))
-            baselines.append(("CUTLASS", 18, (0, 1)))
         backends.extend(
             (("TRTLLM NVFP4", "TRTLLM NVFP4", 15), ("TRTLLM BF16", "TRTLLM BF16", 15))
         )
-        baselines.extend((("TRTLLM NVFP4", 23, (0, 1)), ("TRTLLM BF16", 23, (0, 1))))
+        baselines = [("TRTLLM NVFP4", 23, (0, 1)), ("TRTLLM BF16", 23, (0, 1))]
         winner_width = 12
     elif quant_family == "mxfp":
         modes = ("MXFP4xMXFP8", "MXFP8")
@@ -1872,14 +1868,9 @@ def _print_header(
             f"{CFG.name} MoE Benchmark: CuteDSL MXFP4xMXFP8 / MXFP8 vs TRTLLM MXFP4xMXFP8 / MXFP8 / BF16 "
             f"(EP={ep_config}, TP={tp_config})"
         )
-    elif use_per_token_activation:
+    elif quant_family == "nvfp4":
         print(
             f"{CFG.name} MoE Benchmark: CuteDSL W4A4/W4A16 vs TRTLLM NVFP4 / TRTLLM BF16 "
-            f"(EP={ep_config}, TP={tp_config})"
-        )
-    else:
-        print(
-            f"{CFG.name} MoE Benchmark: CuteDSL W4A4/W4A16 vs CUTLASS vs TRTLLM NVFP4 / TRTLLM BF16 "
             f"(EP={ep_config}, TP={tp_config})"
         )
     print("=" * table_width)
@@ -1930,16 +1921,8 @@ def _print_header(
     )
     if quant_family == "nvfp4":
         print(
-            "CUTLASS fused-finalize tactics: "
-            f"{'allowed' if use_fused_finalize else 'disabled'}"
-        )
-        print(
             "TRTLLM NVFP4 / TRTLLM BF16 finalize: native (unaffected by --no-fused-finalize)."
         )
-        if use_per_token_activation:
-            print(
-                "CUTLASS omitted: it does not consume the per-token activation scale."
-            )
     elif quant_family == "mxfp":
         print(
             "TRTLLM MXFP4xMXFP8 / MXFP8 / BF16 finalize: native (unaffected by --no-fused-finalize)."
@@ -1960,8 +1943,6 @@ def _print_header(
     for _, width, indices in baselines:
         if len(indices) == 1:
             units.append(f"{modes[indices[0]]:>{width}}")
-        elif width == 18:
-            units.append(f"{modes[0]:>8}  {modes[1]:>8}")
         else:
             units.append(f"{(modes[0].rjust(11) + ' ' + modes[1].rjust(11)):>{width}}")
     if winner_width:
@@ -2314,10 +2295,6 @@ def main():
         f"{'atomic fused' if args.use_fused_finalize else 'deterministic two-stage'}"
     )
     if args.quant_family == "nvfp4":
-        print(
-            "CUTLASS fused-finalize tactics: "
-            f"{'allowed' if args.use_fused_finalize else 'disabled'}"
-        )
         print(
             "TRTLLM NVFP4 / TRTLLM BF16 finalize: native (unaffected by --no-fused-finalize)."
         )
