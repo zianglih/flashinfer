@@ -4,11 +4,17 @@
 Compares NVFP4 and BF16 MoE backends on DeepSeek-V3 configuration:
 - CuteDSL W4A4: NVFP4 activations and weights
 - CuteDSL W4A16: BF16 activations with NVFP4 weights decoded online
+- CuteDSL MXFP8 / W4A8 (opt-in): MXFP8 activations with MXFP8 / MXFP4 weights,
+  using the generic split kernels and deterministic unfused combine
 - CUTLASS: NVIDIA CUTLASS-based implementation
 - TRTLLM NVFP4: TensorRT-LLM's NVFP4 implementation
 - TRTLLM BF16: unquantized BF16 activations and weights
 
 Usage:
+    # MXFP8 and mixed MXFP4 x MXFP8, deterministic split finalize
+    python bench_moe_deepseek.py --ep 8 --no-fused-finalize \
+        --backends cute-dsl-mxfp8,cute-dsl-w4a8
+
     # Throughput benchmark (large batches: 128-4096 tokens)
     python bench_moe_deepseek.py
 
@@ -66,6 +72,7 @@ import argparse
 import contextlib
 import gc
 import os
+import sys
 from dataclasses import dataclass
 import numpy as np
 import torch
@@ -1177,6 +1184,8 @@ def _benchmark_single(
     histogram_record = _collect_expert_histogram(inputs, num_local, local_offset)
 
     selected = set(backends or ("cutedsl", "cutlass", "trtllm-nvfp4", "trtllm-bf16"))
+    if backends is None and profile_backend in ("cute-dsl-mxfp8", "cute-dsl-w4a8"):
+        selected = {profile_backend}
     run_cute_dsl_w4a4 = "cutedsl" in selected and profile_backend in (
         None,
         "cute-dsl",
@@ -1235,6 +1244,43 @@ def _benchmark_single(
             profile_iters=profile_iters,
             autotune_cache=autotune_cache,
         )
+    for selector, weight_format, label in (
+        ("cute-dsl-mxfp8", "mxfp8", "CuteDSL MXFP8"),
+        ("cute-dsl-w4a8", "mxfp4", "CuteDSL W4A8"),
+    ):
+        if selector in selected and profile_backend in (None, selector):
+            if (
+                use_fused_finalize
+                or use_per_token_activation
+                or include_activation_quant
+            ):
+                raise ValueError(
+                    f"{selector} requires --no-fused-finalize, per-tensor activation "
+                    "scales, and initial activation quantization outside timing"
+                )
+            if routing_input_mode != "logits":
+                raise ValueError(f"{selector} requires logits routing")
+            from bench_cute_dsl_mxfp8 import bench_cute_dsl_mxfp8
+            from flashinfer.fused_moe.prepare import _cute_dsl_gated_weight_group_size
+
+            lat[label] = bench_cute_dsl_mxfp8(
+                sys.modules[__name__],
+                inputs,
+                warmup,
+                iters,
+                num_local,
+                local_offset,
+                use_cuda_graph,
+                use_cupti,
+                weight_format=weight_format,
+                gated_group_size=_cute_dsl_gated_weight_group_size(
+                    inputs["hidden_bf16"].device
+                ),
+                do_autotune=do_autotune,
+                profile_cuda=profile_cuda,
+                profile_iters=profile_iters,
+                autotune_cache=autotune_cache,
+            )
     if run_cutlass and not use_per_token_activation:
         lat["CUTLASS"] = bench_cutlass(
             inputs,
@@ -1570,7 +1616,7 @@ def main():
     parser.add_argument(
         "--backends",
         type=str,
-        help="Comma-separated subset of cutedsl,cutlass,trtllm-nvfp4,trtllm-bf16 (default: all)",
+        help="Comma-separated subset of cutedsl,cutlass,trtllm-nvfp4,trtllm-bf16; opt-in cute-dsl-mxfp8,cute-dsl-w4a8 require --no-fused-finalize",
     )
     parser.add_argument(
         "--distributions",
@@ -1649,6 +1695,8 @@ def main():
         choices=[
             "cute-dsl",
             "cute-dsl-w4a16",
+            "cute-dsl-mxfp8",
+            "cute-dsl-w4a8",
             "cutlass",
             "trtllm-nvfp4",
             "trtllm-bf16",
@@ -1675,7 +1723,15 @@ def main():
             item.strip() for item in args.backends.split(",") if item.strip()
         )
         unknown = sorted(
-            set(backends) - {"cutedsl", "cutlass", "trtllm-nvfp4", "trtllm-bf16"}
+            set(backends)
+            - {
+                "cutedsl",
+                "cutlass",
+                "trtllm-nvfp4",
+                "trtllm-bf16",
+                "cute-dsl-mxfp8",
+                "cute-dsl-w4a8",
+            }
         )
         if unknown:
             parser.error(f"unknown --backends value(s): {', '.join(unknown)}")
