@@ -351,6 +351,7 @@ class Sm100BlockScaledMoeEpilogue:
             raise ValueError("Fused combine requires BF16, FP16, or FP32 output")
         self.bulk_tokens = 0
         self.overlap_acc = False
+        self.overlap_fc1_steps = 0
         self.bulk_stages = 0
         self.tile_n = mma_tiler_mnk[1]
         self.activation_type = activation_type
@@ -545,6 +546,9 @@ class Sm100BlockScaledMoeEpilogue:
         token_start,
         fc2_output_row,
         fc2_scale,
+        release_acc: cutlass.Constexpr = False,
+        acc_pipeline=None,
+        acc_state=None,
     ):
         warp = (tidx // 32) % 4
         lane = tidx % 32
@@ -569,6 +573,11 @@ class Sm100BlockScaledMoeEpilogue:
             else:
                 values = self._activate(up, gate, alpha)
                 values = _blockscaled_transpose16x32(values, scratch)
+            if cutlass.const_expr(release_acc):
+                # All overlapping accumulator and transpose-scratch reads have
+                # completed before either CTA allows the next MMA to overwrite.
+                cute.arch.fence_view_async_tmem_load()
+                acc_pipeline.consumer_release(acc_state)
             absmax = cutlass.Float32(0.0)
             if cutlass.const_expr(self.generate_sfc):
                 if cutlass.const_expr(self.sf_vec_size == 32):
@@ -595,6 +604,11 @@ class Sm100BlockScaledMoeEpilogue:
             bottom = _blockscaled_load16x32(scratch + (16 << 16))
             top = _blockscaled_transpose16x32(top, scratch)
             bottom = _blockscaled_transpose16x32(bottom, scratch, True)
+            if cutlass.const_expr(release_acc):
+                # All overlapping accumulator and transpose-scratch reads have
+                # completed before either CTA allows the next MMA to overwrite.
+                cute.arch.fence_view_async_tmem_load()
+                acc_pipeline.consumer_release(acc_state)
             row = route_start + token_start + lane
             scale = alpha
             output_row = row
@@ -637,6 +651,124 @@ class Sm100BlockScaledMoeEpilogue:
                             norm_const,
                             absmax,
                         )
+
+    @cute.jit
+    def _run_overlapping_fc1_direction(
+        self,
+        acc_tensor,
+        output_tensor,
+        output_sf_tensor,
+        alpha,
+        norm_const,
+        per_token_scale,
+        token_mapping,
+        channel_start,
+        route_start,
+        valid_tokens,
+        tidx,
+        smem_scratch,
+        acc_pipeline,
+        acc_state,
+        channel_stride: cutlass.Constexpr,
+        channel_tiles: cutlass.Constexpr,
+        reverse: cutlass.Constexpr,
+    ):
+        # Treat all channel tiles as one virtual accumulator column range.
+        # The actual scale footprint, rounded to a 32-column transpose slab,
+        # determines the shared interval. Read it before releasing ownership.
+        groups = self.tile_n // 32
+        for step in cutlass.range_constexpr(channel_tiles * groups):
+            slab = channel_tiles * groups - 1 - step if reverse else step
+            channel_tile = slab // groups
+            token_start = (slab % groups) * 32
+            tile = cute.make_tensor(
+                acc_tensor.iterator + channel_tile * self.tile_n, acc_tensor.layout
+            )
+            if token_start < valid_tokens:
+                self._run_token_group(
+                    tile,
+                    output_tensor,
+                    output_sf_tensor,
+                    alpha,
+                    norm_const,
+                    per_token_scale,
+                    token_mapping,
+                    channel_start + channel_tile * channel_stride,
+                    route_start,
+                    valid_tokens,
+                    tidx,
+                    smem_scratch,
+                    token_start,
+                    cutlass.Int32(0),
+                    alpha,
+                    step + 1 == self.overlap_fc1_steps,
+                    acc_pipeline,
+                    acc_state,
+                )
+            elif cutlass.const_expr(step + 1 == self.overlap_fc1_steps):
+                cute.arch.fence_view_async_tmem_load()
+                acc_pipeline.consumer_release(acc_state)
+
+    @cute.jit
+    def run_overlapping_fc1(
+        self,
+        acc_tensor,
+        output_tensor,
+        output_sf_tensor,
+        alpha,
+        norm_const,
+        per_token_scale,
+        token_mapping,
+        channel_start,
+        route_start,
+        valid_tokens,
+        tidx,
+        smem_scratch,
+        acc_pipeline,
+        acc_state,
+        channel_stride: cutlass.Constexpr,
+        channel_tiles: cutlass.Constexpr,
+    ):
+        if acc_state.phase == 0:
+            self._run_overlapping_fc1_direction(
+                acc_tensor,
+                output_tensor,
+                output_sf_tensor,
+                alpha,
+                norm_const,
+                per_token_scale,
+                token_mapping,
+                channel_start,
+                route_start,
+                valid_tokens,
+                tidx,
+                smem_scratch,
+                acc_pipeline,
+                acc_state,
+                channel_stride,
+                channel_tiles,
+                True,
+            )
+        else:
+            self._run_overlapping_fc1_direction(
+                acc_tensor,
+                output_tensor,
+                output_sf_tensor,
+                alpha,
+                norm_const,
+                per_token_scale,
+                token_mapping,
+                channel_start,
+                route_start,
+                valid_tokens,
+                tidx,
+                smem_scratch,
+                acc_pipeline,
+                acc_state,
+                channel_stride,
+                channel_tiles,
+                False,
+            )
 
     @cute.jit
     def _run_bulk_direction(

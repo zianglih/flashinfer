@@ -241,6 +241,14 @@ def moe_unpermute(
     # over more columns once there are enough token rows to fill the GPU.
     threads = 32 if num_tokens <= 8 else 128
     vectors_per_thread = 4 if num_tokens > 1024 else 1
+    if num_tokens > 1024 and input_is_expanded:
+        if hidden_size % (threads * 8 * vectors_per_thread):
+            # Avoid a partially occupied final CTA while bounding the
+            # larger tile to seven vectors per thread.
+            for candidate_vectors in (7, 6, 5):
+                if hidden_size % (threads * 8 * candidate_vectors) == 0:
+                    vectors_per_thread = candidate_vectors
+                    break
     cache_key = (
         output.device.index,
         hidden_size,

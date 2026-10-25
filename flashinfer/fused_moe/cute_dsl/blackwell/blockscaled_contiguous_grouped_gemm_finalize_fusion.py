@@ -29,8 +29,8 @@
 """SM100 blockscaled MoE with weights on M and routed activations on runtime N.
 
 FC1 and FC2 share native NVFP4, MXFP4, MXFP8, and mixed MXFP4/MXFP8
-mainloops. TMA loads prepared weights and activation rows; cp.async loads
-activation scale factors. M128 uses one CTA; M256 uses two CTAs with 128
+mainloops. TMA loads prepared weights and activation rows. FC2 also loads
+canonical activation scale tiles with TMA; FC1 uses gathered cp.async scales. M128 uses one CTA; M256 uses two CTAs with 128
 channels each. Allocation uses the tactic width while each MMA descriptor
 rounds the live routed-token count to 16 columns.
 """
@@ -105,6 +105,46 @@ def _blockscaled_tma_gather4(
         f"mbarrier::complete_tx::bytes.cta_group::{cta_group}.L2::cache_hint "
         "[$0], [$1, {$3, $4, $5, $6, $7}], [$2], $8;",
         "r,l,r,r,r,r,r,r,l",
+        has_side_effects=True,
+        is_align_stack=False,
+        asm_dialect=llvm.AsmDialect.AD_ATT,
+        loc=loc,
+        ip=ip,
+    )
+
+
+@dsl_user_op
+def _blockscaled_tma_sfb(
+    atom, destination, mbarrier, k_block, row_block, cta_group, loc=None, ip=None
+):
+    """Load one canonical 128-row SF block, replicated in each CTA."""
+    executable = _cute_nvgpu_ir.atom_make_exec_tma(atom._trait.value, loc=loc, ip=ip)
+    descriptor_type = _cute_ir.PtrType.get(
+        _cute_nvgpu_ir.TmaDescriptorTiledType.get(), AddressSpace.generic, 64
+    )
+    descriptor = _cute_nvgpu_ir.get_tma_desc_addr(
+        descriptor_type, executable, loc=loc, ip=ip
+    )
+    barrier = cutlass.Int32(mbarrier.toint())
+    if cta_group == 2:
+        # Both CTAs contribute their full local SFB tile to the leader barrier.
+        barrier = barrier & cutlass.Int32(-16777217)
+    elif cta_group != 1:
+        raise ValueError("Unsupported TMA CTA group")
+    llvm.inline_asm(
+        None,
+        [
+            cutlass.Int32(destination.toint()).ir_value(loc=loc, ip=ip),
+            descriptor.toint().ir_value(loc=loc, ip=ip),
+            barrier.ir_value(loc=loc, ip=ip),
+            cutlass.Int32(k_block).ir_value(loc=loc, ip=ip),
+            cutlass.Int32(row_block).ir_value(loc=loc, ip=ip),
+            cutlass.Int64(0).ir_value(loc=loc, ip=ip),
+        ],
+        "cp.async.bulk.tensor.3d.shared::cta.global."
+        f"mbarrier::complete_tx::bytes.cta_group::{cta_group}.L2::cache_hint "
+        "[$0], [$1, {0, $3, $4}], [$2], $5;",
+        "r,l,r,r,r,l",
         has_side_effects=True,
         is_align_stack=False,
         asm_dialect=llvm.AsmDialect.AD_ATT,
@@ -317,6 +357,9 @@ class Sm100BlockScaledGroupedGemmKernel:
         # though each CTA stores only its half of the B activation tile.
         self.sfb_row_blocks = max(1, self.allocated_n // 128)
         self.sfb_stage_bytes = self.sfb_row_blocks * self.sf_stage_bytes
+        # FC2 route tiles aligned to 128 rows expose complete canonical SF atoms.
+        # Smaller route tiles can start inside an atom and retain cp.async.
+        self.tma_sfb = activation_type is None and self.route_tile >= 128
         self.activation_type = activation_type
         self.top_k = top_k
         self.use_per_token_scale = use_per_token_scale
@@ -353,8 +396,14 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.acc_stages = 2 if self.overlap_epilogue and self.allocated_n <= 128 else 1
         if self.channel_tiles == 2:
             self.acc_stages = 1
-        self.sf_cols = 16 * self.k_steps // 4
+        self.sf_cols = self.tile_k // self.sf_vec_size
         self.sfb_cols = self.sf_cols * self.sfb_row_blocks
+        self.overlap_fc1_acc = (
+            self.activation_type is not None
+            and self.overlap_epilogue
+            and self.acc_cols == 256
+            and self.sf_cols * self.channel_tiles + self.sfb_cols <= 64
+        )
         self.tmem_cols = (
             1
             << (
@@ -689,6 +738,33 @@ class Sm100BlockScaledGroupedGemmKernel:
                 (1, self.gather_k),
             )
 
+        tma_atom_sfb = None
+        if cutlass.const_expr(self.tma_sfb):
+            # The canonical SF layout consists of contiguous 512-byte blocks.
+            # Keep K-block and row-block coordinates separate so TMA zero-fills
+            # a short final K tile without crossing into the next row block.
+            sf_k_blocks = cute.ceil_div(weights.shape[1], self.sf_block_k)
+            sf_row_blocks = cute.ceil_div(activations.shape[0], 128)
+            # Preserve the 3D descriptor's K axis even when it has one block.
+            # This types the constant K extent without adding a runtime argument.
+            sf_source = cute.make_tensor(
+                cute.recast_ptr(activations_sf.iterator, dtype=cutlass.Int16),
+                cute.make_layout(
+                    (256, cutlass.Int32(sf_k_blocks), cutlass.Int32(sf_row_blocks)),
+                    stride=(1, 256, sf_k_blocks * 256),
+                ),
+            )
+            sf_tile = (256, self.tile_k // self.sf_block_k, 1)
+            sf_destination = cute.make_layout(
+                sf_tile, stride=(1, 256, self.tile_k // self.sf_block_k * 256)
+            )
+            tma_atom_sfb, _ = cpasync.make_tiled_tma_atom(
+                cpasync.CopyBulkTensorTileG2SOp(),
+                sf_source,
+                sf_destination,
+                sf_tile,
+            )
+
         # Preserve the operand pipeline depth. Use the largest row-scatter
         # buffer that fits the actual dtype/layout allocation, including every
         # mbarrier and alignment pad in SharedStorage.
@@ -728,19 +804,31 @@ class Sm100BlockScaledGroupedGemmKernel:
             self.epilogue.bulk_tokens = 0
             self.epilogue.bulk_stages = 0
 
-        # Two N256 windows overlap only in columns 192..255; scales remain
-        # disjoint in 448..495. Smaller/direct epilogues retain their ownership.
+        # Alternate overlapping accumulator windows while keeping scales
+        # disjoint. The epilogue reads their shared interval before release.
         self.overlap_acc = (
             self.allocated_n == 256
             and self.overlap_epilogue
             and self.epilogue.bulk_tokens > 0
-        )
-        if cutlass.const_expr(self.overlap_acc and self.sf_cols + self.sfb_cols > 64):
+        ) or self.overlap_fc1_acc
+        if cutlass.const_expr(
+            self.overlap_acc and self.sf_cols * self.channel_tiles + self.sfb_cols > 64
+        ):
             raise ValueError("Overlapping accumulators require at most 64 SF columns")
+        # TMEM scale copies occupy four columns per 128-bit scale atom. The
+        # FC1 transpose works in 32-column slabs, so only ownership is rounded.
+        sf_footprint = self.sf_cols * self.channel_tiles + self.sfb_cols
+        self.protected_acc_cols = (
+            ((sf_footprint + 31) // 32) * 32 if self.overlap_fc1_acc else 64
+        )
+        self.acc_window_stride = self.acc_cols - self.protected_acc_cols
         self.acc_reserved_cols = (
-            448 if self.overlap_acc else self.acc_stages * self.acc_cols
+            self.acc_cols + self.acc_window_stride
+            if self.overlap_acc
+            else self.acc_stages * self.acc_cols
         )
         self.epilogue.overlap_acc = self.overlap_acc
+        self.epilogue.overlap_fc1_steps = self.protected_acc_cols // 32
 
         @cute.struct
         class SharedStorage:
@@ -789,6 +877,7 @@ class Sm100BlockScaledGroupedGemmKernel:
             tma_activations,
             tma_atom_sfa,
             tma_weights_sf,
+            tma_atom_sfb,
             activations,
             weights_sf,
             activations_sf,
@@ -849,6 +938,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         tma_activations,
         tma_atom_sfa,
         tma_weights_sf,
+        tma_atom_sfb,
         activations,
         weights_sf,
         activations_sf,
@@ -884,21 +974,24 @@ class Sm100BlockScaledGroupedGemmKernel:
                 (128 * self.tile_k * self.weight_dtype.width // 8 + self.sf_stage_bytes)
                 * self.channel_tiles
                 + self.b_rows * self.tile_k * self.activation_dtype.width // 8
+                + (self.sfb_stage_bytes if self.tma_sfb else 0)
             )
             // (4 if self.activation_type is not None else 1),
         )
-        ab = PipelineCpAsyncUmma.create(
-            barrier_storage=storage.ab_barriers.data_ptr(),
-            num_stages=self.num_stages,
-            producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread, 128),
-            consumer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread),
-            defer_sync=True,
-            cta_layout_vmnk=cluster_layout,
-        )
+        ab = None
+        if cutlass.const_expr(not self.tma_sfb):
+            ab = PipelineCpAsyncUmma.create(
+                barrier_storage=storage.ab_barriers.data_ptr(),
+                num_stages=self.num_stages,
+                producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread, 128),
+                consumer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread),
+                defer_sync=True,
+                cta_layout_vmnk=cluster_layout,
+            )
         # cp.async completion is CTA-local. Both MMA warps relay that local
         # completion before the leader issues a group-2 MMA.
         relay = None
-        if cutlass.const_expr(self.cta_group_size == 2):
+        if cutlass.const_expr(self.cta_group_size == 2 and not self.tma_sfb):
             relay = pipeline.PipelineAsyncUmma.create(
                 barrier_storage=storage.relay_barriers.data_ptr(),
                 num_stages=self.num_stages,
@@ -1070,11 +1163,12 @@ class Sm100BlockScaledGroupedGemmKernel:
                         )
                 shared_sf_offset = (sf_row % 32) * 16 + (sf_row // 32) * 4
                 for k_tile in cutlass.range(k_tiles):
-                    if cutlass.const_expr(self.enable_iket):
-                        _iket.range_push("producer_sf_empty")
-                    ab.producer_acquire(producer)
-                    if cutlass.const_expr(self.enable_iket):
-                        _iket.range_pop()
+                    if cutlass.const_expr(not self.tma_sfb):
+                        if cutlass.const_expr(self.enable_iket):
+                            _iket.range_push("producer_sf_empty")
+                        ab.producer_acquire(producer)
+                        if cutlass.const_expr(self.enable_iket):
+                            _iket.range_pop()
                     if cutlass.const_expr(self.activation_type is not None):
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("producer_tma_empty")
@@ -1148,39 +1242,58 @@ class Sm100BlockScaledGroupedGemmKernel:
                             _iket.range_pop()
                     if cutlass.const_expr(self.enable_iket):
                         _iket.range_push("producer_sf_issue")
-                    # Issue the fragmented SF copies before FC1 Gather4 so they
-                    # can progress while the producer issues the payload loads.
-                    # Four contiguous SF bytes form one prepared scale-factor block.
-                    for row_block in cutlass.range_constexpr(self.sfb_row_blocks):
-                        row = sf_row + row_block * 128
-                        for sf_block in cutlass.range_constexpr(
-                            self.tile_k // self.sf_block_k
-                        ):
-                            channel = k_tile * self.tile_k + sf_block * self.sf_block_k
-                            shared_offset = (
-                                producer.index * self.sfb_stage_bytes
-                                + row_block * self.sf_stage_bytes
-                                + sf_block * 512
-                                + shared_sf_offset
-                            )
-                            if cutlass.const_expr(self.activation_type is not None):
-                                activation_offset = (
-                                    activation_sf_offsets[row_block]
-                                    + channel // self.sf_vec_size
+                    if cutlass.const_expr(self.tma_sfb):
+                        if warp == 0:
+                            for row_block in cutlass.range_constexpr(
+                                self.sfb_row_blocks
+                            ):
+                                with cute.arch.elect_one():
+                                    _blockscaled_tma_sfb(
+                                        tma_atom_sfb,
+                                        sSFB.iterator
+                                        + producer.index * self.sfb_stage_bytes
+                                        + row_block * self.sf_stage_bytes,
+                                        a_pipe.producer_get_barrier(producer),
+                                        k_tile * (self.tile_k // self.sf_block_k),
+                                        route_start // 128 + row_block,
+                                        self.cta_group_size,
+                                    )
+                    else:
+                        # Issue the fragmented SF copies before FC1 Gather4 so they
+                        # can progress while the producer issues the payload loads.
+                        # Four contiguous SF bytes form one prepared scale-factor block.
+                        for row_block in cutlass.range_constexpr(self.sfb_row_blocks):
+                            row = sf_row + row_block * 128
+                            for sf_block in cutlass.range_constexpr(
+                                self.tile_k // self.sf_block_k
+                            ):
+                                channel = (
+                                    k_tile * self.tile_k + sf_block * self.sf_block_k
                                 )
-                            else:
-                                activation_offset = (
-                                    activation_sf_offsets[row_block]
-                                    + (channel // self.sf_block_k) * 512
+                                shared_offset = (
+                                    producer.index * self.sfb_stage_bytes
+                                    + row_block * self.sf_stage_bytes
+                                    + sf_block * 512
+                                    + shared_sf_offset
                                 )
-                            self._copy_tile(
-                                copy_sf,
-                                activations_sf.iterator
-                                + cute.assume(activation_offset, divby=4),
-                                sSFB.iterator + cute.assume(shared_offset, divby=4),
-                                4,
-                                (row < valid) & (channel < weights.shape[1]),
-                            )
+                                if cutlass.const_expr(self.activation_type is not None):
+                                    activation_offset = (
+                                        activation_sf_offsets[row_block]
+                                        + channel // self.sf_vec_size
+                                    )
+                                else:
+                                    activation_offset = (
+                                        activation_sf_offsets[row_block]
+                                        + (channel // self.sf_block_k) * 512
+                                    )
+                                self._copy_tile(
+                                    copy_sf,
+                                    activations_sf.iterator
+                                    + cute.assume(activation_offset, divby=4),
+                                    sSFB.iterator + cute.assume(shared_offset, divby=4),
+                                    4,
+                                    (row < valid) & (channel < weights.shape[1]),
+                                )
                     if cutlass.const_expr(self.enable_iket):
                         _iket.range_pop()
                     if cutlass.const_expr(self.enable_iket):
@@ -1214,11 +1327,12 @@ class Sm100BlockScaledGroupedGemmKernel:
                                         )
                     if cutlass.const_expr(self.enable_iket):
                         _iket.range_pop()
-                    if cutlass.const_expr(self.enable_iket):
-                        _iket.range_push("producer_sf_commit")
-                    ab.producer_commit(producer)
-                    if cutlass.const_expr(self.enable_iket):
-                        _iket.range_pop()
+                    if cutlass.const_expr(not self.tma_sfb):
+                        if cutlass.const_expr(self.enable_iket):
+                            _iket.range_push("producer_sf_commit")
+                        ab.producer_commit(producer)
+                        if cutlass.const_expr(self.enable_iket):
+                            _iket.range_pop()
                     producer.advance()
                 if cutlass.const_expr(not self.overlap_epilogue):
                     if cutlass.const_expr(self.enable_iket):
@@ -1264,7 +1378,8 @@ class Sm100BlockScaledGroupedGemmKernel:
                         _iket.range_pop()
                     consumer.advance()
             # Each tail advances its state through all stages.
-            ab.producer_tail(producer.clone())
+            if cutlass.const_expr(not self.tma_sfb):
+                ab.producer_tail(producer.clone())
             if warp == 0:
                 a_pipe.producer_tail(producer)
         elif warp < (8 if self.overlap_epilogue else 4):
@@ -1289,20 +1404,15 @@ class Sm100BlockScaledGroupedGemmKernel:
                 norm = cutlass.Float32(1.0)
                 if cutlass.const_expr(norm_const is not None):
                     norm = norm_const[0]
-                for channel_tile in cutlass.range_constexpr(self.channel_tiles):
+                if cutlass.const_expr(self.overlap_fc1_acc):
                     epi_accumulator = cute.make_tensor(
                         tmem_ptr
                         + cute.assume(
-                            consumer.phase * 192
-                            if self.overlap_acc
-                            else consumer.index * self.acc_cols
-                            + channel_tile * self.allocated_n,
-                            divby=32,
+                            consumer.phase * self.acc_window_stride, divby=32
                         ),
                         acc_layout,
                     )
-                    self.epilogue.run(
-                        tiled_mma,
+                    self.epilogue.run_overlapping_fc1(
                         epi_accumulator,
                         output,
                         output_sf,
@@ -1310,16 +1420,50 @@ class Sm100BlockScaledGroupedGemmKernel:
                         norm,
                         per_token_scale,
                         token_mapping,
-                        token_final_scales,
-                        channel_start + channel_tile * self.mma_m,
+                        channel_start,
                         route_start,
                         valid,
-                        expert,
                         tidx - 128,
                         storage.epilogue_scratch.data_ptr(),
                         acc_pipe,
                         consumer,
+                        self.mma_m,
+                        self.channel_tiles,
                     )
+                else:
+                    for channel_tile in cutlass.range_constexpr(self.channel_tiles):
+                        epi_accumulator = cute.make_tensor(
+                            tmem_ptr
+                            + cute.assume(
+                                (
+                                    consumer.phase * self.acc_window_stride
+                                    if self.overlap_acc
+                                    else consumer.index * self.acc_cols
+                                )
+                                + channel_tile * self.allocated_n,
+                                divby=32,
+                            ),
+                            acc_layout,
+                        )
+                        self.epilogue.run(
+                            tiled_mma,
+                            epi_accumulator,
+                            output,
+                            output_sf,
+                            alpha[expert],
+                            norm,
+                            per_token_scale,
+                            token_mapping,
+                            token_final_scales,
+                            channel_start + channel_tile * self.mma_m,
+                            route_start,
+                            valid,
+                            expert,
+                            tidx - 128,
+                            storage.epilogue_scratch.data_ptr(),
+                            acc_pipe,
+                            consumer,
+                        )
                 cute.arch.fence_view_async_tmem_load()
                 if cutlass.const_expr(not self.overlap_acc):
                     acc_pipe.consumer_release(consumer)
@@ -1379,7 +1523,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                 mma_accumulator = cute.make_tensor(
                     tmem_ptr
                     + cute.assume(
-                        (producer.phase ^ 1) * 192
+                        (producer.phase ^ 1) * self.acc_window_stride
                         if self.overlap_acc
                         else producer.index * self.acc_cols,
                         divby=32,
@@ -1393,12 +1537,15 @@ class Sm100BlockScaledGroupedGemmKernel:
                 if cutlass.const_expr(self.enable_iket):
                     _iket.range_pop()
                 for k_tile in cutlass.range(k_tiles):
-                    if cutlass.const_expr(self.enable_iket):
-                        _iket.range_push("mma_sf_ready")
-                    ab.consumer_wait(consumer)
-                    if cutlass.const_expr(self.enable_iket):
-                        _iket.range_pop()
-                    if cutlass.const_expr(self.cta_group_size == 2):
+                    if cutlass.const_expr(not self.tma_sfb):
+                        if cutlass.const_expr(self.enable_iket):
+                            _iket.range_push("mma_sf_ready")
+                        ab.consumer_wait(consumer)
+                        if cutlass.const_expr(self.enable_iket):
+                            _iket.range_pop()
+                    if cutlass.const_expr(
+                        self.cta_group_size == 2 and not self.tma_sfb
+                    ):
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("mma_relay_empty")
                         relay.producer_acquire(relay_producer)
@@ -1411,7 +1558,9 @@ class Sm100BlockScaledGroupedGemmKernel:
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
                     if cta_rank == 0:
-                        if cutlass.const_expr(self.cta_group_size == 2):
+                        if cutlass.const_expr(
+                            self.cta_group_size == 2 and not self.tma_sfb
+                        ):
                             if cutlass.const_expr(self.enable_iket):
                                 _iket.range_push("mma_peer_sf_ready")
                             relay.consumer_wait(consumer)
@@ -1467,11 +1616,8 @@ class Sm100BlockScaledGroupedGemmKernel:
                             if cutlass.const_expr(self.enable_iket):
                                 _iket.range_push("mma_umma1_issue")
                             mma_accumulator1 = cute.make_tensor(
-                                tmem_ptr
-                                + cute.assume(
-                                    producer.index * self.acc_cols + self.allocated_n,
-                                    divby=32,
-                                ),
+                                mma_accumulator.iterator
+                                + cute.assume(self.allocated_n, divby=32),
                                 acc_layout,
                             )
                             _blockscaled_dynamic_mma(
@@ -1499,9 +1645,12 @@ class Sm100BlockScaledGroupedGemmKernel:
                             _iket.range_push("mma_release_issue")
                         # Both channel tiles must finish reading the shared B/SFB
                         # stage before any operand pipeline can overwrite it.
-                        ab.consumer_release(consumer)
+                        if cutlass.const_expr(not self.tma_sfb):
+                            ab.consumer_release(consumer)
                         a_pipe.consumer_release(consumer)
-                        if cutlass.const_expr(self.cta_group_size == 2):
+                        if cutlass.const_expr(
+                            self.cta_group_size == 2 and not self.tma_sfb
+                        ):
                             relay.consumer_release(consumer)
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
@@ -1510,7 +1659,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                 if cta_rank == 0:
                     acc_pipe.producer_commit(producer)
                 producer.advance()
-            if cutlass.const_expr(self.cta_group_size == 2):
+            if cutlass.const_expr(self.cta_group_size == 2 and not self.tma_sfb):
                 relay.producer_tail(relay_producer)
             if cta_rank == 0:
                 acc_pipe.producer_tail(producer)
