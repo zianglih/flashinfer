@@ -374,6 +374,7 @@ def bench_cute_dsl(
     """
     from flashinfer import SfLayout, nvfp4_quantize
     from flashinfer.fused_moe import fused_topk_deepseek
+    from flashinfer.fused_moe.prepare import _cute_dsl_gated_weight_group_size
     from flashinfer.cute_dsl.utils import convert_sf_to_mma_layout
     from flashinfer.fp4_quantization import fp4_quantize
     from flashinfer.quantization.nvfp4_quantization_utils import (
@@ -448,7 +449,7 @@ def bench_cute_dsl(
     w1_local = inputs["w1_bf16"][expert_start:expert_end]
     w2_local = inputs["w2_bf16"][expert_start:expert_end]
 
-    w1i = interleave(w1_local, 64)
+    w1i = interleave(w1_local, _cute_dsl_gated_weight_group_size(w1_local.device))
     w1f = w1i.view(num_local_experts * 2 * CFG.intermediate_size, CFG.hidden_size)
     w1q, w1s = fp4_quantize(w1f, gs1, sv, False, True)
     w1q = w1q.view(num_local_experts, 2 * CFG.intermediate_size, CFG.hidden_size // 2)

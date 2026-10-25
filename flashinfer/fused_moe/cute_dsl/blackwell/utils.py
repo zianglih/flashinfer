@@ -165,7 +165,7 @@ def blk_reduce_fp16(dst_gemm, src_smem, size, loc=None, ip=None):
 # The 16x32 TMEM transpose follows the NVFP4 MegaMoE epilogue. Each lane
 # receives one token's 16 contiguous channels. SF32 combines two adjacent
 # fragments when computing its scale; SF16 uses one fragment.
-# External weights retain the split backend's up64/gate64 interleaving.
+# Prepared weights interleave up16/gate16 within each warp's 32 TMEM rows.
 
 
 def _blockscaled_tmem_view(ptr, rows, cols):
@@ -530,36 +530,25 @@ class Sm100BlockScaledMoeEpilogue:
                 ptr = acc_tensor.iterator + cute.assume(token_start, divby=32)
                 scratch = ptr + cute.assume(warp * (32 << 16), divby=32)
                 if cutlass.const_expr(self.gated):
-                    # TMEM loads address each warp's own 32-row datapath. The
-                    # up64/gate64 weight layout therefore needs an inter-warp
-                    # exchange after transposing those local channel rows.
-                    top = _blockscaled_load16x32(scratch)
-                    bottom = _blockscaled_load16x32(scratch + (16 << 16))
-                    top = _blockscaled_transpose16x32(top, scratch)
-                    bottom = _blockscaled_transpose16x32(bottom, scratch, True)
-                    shared = cute.make_tensor(
-                        smem_scratch,
-                        cute.make_layout((128, 32), stride=(32, 1)),
-                    )
-                    for i in cutlass.range_constexpr(16):
-                        shared[warp * 32 + i, lane] = top[i]
-                        shared[warp * 32 + 16 + i, lane] = bottom[i]
-                    self.transpose_barrier.arrive_and_wait()
-                    up = cute.make_rmem_tensor((16,), cutlass.Float32)
-                    gate = cute.make_rmem_tensor((16,), cutlass.Float32)
-                    for i in cutlass.range_constexpr(16):
-                        up[i] = shared[warp * 16 + i, lane]
-                        gate[i] = shared[64 + warp * 16 + i, lane]
-                    self.transpose_barrier.arrive_and_wait()
-                    row = route_start + token_start + lane
-                    token_alpha = alpha
+                    # The prepared up16/gate16 groups both belong to this
+                    # warp's 32-row TMEM datapath. Load both before reusing
+                    # the accumulator as transpose scratch.
+                    up = _blockscaled_load16x32(scratch)
+                    gate = _blockscaled_load16x32(scratch + (16 << 16))
                     if cutlass.const_expr(self.use_per_token_scale):
+                        up = _blockscaled_transpose16x32(up, scratch)
+                        gate = _blockscaled_transpose16x32(gate, scratch, True)
+                        row = route_start + token_start + lane
+                        token_alpha = alpha
                         if token_start + lane < valid_tokens:
                             token_alpha = (
                                 alpha
                                 * per_token_scale[token_mapping[row] // self.top_k]
                             )
-                    values = self._activate(up, gate, token_alpha)
+                        values = self._activate(up, gate, token_alpha)
+                    else:
+                        values = self._activate(up, gate, alpha)
+                        values = _blockscaled_transpose16x32(values, scratch)
                     absmax = cutlass.Float32(0.0)
                     if cutlass.const_expr(self.generate_sfc):
                         if cutlass.const_expr(self.sf_vec_size == 32):
