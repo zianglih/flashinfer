@@ -416,12 +416,8 @@ def _get_compiled_gather_kernel(
             max_active_clusters=max_active_clusters,
             stream=stream,
             # Rubin strides must be runtime Int64s, not Python constexprs.
-            **(
-                {
-                    "c_stride_m": cutlass.Int64(0),
-                    "c_sf_n_tile_offset": cutlass.Int64(0),
-                }
-            ),
+            c_stride_m=cutlass.Int64(0),
+            c_sf_n_tile_offset=cutlass.Int64(0),
         )
 
         _gather_kernel_cache[cache_key] = compiled_gemm

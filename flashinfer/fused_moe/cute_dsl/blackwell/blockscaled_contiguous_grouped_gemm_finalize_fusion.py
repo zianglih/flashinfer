@@ -321,7 +321,6 @@ class Sm100BlockScaledGroupedGemmKernel:
             )
         if sf_dtype is cutlass.Float8E8M0FNU:
             self.descriptor |= 1 << 23
-        self.mma_tiler = mma_tiler_mnk
         self.route_tile = mma_tiler_mnk[1]
         # The epilogue transposes 32-column chunks even for a 16-row tile.
         self.allocated_n = max(32, self.route_tile)
@@ -340,7 +339,6 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.tma_sfb = self.route_tile >= 128
         self.activation_type = activation_type
         self.top_k = top_k
-        self.use_per_token_scale = use_per_token_scale
         self.use_fused_finalize = use_fused_finalize
         self.enable_pdl = enable_pdl
         self.output_dtype = output_dtype
@@ -670,7 +668,6 @@ class Sm100BlockScaledGroupedGemmKernel:
             cluster_layout.shape,
             internal_type=cutlass.Int16,
         )
-        tma_atom_b, tma_activations = None, None
         tma_atom_b, tma_activations = cute.nvgpu.make_tiled_tma_atom_B(
             cpasync.CopyBulkTensorTileG2SOp(self.cta_group),
             activations,
@@ -717,7 +714,7 @@ class Sm100BlockScaledGroupedGemmKernel:
             + cute.cosize(self.sfb_layout) * self.sf_dtype.width // 8
         )
         metadata_bytes = (
-            ((self.num_stages * 6 + self.acc_stages * 2) * 8 + 4 + 127) // 128
+            ((self.num_stages * 4 + self.acc_stages * 2) * 8 + 4 + 127) // 128
         ) * 128 + 128
         available = (
             utils.get_smem_capacity_in_bytes("sm_100") - operand_bytes - metadata_bytes
@@ -779,7 +776,6 @@ class Sm100BlockScaledGroupedGemmKernel:
             a_barriers: cute.struct.MemRange[cutlass.Int64, self.num_stages * 2]
             ab_barriers: cute.struct.MemRange[cutlass.Int64, self.num_stages * 2]
             acc_barriers: cute.struct.MemRange[cutlass.Int64, 2 * self.acc_stages]
-            relay_barriers: cute.struct.MemRange[cutlass.Int64, self.num_stages * 2]
             tmem_holding: cutlass.Int32
             epilogue_scratch: cute.struct.Align[
                 cute.struct.MemRange[cutlass.Float32, self.epilogue_scratch_floats], 128
@@ -822,8 +818,6 @@ class Sm100BlockScaledGroupedGemmKernel:
             tma_atom_sfa,
             tma_weights_sf,
             tma_atom_sfb,
-            activations,
-            weights_sf,
             activations_sf,
             output,
             output_sf,
@@ -883,8 +877,6 @@ class Sm100BlockScaledGroupedGemmKernel:
         tma_atom_sfa,
         tma_weights_sf,
         tma_atom_sfb,
-        activations,
-        weights_sf,
         activations_sf,
         output,
         output_sf,
@@ -917,8 +909,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                 * self.channel_tiles
                 + self.b_rows * self.tile_k * self.activation_dtype.width // 8
                 + (self.sfb_stage_bytes if self.tma_sfb else 0)
-            )
-            // (1),
+            ),
         )
         ab = None
         if cutlass.const_expr(not self.tma_sfb):
@@ -926,18 +917,6 @@ class Sm100BlockScaledGroupedGemmKernel:
                 barrier_storage=storage.ab_barriers.data_ptr(),
                 num_stages=self.num_stages,
                 producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread, 128),
-                consumer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread),
-                defer_sync=True,
-                cta_layout_vmnk=cluster_layout,
-            )
-        # cp.async completion is CTA-local. Both MMA warps relay that local
-        # completion before the leader issues a group-2 MMA.
-        relay = None
-        if cutlass.const_expr(self.cta_group_size == 2 and not self.tma_sfb):
-            relay = pipeline.PipelineAsyncUmma.create(
-                barrier_storage=storage.relay_barriers.data_ptr(),
-                num_stages=self.num_stages,
-                producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread, 64),
                 consumer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread),
                 defer_sync=True,
                 cta_layout_vmnk=cluster_layout,
@@ -1183,10 +1162,6 @@ class Sm100BlockScaledGroupedGemmKernel:
                                 )
                     if cutlass.const_expr(self.enable_iket):
                         _iket.range_pop()
-                    if cutlass.const_expr(self.enable_iket):
-                        _iket.range_push("producer_gather4_issue")
-                    if cutlass.const_expr(self.enable_iket):
-                        _iket.range_pop()
                     if cutlass.const_expr(not self.tma_sfb):
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("producer_sf_commit")
@@ -1216,7 +1191,6 @@ class Sm100BlockScaledGroupedGemmKernel:
                             acc_layout,
                         )
                         self.epilogue.run(
-                            tiled_mma,
                             epi_accumulator,
                             output,
                             output_sf,
@@ -1228,7 +1202,6 @@ class Sm100BlockScaledGroupedGemmKernel:
                             channel_start + channel_tile * self.mma_m,
                             route_start,
                             valid,
-                            expert,
                             tidx,
                             storage.epilogue_scratch.data_ptr(),
                         )
@@ -1317,7 +1290,6 @@ class Sm100BlockScaledGroupedGemmKernel:
                             acc_layout,
                         )
                         self.epilogue.run(
-                            tiled_mma,
                             epi_accumulator,
                             output,
                             output_sf,
@@ -1329,7 +1301,6 @@ class Sm100BlockScaledGroupedGemmKernel:
                             channel_start + channel_tile * self.mma_m,
                             route_start,
                             valid,
-                            expert,
                             tidx - 128,
                             storage.epilogue_scratch.data_ptr(),
                             acc_pipe,
@@ -1384,9 +1355,6 @@ class Sm100BlockScaledGroupedGemmKernel:
             producer = pipeline.make_pipeline_state(
                 pipeline.PipelineUserType.Producer, self.acc_stages
             )
-            relay_producer = pipeline.make_pipeline_state(
-                pipeline.PipelineUserType.Producer, self.num_stages
-            )
             for tile in cutlass.range(block, total_tiles, grid):
                 route_idx = tile // total_m_tiles
                 route_start = route_idx * self.route_tile
@@ -1418,29 +1386,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                             cute.arch.fence_proxy("async.shared", space="cta")
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
-                    if cutlass.const_expr(
-                        self.cta_group_size == 2 and not self.tma_sfb
-                    ):
-                        if cutlass.const_expr(self.enable_iket):
-                            _iket.range_push("mma_relay_empty")
-                        relay.producer_acquire(relay_producer)
-                        if cutlass.const_expr(self.enable_iket):
-                            _iket.range_pop()
-                        if cutlass.const_expr(self.enable_iket):
-                            _iket.range_push("mma_relay_arrive")
-                        cute.arch.fence_proxy("async.shared", space="cta")
-                        relay.producer_commit(relay_producer)
-                        if cutlass.const_expr(self.enable_iket):
-                            _iket.range_pop()
                     if cta_rank == 0:
-                        if cutlass.const_expr(
-                            self.cta_group_size == 2 and not self.tma_sfb
-                        ):
-                            if cutlass.const_expr(self.enable_iket):
-                                _iket.range_push("mma_peer_sf_ready")
-                            relay.consumer_wait(consumer)
-                            if cutlass.const_expr(self.enable_iket):
-                                _iket.range_pop()
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("mma_tma_ready")
                         a_pipe.consumer_wait(consumer)
@@ -1523,19 +1469,12 @@ class Sm100BlockScaledGroupedGemmKernel:
                         if cutlass.const_expr(not self.tma_sfb):
                             ab.consumer_release(consumer)
                         a_pipe.consumer_release(consumer)
-                        if cutlass.const_expr(
-                            self.cta_group_size == 2 and not self.tma_sfb
-                        ):
-                            relay.consumer_release(consumer)
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
-                    relay_producer.advance()
                     consumer.advance()
                 if cta_rank == 0:
                     acc_pipe.producer_commit(producer)
                 producer.advance()
-            if cutlass.const_expr(self.cta_group_size == 2 and not self.tma_sfb):
-                relay.producer_tail(relay_producer)
             if cta_rank == 0:
                 acc_pipe.producer_tail(producer)
         pipeline.NamedBarrier(

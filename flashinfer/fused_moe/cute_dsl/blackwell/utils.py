@@ -1013,7 +1013,6 @@ class Sm100BlockScaledMoeEpilogue:
     @cute.jit
     def run(
         self,
-        tiled_mma,
         acc_tensor,
         output_tensor,
         output_sf_tensor,
@@ -1025,7 +1024,6 @@ class Sm100BlockScaledMoeEpilogue:
         channel_start,
         route_start,
         valid_tokens,
-        expert_idx,
         tidx,
         smem_scratch,
         acc_pipeline=None,

@@ -39,7 +39,7 @@ class PrepareRouted:
     def __init__(self, payload_bytes, sf_columns, route_tile, top_k, grid, enable_pdl):
         if payload_bytes % 32 or sf_columns % 4:
             raise ValueError(
-                "payload rows require32-byte alignment; SF rows require4-scale groups"
+                "payload rows require 32-byte alignment; SF rows require 4-scale groups"
             )
         self.payload_words = payload_bytes // 4
         self.sf_blocks = sf_columns // 4
@@ -125,17 +125,15 @@ class PrepareRouted:
                 ):
                     column = (tidx + iteration * self.threads) * 8
                     if column < self.payload_words:
-                        values.fill(0)
-                        if valid:
-                            cute.copy(
-                                copy,
-                                _vector(
-                                    payload_ptr
-                                    + cutlass.Int64(source) * self.payload_words
-                                    + column
-                                ),
-                                values,
-                            )
+                        cute.copy(
+                            copy,
+                            _vector(
+                                payload_ptr
+                                + cutlass.Int64(source) * self.payload_words
+                                + column
+                            ),
+                            values,
+                        )
                         cute.copy(
                             copy,
                             values,

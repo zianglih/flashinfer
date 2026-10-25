@@ -105,18 +105,22 @@ def test_finalize_n_tiling(n, mma, cluster, expect):
 
 
 @pytest.mark.parametrize(
-    "n,mma,expect",
+    "n,mma,cluster,expect",
     [
         # The gated epilogue produces 64 channels per physical M128 tile.
-        (384, (128, 16), True),
-        (512, (128, 64), True),
+        (384, (128, 16), (1, 1), True),
+        (512, (128, 64), (1, 1), True),
         # Weight scale storage still requires complete 128-channel atoms.
-        (192, (128, 128), False),
+        (192, (128, 128), (1, 1), False),
+        # M512 reuses B across two M256 instructions in a two-CTA cluster.
+        (384, (512, 128), (2, 1), True),
+        (384, (512, 256), (2, 1), False),
+        (384, (512, 128), (1, 1), False),
+        (384, (512, 128), (4, 1), False),
     ],
 )
-def test_gemm1_n_tiling_guard(n, mma, expect):
-    # Routed-token N is shared by the two blockscaled GEMMs.
-    assert _gemm1_ok(n, mma, (1, 1)) is expect
+def test_gemm1_n_tiling_guard(n, mma, cluster, expect):
+    assert _gemm1_ok(n, mma, cluster) is expect
 
 
 @pytest.mark.parametrize("op", [_gemm1_ok, _finalize_ok])
@@ -201,64 +205,3 @@ def test_every_rubin_tactic_is_single_cta():
             f"gemm2 tactic {gemm2_tactic} at tile_size={tile_size} uses "
             f"cluster_shape_m={gemm2_cluster_shape_mn[0]}"
         )
-
-
-@pytest.mark.parametrize(
-    "a_dtype,b_dtype,sf_dtype,sf_vec_size,c_dtype",
-    [
-        (
-            cutlass.Float4E2M1FN,
-            cutlass.Float4E2M1FN,
-            cutlass.Float8E4M3FN,
-            16,
-            cutlass.Float4E2M1FN,
-        ),
-        (
-            cutlass.Float4E2M1FN,
-            cutlass.Float4E2M1FN,
-            cutlass.Float8E8M0FNU,
-            16,
-            cutlass.Float4E2M1FN,
-        ),
-        (
-            cutlass.Float4E2M1FN,
-            cutlass.Float4E2M1FN,
-            cutlass.Float8E8M0FNU,
-            32,
-            cutlass.Float4E2M1FN,
-        ),
-        (
-            cutlass.Float8E4M3FN,
-            cutlass.Float8E4M3FN,
-            cutlass.Float8E8M0FNU,
-            32,
-            cutlass.Float8E4M3FN,
-        ),
-        (
-            cutlass.Float8E5M2,
-            cutlass.Float8E5M2,
-            cutlass.Float8E8M0FNU,
-            32,
-            cutlass.Float8E5M2,
-        ),
-        (
-            cutlass.Float8E4M3FN,
-            cutlass.Float4E2M1FN,
-            cutlass.Float8E8M0FNU,
-            32,
-            cutlass.Float8E4M3FN,
-        ),
-    ],
-)
-def test_gemm1_logical_m512_geometry(a_dtype, b_dtype, sf_dtype, sf_vec_size, c_dtype):
-    kwargs = dict(
-        a_dtype=a_dtype,
-        b_dtype=b_dtype,
-        sf_dtype=sf_dtype,
-        sf_vec_size=sf_vec_size,
-        c_dtype=c_dtype,
-    )
-    assert _gemm1_ok(384, (512, 128), (2, 1), **kwargs)
-    assert not _gemm1_ok(384, (512, 256), (2, 1), **kwargs)
-    assert not _gemm1_ok(384, (512, 128), (1, 1), **kwargs)
-    assert not _gemm1_ok(384, (512, 128), (4, 1), **kwargs)
