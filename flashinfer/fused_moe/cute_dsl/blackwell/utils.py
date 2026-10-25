@@ -329,6 +329,8 @@ class Sm100BlockScaledMoeEpilogue:
             cutlass.Float32,
         ):
             raise ValueError("Fused combine requires BF16, FP16, or FP32 output")
+        self.bulk_tokens = 0
+        self.bulk_stages = 0
         self.tile_n = mma_tiler_mnk[1]
         self.activation_type = activation_type
         self.gated = activation_type in (
@@ -616,6 +618,118 @@ class Sm100BlockScaledMoeEpilogue:
                         )
 
     @cute.jit
+    def _run_bulk(
+        self,
+        acc_tensor,
+        output_tensor,
+        alpha,
+        per_token_scale,
+        token_mapping,
+        channel_start,
+        route_start,
+        valid_tokens,
+        tidx,
+        smem_scratch,
+    ):
+        warp = (tidx // 32) % 4
+        lane = tidx % 32
+        groups = max(1, self.tile_n // 32)
+        tokens = self.bulk_tokens
+        stages = self.bulk_stages
+        if cutlass.const_expr(tokens == 64):
+            repeat = tcgen05.Repetition.x64
+        elif cutlass.const_expr(tokens == 32):
+            repeat = tcgen05.Repetition.x32
+        else:
+            raise ValueError("Unsupported FC2 bulk token slab")
+        uniform_scale = alpha
+        if cutlass.const_expr(
+            self.final_scale_dtype in (cutlass.BFloat16, cutlass.Float16)
+        ):
+            uniform_scale = cutlass.Float32(self.final_scale_dtype(uniform_scale))
+        output_rows = cute.make_rmem_tensor((groups,), cutlass.Int32)
+        scales = cute.make_rmem_tensor((groups,), cutlass.Float32)
+        for group in cutlass.range_constexpr(groups):
+            output_rows[group] = 0
+            scales[group] = alpha
+            row = route_start + group * 32 + lane
+            if group * 32 + lane < valid_tokens:
+                output_rows[group] = token_mapping[row]
+                route_scale = cutlass.Float32(1.0)
+                if cutlass.const_expr(self.use_per_token_scale):
+                    route_scale = route_scale * per_token_scale[row]
+                scale = alpha * route_scale
+                if cutlass.const_expr(
+                    self.final_scale_dtype in (cutlass.BFloat16, cutlass.Float16)
+                ):
+                    scale = cutlass.Float32(self.final_scale_dtype(scale))
+                scales[group] = scale
+        shared_all = cute.make_tensor(
+            cute.recast_ptr(smem_scratch, dtype=self.output_dtype),
+            cute.make_layout((tokens, 128, stages), stride=(128, 1, tokens * 128)),
+        )
+        for group in cutlass.range_constexpr(self.tile_n // tokens):
+            if group * tokens < valid_tokens:
+                if cutlass.const_expr(group >= stages):
+                    cute.arch.cp_async_bulk_wait_group(stages - 1, read=True)
+                    self.transpose_barrier.arrive_and_wait()
+                shared = shared_all[None, None, group % stages]
+                ptr = (
+                    acc_tensor.iterator
+                    + group * tokens
+                    + cute.assume(warp * (32 << 16), divby=32)
+                )
+                values = cute.make_rmem_tensor((tokens,), cutlass.Float32)
+                cute.copy(
+                    cute.make_copy_atom(tcgen05.Ld32x32bOp(repeat), cutlass.Float32),
+                    _blockscaled_tmem_view(ptr, 32, tokens),
+                    _blockscaled_rmem_view(values, tokens),
+                )
+                if cutlass.const_expr(self.use_per_token_scale):
+                    for i in cutlass.range_constexpr(tokens):
+                        scale = cute.arch.shuffle_sync(
+                            scales[group * (tokens // 32) + i // 32], i % 32
+                        )
+                        shared[i, warp * 32 + lane] = (values[i] * scale).to(
+                            self.output_dtype
+                        )
+                else:
+                    for i in cutlass.range_constexpr(0, tokens, 2):
+                        values[i], values[i + 1] = cute.arch.mul_packed_f32x2(
+                            (values[i], values[i + 1]), (uniform_scale, uniform_scale)
+                        )
+                    converted = cute.make_rmem_tensor((tokens,), self.output_dtype)
+                    converted.store(values.load().to(self.output_dtype))
+                    for i in cutlass.range_constexpr(tokens):
+                        shared[i, warp * 32 + lane] = converted[i]
+                cute.arch.fence_proxy("async.shared", space="cta")
+                self.transpose_barrier.arrive_and_wait()
+                # Distribute row transactions across all four epilogue warps.
+                copy_row = warp * (tokens // 4) + lane
+                row_source = output_rows[group * (tokens // 32)]
+                if cutlass.const_expr(tokens == 64):
+                    if warp >= 2:
+                        row_source = output_rows[group * 2 + 1]
+                output_row = cute.arch.shuffle_sync(row_source, copy_row % 32)
+                if lane < tokens // 4:
+                    if group * tokens + copy_row < valid_tokens:
+                        source = cute.local_tile(shared, (1, 128), (copy_row, 0))
+                        target = cute.local_tile(
+                            output_tensor, (1, 128), (output_row, channel_start // 128)
+                        )
+                        copy_channels = cutlass.min(
+                            cutlass.Int32(128), output_tensor.shape[1] - channel_start
+                        )
+                        blk_copy(
+                            target,
+                            source,
+                            cutlass.Int32(copy_channels * self.output_dtype.width // 8),
+                        )
+                cute.arch.cp_async_bulk_commit_group()
+        cute.arch.cp_async_bulk_wait_group(0, read=True)
+        self.transpose_barrier.arrive_and_wait()
+
+    @cute.jit
     def run(
         self,
         tiled_mma,
@@ -635,7 +749,23 @@ class Sm100BlockScaledMoeEpilogue:
         smem_scratch,
     ):
         lane = tidx % 32
-        if cutlass.const_expr(self.activation_type is None):
+        if cutlass.const_expr(self.bulk_tokens > 0):
+            # A final two-CTA channel tile can have no live channels in its
+            # second CTA. Avoid issuing a zero-byte global bulk copy there.
+            if channel_start < output_tensor.shape[1]:
+                self._run_bulk(
+                    acc_tensor,
+                    output_tensor,
+                    alpha,
+                    per_token_scale,
+                    token_mapping,
+                    channel_start,
+                    route_start,
+                    valid_tokens,
+                    tidx,
+                    smem_scratch,
+                )
+        elif cutlass.const_expr(self.activation_type is None):
             # Fetch the whole tile's routing metadata before its stores. Keeping
             # the slab indices static preserves these values in registers.
             groups = max(1, self.tile_n // 32)

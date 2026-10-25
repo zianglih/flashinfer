@@ -624,6 +624,45 @@ class Sm100BlockScaledGroupedGemmKernel:
                 (1, self.tile_k),
             )
 
+        # Preserve the operand pipeline depth. Use the largest row-scatter
+        # buffer that fits the actual dtype/layout allocation, including every
+        # mbarrier and alignment pad in SharedStorage.
+        operand_bytes = (
+            cute.cosize(self.a_layout.outer) * self.a_storage_dtype.width // 8
+            + cute.cosize(self.b_layout.outer) * self.activation_dtype.width // 8
+            + cute.cosize(self.sfa_layout) * self.sf_dtype.width // 8
+            + cute.cosize(self.sfb_layout) * self.sf_dtype.width // 8
+        )
+        metadata_bytes = (
+            ((self.num_stages * 6 + self.acc_stages * 2) * 8 + 4 + 127) // 128
+        ) * 128 + 128
+        available = (
+            utils.get_smem_capacity_in_bytes("sm_100") - operand_bytes - metadata_bytes
+        )
+        self.epilogue_scratch_floats = 128
+        if cutlass.const_expr(
+            self.activation_type is None
+            and not self.use_fused_finalize
+            and self.output_dtype in (cutlass.BFloat16, cutlass.Float16)
+            and not self.epilogue.generate_sfc
+            and self.route_tile >= 128
+        ):
+            if cutlass.const_expr(available >= 64 * 128 * 2 * 2):
+                self.epilogue.bulk_tokens = 64
+                self.epilogue.bulk_stages = 2
+            elif cutlass.const_expr(available >= 32 * 128 * 2):
+                self.epilogue.bulk_tokens = 32
+                self.epilogue.bulk_stages = 1
+            else:
+                self.epilogue.bulk_tokens = 0
+                self.epilogue.bulk_stages = 0
+            self.epilogue_scratch_floats = max(
+                128, self.epilogue.bulk_tokens * 128 * self.epilogue.bulk_stages // 2
+            )
+        else:
+            self.epilogue.bulk_tokens = 0
+            self.epilogue.bulk_stages = 0
+
         @cute.struct
         class SharedStorage:
             a_barriers: cute.struct.MemRange[cutlass.Int64, self.num_stages * 2]
@@ -632,7 +671,7 @@ class Sm100BlockScaledGroupedGemmKernel:
             relay_barriers: cute.struct.MemRange[cutlass.Int64, self.num_stages * 2]
             tmem_holding: cutlass.Int32
             epilogue_scratch: cute.struct.Align[
-                cute.struct.MemRange[cutlass.Float32, 128], 128
+                cute.struct.MemRange[cutlass.Float32, self.epilogue_scratch_floats], 128
             ]
             tmem_dealloc_mbar: cutlass.Int64
             a: cute.struct.Align[
@@ -976,30 +1015,8 @@ class Sm100BlockScaledGroupedGemmKernel:
                                 tBsB[(None, producer.index)],
                                 tma_bar_ptr=a_pipe.producer_get_barrier(producer),
                             )
-                    if cutlass.const_expr(self.activation_type is not None):
-                        # Four arrivals jointly register the transaction count;
-                        # each warp can issue its Gather4 loads after its arrival.
-                        for run in cutlass.range_constexpr(self.b_rows // 32):
-                            row_base = (warp + 4 * run) * 8
-                            for half in cutlass.range_constexpr(2):
-                                offset = cute.assume(
-                                    (producer.index * self.b_rows + row_base + half * 4)
-                                    * self.tile_k,
-                                    divby=4 * self.tile_k,
-                                )
-                                first = run * 8 + half * 4
-                                with cute.arch.elect_one():
-                                    _blockscaled_tma_gather4(
-                                        tma_atom_b,
-                                        sB.iterator + offset,
-                                        a_pipe.producer_get_barrier(producer),
-                                        k_tile * self.tile_k,
-                                        gather_row_ids[first],
-                                        gather_row_ids[first + 1],
-                                        gather_row_ids[first + 2],
-                                        gather_row_ids[first + 3],
-                                        self.cta_group_size,
-                                    )
+                    # Issue the fragmented SF copies before FC1 Gather4 so they
+                    # can progress while the producer issues the payload loads.
                     # Four contiguous SF bytes form one prepared scale-factor block.
                     for row_block in cutlass.range_constexpr(self.sfb_row_blocks):
                         row = sf_row + row_block * 128
@@ -1031,6 +1048,30 @@ class Sm100BlockScaledGroupedGemmKernel:
                                 4,
                                 (row < valid) & (channel < weights.shape[1]),
                             )
+                    if cutlass.const_expr(self.activation_type is not None):
+                        # Four arrivals jointly register the transaction count;
+                        # each warp can issue its Gather4 loads after its arrival.
+                        for run in cutlass.range_constexpr(self.b_rows // 32):
+                            row_base = (warp + 4 * run) * 8
+                            for half in cutlass.range_constexpr(2):
+                                offset = cute.assume(
+                                    (producer.index * self.b_rows + row_base + half * 4)
+                                    * self.tile_k,
+                                    divby=4 * self.tile_k,
+                                )
+                                first = run * 8 + half * 4
+                                with cute.arch.elect_one():
+                                    _blockscaled_tma_gather4(
+                                        tma_atom_b,
+                                        sB.iterator + offset,
+                                        a_pipe.producer_get_barrier(producer),
+                                        k_tile * self.tile_k,
+                                        gather_row_ids[first],
+                                        gather_row_ids[first + 1],
+                                        gather_row_ids[first + 2],
+                                        gather_row_ids[first + 3],
+                                        self.cta_group_size,
+                                    )
                     ab.producer_commit(producer)
                     producer.advance()
                 if cutlass.const_expr(not self.overlap_epilogue):
