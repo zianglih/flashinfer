@@ -136,6 +136,26 @@ def _run_blockscaled_gemm(
     else:
         scale_dtype = torch_to_cutlass_dtype(token_final_scales.dtype)
     stream = cuda.CUstream(torch.cuda.current_stream().cuda_stream)
+    if activation_type is not None:
+        from .blackwell.moe_prepare import allocate, prepare
+
+        routed, routed_sf = allocate(
+            activation, activation_sf, token_mapping.numel(), sf_vec_size
+        )
+        prepare(
+            activation,
+            activation_sf,
+            routed,
+            routed_sf,
+            token_mapping,
+            mn_limit,
+            num_tiles,
+            route_tile,
+            top_k,
+            sf_vec_size,
+            enable_pdl,
+        )
+        activation, activation_sf = routed, routed_sf
     pointers = (
         _blockscaled_ptr(weight, weight_dtype, 32),
         _blockscaled_ptr(weight_sf, sf_dtype),

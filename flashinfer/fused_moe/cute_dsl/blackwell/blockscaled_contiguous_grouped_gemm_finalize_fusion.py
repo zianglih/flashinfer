@@ -26,13 +26,19 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-"""SM100 blockscaled MoE with weights on M and routed activations on runtime N.
+"""SM100 blockscaled split MoE with weights on M and activations on runtime N.
 
 FC1 and FC2 share native NVFP4, MXFP4, MXFP8, and mixed MXFP4/MXFP8
-mainloops. TMA loads prepared weights and activation rows. FC2 also loads
-canonical activation scale tiles with TMA; FC1 uses gathered cp.async scales. M128 uses one CTA; M256 uses two CTAs with 128
-channels each. Allocation uses the tactic width while each MMA descriptor
-rounds the live routed-token count to 16 columns.
+mainloops. Both phases use regular TMA for prepared weights and routed
+activation rows. Canonical activation scales use TMA for N128/N256 route
+tiles and cp.async for smaller tiles that can start inside a 128-row SF atom.
+FC1 preparation preserves payload and scale bytes; per-token activation
+scales retain their original token indexing through the routing map.
+
+M128 uses one CTA; M256 uses two CTAs with 128 channels each. Logical M512
+FC1 reuses an activation tile across two M256 channel tiles. Allocation
+uses the tactic width while each MMA descriptor rounds the live routed-token
+count to 16 columns.
 """
 
 from typing import Optional
@@ -68,49 +74,6 @@ from .utils import (
 
 # Imported only for explicitly instrumented diagnostic builds.
 _iket = None
-
-
-@dsl_user_op
-def _blockscaled_tma_gather4(
-    atom, destination, mbarrier, k, r0, r1, r2, r3, cta_group, loc=None, ip=None
-):
-    """Issue four 128-byte activation rows into the native K-major B layout."""
-    executable = _cute_nvgpu_ir.atom_make_exec_tma(atom._trait.value, loc=loc, ip=ip)
-    descriptor_type = _cute_ir.PtrType.get(
-        _cute_nvgpu_ir.TmaDescriptorTiledType.get(), AddressSpace.generic, 64
-    )
-    descriptor = _cute_nvgpu_ir.get_tma_desc_addr(
-        descriptor_type, executable, loc=loc, ip=ip
-    )
-    barrier = cutlass.Int32(mbarrier.toint())
-    if cta_group == 2:
-        # Clear the peer-CTA bit so both CTAs signal the leader's barrier.
-        barrier = barrier & cutlass.Int32(-16777217)
-    elif cta_group != 1:
-        raise ValueError("Unsupported TMA CTA group")
-    llvm.inline_asm(
-        None,
-        [
-            cutlass.Int32(destination.toint()).ir_value(loc=loc, ip=ip),
-            descriptor.toint().ir_value(loc=loc, ip=ip),
-            barrier.ir_value(loc=loc, ip=ip),
-            cutlass.Int32(k).ir_value(loc=loc, ip=ip),
-            cutlass.Int32(r0).ir_value(loc=loc, ip=ip),
-            cutlass.Int32(r1).ir_value(loc=loc, ip=ip),
-            cutlass.Int32(r2).ir_value(loc=loc, ip=ip),
-            cutlass.Int32(r3).ir_value(loc=loc, ip=ip),
-            cutlass.Int64(0).ir_value(loc=loc, ip=ip),
-        ],
-        "cp.async.bulk.tensor.2d.shared::cta.global.tile::gather4."
-        f"mbarrier::complete_tx::bytes.cta_group::{cta_group}.L2::cache_hint "
-        "[$0], [$1, {$3, $4, $5, $6, $7}], [$2], $8;",
-        "r,l,r,r,r,r,r,r,l",
-        has_side_effects=True,
-        is_align_stack=False,
-        asm_dialect=llvm.AsmDialect.AD_ATT,
-        loc=loc,
-        ip=ip,
-    )
 
 
 @dsl_user_op
@@ -357,9 +320,11 @@ class Sm100BlockScaledGroupedGemmKernel:
         # though each CTA stores only its half of the B activation tile.
         self.sfb_row_blocks = max(1, self.allocated_n // 128)
         self.sfb_stage_bytes = self.sfb_row_blocks * self.sf_stage_bytes
-        # FC2 route tiles aligned to 128 rows expose complete canonical SF atoms.
+        # Route tiles aligned to 128 rows expose complete canonical SF atoms.
         # Smaller route tiles can start inside an atom and retain cp.async.
-        self.tma_sfb = activation_type is None and self.route_tile >= 128
+        # Both phases consume routed payload and canonical SF. Keep
+        # activation_type exclusively as the numerical phase.
+        self.tma_sfb = self.route_tile >= 128
         self.activation_type = activation_type
         self.top_k = top_k
         self.use_per_token_scale = use_per_token_scale
@@ -533,7 +498,12 @@ class Sm100BlockScaledGroupedGemmKernel:
             ActivationType.Relu2
         )
         out_channels = cute.assume(num_channels // (2 if gated else 1), divby=16)
-        source_rows = num_tokens if self.activation_type is not None else num_routes
+        source_rows = num_routes
+        # FC1 scales still belong to original tokens; the epilogue indexes them
+        # through the unchanged route mapping. FC2 scales belong to route rows.
+        per_token_scale_rows = (
+            num_tokens if self.activation_type is not None else num_routes
+        )
         output_rows = num_routes
         if cutlass.const_expr(self.activation_type is None):
             output_rows = (
@@ -605,7 +575,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         per_token_scale = None
         if cutlass.const_expr(per_token_scale_ptr is not None):
             per_token_scale = cute.make_tensor(
-                per_token_scale_ptr, cute.make_layout((source_rows,))
+                per_token_scale_ptr, cute.make_layout((per_token_scale_rows,))
             )
         self(
             weights,
@@ -703,40 +673,14 @@ class Sm100BlockScaledGroupedGemmKernel:
             internal_type=cutlass.Int16,
         )
         tma_atom_b, tma_activations = None, None
-        if cutlass.const_expr(self.activation_type is None):
-            tma_atom_b, tma_activations = cute.nvgpu.make_tiled_tma_atom_B(
-                cpasync.CopyBulkTensorTileG2SOp(self.cta_group),
-                activations,
-                cute.slice_(self.b_layout, (None, None, None, 0)),
-                self.physical_tiler,
-                tiled_mma,
-                cluster_layout.shape,
-            )
-
-        else:
-            # Keep both dimensions dynamic so token-count one still has a 2D
-            # descriptor. Each Gather4 instruction moves a 128-byte row chunk.
-            gather_source = cute.make_tensor(
-                activations.iterator,
-                cute.make_layout(
-                    (
-                        cutlass.Int32(activations.shape[0]),
-                        cutlass.Int32(activations.shape[1]),
-                    ),
-                    stride=activations.stride,
-                ),
-            )
-            gather_layout = cute.make_composed_layout(
-                cute.make_swizzle(3, 4, 3),
-                0,
-                cute.make_layout((1, self.gather_k), stride=(self.gather_k, 1)),
-            )
-            tma_atom_b, _ = cpasync.make_tiled_tma_atom(
-                cpasync.CopyBulkTensorTileG2SOp(),
-                gather_source,
-                gather_layout,
-                (1, self.gather_k),
-            )
+        tma_atom_b, tma_activations = cute.nvgpu.make_tiled_tma_atom_B(
+            cpasync.CopyBulkTensorTileG2SOp(self.cta_group),
+            activations,
+            cute.slice_(self.b_layout, (None, None, None, 0)),
+            self.physical_tiler,
+            tiled_mma,
+            cluster_layout.shape,
+        )
 
         tma_atom_sfb = None
         if cutlass.const_expr(self.tma_sfb):
@@ -964,9 +908,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         a_pipe = PipelineTmaUmma.create(
             barrier_storage=storage.a_barriers.data_ptr(),
             num_stages=self.num_stages,
-            producer_group=pipeline.CooperativeGroup(
-                pipeline.Agent.Thread, 4 if self.activation_type is not None else 1
-            ),
+            producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread, 1),
             consumer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread),
             cta_layout_vmnk=cluster_layout,
             tx_count=self.cta_group_size
@@ -976,7 +918,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                 + self.b_rows * self.tile_k * self.activation_dtype.width // 8
                 + (self.sfb_stage_bytes if self.tma_sfb else 0)
             )
-            // (4 if self.activation_type is not None else 1),
+            // (1),
         )
         ab = None
         if cutlass.const_expr(not self.tma_sfb):
@@ -1076,68 +1018,31 @@ class Sm100BlockScaledGroupedGemmKernel:
                 route_start = route_idx * self.route_tile
                 expert = expert_idx[route_idx]
                 valid = cutlass.min(self.route_tile, mn_limit[route_idx] - route_start)
-                if cutlass.const_expr(self.activation_type is None):
-                    # N16 routing tiles can start halfway through a physical N32 tile.
-                    gB = cute.local_tile(
-                        cute.domain_offset(
-                            (
-                                route_start
-                                + cta_rank
-                                * (
-                                    ((valid + 15) & -16) // self.cta_group_size
-                                    - self.allocated_n // self.cta_group_size
-                                ),
-                                0,
+                # N16 routing tiles can start halfway through a physical N32 tile.
+                gB = cute.local_tile(
+                    cute.domain_offset(
+                        (
+                            route_start
+                            + cta_rank
+                            * (
+                                ((valid + 15) & -16) // self.cta_group_size
+                                - self.allocated_n // self.cta_group_size
                             ),
-                            tma_activations,
+                            0,
                         ),
-                        (self.allocated_n, self.tile_k),
-                        (0, None),
-                    )
-                    tCgB = tiled_mma.get_slice(cta_rank).partition_B(gB)
-                    tBsB, tBgB = cpasync.tma_partition(
-                        tma_atom_b,
-                        0,
-                        cute.make_layout(1),
-                        cute.group_modes(sB, 0, 3),
-                        cute.group_modes(tCgB, 0, 3),
-                    )
-                if cutlass.const_expr(self.activation_type is not None):
-                    # Each warp owns interleaved eight-row runs. Hoist vectorized
-                    # routing-index loads before K and retain invalid rows as OOB.
-                    gather_row_ids = cute.make_rmem_tensor(
-                        (self.b_rows // 4,), cutlass.Int32
-                    )
-                    index_atom = cute.make_copy_atom(
-                        cute.nvgpu.CopyUniversalOp(),
-                        cutlass.Int32,
-                        num_bits_per_copy=128,
-                    )
-                    for run in cutlass.range_constexpr(self.b_rows // 32):
-                        row_base = (warp + 4 * run) * 8
-                        source_row_base = row_base + cta_rank * (
-                            ((valid + 15) & -16) // self.cta_group_size
-                        )
-                        if source_row_base < valid:
-                            index_source = cute.make_tensor(
-                                token_mapping.iterator
-                                + cute.assume(route_start + source_row_base, divby=8),
-                                cute.make_layout((8,)),
-                            )
-                            index_target = cute.make_tensor(
-                                gather_row_ids.iterator + run * 8,
-                                cute.make_layout((8,)),
-                            )
-                            cute.copy(index_atom, index_source, index_target)
-                        for j in cutlass.range_constexpr(8):
-                            if source_row_base + j < valid:
-                                gather_row_ids[run * 8 + j] = (
-                                    gather_row_ids[run * 8 + j] // self.top_k
-                                )
-                            else:
-                                gather_row_ids[run * 8 + j] = cutlass.Int32(
-                                    activations.shape[0]
-                                )
+                        tma_activations,
+                    ),
+                    (self.allocated_n, self.tile_k),
+                    (0, None),
+                )
+                tCgB = tiled_mma.get_slice(cta_rank).partition_B(gB)
+                tBsB, tBgB = cpasync.tma_partition(
+                    tma_atom_b,
+                    0,
+                    cute.make_layout(1),
+                    cute.group_modes(sB, 0, 3),
+                    cute.group_modes(tCgB, 0, 3),
+                )
                 # Give each lane a different SMEM bank for its four scale bytes.
                 sf_row = 8 * warp + 32 * ((tidx % 32) // 8) + tidx % 8
                 activation_sf_offsets = cute.make_rmem_tensor(
@@ -1147,20 +1052,10 @@ class Sm100BlockScaledGroupedGemmKernel:
                     row = sf_row + row_block * 128
                     sf_source_row = cutlass.Int32(0)
                     if row < valid:
-                        if cutlass.const_expr(self.activation_type is not None):
-                            sf_source_row = (
-                                token_mapping[route_start + row] // self.top_k
-                            )
-                        else:
-                            sf_source_row = route_start + row
-                    if cutlass.const_expr(self.activation_type is not None):
-                        activation_sf_offsets[row_block] = sf_source_row * (
-                            weights.shape[1] // self.sf_vec_size
-                        )
-                    else:
-                        activation_sf_offsets[row_block] = _blockscaled_sf_offset(
-                            sf_source_row, 0, padded_k, self.sf_vec_size
-                        )
+                        sf_source_row = route_start + row
+                    activation_sf_offsets[row_block] = _blockscaled_sf_offset(
+                        sf_source_row, 0, padded_k, self.sf_vec_size
+                    )
                 shared_sf_offset = (sf_row % 32) * 16 + (sf_row // 32) * 4
                 for k_tile in cutlass.range(k_tiles):
                     if cutlass.const_expr(not self.tma_sfb):
@@ -1169,20 +1064,13 @@ class Sm100BlockScaledGroupedGemmKernel:
                         ab.producer_acquire(producer)
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
-                    if cutlass.const_expr(self.activation_type is not None):
+                    if warp == 0:
+                        # TMA copy lowering elects internally; keep the whole warp active.
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("producer_tma_empty")
                         a_pipe.producer_acquire(producer)
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
-                    if warp == 0:
-                        # TMA copy lowering elects internally; keep the whole warp active.
-                        if cutlass.const_expr(self.activation_type is None):
-                            if cutlass.const_expr(self.enable_iket):
-                                _iket.range_push("producer_tma_empty")
-                            a_pipe.producer_acquire(producer)
-                            if cutlass.const_expr(self.enable_iket):
-                                _iket.range_pop()
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("producer_weight_tma")
                         for channel_tile in cutlass.range_constexpr(self.channel_tiles):
@@ -1231,13 +1119,12 @@ class Sm100BlockScaledGroupedGemmKernel:
                             _iket.range_pop()
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("producer_activation_tma")
-                        if cutlass.const_expr(self.activation_type is None):
-                            cute.copy(
-                                tma_atom_b,
-                                tBgB[(None, k_tile)],
-                                tBsB[(None, producer.index)],
-                                tma_bar_ptr=a_pipe.producer_get_barrier(producer),
-                            )
+                        cute.copy(
+                            tma_atom_b,
+                            tBgB[(None, k_tile)],
+                            tBsB[(None, producer.index)],
+                            tma_bar_ptr=a_pipe.producer_get_barrier(producer),
+                        )
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
                     if cutlass.const_expr(self.enable_iket):
@@ -1259,9 +1146,9 @@ class Sm100BlockScaledGroupedGemmKernel:
                                         self.cta_group_size,
                                     )
                     else:
-                        # Issue the fragmented SF copies before FC1 Gather4 so they
-                        # can progress while the producer issues the payload loads.
-                        # Four contiguous SF bytes form one prepared scale-factor block.
+                        # Four contiguous SF bytes form one canonical scale-factor block.
+                        # Small route tiles use cp.async when they start inside
+                        # a 128-row SF atom.
                         for row_block in cutlass.range_constexpr(self.sfb_row_blocks):
                             row = sf_row + row_block * 128
                             for sf_block in cutlass.range_constexpr(
@@ -1276,16 +1163,10 @@ class Sm100BlockScaledGroupedGemmKernel:
                                     + sf_block * 512
                                     + shared_sf_offset
                                 )
-                                if cutlass.const_expr(self.activation_type is not None):
-                                    activation_offset = (
-                                        activation_sf_offsets[row_block]
-                                        + channel // self.sf_vec_size
-                                    )
-                                else:
-                                    activation_offset = (
-                                        activation_sf_offsets[row_block]
-                                        + (channel // self.sf_block_k) * 512
-                                    )
+                                activation_offset = (
+                                    activation_sf_offsets[row_block]
+                                    + (channel // self.sf_block_k) * 512
+                                )
                                 self._copy_tile(
                                     copy_sf,
                                     activations_sf.iterator
@@ -1298,33 +1179,6 @@ class Sm100BlockScaledGroupedGemmKernel:
                         _iket.range_pop()
                     if cutlass.const_expr(self.enable_iket):
                         _iket.range_push("producer_gather4_issue")
-                    if cutlass.const_expr(self.activation_type is not None):
-                        # Four arrivals jointly register the transaction count;
-                        # each warp can issue its Gather4 loads after its arrival.
-                        for k_chunk in cutlass.range_constexpr(self.k_steps // 4):
-                            for run in cutlass.range_constexpr(self.b_rows // 32):
-                                row_base = (warp + 4 * run) * 8
-                                for half in cutlass.range_constexpr(2):
-                                    offset = cute.assume(
-                                        producer.index * self.b_rows * self.tile_k
-                                        + k_chunk * self.b_rows * self.gather_k
-                                        + (row_base + half * 4) * self.gather_k,
-                                        divby=4 * self.gather_k,
-                                    )
-                                    first = run * 8 + half * 4
-                                    with cute.arch.elect_one():
-                                        _blockscaled_tma_gather4(
-                                            tma_atom_b,
-                                            sB.iterator + offset,
-                                            a_pipe.producer_get_barrier(producer),
-                                            k_tile * self.tile_k
-                                            + k_chunk * self.gather_k,
-                                            gather_row_ids[first],
-                                            gather_row_ids[first + 1],
-                                            gather_row_ids[first + 2],
-                                            gather_row_ids[first + 3],
-                                            self.cta_group_size,
-                                        )
                     if cutlass.const_expr(self.enable_iket):
                         _iket.range_pop()
                     if cutlass.const_expr(not self.tma_sfb):
