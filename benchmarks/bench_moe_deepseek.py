@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DeepSeek-V3 MoE Performance Benchmark - CuteDSL vs CUTLASS vs TRTLLM.
+"""DeepSeek MoE Performance Benchmark - CuteDSL vs CUTLASS vs TRTLLM.
 
 Compares NVFP4, MXFP8, MXFP4 x MXFP8, and BF16 MoE backends:
 - CuteDSL W4A4: NVFP4 activations and weights
@@ -12,6 +12,9 @@ Compares NVFP4, MXFP8, MXFP4 x MXFP8, and BF16 MoE backends:
 - TRTLLM BF16: unquantized BF16 activations and weights
 
 Usage:
+    # V4.1-Flash EP4: shared sqrtsoftplus routes are prepared outside timing
+    python bench_moe_deepseek.py --model v41-flash --ep 4 --no-fused-finalize
+
     # Separate MXFP8 / MXFP4 x MXFP8 table with matched TRTLLM baselines
     python bench_moe_deepseek.py --quant-family mxfp --ep 8 --no-fused-finalize
 
@@ -72,9 +75,11 @@ import argparse
 import contextlib
 import gc
 import os
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import numpy as np
 import torch
+
+from flashinfer.tllm_enums import DEFAULT_SWIGLU_LIMIT
 
 
 @dataclass
@@ -86,9 +91,31 @@ class DeepSeekConfig:
     topk_group: int = 4
     top_k: int = 8
     routed_scaling_factor: float = 2.5
+    name: str = "DeepSeek-V3"
+    routing: str = "deepseek_v3"
+    swiglu_limit: float = DEFAULT_SWIGLU_LIMIT
+    default_ep: int = 1
 
 
-CFG = DeepSeekConfig()
+MODEL_CONFIGS = {
+    "v3": DeepSeekConfig(),
+    # https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash/blob/314113f8a7dadb388215396ba5fbee2c610a04d6/config.json
+    # The official inference/model.py Gate and Expert define routing/clamping.
+    "v41-flash": DeepSeekConfig(
+        hidden_size=5120,
+        intermediate_size=2304,
+        num_experts=384,
+        n_group=1,
+        topk_group=1,
+        top_k=6,
+        routed_scaling_factor=1.5,
+        name="DeepSeek-V4.1-Flash",
+        routing="sqrtsoftplus",
+        swiglu_limit=10.0,
+        default_ep=4,
+    ),
+}
+CFG = MODEL_CONFIGS["v3"]
 BASE_INTERMEDIATE_SIZE = CFG.intermediate_size
 TOKEN_COUNTS = [128, 256, 512, 1024, 2048, 4096]
 
@@ -176,7 +203,11 @@ def create_inputs(n, dev="cuda", routing_bias_scale=0.01):
     # Router logits and bias
     rl = torch.randn(n, CFG.num_experts, device=dev, dtype=torch.float32)
     rb = (
-        torch.randn(CFG.num_experts, device=dev, dtype=torch.bfloat16)
+        torch.randn(
+            CFG.num_experts,
+            device=dev,
+            dtype=torch.float32 if CFG.routing == "sqrtsoftplus" else torch.bfloat16,
+        )
         * routing_bias_scale
     )
 
@@ -339,6 +370,59 @@ def _measure_or_profile(
     return float("nan")
 
 
+def _routing_tensors(inputs):
+    """Allocate V3 outputs or share V4.1's precomputed model routes."""
+    logits = inputs["router_logits"]
+    if CFG.routing == "deepseek_v3":
+        shape = (logits.shape[0], CFG.top_k)
+        return (
+            torch.empty(shape, dtype=torch.float32, device=logits.device),
+            torch.empty(shape, dtype=torch.int32, device=logits.device),
+        )
+    elif CFG.routing == "sqrtsoftplus":
+        if "_model_routes" not in inputs:
+            # Neither fused_topk_deepseek nor TRTLLM's native router implements
+            # sqrtsoftplus. Match the distributed benchmark: prepare routes on
+            # CPU once, outside tuning/timing/graphs, and share them across arms.
+            scores = torch.nn.functional.softplus(logits.float().cpu()).sqrt()
+            bias = inputs["routing_bias"].float().cpu()
+            ids = torch.argsort(scores + bias, dim=-1, descending=True, stable=True)[
+                :, : CFG.top_k
+            ]
+            # Match the distributed benchmark's lower-ID tie policy.
+            weights = scores.gather(1, ids)
+            weights = weights / (weights.sum(dim=-1, keepdim=True) + 1e-20)
+            weights = weights * CFG.routed_scaling_factor
+            inputs["_model_routes"] = (
+                weights.to(device=logits.device, dtype=torch.float32),
+                ids.to(device=logits.device, dtype=torch.int32),
+            )
+        return inputs["_model_routes"]
+    else:
+        raise ValueError(f"Unsupported model routing: {CFG.routing}")
+
+
+def _route_tokens(router_logits, routing_bias, topk_values, topk_indices):
+    if CFG.routing == "deepseek_v3":
+        from flashinfer.fused_moe import fused_topk_deepseek
+
+        fused_topk_deepseek(
+            scores=router_logits,
+            bias=routing_bias,
+            n_group=CFG.n_group,
+            topk_group=CFG.topk_group,
+            topk=CFG.top_k,
+            routed_scaling_factor=CFG.routed_scaling_factor,
+            topk_values=topk_values,
+            topk_indices=topk_indices,
+        )
+    elif CFG.routing == "sqrtsoftplus":
+        # _routing_tensors supplied shared immutable routes before timing.
+        return
+    else:
+        raise ValueError(f"Unsupported model routing: {CFG.routing}")
+
+
 def bench_cute_dsl(
     inputs,
     warmup=10,
@@ -380,7 +464,6 @@ def bench_cute_dsl(
             cudaProfilerStart/Stop instead of benchmarking.
         profile_iters: Number of cold-L2 graph replays to capture.
     """
-    from flashinfer.fused_moe import fused_topk_deepseek
     from flashinfer.fused_moe.prepare import _cute_dsl_gated_weight_group_size
     from flashinfer.cute_dsl.utils import convert_sf_to_mma_layout
     from flashinfer.fp4_quantization import fp4_quantize
@@ -402,8 +485,7 @@ def bench_cute_dsl(
     w1_local = inputs["w1_bf16"][expert_start:expert_end]
     w2_local = inputs["w2_bf16"][expert_start:expert_end]
     gated_group_size = _cute_dsl_gated_weight_group_size(dev)
-    tv = torch.empty(n, CFG.top_k, dtype=torch.float32, device=dev)
-    ti = torch.empty(n, CFG.top_k, dtype=torch.int32, device=dev)
+    tv, ti = _routing_tensors(inputs)
     alpha = torch.ones(num_local_experts, dtype=torch.float32, device=dev)
     routing_bias_f32 = inputs["routing_bias"].float()
 
@@ -499,6 +581,7 @@ def bench_cute_dsl(
                 local_expert_offset=local_expert_offset,
                 use_fused_finalize=use_fused_finalize,
                 quant_mode=quant_mode,
+                swiglu_limit=CFG.swiglu_limit,
             )
 
             def run_moe(x, x_sf, topk_values, topk_indices, per_token_scale):
@@ -540,6 +623,7 @@ def bench_cute_dsl(
                     quant_mode=quant_mode,
                     per_token_scale=per_token_scale,
                     use_fused_finalize=use_fused_finalize,
+                    swiglu_limit=CFG.swiglu_limit,
                 )
 
     elif quant_mode in ("mxfp8", "w4a8"):
@@ -667,6 +751,7 @@ def bench_cute_dsl(
                     local_expert_offset,
                     CFG.top_k,
                     "swiglu",
+                    CFG.swiglu_limit,
                     "bf16_unfused",
                     "pdl",
                     use_cuda_graph,
@@ -807,6 +892,7 @@ def bench_cute_dsl(
                     mma_tiler_mn=gemm1[0],
                     cluster_shape_mn=gemm1[1],
                     raster_along_m=gemm1[2],
+                    swiglu_limit=CFG.swiglu_limit,
                     **common,
                 )
                 fc2(
@@ -870,16 +956,7 @@ def bench_cute_dsl(
 
     def run(x, x_sf, router_logits, routing_bias, topk_values, topk_indices):
         x, x_sf, per_token_scale = prepare_activation(x, x_sf)
-        fused_topk_deepseek(
-            scores=router_logits,
-            bias=routing_bias,
-            n_group=CFG.n_group,
-            topk_group=CFG.topk_group,
-            topk=CFG.top_k,
-            routed_scaling_factor=CFG.routed_scaling_factor,
-            topk_values=topk_values,
-            topk_indices=topk_indices,
-        )
+        _route_tokens(router_logits, routing_bias, topk_values, topk_indices)
         return run_moe(x, x_sf, topk_values, topk_indices, per_token_scale)
 
     # Pass input tensors via input_kwargs for cold L2 cache rotation
@@ -939,7 +1016,8 @@ def bench_cutlass(
         use_fused_finalize: Allow fused-finalize tactics when True; exclude
             them when False. Autotuning may still choose an unfused tactic.
     """
-    from flashinfer.fused_moe import fused_topk_deepseek, cutlass_fused_moe
+    from flashinfer.fused_moe import SwiGLU, cutlass_fused_moe
+    from flashinfer.fused_moe.runners import _cutlass_activation_params
     from flashinfer.fp4_quantization import fp4_quantize
 
     if num_local_experts is None:
@@ -947,8 +1025,10 @@ def bench_cutlass(
 
     n, sv, dev = inputs["router_logits"].shape[0], 16, "cuda"
 
-    tv = torch.empty(n, CFG.top_k, dtype=torch.float32, device=dev)
-    ti = torch.empty(n, CFG.top_k, dtype=torch.int32, device=dev)
+    tv, ti = _routing_tensors(inputs)
+    activation_params = _cutlass_activation_params(
+        SwiGLU(limit=CFG.swiglu_limit), num_local_experts, torch.device(dev)
+    )
 
     # Expert range for this EP partition
     expert_start = local_expert_offset
@@ -991,17 +1071,7 @@ def bench_cutlass(
     def run(hidden, sf, router_logits, routing_bias, topk_values, topk_indices):
         if include_activation_quant:
             hidden, sf = fp4_quantize(hidden, a1_gs, sv, False, True)
-        # Routing (included in timing for fair comparison with TRTLLM)
-        fused_topk_deepseek(
-            scores=router_logits,
-            bias=routing_bias,
-            n_group=CFG.n_group,
-            topk_group=CFG.topk_group,
-            topk=CFG.top_k,
-            routed_scaling_factor=CFG.routed_scaling_factor,
-            topk_values=topk_values,
-            topk_indices=topk_indices,
-        )
+        _route_tokens(router_logits, routing_bias, topk_values, topk_indices)
         cutlass_fused_moe(
             hidden,
             topk_indices.to(torch.int),
@@ -1015,6 +1085,9 @@ def bench_cutlass(
             ep_size=ep_size,
             ep_rank=0,  # Simulating rank 0 of EP
             use_fused_finalize=use_fused_finalize,
+            swiglu_alpha=activation_params["swiglu_alpha"],
+            swiglu_beta=activation_params["swiglu_beta"],
+            swiglu_limit=activation_params["swiglu_limit"],
         )
         return output
 
@@ -1071,7 +1144,8 @@ def bench_trtllm(
             outside timing. NVFP4 per-token/4over6 flags do not affect the
             MX modes or BF16.
     """
-    from flashinfer.fused_moe import RoutingMethodType
+    from flashinfer.fused_moe import RoutingMethodType, SwiGLU
+    from flashinfer.fused_moe.prepare import _activation_param_view
     from flashinfer.fused_moe.da_tuner import (
         RoutingRealizationFactory,
         RoutingRealizationKey,
@@ -1313,10 +1387,18 @@ def bench_trtllm(
     else:
         raise ValueError(f"Unsupported TRTLLM precision: {precision}")
 
+    moe_kwargs.update(
+        _activation_param_view(
+            SwiGLU(limit=CFG.swiglu_limit), num_local_experts, torch.device(dev)
+        )
+    )
     routing_ids = None
     routing_weights = None
-    is_routed = routing_input_mode == "routed"
-    if is_routed:
+    is_routed = routing_input_mode == "routed" or CFG.routing == "sqrtsoftplus"
+    if CFG.routing == "sqrtsoftplus":
+        routing_weights, routing_ids = _routing_tensors(inputs)
+        moe_kwargs.update(n_group=None, topk_group=None)
+    elif is_routed:
         if precision == "mxfp8":
             # The FP8 Renormalize path consumes precomputed, ungrouped routes.
             moe_kwargs.update(n_group=None, topk_group=None)
@@ -1460,7 +1542,7 @@ def run_benchmark(
     quant_family="nvfp4",
 ):
     """
-    Unified benchmark for DeepSeek-V3 MoE backends.
+    Unified benchmark for the selected DeepSeek MoE model and precision family.
 
     Autotuning runs in each backend's pre-warm step (under ``autotune(True)``)
     so the autotuner profiles all tactics on the default stream before
@@ -1733,11 +1815,11 @@ def _table_layout(quant_family, use_per_token_activation):
         baselines = []
         if not use_per_token_activation:
             backends.append(("CUTLASS", "CUTLASS", 15))
-            baselines.append(("CUTLASS", 18))
+            baselines.append(("CUTLASS", 18, (0, 1)))
         backends.extend(
             (("TRTLLM NVFP4", "TRTLLM NVFP4", 15), ("TRTLLM BF16", "TRTLLM BF16", 15))
         )
-        baselines.extend((("TRTLLM NVFP4", 23), ("TRTLLM BF16", 23)))
+        baselines.extend((("TRTLLM NVFP4", 23, (0, 1)), ("TRTLLM BF16", 23, (0, 1))))
         winner_width = 12
     elif quant_family == "mxfp":
         modes = ("MXFP4xMXFP8", "MXFP8")
@@ -1749,18 +1831,18 @@ def _table_layout(quant_family, use_per_token_activation):
             ("TRTLLM BF16", "TRTLLM BF16", 23),
         ]
         baselines = [
-            ("TRTLLM MXFP4xMXFP8", 32),
-            ("TRTLLM MXFP8", 25),
-            ("TRTLLM BF16", 23),
+            ("TRTLLM MXFP4xMXFP8", 32, (0,)),
+            ("TRTLLM MXFP8", 25, (1,)),
+            ("TRTLLM BF16", 23, (0, 1)),
         ]
-        winner_width = 23
+        winner_width = 0
     else:
         raise ValueError(f"Unsupported quantization family: {quant_family}")
     widths = [
         6,
         *[width for _, _, width in backends],
-        *[width for _, width in baselines],
-        winner_width,
+        *[width for _, width, _ in baselines],
+        *([winner_width] if winner_width else []),
         7,
         15,
     ]
@@ -1787,17 +1869,17 @@ def _print_header(
     print("\n" + "=" * table_width)
     if quant_family == "mxfp":
         print(
-            "DeepSeek-V3 MoE Benchmark: CuteDSL MXFP4xMXFP8 / MXFP8 vs TRTLLM MXFP4xMXFP8 / MXFP8 / BF16 "
+            f"{CFG.name} MoE Benchmark: CuteDSL MXFP4xMXFP8 / MXFP8 vs TRTLLM MXFP4xMXFP8 / MXFP8 / BF16 "
             f"(EP={ep_config}, TP={tp_config})"
         )
     elif use_per_token_activation:
         print(
-            "DeepSeek-V3 MoE Benchmark: CuteDSL W4A4/W4A16 vs TRTLLM NVFP4 / TRTLLM BF16 "
+            f"{CFG.name} MoE Benchmark: CuteDSL W4A4/W4A16 vs TRTLLM NVFP4 / TRTLLM BF16 "
             f"(EP={ep_config}, TP={tp_config})"
         )
     else:
         print(
-            "DeepSeek-V3 MoE Benchmark: CuteDSL W4A4/W4A16 vs CUTLASS vs TRTLLM NVFP4 / TRTLLM BF16 "
+            f"{CFG.name} MoE Benchmark: CuteDSL W4A4/W4A16 vs CUTLASS vs TRTLLM NVFP4 / TRTLLM BF16 "
             f"(EP={ep_config}, TP={tp_config})"
         )
     print("=" * table_width)
@@ -1819,6 +1901,16 @@ def _print_header(
         f"Routing bias scale: {routing_bias_scale} "
         f"(larger values tend to create expert imbalance)"
     )
+    if CFG.routing == "sqrtsoftplus":
+        print(
+            "Routing: shared precomputed sqrt(softplus(logits)), bias selects only, "
+            f"top-{CFG.top_k} normalized then scaled by {CFG.routed_scaling_factor}; "
+            "routing excluded from every backend's timing."
+        )
+        print(
+            f"Activation: SwiGLU, gate clamped above {CFG.swiglu_limit:g}, "
+            f"up clamped to [-{CFG.swiglu_limit:g}, {CFG.swiglu_limit:g}]."
+        )
     if quant_family == "nvfp4":
         print(
             "Timed initial activation quantization for FP4-activation backends: "
@@ -1855,22 +1947,26 @@ def _print_header(
     print("-" * table_width)
     headers = [f"{'Tokens':>6}"]
     headers.extend(f"{label:^{width}}" for _, label, width in backends)
-    headers.extend(f"{'Speedup vs ' + label:^{width}}" for label, width in baselines)
-    headers.extend((f"{'Winner':^{winner_width}}", f"{'Active':^7}", f"{'Stats':^15}"))
+    headers.extend(f"{'Speedup vs ' + label:^{width}}" for label, width, _ in baselines)
+    if winner_width:
+        headers.append(f"{'Winner':^{winner_width}}")
+    headers.extend((f"{'Active':^7}", f"{'Stats':^15}"))
     print(" | ".join(headers))
     units = [f"{'':>6}"]
     units.extend(
         f"{('ms'.rjust(7) + ' ' + 'TFLOPS'.rjust(7)):>{width}}"
         for _, _, width in backends
     )
-    for _, width in baselines:
-        if width == 18:
+    for _, width, indices in baselines:
+        if len(indices) == 1:
+            units.append(f"{modes[indices[0]]:>{width}}")
+        elif width == 18:
             units.append(f"{modes[0]:>8}  {modes[1]:>8}")
         else:
             units.append(f"{(modes[0].rjust(11) + ' ' + modes[1].rjust(11)):>{width}}")
-    units.extend(
-        (f"{'':^{winner_width}}", f"{'experts':^7}", f"{'min/max/median':^15}")
-    )
+    if winner_width:
+        units.append(f"{'':^{winner_width}}")
+    units.extend((f"{'experts':^7}", f"{'min/max/median':^15}"))
     print(" | ".join(units))
     print("-" * table_width)
 
@@ -1886,14 +1982,19 @@ def _print_row(results, histogram_record, quant_family="nvfp4"):
     for key, _, width in backends:
         latency = f"{rows[key].latency_ms:>7.3f} {rows[key].tflops:>7.1f}"
         fields.append(f"{latency:>{width}}")
-    for key, width in baselines:
+    for key, width, indices in baselines:
         speedups = " ".join(
-            f"{rows[key].latency_ms / mode.latency_ms:>7.2f}x" for mode in cute
+            f"{rows[key].latency_ms / cute[index].latency_ms:>7.2f}x"
+            for index in indices
         )
         fields.append(f"{speedups:>{width}}")
-    winner_key, winner, _ = min(backends, key=lambda entry: rows[entry[0]].latency_ms)
-    if quant_family == "nvfp4" and winner_key in (backends[0][0], backends[1][0]):
-        winner = modes[0] if winner_key == backends[0][0] else modes[1]
+    if winner_width:
+        winner_key, winner, _ = min(
+            backends, key=lambda entry: rows[entry[0]].latency_ms
+        )
+        if winner_key in (backends[0][0], backends[1][0]):
+            winner = modes[0] if winner_key == backends[0][0] else modes[1]
+        fields.append(f"{winner:^{winner_width}}")
     stats = (
         f"{histogram_record['min_count']:>3}/"
         f"{histogram_record['max_count']:>3}/"
@@ -1901,7 +2002,6 @@ def _print_row(results, histogram_record, quant_family="nvfp4"):
     )
     fields.extend(
         (
-            f"{winner:^{winner_width}}",
             f"{histogram_record['active_local_experts']:>7}",
             f"{stats:>15}",
         )
@@ -1919,22 +2019,12 @@ def _print_footer(use_per_token_activation, quant_family="nvfp4"):
 
 
 def _collect_expert_histogram(inputs, num_local, local_offset):
-    from flashinfer.fused_moe import fused_topk_deepseek
-
-    num_tokens = inputs["router_logits"].shape[0]
-    dev = inputs["router_logits"].device
-    topk_values = torch.empty(num_tokens, CFG.top_k, dtype=torch.float32, device=dev)
-    topk_indices = torch.empty(num_tokens, CFG.top_k, dtype=torch.int32, device=dev)
-
-    fused_topk_deepseek(
-        scores=inputs["router_logits"],
-        bias=inputs["routing_bias"].float(),
-        n_group=CFG.n_group,
-        topk_group=CFG.topk_group,
-        topk=CFG.top_k,
-        routed_scaling_factor=CFG.routed_scaling_factor,
-        topk_values=topk_values,
-        topk_indices=topk_indices,
+    topk_values, topk_indices = _routing_tensors(inputs)
+    _route_tokens(
+        inputs["router_logits"],
+        inputs["routing_bias"].float(),
+        topk_values,
+        topk_indices,
     )
 
     expert_hist = torch.bincount(
@@ -1961,8 +2051,14 @@ def _collect_expert_histogram(inputs, num_local, local_offset):
 
 
 def main():
-    parser = argparse.ArgumentParser(
-        description="DeepSeek-V3 MoE Performance Benchmark"
+    global CFG, BASE_INTERMEDIATE_SIZE
+
+    parser = argparse.ArgumentParser(description="DeepSeek MoE Performance Benchmark")
+    parser.add_argument(
+        "--model",
+        choices=tuple(MODEL_CONFIGS),
+        default="v3",
+        help="Model shape, routing and activation preset. V4.1-Flash shares precomputed routes across all backends, excluded from timing.",
     )
     parser.add_argument(
         "--num-tokens",
@@ -1989,8 +2085,8 @@ def main():
     parser.add_argument(
         "--num-experts",
         type=int,
-        default=CFG.num_experts,
-        help="Number of global routing experts",
+        default=None,
+        help="Override the model's number of global routing experts",
     )
     parser.add_argument(
         "--quant-family",
@@ -2023,9 +2119,9 @@ def main():
     parser.add_argument(
         "--ep",
         type=int,
-        default=1,
+        default=None,
         choices=[1, 2, 4, 8, 16],
-        help="Expert parallelism simulation.",
+        help="Expert parallelism simulation (default: V3 EP1, V4.1-Flash EP4).",
     )
     parser.add_argument(
         "--tp",
@@ -2098,6 +2194,12 @@ def main():
     )
     args = parser.parse_args()
 
+    CFG = replace(MODEL_CONFIGS[args.model])
+    BASE_INTERMEDIATE_SIZE = CFG.intermediate_size
+    if args.ep is None:
+        args.ep = CFG.default_ep
+    if args.num_experts is None:
+        args.num_experts = CFG.num_experts
     if args.tp < 1:
         parser.error("--tp must be positive")
     if args.num_experts < 1:
@@ -2184,11 +2286,21 @@ def main():
         tokens = TOKEN_COUNTS  # [128, 256, 512, 1024, 2048, 4096]
     if args.profile_cuda and len(tokens) != 1:
         parser.error("--profile-cuda requires exactly one token count")
-    print("\nDeepSeek-V3 MoE Performance Benchmark")
+    print(f"\n{CFG.name} MoE Performance Benchmark")
     print(f"GPU: {torch.cuda.get_device_name(0)}")
     print(f"CuteDSL API: {'Functional' if args.functional_api else 'Wrapper'}")
     print(f"Per-token activation: {args.use_per_token_activation}")
     print(f"Initial activation quantization: {args.include_activation_quant}")
+    print(f"Expert parallelism simulation: EP={args.ep}")
+    if CFG.routing == "sqrtsoftplus":
+        print(
+            "Routing: model sqrtsoftplus routes precomputed and shared by all backends; "
+            "routing excluded from timing, TRTLLM uses routed APIs."
+        )
+    elif CFG.routing == "deepseek_v3":
+        print(f"Routing input mode: {args.routing_input_mode}")
+    else:
+        raise ValueError(f"Unsupported model routing: {CFG.routing}")
     if args.quant_family == "nvfp4":
         print("CuteDSL modes: W4A4 and W4A16; baselines: TRTLLM NVFP4 and TRTLLM BF16")
     elif args.quant_family == "mxfp":
