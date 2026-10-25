@@ -4176,8 +4176,11 @@ def test_w4a8_fused_moe_tactics_and_apis(
 
 @cute_dsl_available
 @sm10x_required
-class TestRubinMultiCtaTacticRejected:
-    """A Rubin tactic with ``cluster_shape_m > 1`` must be refused.
+class TestUnsupportedMoeTacticRejected:
+    """Reject tactics whose geometry disagrees with routing metadata.
+
+    Blackwell MMA N must equal the routing tile size for both GEMMs.
+    A Rubin tactic with ``cluster_shape_m > 1`` must also be refused.
 
     ``moe_sort`` leaves tile-metadata entries past ``num_non_exiting_tiles``
     uninitialized. A multi-CTA cluster would require the tile count handed to
@@ -4207,10 +4210,18 @@ class TestRubinMultiCtaTacticRejected:
         )
 
     @pytest.mark.parametrize(
-        "gemm1_cluster_m,gemm2_cluster_m", [(2, 1), (1, 2), (2, 2)]
+        "architecture,gemm1_size,gemm2_size",
+        [
+            ("rubin", 2, 1),
+            ("rubin", 1, 2),
+            ("rubin", 2, 2),
+            ("blackwell", 16, 128),
+            ("blackwell", 128, 16),
+            ("blackwell", 16, 32),
+        ],
     )
     def test_rejected_before_routing(
-        self, monkeypatch, gemm1_cluster_m: int, gemm2_cluster_m: int
+        self, monkeypatch, architecture: str, gemm1_size: int, gemm2_size: int
     ):
         """Rejection must precede ``moe_sort`` and any GEMM launch."""
         import flashinfer.fused_moe.cute_dsl.fused_moe as fused_moe_mod
@@ -4220,9 +4231,7 @@ class TestRubinMultiCtaTacticRejected:
 
         def _tripwire(*args, **kwargs):
             routing_calls.append(1)
-            raise AssertionError(
-                "moe_sort ran before the multi-CTA tactic was rejected"
-            )
+            raise AssertionError("moe_sort ran before the tactic was rejected")
 
         monkeypatch.setattr(fused_moe_mod, "moe_sort", _tripwire)
 
@@ -4236,7 +4245,20 @@ class TestRubinMultiCtaTacticRejected:
             top_k=top_k,
         )
 
-        with pytest.raises(NotImplementedError, match="cluster_shape_m"):
+        if architecture == "rubin":
+            tactic_params = self._rubin_tactic_params(gemm1_size, gemm2_size)
+            error_type, error_match = NotImplementedError, "cluster_shape_m"
+        elif architecture == "blackwell":
+            tactic_params = dict(
+                tile_size=128,
+                gemm1_mma_tiler_mn=(128, gemm1_size),
+                gemm2_mma_tiler_mn=(128, gemm2_size),
+            )
+            error_type, error_match = ValueError, "must match the routing tile_size"
+        else:
+            raise ValueError(f"Unsupported test architecture: {architecture}")
+
+        with pytest.raises(error_type, match=error_match):
             _moe_core_impl(
                 x=tensors["x"],
                 x_sf=tensors["x_sf"],
@@ -4253,7 +4275,7 @@ class TestRubinMultiCtaTacticRejected:
                 top_k=top_k,
                 num_local_experts=num_experts,
                 output_dtype=torch.bfloat16,
-                **self._rubin_tactic_params(gemm1_cluster_m, gemm2_cluster_m),
+                **tactic_params,
             )
 
         assert not routing_calls, "routing ran despite an unsupported tactic"

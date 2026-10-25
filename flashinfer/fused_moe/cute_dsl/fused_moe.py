@@ -508,6 +508,16 @@ def _moe_core_impl(
             memset_event = memset_event or resources["memset_event"]
 
     is_rubin = gemm1_mma_tiler is not None and gemm1_mma_inst_shape is not None
+    if not is_rubin:
+        for phase, mma_tiler_mn in (
+            ("GEMM1", gemm1_mma_tiler_mn),
+            ("GEMM2", gemm2_mma_tiler_mn),
+        ):
+            if mma_tiler_mn[1] != tile_size:
+                raise ValueError(
+                    f"Blackwell {phase} routed-token N={mma_tiler_mn[1]} must match "
+                    f"the routing tile_size={tile_size}."
+                )
     # Reject before routing so an unsupported call does no GPU work.
     if use_localized_path and not is_rubin:
         raise NotImplementedError(
