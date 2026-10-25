@@ -297,11 +297,11 @@ class Sm100BlockScaledGroupedGemmKernel:
             self.num_stages = 5
         else:
             raise ValueError("Unsupported routed-token tile")
-        # Large tiles overlap the next tile's loads with dedicated epilogue
-        # warps. Mixed-format FC1 keeps the smaller producer/epilogue group.
-        self.overlap_epilogue = self.route_tile >= 128 and (
-            activation_type is None
-            or (self.cta_group_size == 2 and not self.unpack_weights)
+        # Dedicated epilogue warps let small tiles load the next tile while
+        # storing results. Mixed-format FC1 keeps the smaller warp group.
+        self.overlap_epilogue = activation_type is None or (
+            not self.unpack_weights
+            and (self.route_tile < 128 or self.cta_group_size == 2)
         )
         self.threads_per_cta = 288 if self.overlap_epilogue else 160
         self.acc_cols = self.allocated_n
