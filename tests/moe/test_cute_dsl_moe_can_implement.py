@@ -1,6 +1,6 @@
 """Host checks for the shared blockscaled MoE operand contract.
 
-All SM100 types put channel tiles on M128/M256 and routed tokens on N.
+All SM100 types put channel tiles on M and routed tokens on N.
 These checks exercise the existing classmethod hooks without GPU work.
 """
 
@@ -96,6 +96,8 @@ def _gemm1_ok(
         (128, (128, 128), (1, 2), False),
         (256, (128, 128), (2, 1), False),
         (256, (256, 128), (1, 1), False),
+        # Reusing B across two channel tiles is an FC1-only tactic.
+        (512, (512, 128), (2, 1), False),
     ],
 )
 def test_finalize_n_tiling(n, mma, cluster, expect):
@@ -199,3 +201,64 @@ def test_every_rubin_tactic_is_single_cta():
             f"gemm2 tactic {gemm2_tactic} at tile_size={tile_size} uses "
             f"cluster_shape_m={gemm2_cluster_shape_mn[0]}"
         )
+
+
+@pytest.mark.parametrize(
+    "a_dtype,b_dtype,sf_dtype,sf_vec_size,c_dtype",
+    [
+        (
+            cutlass.Float4E2M1FN,
+            cutlass.Float4E2M1FN,
+            cutlass.Float8E4M3FN,
+            16,
+            cutlass.Float4E2M1FN,
+        ),
+        (
+            cutlass.Float4E2M1FN,
+            cutlass.Float4E2M1FN,
+            cutlass.Float8E8M0FNU,
+            16,
+            cutlass.Float4E2M1FN,
+        ),
+        (
+            cutlass.Float4E2M1FN,
+            cutlass.Float4E2M1FN,
+            cutlass.Float8E8M0FNU,
+            32,
+            cutlass.Float4E2M1FN,
+        ),
+        (
+            cutlass.Float8E4M3FN,
+            cutlass.Float8E4M3FN,
+            cutlass.Float8E8M0FNU,
+            32,
+            cutlass.Float8E4M3FN,
+        ),
+        (
+            cutlass.Float8E5M2,
+            cutlass.Float8E5M2,
+            cutlass.Float8E8M0FNU,
+            32,
+            cutlass.Float8E5M2,
+        ),
+        (
+            cutlass.Float8E4M3FN,
+            cutlass.Float4E2M1FN,
+            cutlass.Float8E8M0FNU,
+            32,
+            cutlass.Float8E4M3FN,
+        ),
+    ],
+)
+def test_gemm1_logical_m512_geometry(a_dtype, b_dtype, sf_dtype, sf_vec_size, c_dtype):
+    kwargs = dict(
+        a_dtype=a_dtype,
+        b_dtype=b_dtype,
+        sf_dtype=sf_dtype,
+        sf_vec_size=sf_vec_size,
+        c_dtype=c_dtype,
+    )
+    assert _gemm1_ok(384, (512, 128), (2, 1), **kwargs)
+    assert not _gemm1_ok(384, (512, 256), (2, 1), **kwargs)
+    assert not _gemm1_ok(384, (512, 128), (1, 1), **kwargs)
+    assert not _gemm1_ok(384, (512, 128), (4, 1), **kwargs)

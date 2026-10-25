@@ -350,6 +350,7 @@ class Sm100BlockScaledMoeEpilogue:
         ):
             raise ValueError("Fused combine requires BF16, FP16, or FP32 output")
         self.bulk_tokens = 0
+        self.overlap_acc = False
         self.bulk_stages = 0
         self.tile_n = mma_tiler_mnk[1]
         self.activation_type = activation_type
@@ -638,7 +639,7 @@ class Sm100BlockScaledMoeEpilogue:
                         )
 
     @cute.jit
-    def _run_bulk(
+    def _run_bulk_direction(
         self,
         acc_tensor,
         output_tensor,
@@ -650,6 +651,9 @@ class Sm100BlockScaledMoeEpilogue:
         valid_tokens,
         tidx,
         smem_scratch,
+        acc_pipeline,
+        acc_state,
+        reverse: cutlass.Constexpr,
     ):
         warp = (tidx // 32) % 4
         lane = tidx % 32
@@ -686,12 +690,13 @@ class Sm100BlockScaledMoeEpilogue:
             cute.recast_ptr(smem_scratch, dtype=self.output_dtype),
             cute.make_layout((tokens, 128, stages), stride=(136, 1, tokens * 136)),
         )
-        for group in cutlass.range_constexpr(self.tile_n // tokens):
+        for step in cutlass.range_constexpr(self.tile_n // tokens):
+            group = self.tile_n // tokens - 1 - step if reverse else step
             if group * tokens < valid_tokens:
-                if cutlass.const_expr(group >= stages):
+                if cutlass.const_expr(step >= stages):
                     cute.arch.cp_async_bulk_wait_group(stages - 1, read=True)
                     self.transpose_barrier.arrive_and_wait()
-                shared = shared_all[None, None, group % stages]
+                shared = shared_all[None, None, step % stages]
                 ptr = (
                     acc_tensor.iterator
                     + group * tokens
@@ -712,6 +717,13 @@ class Sm100BlockScaledMoeEpilogue:
                         _blockscaled_tmem_view(ptr + (half * 16 << 16), 16, tokens),
                         _blockscaled_rmem_view(values, tokens // 2),
                     )
+                    if cutlass.const_expr(
+                        self.overlap_acc and (step + 1) * tokens == 64 and half == 1
+                    ):
+                        # The next MMA overlaps only these 64 columns. Complete
+                        # every TMEM read before either CTA releases ownership.
+                        cute.arch.fence_view_async_tmem_load()
+                        acc_pipeline.consumer_release(acc_state)
                     if cutlass.const_expr(self.use_per_token_scale):
                         for i in cutlass.range_constexpr(tokens // 2):
                             token = (i // 4) * 8 + (lane % 4) * 2 + i % 2
@@ -769,8 +781,79 @@ class Sm100BlockScaledMoeEpilogue:
                             cutlass.Int32(copy_channels * self.output_dtype.width // 8),
                         )
                 cute.arch.cp_async_bulk_commit_group()
+            if cutlass.const_expr(self.overlap_acc and (step + 1) * tokens == 64):
+                if group * tokens >= valid_tokens:
+                    # A skipped overlap slab has no live TMEM values to read.
+                    cute.arch.fence_view_async_tmem_load()
+                    acc_pipeline.consumer_release(acc_state)
         cute.arch.cp_async_bulk_wait_group(0, read=True)
         self.transpose_barrier.arrive_and_wait()
+
+    @cute.jit
+    def _run_bulk(
+        self,
+        acc_tensor,
+        output_tensor,
+        alpha,
+        per_token_scale,
+        token_mapping,
+        channel_start,
+        route_start,
+        valid_tokens,
+        tidx,
+        smem_scratch,
+        acc_pipeline,
+        acc_state,
+    ):
+        if cutlass.const_expr(self.overlap_acc):
+            if acc_state.phase == 0:
+                self._run_bulk_direction(
+                    acc_tensor,
+                    output_tensor,
+                    alpha,
+                    per_token_scale,
+                    token_mapping,
+                    channel_start,
+                    route_start,
+                    valid_tokens,
+                    tidx,
+                    smem_scratch,
+                    acc_pipeline,
+                    acc_state,
+                    True,
+                )
+            else:
+                self._run_bulk_direction(
+                    acc_tensor,
+                    output_tensor,
+                    alpha,
+                    per_token_scale,
+                    token_mapping,
+                    channel_start,
+                    route_start,
+                    valid_tokens,
+                    tidx,
+                    smem_scratch,
+                    acc_pipeline,
+                    acc_state,
+                    False,
+                )
+        else:
+            self._run_bulk_direction(
+                acc_tensor,
+                output_tensor,
+                alpha,
+                per_token_scale,
+                token_mapping,
+                channel_start,
+                route_start,
+                valid_tokens,
+                tidx,
+                smem_scratch,
+                acc_pipeline,
+                acc_state,
+                False,
+            )
 
     @cute.jit
     def run(
@@ -790,6 +873,8 @@ class Sm100BlockScaledMoeEpilogue:
         expert_idx,
         tidx,
         smem_scratch,
+        acc_pipeline=None,
+        acc_state=None,
     ):
         lane = tidx % 32
         if cutlass.const_expr(self.bulk_tokens > 0):
@@ -807,7 +892,12 @@ class Sm100BlockScaledMoeEpilogue:
                     valid_tokens,
                     tidx,
                     smem_scratch,
+                    acc_pipeline,
+                    acc_state,
                 )
+            elif cutlass.const_expr(self.overlap_acc):
+                # This CTA has no live output channels, hence no TMEM reads.
+                acc_pipeline.consumer_release(acc_state)
         elif cutlass.const_expr(self.activation_type is None):
             # Fetch the whole tile's routing metadata before its stores. Keeping
             # the slab indices static preserves these values in registers.

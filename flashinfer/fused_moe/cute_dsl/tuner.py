@@ -84,6 +84,26 @@ def get_blackwell_gemm1_valid_tactics(tile_size: int) -> List[Tuple]:
     """Block-scaled FC1: physical M is output channels and N is routed tokens."""
     if tile_size in (16, 32, 64):
         return [((128, tile_size), (1, 1), False)]
+    elif tile_size == 128:
+        return [
+            ((128, 128), (1, 1), False),
+            ((256, 128), (2, 1), False),
+            # Two M256 instructions reuse B/SFB in one two-CTA group.
+            ((512, 128), (2, 1), False),
+        ]
+    elif tile_size == 256:
+        return [
+            ((128, 256), (1, 1), False),
+            ((256, 256), (2, 1), False),
+        ]
+    else:
+        raise ValueError(f"Unsupported Blackwell routing tile: {tile_size}")
+
+
+def get_blackwell_gemm2_valid_tactics(tile_size: int) -> List[Tuple]:
+    """FC2 shares token capacity and uses one physical channel tile."""
+    if tile_size in (16, 32, 64):
+        return [((128, tile_size), (1, 1), False)]
     elif tile_size in (128, 256):
         return [
             ((128, tile_size), (1, 1), False),
@@ -91,11 +111,6 @@ def get_blackwell_gemm1_valid_tactics(tile_size: int) -> List[Tuple]:
         ]
     else:
         raise ValueError(f"Unsupported Blackwell routing tile: {tile_size}")
-
-
-def get_blackwell_gemm2_valid_tactics(tile_size: int) -> List[Tuple]:
-    """FC2 shares FC1's token capacity; its channel geometry is independent."""
-    return get_blackwell_gemm1_valid_tactics(tile_size)
 
 
 def get_blackwell_moe_valid_tactics() -> List[Tuple]:
@@ -673,7 +688,7 @@ class CuteDslFusedMoERunner(TunableRunner):
             self.output_dtype,
             self.enable_pdl,
         )
-        extras += ("blockscaled_route_n_v2",)
+        extras += ("blockscaled_route_n_v3",)
         if self.use_cuda_graph:
             extras += ("cuda_graph",)
         return extras + self._localization_signature()

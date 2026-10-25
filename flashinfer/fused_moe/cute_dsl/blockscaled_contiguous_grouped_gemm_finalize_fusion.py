@@ -117,6 +117,12 @@ def _run_blockscaled_gemm(
         valid_tile = cluster_shape_mn == (1, 1) and route_tile in (16, 32, 64, 128, 256)
     elif mma_m == 256:
         valid_tile = cluster_shape_mn == (2, 1) and route_tile in (128, 256)
+    elif mma_m == 512:
+        valid_tile = (
+            activation_type is not None
+            and cluster_shape_mn == (2, 1)
+            and route_tile == 128
+        )
     else:
         valid_tile = False
     if not valid_tile:

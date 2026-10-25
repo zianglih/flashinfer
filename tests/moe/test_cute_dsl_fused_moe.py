@@ -933,12 +933,18 @@ class TestTacticEnumeration:
         )
 
         tactics = get_w4a8_moe_valid_tactics()
-        assert len(tactics) == 11
+        assert len(tactics) == 13
         assert {tile_size for tile_size, _, _ in tactics} == {16, 32, 64, 128, 256}
         for tile_size, gemm1, gemm2 in tactics:
             assert gemm1[0][1] == gemm2[0][1] == tile_size
-            for mma, cluster, _ in (gemm1, gemm2):
-                assert (mma[0], cluster) in {(128, (1, 1)), (256, (2, 1))}
+            assert (gemm1[0][0], gemm1[1]) in {
+                (128, (1, 1)),
+                (256, (2, 1)),
+                (512, (2, 1)),
+            }
+            assert (gemm2[0][0], gemm2[1]) in {(128, (1, 1)), (256, (2, 1))}
+            if gemm1[0][0] == 512:
+                assert tile_size == 128
         assert canonicalize_w4a8_tactic(list(tactics[0])) == tactics[0]
         with pytest.raises(ValueError, match="unsupported W4A8 MoE tactic"):
             canonicalize_w4a8_tactic(
@@ -953,13 +959,19 @@ class TestTacticEnumeration:
         )
 
         tactics = get_blackwell_gemm1_valid_tactics(tile_size)
-        assert len(tactics) == (1 if tile_size <= 64 else 2)
+        assert len(tactics) == (1 if tile_size <= 64 else 3 if tile_size == 128 else 2)
         for mma_tiler_mn, cluster_shape_mn, _ in tactics:
             assert mma_tiler_mn[1] == tile_size, (
                 f"gemm1 MMA shape {mma_tiler_mn} does not place routed tokens on N "
                 f"tile_size={tile_size}; tactic={(mma_tiler_mn, cluster_shape_mn)}"
             )
-            assert (mma_tiler_mn[0], cluster_shape_mn) in {(128, (1, 1)), (256, (2, 1))}
+            assert (mma_tiler_mn[0], cluster_shape_mn) in {
+                (128, (1, 1)),
+                (256, (2, 1)),
+                (512, (2, 1)),
+            }
+            if mma_tiler_mn[0] == 512:
+                assert tile_size == 128
 
     @pytest.mark.parametrize("tile_size", [16, 32, 64, 128, 256])
     def test_gemm2_tactics_match_tile_size(self, tile_size):
@@ -981,7 +993,7 @@ class TestTacticEnumeration:
         """Keep every supported routing capacity and pair compatible GEMMs."""
         from flashinfer.fused_moe.cute_dsl.tuner import ALL_BLACKWELL_MOE_TACTICS
 
-        assert len(ALL_BLACKWELL_MOE_TACTICS) == 11
+        assert len(ALL_BLACKWELL_MOE_TACTICS) == 13
         assert {tile_size for tile_size, _, _ in ALL_BLACKWELL_MOE_TACTICS} == {
             16,
             32,
@@ -991,10 +1003,19 @@ class TestTacticEnumeration:
         }
         for tile_size, gemm1_tactic, gemm2_tactic in ALL_BLACKWELL_MOE_TACTICS:
             assert gemm1_tactic[0][1] == gemm2_tactic[0][1] == tile_size
-            for mma, cluster, _ in (gemm1_tactic, gemm2_tactic):
-                assert (mma[0], cluster) in {(128, (1, 1)), (256, (2, 1))}
-                if tile_size <= 64:
-                    assert mma[0] == 128
+            assert (gemm1_tactic[0][0], gemm1_tactic[1]) in {
+                (128, (1, 1)),
+                (256, (2, 1)),
+                (512, (2, 1)),
+            }
+            assert (gemm2_tactic[0][0], gemm2_tactic[1]) in {
+                (128, (1, 1)),
+                (256, (2, 1)),
+            }
+            if gemm1_tactic[0][0] == 512:
+                assert tile_size == 128
+            if tile_size <= 64:
+                assert gemm1_tactic[0][0] == gemm2_tactic[0][0] == 128
 
     def test_w4a16_tactic_enumeration_invariants(self):
         from flashinfer.fused_moe.cute_dsl.blackwell.moe_w4a16 import (
