@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Copyright (c) 2025 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
+# Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved.
 # SPDX-License-Identifier: BSD-3-Clause
 
 # Redistribution and use in source and binary forms, with or without
@@ -48,11 +48,23 @@ Blackwell (SM100) specific kernel utilities.
 
 Re-exports shared utilities from common/kernel_utils.py (pointer helpers, the
 f32 activation functions, fmin) and adds Blackwell-specific functions:
-blk_reduce_bf16, blk_reduce_fp32, blk_reduce_fp16.
+blk_reduce_bf16, blk_reduce_fp32, blk_reduce_fp16, and the channel-major
+block-scaled epilogue shared by the split MoE FC1 and FC2 kernels.
 """
 
+import cutlass
+import cutlass.cute as cute
+import cutlass.pipeline as pipeline
+from cutlass._mlir import ir
 from cutlass._mlir.dialects import llvm
+from cutlass.cute.nvgpu import tcgen05
 from cutlass.cutlass_dsl import dsl_user_op
+
+from flashinfer.tllm_enums import ActivationType
+from flashinfer.quantization.quantization_cute_dsl_utils import (
+    float_to_ue8m0_fast,
+    ue8m0_to_inv_scale_fast,
+)
 
 # Re-export all shared utilities so existing imports continue to work
 from ..common.kernel_utils import (  # noqa: F401
@@ -148,3 +160,499 @@ def blk_reduce_fp16(dst_gemm, src_smem, size, loc=None, ip=None):
         loc=loc,
         ip=ip,
     )
+
+
+# The 16x32 TMEM transpose follows the NVFP4 MegaMoE epilogue. Each lane
+# receives one token's 16 contiguous channels. SF32 combines two adjacent
+# fragments when computing its scale; SF16 uses one fragment.
+# External weights retain the split backend's up64/gate64 interleaving.
+
+
+def _blockscaled_tmem_view(ptr, rows, cols):
+    return cute.make_tensor(
+        ptr,
+        cute.make_layout((((rows, cols), 1),), stride=((((1 << 16), 1), 0),)),
+    )
+
+
+def _blockscaled_rmem_view(values, count, offset=0):
+    return cute.make_tensor(
+        values.iterator + offset,
+        cute.make_layout((((count,), 1),), stride=(((1,), 0),)),
+    )
+
+
+@cute.jit
+def _blockscaled_load16x32(ptr):
+    values = cute.make_rmem_tensor((16,), cutlass.Float32)
+    cute.copy(
+        cute.make_copy_atom(
+            tcgen05.Ld16x64bOp(tcgen05.Repetition.x16), cutlass.Float32
+        ),
+        _blockscaled_tmem_view(ptr, 16, 32),
+        _blockscaled_rmem_view(values, 16),
+    )
+    return values
+
+
+@cute.jit
+def _blockscaled_transpose16x32(values, scratch_ptr, bottom: cutlass.Constexpr = False):
+    """Transpose loaded values into lane=token, register=channel order.
+
+    The scratch rectangle is 32 TMEM rows by 32 columns.  All source values
+    must have been loaded before the caller reuses their TMEM as scratch.
+    """
+    perm1 = (0, 8, 2, 10, 4, 12, 6, 14, 1, 9, 3, 11, 5, 13, 7, 15)
+    perm3 = (0, 1, 4, 5, 2, 3, 6, 7, 8, 9, 12, 13, 10, 11, 14, 15)
+    work = cute.make_rmem_tensor((16,), cutlass.Float32)
+    result = cute.make_rmem_tensor((16,), cutlass.Float32)
+    source_ptr = scratch_ptr + ((16 << 16) if bottom else 0)
+    dest_ptr = scratch_ptr + (16 if bottom else 0)
+    source = _blockscaled_tmem_view(source_ptr, 16, 32)
+    dest = _blockscaled_tmem_view(dest_ptr, 32, 16)
+    dest_top = _blockscaled_tmem_view(dest_ptr, 16, 16)
+    dest_bottom = _blockscaled_tmem_view(dest_ptr + (16 << 16), 16, 16)
+    for i in cutlass.range_constexpr(16):
+        result[i] = values[perm1[i]]
+    cute.copy(
+        cute.make_copy_atom(
+            tcgen05.St16x128bOp(tcgen05.Repetition.x8), cutlass.Float32
+        ),
+        _blockscaled_rmem_view(result, 16),
+        source,
+    )
+    cute.copy(
+        cute.make_copy_atom(
+            tcgen05.Ld16x64bOp(tcgen05.Repetition.x16), cutlass.Float32
+        ),
+        source,
+        _blockscaled_rmem_view(work, 16),
+    )
+    atom_store = cute.make_copy_atom(
+        tcgen05.St32x32bOp(tcgen05.Repetition.x16), cutlass.Float32
+    )
+    cute.copy(atom_store, _blockscaled_rmem_view(work, 16), dest)
+    atom_load3 = cute.make_copy_atom(
+        tcgen05.Ld16x256bOp(tcgen05.Repetition.x2), cutlass.Float32
+    )
+    cute.copy(atom_load3, dest_top, _blockscaled_rmem_view(work, 8))
+    cute.copy(atom_load3, dest_bottom, _blockscaled_rmem_view(work, 8, 8))
+    for i in cutlass.range_constexpr(16):
+        result[i] = work[perm3[i]]
+    cute.copy(atom_store, _blockscaled_rmem_view(result, 16), dest)
+    atom_load4 = cute.make_copy_atom(
+        tcgen05.Ld16x128bOp(tcgen05.Repetition.x4), cutlass.Float32
+    )
+    cute.copy(atom_load4, dest_top, _blockscaled_rmem_view(work, 8))
+    cute.copy(atom_load4, dest_bottom, _blockscaled_rmem_view(work, 8, 8))
+    for i in cutlass.range_constexpr(16):
+        result[i] = work[perm1[i]]
+    return result
+
+
+@dsl_user_op
+def _blockscaled_atomic_add_pair(values, output, loc=None, ip=None):
+    if values.element_type == cutlass.BFloat16:
+        instruction = "red.global.add.noftz.bf16x2"
+    elif values.element_type == cutlass.Float16:
+        instruction = "red.global.add.noftz.f16x2"
+    elif values.element_type == cutlass.Float32:
+        vectorized_atomic_add_fp32x2(values, output, loc=loc, ip=ip)
+        return
+    else:
+        raise ValueError("The split MoE fused output must be BF16, FP16, or FP32")
+    llvm.inline_asm(
+        None,
+        [
+            output.iterator.llvm_ptr,
+            llvm.bitcast(ir.IntegerType.get_signless(32), values.load().ir_value()),
+        ],
+        f"{instruction} [$0], $1;",
+        "l,r",
+        has_side_effects=True,
+        loc=loc,
+        ip=ip,
+    )
+
+
+class Sm100BlockScaledMoeEpilogue:
+    def __init__(
+        self,
+        mma_tiler_mnk,
+        activation_type,
+        swiglu_alpha,
+        swiglu_beta,
+        swiglu_limit,
+        situ_beta,
+        situ_linear_beta,
+        use_per_token_scale,
+        use_fused_finalize,
+        top_k,
+        output_dtype,
+        final_scale_dtype,
+        sf_vec_size,
+        sf_dtype,
+        generate_sfc,
+    ):
+        if mma_tiler_mnk[0] != 128:
+            raise ValueError("The split block-scaled epilogue requires one-CTA M128")
+        if activation_type not in (
+            None,
+            ActivationType.Swiglu.value,
+            ActivationType.GegluTanh.value,
+            ActivationType.Relu2.value,
+        ):
+            raise ValueError(
+                f"Unsupported split block-scaled activation: {activation_type}"
+            )
+        if output_dtype not in (
+            cutlass.Float4E2M1FN,
+            cutlass.BFloat16,
+            cutlass.Float16,
+            cutlass.Float32,
+            cutlass.Float8E4M3FN,
+            cutlass.Float8E5M2,
+        ):
+            raise ValueError(f"Unsupported split block-scaled output: {output_dtype}")
+        if sf_vec_size not in (16, 32):
+            raise ValueError("Block-scaled MoE requires SF16 or SF32")
+        if sf_dtype not in (cutlass.Float8E4M3FN, cutlass.Float8E8M0FNU):
+            raise ValueError("Block-scaled MoE requires E4M3 or E8M0 scales")
+        if generate_sfc and output_dtype not in (
+            cutlass.Float4E2M1FN,
+            cutlass.Float8E4M3FN,
+        ):
+            raise ValueError("Scale generation requires FP4 or E4M3 output")
+        if use_fused_finalize and output_dtype not in (
+            cutlass.BFloat16,
+            cutlass.Float16,
+            cutlass.Float32,
+        ):
+            raise ValueError("Fused combine requires BF16, FP16, or FP32 output")
+        self.tile_n = mma_tiler_mnk[1]
+        self.activation_type = activation_type
+        self.gated = activation_type in (
+            ActivationType.Swiglu.value,
+            ActivationType.GegluTanh.value,
+        )
+        self.swiglu_alpha = swiglu_alpha
+        self.swiglu_beta = swiglu_beta
+        self.swiglu_limit = swiglu_limit
+        self.situ_beta = situ_beta
+        self.situ_linear_beta = situ_linear_beta
+        self.use_per_token_scale = use_per_token_scale
+        self.use_fused_finalize = use_fused_finalize
+        self.top_k = top_k
+        self.output_dtype = output_dtype
+        self.final_scale_dtype = final_scale_dtype
+        self.sf_vec_size = sf_vec_size
+        self.sf_dtype = sf_dtype
+        self.generate_sfc = generate_sfc
+        self.is_mxfp8_output = (
+            generate_sfc
+            and output_dtype is cutlass.Float8E4M3FN
+            and sf_dtype is cutlass.Float8E8M0FNU
+            and sf_vec_size == 32
+        )
+        self.transpose_barrier = pipeline.NamedBarrier(6, 128)
+
+    @cute.jit
+    def _activate(self, up, gate, alpha):
+        result = cute.make_rmem_tensor((16,), cutlass.Float32)
+        for i in cutlass.range_constexpr(0, 16, 2):
+            u = cute.arch.mul_packed_f32x2((up[i], up[i + 1]), (alpha, alpha))
+            if cutlass.const_expr(self.activation_type == ActivationType.Relu2.value):
+                relu = (
+                    cute.arch.fmax(u[0], cutlass.Float32(0.0)),
+                    cute.arch.fmax(u[1], cutlass.Float32(0.0)),
+                )
+                result[i], result[i + 1] = cute.arch.mul_packed_f32x2(relu, relu)
+            elif cutlass.const_expr(self.gated):
+                g = cute.arch.mul_packed_f32x2((gate[i], gate[i + 1]), (alpha, alpha))
+                if cutlass.const_expr(self.situ_beta is not None):
+                    if cutlass.const_expr(self.situ_linear_beta is not None):
+                        linear_beta = cutlass.Float32(self.situ_linear_beta)
+                        inv_beta = cutlass.Float32(
+                            f32_reciprocal(self.situ_linear_beta)
+                        )
+                        u = (
+                            linear_beta * tanh_f32(u[0] * inv_beta, fastmath=True),
+                            linear_beta * tanh_f32(u[1] * inv_beta, fastmath=True),
+                        )
+                    g = (
+                        situ_f32(g[0], self.situ_beta, fastmath=True),
+                        situ_f32(g[1], self.situ_beta, fastmath=True),
+                    )
+                elif cutlass.const_expr(
+                    self.activation_type == ActivationType.GegluTanh.value
+                ):
+                    g = (
+                        gelu_tanh_f32(g[0], fastmath=True),
+                        gelu_tanh_f32(g[1], fastmath=True),
+                    )
+                elif cutlass.const_expr(
+                    self.activation_type == ActivationType.Swiglu.value
+                ):
+                    limit = cutlass.Float32(self.swiglu_limit)
+                    g = (fmin(g[0], limit, nan=True), fmin(g[1], limit, nan=True))
+                    u = (
+                        -fmin(-fmin(u[0], limit, nan=True), limit, nan=True),
+                        -fmin(-fmin(u[1], limit, nan=True), limit, nan=True),
+                    )
+                    neg_alpha_log2e = -(
+                        cutlass.Float32(self.swiglu_alpha)
+                        * cutlass.Float32(1.4426950408889634)
+                    )
+                    arg = cute.arch.mul_packed_f32x2(
+                        g,
+                        (neg_alpha_log2e, neg_alpha_log2e),
+                    )
+                    exp = cute.arch.add_packed_f32x2(
+                        (
+                            cute.math.exp2(arg[0], fastmath=True),
+                            cute.math.exp2(arg[1], fastmath=True),
+                        ),
+                        (cutlass.Float32(1.0), cutlass.Float32(1.0)),
+                    )
+                    g = cute.arch.mul_packed_f32x2(
+                        g, (cute.arch.rcp_approx(exp[0]), cute.arch.rcp_approx(exp[1]))
+                    )
+                    u = cute.arch.add_packed_f32x2(
+                        u,
+                        (
+                            cutlass.Float32(self.swiglu_beta),
+                            cutlass.Float32(self.swiglu_beta),
+                        ),
+                    )
+                result[i], result[i + 1] = cute.arch.mul_packed_f32x2(u, g)
+        return result
+
+    @cute.jit
+    def _absmax(self, values):
+        result = cutlass.Float32(0.0)
+        for i in cutlass.range_constexpr(16):
+            result = cute.arch.fmax(result, cute.arch.fmax(values[i], -values[i]))
+        return result
+
+    @cute.jit
+    def _gated_sf32_absmax(self, values, scratch_ptr, warp, lane):
+        """Join adjacent warps' 16-channel fragments for each token's SF32."""
+        shared = cute.make_tensor(
+            scratch_ptr, cute.make_layout((4, 32), stride=(32, 1))
+        )
+        local = self._absmax(values)
+        shared[warp, lane] = local
+        self.transpose_barrier.arrive_and_wait()
+        result = cute.arch.fmax(local, shared[warp ^ 1, lane])
+        self.transpose_barrier.arrive_and_wait()
+        return result
+
+    @cute.jit
+    def _store(self, values, output, output_sf, row, channel, norm_const, absmax):
+        converted = cute.make_rmem_tensor((16,), self.output_dtype)
+        if cutlass.const_expr(self.generate_sfc):
+            if cutlass.const_expr(self.is_mxfp8_output):
+                # Match mxfp8_quantize's saturating round-up E8M0 code, including
+                # code zero for an all-zero block. Keep raw bytes for its store.
+                sf = float_to_ue8m0_fast(absmax * cutlass.Float32(1.0 / 448.0))
+                scale = ue8m0_to_inv_scale_fast(sf)
+                if channel % self.sf_vec_size == 0:
+                    output_sf[row, channel] = sf.to(cutlass.Uint8)
+            elif cutlass.const_expr(self.output_dtype == cutlass.Float4E2M1FN):
+                sf = (absmax * cutlass.Float32(1.0 / 6.0) * norm_const).to(
+                    self.sf_dtype
+                )
+                if channel % self.sf_vec_size == 0:
+                    output_sf[row, channel] = sf
+                scale = fmin(
+                    norm_const * cute.arch.rcp_approx(cutlass.Float32(sf)),
+                    cutlass.Float32(3.40282346638528859812e38),
+                    nan=True,
+                )
+            elif cutlass.const_expr(self.output_dtype == cutlass.Float8E4M3FN):
+                sf = (absmax * cutlass.Float32(1.0 / 448.0) * norm_const).to(
+                    self.sf_dtype
+                )
+                if channel % self.sf_vec_size == 0:
+                    output_sf[row, channel] = sf
+                scale = fmin(
+                    norm_const * cute.arch.rcp_approx(cutlass.Float32(sf)),
+                    cutlass.Float32(3.40282346638528859812e38),
+                    nan=True,
+                )
+            for i in cutlass.range_constexpr(0, 16, 2):
+                values[i], values[i + 1] = cute.arch.mul_packed_f32x2(
+                    (values[i], values[i + 1]), (scale, scale)
+                )
+        converted.store(values.load().to(self.output_dtype))
+        target = cute.local_tile(output, (1, 16), (row, channel // 16))
+        if cutlass.const_expr(self.use_fused_finalize):
+            for i in cutlass.range_constexpr(0, 16, 2):
+                pair = cute.make_tensor(converted.iterator + i, cute.make_layout((2,)))
+                target_pair = cute.make_tensor(
+                    target.iterator + i, cute.make_layout((2,))
+                )
+                _blockscaled_atomic_add_pair(pair, target_pair)
+        else:
+            cute.copy(
+                cute.make_copy_atom(
+                    cute.nvgpu.CopyUniversalOp(),
+                    self.output_dtype,
+                    num_bits_per_copy=min(128, self.output_dtype.width * 16),
+                ),
+                converted,
+                cute.coalesce(target),
+            )
+
+    @cute.jit
+    def run(
+        self,
+        tiled_mma,
+        acc_tensor,
+        output_tensor,
+        output_sf_tensor,
+        alpha,
+        norm_const,
+        per_token_scale,
+        token_mapping,
+        token_final_scales,
+        channel_start,
+        route_start,
+        valid_tokens,
+        expert_idx,
+        tidx,
+        smem_scratch,
+    ):
+        warp = (tidx // 32) % 4
+        lane = tidx % 32
+        for token_start in cutlass.range(0, self.tile_n, 32, unroll=1):
+            if token_start < valid_tokens:
+                ptr = acc_tensor.iterator + cute.assume(token_start, divby=32)
+                scratch = ptr + cute.assume(warp * (32 << 16), divby=32)
+                if cutlass.const_expr(self.gated):
+                    # TMEM loads address each warp's own 32-row datapath. The
+                    # up64/gate64 weight layout therefore needs an inter-warp
+                    # exchange after transposing those local channel rows.
+                    top = _blockscaled_load16x32(scratch)
+                    bottom = _blockscaled_load16x32(scratch + (16 << 16))
+                    top = _blockscaled_transpose16x32(top, scratch)
+                    bottom = _blockscaled_transpose16x32(bottom, scratch, True)
+                    shared = cute.make_tensor(
+                        smem_scratch,
+                        cute.make_layout((128, 32), stride=(32, 1)),
+                    )
+                    for i in cutlass.range_constexpr(16):
+                        shared[warp * 32 + i, lane] = top[i]
+                        shared[warp * 32 + 16 + i, lane] = bottom[i]
+                    self.transpose_barrier.arrive_and_wait()
+                    up = cute.make_rmem_tensor((16,), cutlass.Float32)
+                    gate = cute.make_rmem_tensor((16,), cutlass.Float32)
+                    for i in cutlass.range_constexpr(16):
+                        up[i] = shared[warp * 16 + i, lane]
+                        gate[i] = shared[64 + warp * 16 + i, lane]
+                    self.transpose_barrier.arrive_and_wait()
+                    row = route_start + token_start + lane
+                    token_alpha = alpha
+                    if cutlass.const_expr(self.use_per_token_scale):
+                        if token_start + lane < valid_tokens:
+                            token_alpha = (
+                                alpha
+                                * per_token_scale[token_mapping[row] // self.top_k]
+                            )
+                    values = self._activate(up, gate, token_alpha)
+                    absmax = cutlass.Float32(0.0)
+                    if cutlass.const_expr(self.generate_sfc):
+                        if cutlass.const_expr(self.sf_vec_size == 32):
+                            absmax = self._gated_sf32_absmax(
+                                values, smem_scratch, warp, lane
+                            )
+                        elif cutlass.const_expr(self.sf_vec_size == 16):
+                            absmax = self._absmax(values)
+                    channel = channel_start // 2 + warp * 16
+                    if token_start + lane < valid_tokens:
+                        if channel < output_tensor.shape[1]:
+                            self._store(
+                                values,
+                                output_tensor,
+                                output_sf_tensor,
+                                route_start + token_start + lane,
+                                channel,
+                                norm_const,
+                                absmax,
+                            )
+                elif cutlass.const_expr(
+                    self.activation_type == ActivationType.Relu2.value
+                    or self.activation_type is None
+                ):
+                    top = _blockscaled_load16x32(scratch)
+                    bottom = _blockscaled_load16x32(scratch + (16 << 16))
+                    top = _blockscaled_transpose16x32(top, scratch)
+                    bottom = _blockscaled_transpose16x32(bottom, scratch, True)
+                    row = route_start + token_start + lane
+                    scale = alpha
+                    output_row = row
+                    if token_start + lane < valid_tokens:
+                        if cutlass.const_expr(
+                            self.use_per_token_scale
+                            and self.activation_type == ActivationType.Relu2.value
+                        ):
+                            scale = (
+                                scale
+                                * per_token_scale[token_mapping[row] // self.top_k]
+                            )
+                        if cutlass.const_expr(self.activation_type is None):
+                            expanded = token_mapping[row]
+                            output_row = expanded
+                            route_scale = cutlass.Float32(1.0)
+                            if cutlass.const_expr(self.use_fused_finalize):
+                                output_row = expanded // self.top_k
+                                route_scale = cutlass.Float32(
+                                    token_final_scales[
+                                        output_row, expanded % self.top_k
+                                    ]
+                                )
+                            if cutlass.const_expr(self.use_per_token_scale):
+                                route_scale = route_scale * per_token_scale[row]
+                            scale = alpha * route_scale
+                            if cutlass.const_expr(
+                                self.final_scale_dtype
+                                in (cutlass.BFloat16, cutlass.Float16)
+                            ):
+                                # Preserve the former metadata buffer's rounding
+                                # before applying the scale to FP32 accumulators.
+                                scale = cutlass.Float32(self.final_scale_dtype(scale))
+                    if cutlass.const_expr(
+                        self.activation_type == ActivationType.Relu2.value
+                    ):
+                        top = self._activate(top, None, scale)
+                        bottom = self._activate(bottom, None, scale)
+                    elif cutlass.const_expr(self.activation_type is None):
+                        for i in cutlass.range_constexpr(0, 16, 2):
+                            top[i], top[i + 1] = cute.arch.mul_packed_f32x2(
+                                (top[i], top[i + 1]), (scale, scale)
+                            )
+                            bottom[i], bottom[i + 1] = cute.arch.mul_packed_f32x2(
+                                (bottom[i], bottom[i + 1]), (scale, scale)
+                            )
+                    absmax = cutlass.Float32(0.0)
+                    if cutlass.const_expr(self.generate_sfc and self.sf_vec_size == 32):
+                        absmax = cute.arch.fmax(self._absmax(top), self._absmax(bottom))
+                    for half in cutlass.range_constexpr(2):
+                        values = top if half == 0 else bottom
+                        if cutlass.const_expr(
+                            self.generate_sfc and self.sf_vec_size == 16
+                        ):
+                            absmax = self._absmax(values)
+                        channel = channel_start + warp * 32 + half * 16
+                        if token_start + lane < valid_tokens:
+                            if channel < output_tensor.shape[1]:
+                                self._store(
+                                    values,
+                                    output_tensor,
+                                    output_sf_tensor,
+                                    output_row,
+                                    channel,
+                                    norm_const,
+                                    absmax,
+                                )
+        cute.arch.fence_view_async_tmem_load()

@@ -301,10 +301,10 @@ def test_situ_changes_autotuner_cache_key(quant_mode: str):
 
 
 @cute_dsl_available
-@pytest.mark.parametrize("k", [128, 256, 384, 512])
+@pytest.mark.parametrize("k", [64, 128, 192, 256, 384, 512])
 @pytest.mark.parametrize("num_tokens", [1, 17])
-@pytest.mark.parametrize("tile_m", [128, 256])
-def test_gather_gemm_k_tail(k, num_tokens, tile_m):
+@pytest.mark.parametrize("tile_n", [16, 32, 64, 128])
+def test_gather_gemm_k_tail(k, num_tokens, tile_n):
     if not torch.cuda.is_available() or get_compute_capability(
         torch.device("cuda")
     ) not in (
@@ -336,7 +336,8 @@ def test_gather_gemm_k_tail(k, num_tokens, tile_m):
     b_scale = torch.full(
         (32, 4, n // 128, 4, k // 64, 1), 0x38, dtype=torch.uint8, device=device
     )
-    mapping = torch.full((tile_m,), -1, dtype=torch.int32, device=device)
+    num_tiles = (num_tokens + tile_n - 1) // tile_n
+    mapping = torch.full((num_tiles * tile_n,), -1, dtype=torch.int32, device=device)
     mapping[:num_tokens] = torch.arange(num_tokens - 1, -1, -1, device=device)
 
     output, _ = blockscaled_contiguous_gather_grouped_gemm_act_fusion(
@@ -345,16 +346,18 @@ def test_gather_gemm_k_tail(k, num_tokens, tile_m):
         a_scale=a_scale,
         b_scale=b_scale,
         alpha=torch.full((1,), 1.0 / k, device=device),
-        tile_idx_to_expert_idx=torch.zeros(1, dtype=torch.int32, device=device),
-        tile_idx_to_mn_limit=torch.tensor(
-            [num_tokens], dtype=torch.int32, device=device
+        tile_idx_to_expert_idx=torch.zeros(num_tiles, dtype=torch.int32, device=device),
+        tile_idx_to_mn_limit=torch.full(
+            (num_tiles,), num_tokens, dtype=torch.int32, device=device
         ),
         token_id_mapping=mapping,
-        num_non_exiting_tiles=torch.ones(1, dtype=torch.int32, device=device),
+        num_non_exiting_tiles=torch.tensor(
+            [num_tiles], dtype=torch.int32, device=device
+        ),
         topk=1,
         c_dtype="bfloat16",
-        mma_tiler_mn=(tile_m, 128),
-        cluster_shape_mn=(tile_m // 128, 1),
+        mma_tiler_mn=(128, tile_n),
+        cluster_shape_mn=(1, 1),
         enable_pdl=False,
     )
     # Both projections are dot(ones, ones) / K = 1, hence SwiGLU = sigmoid(1).
@@ -383,13 +386,19 @@ def test_tuner_checks_gemm2_output_dtype(monkeypatch, output_dtype, arch):
 
         tactic = tuner.DEFAULT_RUBIN_MOE_TACTIC
         dtype_arg = "c_dtype"
-    else:
-        from flashinfer.fused_moe.cute_dsl.blackwell import (
-            Sm100BlockScaledContiguousGroupedGemmFinalizeFusionKernel as kernel,
+        expected_dtypes = [torch_to_cutlass_dtype(output_dtype)]
+    elif arch == "blackwell":
+        import cutlass
+
+        from flashinfer.fused_moe.cute_dsl.blackwell.blockscaled_contiguous_grouped_gemm_finalize_fusion import (
+            Sm100BlockScaledGroupedGemmKernel as kernel,
         )
 
         tactic = tuner.DEFAULT_BLACKWELL_MOE_TACTIC
-        dtype_arg = "out_dtype"
+        dtype_arg = "output_dtype"
+        expected_dtypes = [cutlass.Float4E2M1FN, torch_to_cutlass_dtype(output_dtype)]
+    else:
+        raise ValueError(f"unsupported arch {arch!r}")
 
     can_implement = kernel.can_implement
     checked_dtypes = []
@@ -413,7 +422,7 @@ def test_tuner_checks_gemm2_output_dtype(monkeypatch, output_dtype, arch):
         output_dtype=output_dtype,
     )
     assert runner.get_valid_tactics(inputs, profile=None) == [tactic]
-    assert checked_dtypes == [torch_to_cutlass_dtype(output_dtype)]
+    assert checked_dtypes == expected_dtypes
 
 
 def test_localized_runner_uses_shard_shapes_and_separate_cache_key():
@@ -862,101 +871,76 @@ class TestTacticEnumeration:
     accuracy tests can fail to detect when a tile size is gated out of
     ALL_BLACKWELL_MOE_TACTICS as a workaround.
 
-    The MoE pipeline runs gemm1 (gather + SwiGLU) followed by gemm2
-    (finalize fusion) back-to-back on the same padded token sequence.
-    For the layouts to match, gemm1 and gemm2 must share the same
-    mma_tiler M dimension and the same cluster_shape M dimension.
+    Blackwell W4A4/W4A8 place output channels on M and routed tokens on N.
+    GEMM1 and GEMM2 must share the routed-token N capacity and use the
+    supported single-CTA geometry for their intermediate layout to match.
     """
 
     def test_w4a8_retains_mixed_finalize_tactics(self):
+        """The mixed-input finalizer shares GEMM1's runtime-N routing tile."""
         from flashinfer.fused_moe.cute_dsl.tuner import (
             canonicalize_w4a8_tactic,
             get_w4a8_moe_valid_tactics,
         )
 
         tactics = get_w4a8_moe_valid_tactics()
-        assert len(tactics) == 32
-        assert {gemm2[0][1] for _, _, gemm2 in tactics} == {64, 128, 192, 256}
+        assert len(tactics) == 4
+        assert {tile_size for tile_size, _, _ in tactics} == {16, 32, 64, 128}
+        for tile_size, gemm1, gemm2 in tactics:
+            assert gemm1[0] == gemm2[0] == (128, tile_size)
+            assert gemm1[1] == gemm2[1] == (1, 1)
         assert canonicalize_w4a8_tactic(list(tactics[0])) == tactics[0]
         with pytest.raises(ValueError, match="unsupported W4A8 MoE tactic"):
             canonicalize_w4a8_tactic(
                 (128, ((128, 128), (1, 1), False), ((128, 96), (1, 1), False))
             )
 
-    @pytest.mark.parametrize("tile_size", [128, 256])
+    @pytest.mark.parametrize("tile_size", [16, 32, 64, 128])
     def test_gemm1_tactics_match_tile_size(self, tile_size):
-        """Every gemm1 tactic must have mma_tiler[0] == tile_size and
-        cluster_shape[0] == tile_size // 128 (1-CTA at tile=128, 2-CTA
-        at tile=256)."""
+        """GEMM1 uses M128 with the routing tile on N and one CTA."""
         from flashinfer.fused_moe.cute_dsl.tuner import (
             get_blackwell_gemm1_valid_tactics,
         )
 
         tactics = get_blackwell_gemm1_valid_tactics(tile_size)
-        assert len(tactics) > 0, f"no gemm1 tactics returned at tile_size={tile_size}"
-        expected_cluster_m = tile_size // 128
+        assert len(tactics) == 1
         for mma_tiler_mn, cluster_shape_mn, _ in tactics:
-            assert mma_tiler_mn[0] == tile_size, (
-                f"gemm1 mma_tiler[0]={mma_tiler_mn[0]} does not match "
+            assert mma_tiler_mn == (128, tile_size), (
+                f"gemm1 MMA shape {mma_tiler_mn} does not place routed tokens on N "
                 f"tile_size={tile_size}; tactic={(mma_tiler_mn, cluster_shape_mn)}"
             )
-            assert cluster_shape_mn[0] == expected_cluster_m, (
-                f"gemm1 cluster_shape[0]={cluster_shape_mn[0]} does not "
-                f"match tile_size//128={expected_cluster_m}; "
-                f"tactic={(mma_tiler_mn, cluster_shape_mn)}"
-            )
+            assert cluster_shape_mn == (1, 1)
 
-    @pytest.mark.parametrize("tile_size", [128, 256])
+    @pytest.mark.parametrize("tile_size", [16, 32, 64, 128])
     def test_gemm2_tactics_match_tile_size(self, tile_size):
-        """Every gemm2 tactic must have mma_tiler[0] == tile_size and
-        cluster_shape[0] == tile_size // 128. The finalize kernel
-        consumes the upstream gemm1 output layout — a 1-CTA gemm2
-        tactic at tile_size=256 cannot consume a 2-CTA gemm1 output
-        and produces incorrect results (regression for #3067)."""
+        """GEMM2 consumes GEMM1's routed-token N layout with one CTA."""
         from flashinfer.fused_moe.cute_dsl.tuner import (
             get_blackwell_gemm2_valid_tactics,
         )
 
         tactics = get_blackwell_gemm2_valid_tactics(tile_size)
-        assert len(tactics) > 0, f"no gemm2 tactics returned at tile_size={tile_size}"
-        expected_cluster_m = tile_size // 128
+        assert len(tactics) == 1
         for mma_tiler_mn, cluster_shape_mn, _ in tactics:
-            assert mma_tiler_mn[0] == tile_size, (
-                f"gemm2 mma_tiler[0]={mma_tiler_mn[0]} does not match "
+            assert mma_tiler_mn == (128, tile_size), (
+                f"gemm2 MMA shape {mma_tiler_mn} does not place routed tokens on N "
                 f"tile_size={tile_size}; tactic={(mma_tiler_mn, cluster_shape_mn)}"
             )
-            assert cluster_shape_mn[0] == expected_cluster_m, (
-                f"gemm2 cluster_shape[0]={cluster_shape_mn[0]} does not "
-                f"match tile_size//128={expected_cluster_m}; "
-                f"tactic={(mma_tiler_mn, cluster_shape_mn)}"
-            )
+            assert cluster_shape_mn == (1, 1)
 
     def test_all_moe_tactics_pair_gemm1_and_gemm2_consistently(self):
-        """Every (tile_size, gemm1_tactic, gemm2_tactic) tuple in
-        ALL_BLACKWELL_MOE_TACTICS must have gemm1 and gemm2 share both
-        mma_tiler[0] and cluster_shape[0] (the M dimensions). This
-        catches a class of bug where the product loop in
-        get_moe_valid_tactics accidentally pairs incompatible
-        gemm1/gemm2 tactics, even if each individual enumeration is
-        internally consistent."""
+        """Keep every supported routing capacity and pair compatible GEMMs."""
         from flashinfer.fused_moe.cute_dsl.tuner import ALL_BLACKWELL_MOE_TACTICS
 
-        assert len(ALL_BLACKWELL_MOE_TACTICS) > 0
+        assert len(ALL_BLACKWELL_MOE_TACTICS) == 4
+        assert {tile_size for tile_size, _, _ in ALL_BLACKWELL_MOE_TACTICS} == {
+            16,
+            32,
+            64,
+            128,
+        }
         for tile_size, gemm1_tactic, gemm2_tactic in ALL_BLACKWELL_MOE_TACTICS:
-            gemm1_mma_m = gemm1_tactic[0][0]
-            gemm1_cluster_m = gemm1_tactic[1][0]
-            gemm2_mma_m = gemm2_tactic[0][0]
-            gemm2_cluster_m = gemm2_tactic[1][0]
-            assert gemm1_mma_m == gemm2_mma_m == tile_size, (
-                f"gemm1/gemm2 mma_m mismatch in ALL_BLACKWELL_MOE_TACTICS at "
-                f"tile_size={tile_size}: gemm1_mma_m={gemm1_mma_m}, "
-                f"gemm2_mma_m={gemm2_mma_m}"
-            )
-            assert gemm1_cluster_m == gemm2_cluster_m == tile_size // 128, (
-                f"gemm1/gemm2 cluster_m mismatch in ALL_BLACKWELL_MOE_TACTICS at "
-                f"tile_size={tile_size}: gemm1_cluster_m={gemm1_cluster_m}, "
-                f"gemm2_cluster_m={gemm2_cluster_m}"
-            )
+            assert gemm1_tactic[0] == gemm2_tactic[0] == (128, tile_size)
+            assert gemm1_tactic[1] == gemm2_tactic[1] == (1, 1)
 
     def test_w4a16_tactic_enumeration_invariants(self):
         from flashinfer.fused_moe.cute_dsl.blackwell.moe_w4a16 import (
@@ -2121,15 +2105,16 @@ class TestCuteDslFusedMoeFunctional:
     ):
         from flashinfer.autotuner import AutoTuner
 
+        num_tokens = 128
         if quant_mode == "w4a4":
-            # hidden=256 leaves one padding CTA in the N=256, cluster_n=2
-            # configuration. hidden=384 also gives the second CTA a partial tile.
-            # Force the 256-row route so both cases execute the kernel path that
-            # previously had to be filtered out.
+            # 129 tokens with top-k=2 give 258 routes across eight experts:
+            # at least one full N16 tile and one partial tile are unavoidable.
+            # Keep route-padding coverage with both activation-scale modes.
+            num_tokens = 129
             tail_config = (
-                256,
-                ((256, 128), (2, 1), False),
-                ((256, 256), (2, 2), False),
+                16,
+                ((128, 16), (1, 1), False),
+                ((128, 16), (1, 1), False),
             )
         elif quant_mode == "w4a16":
             # The same cache sees a full cluster, a padding peer, then a full
@@ -2150,7 +2135,7 @@ class TestCuteDslFusedMoeFunctional:
         for hidden_size in hidden_sizes:
             self._run_numerical_accuracy(
                 activation_type=ActivationType.Relu2,
-                num_tokens=128,
+                num_tokens=num_tokens,
                 top_k=2,
                 hidden_size=hidden_size,
                 intermediate_size=512,
@@ -3933,7 +3918,7 @@ class TestMoeOutputMemsetInplaceContract:
             id="n128-bias-off",
         ),
         pytest.param(
-            (128, ((128, 128), (1, 1), False), ((128, 64), (1, 1), False)),
+            (64, ((128, 64), (1, 1), False), ((128, 64), (1, 1), False)),
             128,
             1.25,
             0.5,
@@ -3942,49 +3927,49 @@ class TestMoeOutputMemsetInplaceContract:
             id="n64-custom-bias",
         ),
         pytest.param(
-            (256, ((256, 128), (2, 1), False), ((256, 192), (2, 1), False)),
+            (32, ((128, 32), (1, 1), False), ((128, 32), (1, 1), False)),
             384,
             1.702,
             1.0,
             7.0,
             False,
-            id="n192-2cta-oai",
+            id="n32-h384-oai",
         ),
         pytest.param(
-            (256, ((256, 128), (2, 1), False), ((256, 128), (2, 1), False)),
+            (128, ((128, 128), (1, 1), False), ((128, 128), (1, 1), False)),
             256,
             1.702,
             1.0,
             7.0,
             False,
-            id="n128-2cta-oai",
+            id="n128-oai",
         ),
         pytest.param(
-            (128, ((128, 128), (1, 1), False), ((128, 192), (1, 1), False)),
+            (64, ((128, 64), (1, 1), False), ((128, 64), (1, 1), False)),
             384,
             1.0,
             0.0,
             torch.finfo(torch.float32).max,
             False,
-            id="n192-1cta",
+            id="n64-h384-bias-off",
         ),
         pytest.param(
-            (256, ((256, 128), (2, 1), False), ((256, 64), (2, 1), False)),
+            (32, ((128, 32), (1, 1), False), ((128, 32), (1, 1), False)),
             128,
             1.25,
             0.5,
             10.0,
             False,
-            id="n64-2cta-custom-bias",
+            id="n32-custom-bias",
         ),
         pytest.param(
-            (128, ((128, 128), (1, 1), False), ((128, 192), (1, 1), False)),
+            (16, ((128, 16), (1, 1), False), ((128, 16), (1, 1), False)),
             256,
             1.702,
             1.0,
             7.0,
             False,
-            id="n192-partial-oai",
+            id="n16-partial-oai",
         ),
     ],
 )

@@ -77,96 +77,35 @@ def _seeded_activation(shapes, dtype, device):
 # =============================================================================
 
 
+BLACKWELL_ROUTE_TILES = (16, 32, 64, 128)
+
+
 def get_blackwell_gemm1_valid_tactics(tile_size: int) -> List[Tuple]:
-    """Get valid Blackwell tactics for GEMM1 (Gather + SwiGLU Fusion).
-
-    Format: (mma_tiler_mn, cluster_shape_mn, raster_along_m)
-    """
-    mma_tiler_mn_candidates = [(tile_size, 128), (tile_size, 256)]
-    cluster_shape_mn_candidates = [(tile_size // 128, 1)]
-    raster_along_m_candidates = [False]
-
-    return [
-        (mma_tiler_mn, cluster_shape_mn, raster_along_m)
-        for mma_tiler_mn, cluster_shape_mn, raster_along_m in itertools.product(
-            mma_tiler_mn_candidates,
-            cluster_shape_mn_candidates,
-            raster_along_m_candidates,
-        )
-    ]
+    """Block-scaled FC1: physical M is output channels and N is routed tokens."""
+    return [((128, tile_size), (1, 1), False)]
 
 
 def get_blackwell_gemm2_valid_tactics(tile_size: int) -> List[Tuple]:
-    """Get valid Blackwell tactics for GEMM2 (Finalize Fusion).
-
-    The finalize kernel's MMA shape must match tile_size because it consumes
-    the upstream gemm1 output layout. At tile_size=128 it uses 1-CTA mma_m=128;
-    at tile_size=256 it uses 2-CTA mma_m=256 (use_2cta_instrs=True). Returning a
-    1-CTA tactic at tile_size=256 yields a layout mismatch and incorrect output
-    (bug #3067, fixed upstream by #3171).
-
-    Format: (mma_tiler_mn, cluster_shape_mn, raster_along_m)
-    """
-    mma_tiler_mn_candidates = [(tile_size, 128), (tile_size, 256)]
-    cluster_shape_mn_candidates = [
-        (tile_size // 128, 1),
-        (tile_size // 128, 2),
-    ]
-    raster_along_m_candidates = [False]
-
-    return [
-        (mma_tiler_mn, cluster_shape_mn, raster_along_m)
-        for mma_tiler_mn, cluster_shape_mn, raster_along_m in itertools.product(
-            mma_tiler_mn_candidates,
-            cluster_shape_mn_candidates,
-            raster_along_m_candidates,
-        )
-    ]
+    """Block-scaled FC2 uses the same routed-token N capacity as FC1."""
+    return [((128, tile_size), (1, 1), False)]
 
 
 def get_blackwell_moe_valid_tactics() -> List[Tuple]:
-    """Get all valid Blackwell MoE tactic combinations.
-
-    Returns: List of (tile_size, gemm1_tactic, gemm2_tactic)
-    """
-    tactics = []
-    # tile_size=256 (2-CTA) is enabled: the gemm1(2-CTA)/gemm2(1-CTA) layout
-    # mismatch that caused incorrect results (#3067) is fixed by parameterizing
-    # get_blackwell_gemm2_valid_tactics on tile_size (#3171). Mirrors main's
-    # get_moe_valid_tactics over VALID_TILE_SIZES.
-    for tile_size in VALID_TILE_SIZES:
-        gemm1_tactics = get_blackwell_gemm1_valid_tactics(tile_size)
-        gemm2_tactics = get_blackwell_gemm2_valid_tactics(tile_size)
-        for gemm1_tactic, gemm2_tactic in itertools.product(
-            gemm1_tactics, gemm2_tactics
-        ):
-            tactics.append((tile_size, gemm1_tactic, gemm2_tactic))
-    return tactics
-
-
-def get_w4a8_moe_valid_tactics() -> List[Tuple]:
-    """Get the Blackwell tactics for W4A8 mixed-format MoE.
-
-    The mixed finalize kernel also supports N tiles 64 and 192. Keep its
-    tactic space distinct so W4A8 does not change W4A4 tuning results.
-    """
+    """Get split block-scaled runtime-N tactics as (route_tile, FC1, FC2)."""
     return [
-        (
-            tile,
-            ((tile, gemm1_n), (tile // 128, 1), False),
-            ((tile, gemm2_n), (tile // 128, cluster_n), False),
-        )
-        for tile, gemm1_n, gemm2_n, cluster_n in itertools.product(
-            VALID_TILE_SIZES, (128, 256), (64, 128, 192, 256), (1, 2)
-        )
+        (route_tile, gemm1, gemm2)
+        for route_tile in BLACKWELL_ROUTE_TILES
+        for gemm1 in get_blackwell_gemm1_valid_tactics(route_tile)
+        for gemm2 in get_blackwell_gemm2_valid_tactics(route_tile)
     ]
 
 
-# Canonical list of tile_sizes the autotuner is allowed to pick.  Used by
-# ``CuteDslMoEWrapper`` to size its preallocated kernel-output buffers so
-# every tactic in the arch-specific tactic lists can reuse the prealloc,
-# regardless of which tile_size the autotuner picks at runtime.  Adding a
-# new tile_size here automatically widens the prealloc.
+def get_w4a8_moe_valid_tactics() -> List[Tuple]:
+    """W4A8 uses the same token-on-N geometry as the other Blackwell modes."""
+    return get_blackwell_moe_valid_tactics()
+
+
+# Rubin routing capacities; Blackwell uses BLACKWELL_ROUTE_TILES above.
 VALID_TILE_SIZES: Tuple[int, ...] = (128, 256)
 
 
@@ -457,7 +396,7 @@ class CuteDslFusedMoERunner(TunableRunner):
     Tactic format follows TRT-LLM style:
         (tile_size, gemm1_tactic, gemm2_tactic)
     where:
-        - tile_size: 128 or 256
+        - tile_size: routed-token capacity (16, 32, 64, or 128 on Blackwell)
         - gemm1_tactic: (mma_tiler_mn, cluster_shape_mn, raster_along_m)
         - gemm2_tactic: (mma_tiler_mn, cluster_shape_mn, raster_along_m)
 
@@ -726,6 +665,7 @@ class CuteDslFusedMoERunner(TunableRunner):
             self.output_dtype,
             self.enable_pdl,
         )
+        extras += ("blockscaled_route_n_v1",)
         if self.use_cuda_graph:
             extras += ("cuda_graph",)
         return extras + self._localization_signature()
@@ -785,14 +725,6 @@ class CuteDslFusedMoERunner(TunableRunner):
         gemm2_out_dtype = torch_to_cutlass_dtype(self.output_dtype)
 
         all_tactics = ALL_W4A8_MOE_TACTICS if is_mxfp8 else _get_arch_tactics()
-
-        token_final_scales = inputs[3]
-        if token_final_scales.dtype == torch.float32:
-            final_scale_dtype = cutlass.Float32
-        elif token_final_scales.dtype == torch.bfloat16:
-            final_scale_dtype = cutlass.BFloat16
-        else:
-            final_scale_dtype = cutlass.Float16
 
         def _tactic_ok(tactic):
             tile_size, gemm1_tactic, gemm2_tactic = tactic
@@ -872,48 +804,31 @@ class CuteDslFusedMoERunner(TunableRunner):
                     c_major="n",
                 )
             else:
-                from .blackwell import (
-                    BlockScaledContiguousGatherGroupedGemmKernel,
-                    Sm100BlockScaledContiguousGroupedGemmFinalizeFusionKernel,
+                from .blackwell.blockscaled_contiguous_grouped_gemm_finalize_fusion import (
+                    Sm100BlockScaledGroupedGemmKernel,
                 )
 
-                gemm1_mma_tiler_mn, gemm1_cluster_shape_mn, _ = gemm1_tactic
-                gemm2_mma_tiler_mn, gemm2_cluster_shape_mn, _ = gemm2_tactic
-
-                gemm1_ok = BlockScaledContiguousGatherGroupedGemmKernel.can_implement(
-                    a_dtype=a_dtype,
-                    b_dtype=b_dtype,
-                    sf_dtype=sf_dtype,
-                    sf_vec_size=sf_vec_size,
-                    c_dtype=gemm1_c_dtype,
-                    mma_tiler_mn=gemm1_mma_tiler_mn,
-                    cluster_shape_mn=gemm1_cluster_shape_mn,
-                    m=permuted_m,
-                    n=gemm1_n,
-                    k=hidden_size,
-                    l=num_local_experts,
-                    a_major="k",
-                    b_major="k",
-                    c_major="n",
-                )
-                gemm2_ok = Sm100BlockScaledContiguousGroupedGemmFinalizeFusionKernel.can_implement(
-                    a_dtype=a_dtype,
-                    b_dtype=b_dtype,
-                    sf_dtype=sf_dtype,
-                    sf_vec_size=sf_vec_size,
-                    out_dtype=gemm2_out_dtype,
-                    final_scale_dtype=final_scale_dtype,
-                    mma_tiler_mn=gemm2_mma_tiler_mn,
-                    cluster_shape_mn=gemm2_cluster_shape_mn,
-                    m=permuted_m,
-                    n=gemm2_n,
-                    k=gemm2_k,
-                    l=num_local_experts,
-                    a_major="k",
-                    b_major="k",
-                    out_major="n",
-                )
-
+                for weight, gemm_tactic, output_dtype in (
+                    (w1_weight, gemm1_tactic, gemm1_c_dtype),
+                    (w2_weight, gemm2_tactic, gemm2_out_dtype),
+                ):
+                    mma_tiler_mn, cluster_shape_mn, _ = gemm_tactic
+                    if mma_tiler_mn[1] != tile_size:
+                        return False
+                    if not Sm100BlockScaledGroupedGemmKernel.can_implement(
+                        m=weight.shape[1],
+                        n=permuted_m,
+                        k=weight.shape[2] * 2,
+                        output_dtype=output_dtype,
+                        activation_dtype=a_dtype,
+                        weight_dtype=b_dtype,
+                        sf_dtype=sf_dtype,
+                        sf_vec_size=sf_vec_size,
+                        mma_tiler_mn=mma_tiler_mn,
+                        cluster_shape_mn=cluster_shape_mn,
+                    ):
+                        return False
+                return True
             return gemm1_ok and gemm2_ok
 
         valid_tactics = [t for t in all_tactics if _tactic_ok(t)]
