@@ -94,6 +94,9 @@ class PrepareRouted:
         bidx, _, _ = cute.arch.block_idx()
         if cutlass.const_expr(self.enable_pdl):
             cute.arch.griddepcontrol_wait()
+            # Permit dependent-grid startup; its dependency wait still protects
+            # consumption of this grid's payload and scale-factor writes.
+            cute.arch.griddepcontrol_launch_dependents()
         count = cute.make_tensor(num_tiles_ptr, cute.make_layout((1,)))[0]
         active_rows = count * self.route_tile
         payload_rows = active_rows
@@ -164,8 +167,6 @@ class PrepareRouted:
                         routed_sf_ptr + offset, cute.make_layout((1,))
                     )
                     target[0] = value
-        if cutlass.const_expr(self.enable_pdl):
-            cute.arch.griddepcontrol_launch_dependents()
 
 
 def allocate(activation, activation_sf, capacity, sf_vec_size):

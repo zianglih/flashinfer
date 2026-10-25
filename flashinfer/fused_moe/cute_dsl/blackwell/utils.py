@@ -300,6 +300,8 @@ class Sm100BlockScaledMoeEpilogue:
         self,
         mma_tiler_mnk,
         activation_type,
+        scatter_output,
+        per_token_scale_is_routed,
         swiglu_alpha,
         swiglu_beta,
         swiglu_limit,
@@ -351,10 +353,12 @@ class Sm100BlockScaledMoeEpilogue:
             raise ValueError("Fused combine requires BF16, FP16, or FP32 output")
         self.bulk_tokens = 0
         self.overlap_acc = False
-        self.overlap_fc1_steps = 0
+        self.overlap_activation_steps = 0
         self.bulk_stages = 0
         self.tile_n = mma_tiler_mnk[1]
         self.activation_type = activation_type
+        self.scatter_output = scatter_output
+        self.per_token_scale_is_routed = per_token_scale_is_routed
         self.gated = activation_type in (
             ActivationType.Swiglu.value,
             ActivationType.GegluTanh.value,
@@ -567,7 +571,12 @@ class Sm100BlockScaledMoeEpilogue:
                 token_alpha = alpha
                 if token_start + lane < valid_tokens:
                     token_alpha = (
-                        alpha * per_token_scale[token_mapping[row] // self.top_k]
+                        alpha
+                        * per_token_scale[
+                            row
+                            if self.per_token_scale_is_routed
+                            else token_mapping[row] // self.top_k
+                        ]
                     )
                 values = self._activate(up, gate, token_alpha)
             else:
@@ -617,8 +626,15 @@ class Sm100BlockScaledMoeEpilogue:
                     self.use_per_token_scale
                     and self.activation_type == ActivationType.Relu2.value
                 ):
-                    scale = scale * per_token_scale[token_mapping[row] // self.top_k]
-                if cutlass.const_expr(self.activation_type is None):
+                    scale = (
+                        scale
+                        * per_token_scale[
+                            row
+                            if self.per_token_scale_is_routed
+                            else token_mapping[row] // self.top_k
+                        ]
+                    )
+                if cutlass.const_expr(self.scatter_output):
                     output_row = fc2_output_row
                     scale = fc2_scale
             if cutlass.const_expr(self.activation_type == ActivationType.Relu2.value):
@@ -701,11 +717,11 @@ class Sm100BlockScaledMoeEpilogue:
                     token_start,
                     cutlass.Int32(0),
                     alpha,
-                    step + 1 == self.overlap_fc1_steps,
+                    step + 1 == self.overlap_activation_steps,
                     acc_pipeline,
                     acc_state,
                 )
-            elif cutlass.const_expr(step + 1 == self.overlap_fc1_steps):
+            elif cutlass.const_expr(step + 1 == self.overlap_activation_steps):
                 cute.arch.fence_view_async_tmem_load()
                 acc_pipeline.consumer_release(acc_state)
 
@@ -809,7 +825,14 @@ class Sm100BlockScaledMoeEpilogue:
                 output_rows[group] = token_mapping[row]
                 route_scale = cutlass.Float32(1.0)
                 if cutlass.const_expr(self.use_per_token_scale):
-                    route_scale = route_scale * per_token_scale[row]
+                    route_scale = (
+                        route_scale
+                        * per_token_scale[
+                            row
+                            if self.per_token_scale_is_routed
+                            else token_mapping[row] // self.top_k
+                        ]
+                    )
                 scale = alpha * route_scale
                 if cutlass.const_expr(
                     self.final_scale_dtype in (cutlass.BFloat16, cutlass.Float16)
@@ -1030,7 +1053,7 @@ class Sm100BlockScaledMoeEpilogue:
             elif cutlass.const_expr(self.overlap_acc):
                 # This CTA has no live output channels, hence no TMEM reads.
                 acc_pipeline.consumer_release(acc_state)
-        elif cutlass.const_expr(self.activation_type is None):
+        elif cutlass.const_expr(self.scatter_output):
             # Fetch the whole tile's routing metadata before its stores. Keeping
             # the slab indices static preserves these values in registers.
             groups = max(1, self.tile_n // 32)
@@ -1050,7 +1073,14 @@ class Sm100BlockScaledMoeEpilogue:
                             token_final_scales[output_row, expanded % self.top_k]
                         )
                     if cutlass.const_expr(self.use_per_token_scale):
-                        route_scale = route_scale * per_token_scale[row]
+                        route_scale = (
+                            route_scale
+                            * per_token_scale[
+                                row
+                                if self.per_token_scale_is_routed
+                                else token_mapping[row] // self.top_k
+                            ]
+                        )
                     scale = alpha * route_scale
                     if cutlass.const_expr(
                         self.final_scale_dtype in (cutlass.BFloat16, cutlass.Float16)

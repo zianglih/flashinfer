@@ -822,6 +822,44 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
         )
 
     if not is_rubin:
+        mma_m, route_tile = mma_tiler_mn
+        k_steps = (
+            8
+            if (
+                (mma_m == 128 and route_tile < 128)
+                or (mma_m == 256 and route_tile == 128)
+            )
+            else 4
+        )
+        if mma_m == 512:
+            num_stages = 5 if sf_vec_size == 32 else 4
+        elif mma_m == 256:
+            num_stages = 3 if k_steps == 8 else 5
+        elif route_tile == 256:
+            num_stages = 3
+        else:
+            num_stages = 4
+        overlap_epilogue = b_dtype_cutlass.width >= a_dtype_cutlass.width and (
+            route_tile < 128 or mma_m >= 256
+        )
+        channel_tiles = 2 if mma_m == 512 else 1
+        allocated_n = max(32, route_tile)
+        tile_k = (
+            (
+                256
+                if a_dtype_cutlass is cutlass.Float4E2M1FN
+                and b_dtype_cutlass is cutlass.Float4E2M1FN
+                else 128
+            )
+            * k_steps
+            // 4
+        )
+        sf_cols = tile_k // sf_vec_size
+        overlap_activation_accumulators = (
+            overlap_epilogue
+            and allocated_n * channel_tiles == 256
+            and sf_cols * (channel_tiles + max(1, allocated_n // 128)) <= 64
+        )
         _run_blockscaled_gemm(
             weight=b,
             weight_sf=b_scale,
@@ -853,6 +891,14 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             weight_dtype=b_dtype_cutlass,
             sf_dtype=sf_dtype_cutlass,
             sf_vec_size=sf_vec_size,
+            prepare_input=True,
+            scatter_output=False,
+            per_token_scale_is_routed=False,
+            k_steps=k_steps,
+            num_stages=num_stages,
+            overlap_epilogue=overlap_epilogue,
+            overlap_activation_accumulators=overlap_activation_accumulators,
+            pdl_signal_at="startup",
             sm_count=sm_count,
         )
         return out, out_scale if generate_sfc else None

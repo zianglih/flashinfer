@@ -77,6 +77,12 @@ _iket = None
 
 
 @dsl_user_op
+def _blockscaled_release_gpu(loc=None, ip=None):
+    """Publish prerequisite routing writes before starting the finalizer."""
+    llvm.fence(llvm.AtomicOrdering.release, syncscope="device", loc=loc, ip=ip)
+
+
+@dsl_user_op
 def _blockscaled_tma_sfb(
     atom, destination, mbarrier, k_block, row_block, cta_group, loc=None, ip=None
 ):
@@ -207,6 +213,13 @@ class Sm100BlockScaledGroupedGemmKernel:
         weight_dtype,
         sf_dtype,
         sf_vec_size,
+        scatter_output,
+        per_token_scale_is_routed,
+        k_steps,
+        num_stages,
+        overlap_epilogue,
+        overlap_activation_accumulators,
+        pdl_signal_at,
         mma_tiler_mnk=(128, 128, 256),
         activation_type=None,
         top_k=1,
@@ -228,6 +241,15 @@ class Sm100BlockScaledGroupedGemmKernel:
             activation_dtype, weight_dtype, sf_dtype, sf_vec_size
         ):
             raise ValueError("Unsupported SM100 blockscaled operand/scale types")
+        if k_steps not in (4, 8) or num_stages < 1:
+            raise ValueError("Invalid block-scaled pipeline depth or K steps")
+        if pdl_signal_at not in ("startup", "producer_exit"):
+            raise ValueError("Unsupported PDL signal boundary")
+        if use_fused_finalize and not scatter_output:
+            raise ValueError("Fused finalization requires output scattering")
+        self.scatter_output = scatter_output
+        self.per_token_scale_is_routed = per_token_scale_is_routed
+        self.pdl_signal_at = pdl_signal_at
         self.enable_iket = enable_iket
         if enable_iket:
             # Compile with options="iket" to collect these ranges. Keep optional
@@ -249,20 +271,11 @@ class Sm100BlockScaledGroupedGemmKernel:
         # instructions in the same two-CTA group. Existing M256 keeps wide K.
         self.channel_tiles = 1
         if mma_tiler_mnk[0] == 512:
-            if activation_type is None or mma_tiler_mnk[1] != 128:
-                raise ValueError("Logical M512 is supported only for FC1 N128")
+            if mma_tiler_mnk[1] != 128:
+                raise ValueError("Logical M512 requires N128")
             self.channel_tiles = 2
         self.gather_k = 256 if both_fp4 else 128
-        # Eight K steps reduce mainloop barriers for small routed-token tiles
-        # and two-CTA FC1 N128. Logical M512 instead reuses B across channels.
-        if (mma_tiler_mnk[0] == 128 and mma_tiler_mnk[1] in (16, 32, 64)) or (
-            mma_tiler_mnk[0] == 256
-            and mma_tiler_mnk[1] == 128
-            and activation_type is not None
-        ):
-            self.k_steps = 8
-        else:
-            self.k_steps = 4
+        self.k_steps = k_steps
         if mma_tiler_mnk[2] != self.gather_k:
             raise ValueError("Unsupported public blockscaled K tile")
         self.tile_k = self.gather_k * self.k_steps // 4
@@ -322,8 +335,8 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.sfb_stage_bytes = self.sfb_row_blocks * self.sf_stage_bytes
         # Route tiles aligned to 128 rows expose complete canonical SF atoms.
         # Smaller route tiles can start inside an atom and retain cp.async.
-        # Both phases consume routed payload and canonical SF. Keep
-        # activation_type exclusively as the numerical phase.
+        # Both call configurations consume routed payload and canonical SF.
+        # Activation type controls only the numerical activation.
         self.tma_sfb = self.route_tile >= 128
         self.activation_type = activation_type
         self.top_k = top_k
@@ -334,41 +347,23 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.max_active_clusters = max_active_clusters
         if max_active_clusters < self.cta_group_size:
             raise ValueError("The launch needs at least one complete CTA group")
-        if self.cta_group_size == 2:
-            self.num_stages = 5
-        elif self.route_tile == 256:
-            self.num_stages = 3 if activation_type is not None else 4
-        elif self.route_tile == 128:
-            self.num_stages = 5 if activation_type is None else 4
-        elif self.route_tile in (16, 32, 64):
-            self.num_stages = 4
-        else:
-            raise ValueError("Unsupported routed-token tile")
-        if self.k_steps == 8 and self.cta_group_size == 2:
-            self.num_stages = 3
-        # Dedicated epilogue warps let small tiles load the next tile while
-        # storing results. Mixed-format FC1 keeps the smaller warp group.
-        self.overlap_epilogue = activation_type is None or (
-            not self.unpack_weights
-            and (self.route_tile < 128 or self.cta_group_size == 2)
-        )
+        self.num_stages = num_stages
+        self.overlap_epilogue = overlap_epilogue
         self.threads_per_cta = 288 if self.overlap_epilogue else 160
         self.overlap_acc = False
-        if self.channel_tiles == 2:
-            # SF32's smaller scale stages leave room for one more operand stage.
-            self.num_stages = 5 if self.sf_vec_size == 32 else 4
         self.acc_cols = self.allocated_n * self.channel_tiles
         self.acc_stages = 2 if self.overlap_epilogue and self.allocated_n <= 128 else 1
         if self.channel_tiles == 2:
             self.acc_stages = 1
         self.sf_cols = self.tile_k // self.sf_vec_size
         self.sfb_cols = self.sf_cols * self.sfb_row_blocks
-        self.overlap_fc1_acc = (
-            self.activation_type is not None
-            and self.overlap_epilogue
+        self.overlap_activation_accumulators = overlap_activation_accumulators
+        if self.overlap_activation_accumulators and not (
+            self.overlap_epilogue
             and self.acc_cols == 256
             and self.sf_cols * self.channel_tiles + self.sfb_cols <= 64
-        )
+        ):
+            raise ValueError("Unsupported overlapping activation accumulator geometry")
         self.tmem_cols = (
             1
             << (
@@ -387,6 +382,8 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.epilogue = Sm100BlockScaledMoeEpilogue(
             mma_tiler_mnk=(128, mma_tiler_mnk[1], mma_tiler_mnk[2]),
             activation_type=activation_type,
+            scatter_output=scatter_output,
+            per_token_scale_is_routed=per_token_scale_is_routed,
             swiglu_alpha=swiglu_alpha,
             swiglu_beta=swiglu_beta,
             swiglu_limit=swiglu_limit,
@@ -494,18 +491,19 @@ class Sm100BlockScaledGroupedGemmKernel:
     ):
         num_channels = cute.assume(num_channels, divby=128)
         reduction_size = cute.assume(reduction_size, divby=self.sf_block_k)
-        gated = self.activation_type is not None and self.activation_type != int(
-            ActivationType.Relu2
+        gated = self.activation_type in (
+            ActivationType.Swiglu.value,
+            ActivationType.GegluTanh.value,
         )
         out_channels = cute.assume(num_channels // (2 if gated else 1), divby=16)
         source_rows = num_routes
         # FC1 scales still belong to original tokens; the epilogue indexes them
         # through the unchanged route mapping. FC2 scales belong to route rows.
         per_token_scale_rows = (
-            num_tokens if self.activation_type is not None else num_routes
+            num_routes if self.per_token_scale_is_routed else num_tokens
         )
         output_rows = num_routes
-        if cutlass.const_expr(self.activation_type is None):
+        if cutlass.const_expr(self.scatter_output):
             output_rows = (
                 num_tokens if self.use_fused_finalize else num_tokens * self.top_k
             )
@@ -726,7 +724,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         )
         self.epilogue_scratch_floats = 128
         if cutlass.const_expr(
-            self.activation_type is None
+            self.scatter_output
             and not self.use_fused_finalize
             and self.output_dtype in (cutlass.BFloat16, cutlass.Float16)
             and not self.epilogue.generate_sfc
@@ -754,7 +752,7 @@ class Sm100BlockScaledGroupedGemmKernel:
             self.allocated_n == 256
             and self.overlap_epilogue
             and self.epilogue.bulk_tokens > 0
-        ) or self.overlap_fc1_acc
+        ) or self.overlap_activation_accumulators
         if cutlass.const_expr(
             self.overlap_acc and self.sf_cols * self.channel_tiles + self.sfb_cols > 64
         ):
@@ -763,7 +761,9 @@ class Sm100BlockScaledGroupedGemmKernel:
         # FC1 transpose works in 32-column slabs, so only ownership is rounded.
         sf_footprint = self.sf_cols * self.channel_tiles + self.sfb_cols
         self.protected_acc_cols = (
-            ((sf_footprint + 31) // 32) * 32 if self.overlap_fc1_acc else 64
+            ((sf_footprint + 31) // 32) * 32
+            if self.overlap_activation_accumulators
+            else 64
         )
         self.acc_window_stride = self.acc_cols - self.protected_acc_cols
         self.acc_reserved_cols = (
@@ -772,7 +772,7 @@ class Sm100BlockScaledGroupedGemmKernel:
             else self.acc_stages * self.acc_cols
         )
         self.epilogue.overlap_acc = self.overlap_acc
-        self.epilogue.overlap_fc1_steps = self.protected_acc_cols // 32
+        self.epilogue.overlap_activation_steps = self.protected_acc_cols // 32
 
         @cute.struct
         class SharedStorage:
@@ -995,6 +995,12 @@ class Sm100BlockScaledGroupedGemmKernel:
         tAsSFA = cute.filter_zeros(tAsSFA)
         tAgSFA = cute.filter_zeros(tAgSFA)
         griddepcontrol_wait()
+        if cutlass.const_expr(self.pdl_signal_at == "startup"):
+            if cutlass.const_expr(
+                self.enable_pdl and self.scatter_output and not self.use_fused_finalize
+            ):
+                _blockscaled_release_gpu()
+            griddepcontrol_launch_dependents()
         total_m_tiles = cute.ceil_div(weights.shape[0], self.mma_m * self.channel_tiles)
         total_tiles = num_tiles[0] * total_m_tiles
         k_tiles = cute.ceil_div(weights.shape[1], self.tile_k)
@@ -1231,11 +1237,22 @@ class Sm100BlockScaledGroupedGemmKernel:
                     if cutlass.const_expr(self.enable_iket):
                         _iket.range_pop()
                     consumer.advance()
-            # Each tail advances its state through all stages.
+            if warp == 0:
+                if cutlass.const_expr(self.pdl_signal_at == "producer_exit"):
+                    if cutlass.const_expr(
+                        self.enable_pdl
+                        and self.scatter_output
+                        and not self.use_fused_finalize
+                    ):
+                        # Republish prior routing writes before combine can
+                        # preload them. Queued MMA/epilogue work remains.
+                        _blockscaled_release_gpu()
+                    griddepcontrol_launch_dependents()
+                # Each drain mutates its state through every ring stage.
+                # Keep independent copies even when warp zero drains A first.
+                a_pipe.producer_tail(producer.clone())
             if cutlass.const_expr(not self.tma_sfb):
                 ab.producer_tail(producer.clone())
-            if warp == 0:
-                a_pipe.producer_tail(producer)
         elif warp < (8 if self.overlap_epilogue else 4):
             consumer = pipeline.make_pipeline_state(
                 pipeline.PipelineUserType.Consumer, self.acc_stages
@@ -1258,7 +1275,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                 norm = cutlass.Float32(1.0)
                 if cutlass.const_expr(norm_const is not None):
                     norm = norm_const[0]
-                if cutlass.const_expr(self.overlap_fc1_acc):
+                if cutlass.const_expr(self.overlap_activation_accumulators):
                     epi_accumulator = cute.make_tensor(
                         tmem_ptr
                         + cute.assume(
@@ -1528,7 +1545,6 @@ class Sm100BlockScaledGroupedGemmKernel:
             tmem.relinquish_alloc_permit()
             pipeline.NamedBarrier(barrier_id=2, num_threads=128).arrive_and_wait()
             tmem.free(tmem_ptr, num_columns=self.tmem_cols)
-        griddepcontrol_launch_dependents()
 
 
 class Sm100BlockScaledContiguousGroupedGemmFinalizeFusionKernel(
