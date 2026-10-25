@@ -139,6 +139,12 @@ def bench_cute_dsl_mxfp8(
             self.workspace_cache = {}
             self.tuning_config = policy.tuning_config
 
+        def __hash__(self):
+            # Keep bucket reuse stable across token points, like the native
+            # runner. TuningConfig contains fresh initializer closures whose
+            # identities must not become part of the runner cache key.
+            return hash(self.get_cache_key_extras(None))
+
         def get_cache_key_extras(self, tensors):
             return (
                 "benchmark_split_mxfp8_v1",
