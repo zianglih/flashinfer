@@ -667,6 +667,12 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
             f"mma_tiler/mma_inst_shape select the Rubin (SM107) finalize "
             f"kernel, but the device is SM{major}{minor}."
         )
+    if not is_rubin and minor not in (0, 3):
+        raise ValueError(
+            f"The Blackwell runtime-N kernel requires SM100 or SM103, but "
+            f"the device is SM{major}{minor}. Select the Rubin kernel with "
+            "mma_tiler/mma_inst_shape on SM107."
+        )
 
     # Validate configuration
     a_dtype_cutlass = get_cutlass_dtype(a_dtype)

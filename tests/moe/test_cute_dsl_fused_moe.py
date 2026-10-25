@@ -855,6 +855,54 @@ class TestKernelInputValidation:
                 **kwargs, c_dtype="bfloat16"
             )
 
+    @pytest.mark.parametrize("stage", ["gather", "finalize"])
+    @pytest.mark.parametrize("minor", [0, 3, 7])
+    @pytest.mark.parametrize("rubin_tactic", [False, True])
+    def test_tactic_matches_weight_layout_architecture(
+        self, monkeypatch, stage, minor, rubin_tactic
+    ):
+        if stage == "gather":
+            from flashinfer.fused_moe.cute_dsl import (
+                blockscaled_contiguous_gather_grouped_gemm_act_fusion as module,
+            )
+
+            op = module.blockscaled_contiguous_gather_grouped_gemm_act_fusion
+            kwargs = self._gather_kwargs()
+        elif stage == "finalize":
+            from flashinfer.fused_moe.cute_dsl import (
+                blockscaled_contiguous_grouped_gemm_finalize_fusion as module,
+            )
+
+            op = module.blockscaled_contiguous_grouped_gemm_finalize_fusion
+            kwargs = self._finalize_kwargs()
+            kwargs.update(a_dtype="float4_e2m1fn", b_dtype="float4_e2m1fn")
+        else:
+            raise ValueError(f"Unsupported test stage: {stage}")
+
+        if rubin_tactic:
+            kwargs.update(mma_tiler=(128, 128, 128), mma_inst_shape=(128, 128, 64))
+        monkeypatch.setattr(
+            module, "get_compute_capability", lambda device: (10, minor)
+        )
+
+        class ValidationPassed(Exception):
+            pass
+
+        def stop_before_kernel_setup(*args, **kwargs):
+            raise ValidationPassed
+
+        # Blackwell and Rubin prepare different gated row groups. Reject a
+        # mismatched explicit tactic before any compilation or output writes.
+        monkeypatch.setattr(module, "get_cutlass_dtype", stop_before_kernel_setup)
+        if rubin_tactic and minor != 7:
+            exception, match = ValueError, "select the Rubin"
+        elif not rubin_tactic and minor == 7:
+            exception, match = ValueError, "requires SM100 or SM103"
+        else:
+            exception, match = ValidationPassed, None
+        with pytest.raises(exception, match=match):
+            op(**kwargs)
+
 
 # =============================================================================
 # Test Class: Tactic-enumeration structural invariants (no GPU required)

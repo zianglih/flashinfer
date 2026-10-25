@@ -472,7 +472,7 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
 
     This kernel is designed for Mixture of Experts (MoE) GEMM1 layers where:
     - Input tokens are NOT pre-permuted (no need for moe_permute kernel!)
-    - The kernel gathers input tokens using token_id_mapping during cp.async load
+    - The kernel gathers input tokens directly using token_id_mapping
     - Gated activations use interleaved gate and up projection weights
     - The configured activation is fused into the GEMM epilogue
     - Optional block-scaled quantization of output
@@ -492,7 +492,7 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             shape (num_tiles,), int32. This is physical MMA N for Blackwell.
         token_id_mapping: Mapping from permuted row to token_id, shape (permuted_m,), int32
             token_id = token_idx * topk + k_idx. Invalid rows have -1.
-            Used by cp.async to gather from A tensor.
+            Used to gather from the original activation tensor.
         num_non_exiting_tiles: Number of valid tiles, shape (1,), int32
         out: Optional output tensor, shape (permuted_m, intermediate_size). Created if None.
              For FP4 output, shape is (permuted_m, intermediate_size//2) uint8.
@@ -677,6 +677,12 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
         raise ValueError(
             f"mma_tiler/mma_inst_shape select the Rubin (SM107) kernel, but "
             f"the device is SM{major}{minor}."
+        )
+    if not is_rubin and minor not in (0, 3):
+        raise ValueError(
+            f"The Blackwell runtime-N kernel requires SM100 or SM103, but "
+            f"the device is SM{major}{minor}. Select the Rubin kernel with "
+            "mma_tiler/mma_inst_shape on SM107."
         )
 
     localized_half_gemm = domain_id >= 0
