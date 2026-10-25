@@ -137,6 +137,8 @@ class CuteDslMoEInputsHelper:
             ]
 
         for j, num_tokens_j in enumerate(num_tokens_per_expert):
+            if num_tokens_j <= 0:
+                continue
             selection_order_j = selection_orders[j].tolist()
             # Prioritize tokens that risk not hitting top_k before all
             # experts are exhausted. (For typical MoE configs with
@@ -158,11 +160,6 @@ class CuteDslMoEInputsHelper:
                 selection_order_j = prioritized + [
                     i for i in selection_order_j if i not in p_set
                 ]
-            # When `num_tokens_per_expert[j] == 0`, the inner loop still
-            # enters and assigns one "ghost" token to expert `j` before
-            # the `num_tokens_j <= 0` break fires. Faithful port of trt-
-            # llm's behavior; tracked upstream at
-            # https://github.com/NVIDIA/TensorRT-LLM/issues/14146.
             for i in selection_order_j:
                 if num_selected_experts[i] < self.top_k:
                     slot = int(num_selected_experts[i])

@@ -834,10 +834,6 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
     if not is_rubin:
         mma_m, route_tile = mma_tiler_mn
         k_steps = 8 if mma_m == 128 and route_tile < 128 else 4
-        if mma_m == 256 or route_tile == 128:
-            num_stages = 5
-        else:
-            num_stages = 4
         _run_blockscaled_gemm(
             weight=b,
             weight_sf=b_scale,
@@ -873,7 +869,7 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
             scatter_output=True,
             per_token_scale_is_routed=True,
             k_steps=k_steps,
-            num_stages=num_stages,
+            num_stages=None,
             overlap_epilogue=True,
             overlap_activation_accumulators=False,
             pdl_signal_at="producer_exit",

@@ -1094,6 +1094,32 @@ class TestInputsHelperContract:
                 f"in CuteDslMoEInputsHelper.inputs_pre_hook."
             )
 
+    @pytest.mark.parametrize("num_tokens", [8, 16, 128])
+    @pytest.mark.parametrize("local_expert_offset", [0, 288])
+    def test_assignments_match_requested_expert_counts(
+        self, num_tokens, local_expert_offset
+    ):
+        from flashinfer.fused_moe.cute_dsl._inputs_helper import (
+            CuteDslMoEInputsHelper,
+        )
+
+        helper = CuteDslMoEInputsHelper(
+            num_experts=384,
+            top_k=6,
+            num_local_experts=96,
+            local_expert_offset=local_expert_offset,
+        )
+        for counts in (
+            [0] * 96,
+            helper.generate_num_tokens_per_expert(num_tokens, approx_max_load=True),
+        ):
+            selected = helper.generate_token_selected_experts(
+                num_tokens, counts, torch.device("cpu"), torch.int32
+            )
+            assigned = selected[selected >= 0] - local_expert_offset
+            assert torch.all((assigned >= 0) & (assigned < 96))
+            assert torch.bincount(assigned, minlength=96).tolist() == counts
+
     def test_hook_is_deterministic_across_helper_instances(self):
         """Two ``CuteDslMoEInputsHelper`` instances with the same seed
         must produce tensor-equal replacement ``token_selected_experts``

@@ -827,14 +827,6 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             )
             else 4
         )
-        if mma_m == 512:
-            num_stages = 5 if sf_vec_size == 32 else 4
-        elif mma_m == 256:
-            num_stages = 3 if k_steps == 8 else 5
-        elif route_tile == 256:
-            num_stages = 3
-        else:
-            num_stages = 4
         overlap_epilogue = b_dtype_cutlass.width >= a_dtype_cutlass.width and (
             route_tile < 128 or mma_m >= 256
         )
@@ -891,7 +883,7 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             scatter_output=False,
             per_token_scale_is_routed=False,
             k_steps=k_steps,
-            num_stages=num_stages,
+            num_stages=None,
             overlap_epilogue=overlap_epilogue,
             overlap_activation_accumulators=overlap_activation_accumulators,
             pdl_signal_at="startup",
