@@ -1,6 +1,6 @@
 """Host checks for the shared blockscaled MoE operand contract.
 
-All SM100 types use channel-major M128 and routed-token N16/32/64/128.
+All SM100 types use channel-major M128 and routed-token N16/32/64/128/256.
 These checks exercise the existing classmethod hooks without GPU work.
 """
 
@@ -84,9 +84,9 @@ def _gemm1_ok(
         (256, (128, 32), (1, 1), True),
         (384, (128, 64), (1, 1), True),
         (512, (128, 128), (1, 1), True),
-        # Previous channel-N tactics are not routed-token tactics.
+        (256, (128, 256), (1, 1), True),
+        # Previous channel-N192 tactics are not routed-token tactics.
         (384, (128, 192), (1, 1), False),
-        (256, (128, 256), (1, 1), False),
         # The current SM100 implementation uses one CTA per cluster.
         (128, (128, 128), (1, 2), False),
         (256, (256, 128), (2, 1), False),

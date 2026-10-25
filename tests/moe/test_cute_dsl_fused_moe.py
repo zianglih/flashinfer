@@ -303,7 +303,7 @@ def test_situ_changes_autotuner_cache_key(quant_mode: str):
 @cute_dsl_available
 @pytest.mark.parametrize("k", [64, 128, 192, 256, 384, 512])
 @pytest.mark.parametrize("num_tokens", [1, 17])
-@pytest.mark.parametrize("tile_n", [16, 32, 64, 128])
+@pytest.mark.parametrize("tile_n", [16, 32, 64, 128, 256])
 def test_gather_gemm_k_tail(k, num_tokens, tile_n):
     if not torch.cuda.is_available() or get_compute_capability(
         torch.device("cuda")
@@ -884,8 +884,8 @@ class TestTacticEnumeration:
         )
 
         tactics = get_w4a8_moe_valid_tactics()
-        assert len(tactics) == 4
-        assert {tile_size for tile_size, _, _ in tactics} == {16, 32, 64, 128}
+        assert len(tactics) == 5
+        assert {tile_size for tile_size, _, _ in tactics} == {16, 32, 64, 128, 256}
         for tile_size, gemm1, gemm2 in tactics:
             assert gemm1[0] == gemm2[0] == (128, tile_size)
             assert gemm1[1] == gemm2[1] == (1, 1)
@@ -895,7 +895,7 @@ class TestTacticEnumeration:
                 (128, ((128, 128), (1, 1), False), ((128, 96), (1, 1), False))
             )
 
-    @pytest.mark.parametrize("tile_size", [16, 32, 64, 128])
+    @pytest.mark.parametrize("tile_size", [16, 32, 64, 128, 256])
     def test_gemm1_tactics_match_tile_size(self, tile_size):
         """GEMM1 uses M128 with the routing tile on N and one CTA."""
         from flashinfer.fused_moe.cute_dsl.tuner import (
@@ -911,7 +911,7 @@ class TestTacticEnumeration:
             )
             assert cluster_shape_mn == (1, 1)
 
-    @pytest.mark.parametrize("tile_size", [16, 32, 64, 128])
+    @pytest.mark.parametrize("tile_size", [16, 32, 64, 128, 256])
     def test_gemm2_tactics_match_tile_size(self, tile_size):
         """GEMM2 consumes GEMM1's routed-token N layout with one CTA."""
         from flashinfer.fused_moe.cute_dsl.tuner import (
@@ -931,12 +931,13 @@ class TestTacticEnumeration:
         """Keep every supported routing capacity and pair compatible GEMMs."""
         from flashinfer.fused_moe.cute_dsl.tuner import ALL_BLACKWELL_MOE_TACTICS
 
-        assert len(ALL_BLACKWELL_MOE_TACTICS) == 4
+        assert len(ALL_BLACKWELL_MOE_TACTICS) == 5
         assert {tile_size for tile_size, _, _ in ALL_BLACKWELL_MOE_TACTICS} == {
             16,
             32,
             64,
             128,
+            256,
         }
         for tile_size, gemm1_tactic, gemm2_tactic in ALL_BLACKWELL_MOE_TACTICS:
             assert gemm1_tactic[0] == gemm2_tactic[0] == (128, tile_size)

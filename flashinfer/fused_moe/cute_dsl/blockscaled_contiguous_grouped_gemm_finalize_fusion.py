@@ -117,7 +117,7 @@ def _run_blockscaled_gemm(
             "The block-scaled runtime-N kernel requires cluster_shape_mn=(1, 1)"
         )
     mma_m, route_tile = mma_tiler_mn
-    if mma_m != 128 or route_tile not in (16, 32, 64, 128):
+    if mma_m != 128 or route_tile not in (16, 32, 64, 128, 256):
         raise ValueError(f"Unsupported block-scaled runtime-N tile {mma_tiler_mn}")
     if output.dtype == torch.uint8:
         output_dtype = cutlass.Float4E2M1FN
@@ -271,7 +271,7 @@ def create_finalize_fusion_tensors(
         permuted_m: Total routed-token capacity (sum of aligned group sizes)
         group_m_list: List of actual (unaligned) routed-token counts per expert
         mma_tiler_mn: Physical Blackwell MMA tile shape (M, N). Routed-token
-            counts are aligned to N, which must be 16, 32, 64, or 128.
+            counts are aligned to N, which must be 16, 32, 64, 128, or 256.
         final_scale_dtype: Data type for token final scales. Default: torch.float32
 
     Returns:
@@ -1030,7 +1030,7 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion_mxfp8_mxfp4(
     per byte. Both scale tensors use the MMA-compatible E8M0 block-32 layout.
     The finalized scatter-reduced output is BF16. Physical MMA M covers output
     channels, which must be divisible by 128; physical N covers routed tokens,
-    whose capacity must be padded to ``mma_tiler_mn[1]`` (16, 32, 64, or 128).
+    whose capacity must be padded to ``mma_tiler_mn[1]`` (16, 32, 64, 128, or 256).
     """
     warnings.warn(
         "blockscaled_contiguous_grouped_gemm_finalize_fusion_mxfp8_mxfp4 is "

@@ -77,7 +77,7 @@ def _seeded_activation(shapes, dtype, device):
 # =============================================================================
 
 
-BLACKWELL_ROUTE_TILES = (16, 32, 64, 128)
+BLACKWELL_ROUTE_TILES = (16, 32, 64, 128, 256)
 
 
 def get_blackwell_gemm1_valid_tactics(tile_size: int) -> List[Tuple]:
@@ -396,7 +396,7 @@ class CuteDslFusedMoERunner(TunableRunner):
     Tactic format follows TRT-LLM style:
         (tile_size, gemm1_tactic, gemm2_tactic)
     where:
-        - tile_size: routed-token capacity (16, 32, 64, or 128 on Blackwell)
+        - tile_size: routed-token capacity (16, 32, 64, 128, or 256 on Blackwell)
         - gemm1_tactic: (mma_tiler_mn, cluster_shape_mn, raster_along_m)
         - gemm2_tactic: (mma_tiler_mn, cluster_shape_mn, raster_along_m)
 

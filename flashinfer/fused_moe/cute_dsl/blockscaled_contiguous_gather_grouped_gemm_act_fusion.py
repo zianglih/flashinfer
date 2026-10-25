@@ -120,7 +120,7 @@ def create_gather_gemm_tensors(
         topk: Number of experts per token
         group_m_list: List of actual (unaligned) routed-token counts per expert
         mma_tiler_m: Routed-token tile capacity for alignment. For Blackwell,
-            pass physical MMA N (16, 32, 64, or 128). The parameter name is
+            pass physical MMA N (16, 32, 64, 128, or 256). The parameter name is
             retained for callers of the Rubin path, which places tokens on M.
 
     Returns:

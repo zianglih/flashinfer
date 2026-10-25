@@ -70,6 +70,7 @@ def bench_cute_dsl_mxfp8(
         raise ValueError(f"unsupported gated weight group: {gated_group_size}")
     cfg = benchmark.CFG
     device = inputs["hidden_bf16"].device
+    architecture = torch.cuda.get_device_capability(device)
     n = inputs["hidden_bf16"].shape[0]
     x, x_sf = mxfp8_quantize(
         inputs["hidden_bf16"],
@@ -147,7 +148,9 @@ def bench_cute_dsl_mxfp8(
 
         def get_cache_key_extras(self, tensors):
             return (
-                "benchmark_split_mxfp8_v1",
+                "benchmark_split_mxfp8_v2",
+                architecture,
+                tuple(all_tactics),
                 weight_format,
                 gated_group_size,
                 cfg.num_experts,

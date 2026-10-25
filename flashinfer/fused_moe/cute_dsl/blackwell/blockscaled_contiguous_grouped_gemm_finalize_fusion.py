@@ -187,7 +187,7 @@ class Sm100BlockScaledGroupedGemmKernel:
             raise ValueError(
                 "Blockscaled split MoE requires M128 and four native MMA K steps"
             )
-        if mma_tiler_mnk[1] not in (16, 32, 64, 128):
+        if mma_tiler_mnk[1] not in (16, 32, 64, 128, 256):
             raise ValueError("Unsupported routed-token tile")
         if both_fp4:
             if sf_vec_size == 16:
@@ -218,6 +218,8 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.physical_tiler = (128, self.allocated_n, self.tile_k)
         self.sf_block_k = 4 * sf_vec_size
         self.sf_stage_bytes = 128 * self.tile_k // sf_vec_size
+        self.sfb_row_blocks = max(1, self.allocated_n // 128)
+        self.sfb_stage_bytes = self.sfb_row_blocks * self.sf_stage_bytes
         self.activation_type = activation_type
         self.top_k = top_k
         self.use_per_token_scale = use_per_token_scale
@@ -225,11 +227,21 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.enable_pdl = enable_pdl
         self.output_dtype = output_dtype
         self.max_active_clusters = max_active_clusters
-        self.num_stages = 3
+        if self.route_tile == 256:
+            self.num_stages = 3 if activation_type is not None else 4
+        elif self.route_tile == 128:
+            self.num_stages = 4
+        elif self.route_tile in (16, 32, 64):
+            self.num_stages = 5
+        else:
+            raise ValueError("Unsupported routed-token tile")
         self.threads_per_cta = 160
         self.acc_cols = self.allocated_n
         self.sf_cols = 16
-        self.tmem_cols = 1 << (self.acc_cols + 2 * self.sf_cols - 1).bit_length()
+        self.sfb_cols = self.sf_cols * self.sfb_row_blocks
+        self.tmem_cols = (
+            1 << (self.acc_cols + self.sf_cols + self.sfb_cols - 1).bit_length()
+        )
         self.epilogue = Sm100BlockScaledMoeEpilogue(
             mma_tiler_mnk=mma_tiler_mnk,
             activation_type=activation_type,
@@ -299,7 +311,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         if cluster_shape_mn != (1, 1) or len(mma_tiler_mn) != 2:
             return False
         tile_m, tile_n = mma_tiler_mn
-        if tile_m != 128 or tile_n not in (16, 32, 64, 128):
+        if tile_m != 128 or tile_n not in (16, 32, 64, 128, 256):
             return False
         if m <= 0 or n <= 0 or k <= 0:
             return False
@@ -482,6 +494,30 @@ class Sm100BlockScaledGroupedGemmKernel:
             internal_type=self.a_storage_dtype if self.unpack_weights else None,
         )
 
+        weight_sf_tensor = cute.make_tensor(
+            weights_sf.iterator,
+            blockscaled_utils.tile_atom_to_shape_SF(weights.shape, self.sf_vec_size),
+        )
+        tma_atom_sfa, tma_weights_sf = cute.nvgpu.make_tiled_tma_atom_A(
+            cpasync.CopyBulkTensorTileG2SOp(tcgen05.CtaGroup.ONE),
+            weight_sf_tensor,
+            cute.slice_(self.sfa_layout, (None, None, None, 0)),
+            self.physical_tiler,
+            tiled_mma,
+            (1, 1, 1, 1),
+            internal_type=cutlass.Int16,
+        )
+        tma_atom_b, tma_activations = None, None
+        if cutlass.const_expr(self.activation_type is None):
+            tma_atom_b, tma_activations = cute.nvgpu.make_tiled_tma_atom_B(
+                cpasync.CopyBulkTensorTileG2SOp(tcgen05.CtaGroup.ONE),
+                activations,
+                cute.slice_(self.b_layout, (None, None, None, 0)),
+                self.physical_tiler,
+                tiled_mma,
+                (1, 1, 1, 1),
+            )
+
         @cute.struct
         class SharedStorage:
             a_barriers: cute.struct.MemRange[cutlass.Int64, self.num_stages * 2]
@@ -519,6 +555,10 @@ class Sm100BlockScaledGroupedGemmKernel:
             self.acc_layout,
             tma_atom_a,
             tma_weights,
+            tma_atom_b,
+            tma_activations,
+            tma_atom_sfa,
+            tma_weights_sf,
             activations,
             weights_sf,
             activations_sf,
@@ -571,6 +611,10 @@ class Sm100BlockScaledGroupedGemmKernel:
         acc_layout,
         tma_atom_a,
         weights,
+        tma_atom_b,
+        tma_activations,
+        tma_atom_sfa,
+        tma_weights_sf,
         activations,
         weights_sf,
         activations_sf,
@@ -595,7 +639,15 @@ class Sm100BlockScaledGroupedGemmKernel:
             num_stages=self.num_stages,
             producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread, 1),
             consumer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread),
-            tx_count=128 * self.tile_k * self.weight_dtype.width // 8,
+            tx_count=(
+                128 * self.tile_k * self.weight_dtype.width // 8
+                + self.sf_stage_bytes
+                + (
+                    self.allocated_n * self.tile_k * self.activation_dtype.width // 8
+                    if self.activation_type is None
+                    else 0
+                )
+            ),
         )
         ab = PipelineCpAsyncUmma.create(
             barrier_storage=storage.ab_barriers.data_ptr(),
@@ -640,14 +692,22 @@ class Sm100BlockScaledGroupedGemmKernel:
             cute.group_modes(sA, 0, 3),
             cute.group_modes(tCgA, 0, 3),
         )
+        gSFA = cute.local_tile(tma_weights_sf, (128, self.tile_k), (None, None, None))
+        tCgSFA = tiled_mma.get_slice(0).partition_A(gSFA)
+        tAsSFA, tAgSFA = cpasync.tma_partition(
+            tma_atom_sfa,
+            0,
+            cute.make_layout(1),
+            cute.group_modes(sSFA, 0, 3),
+            cute.group_modes(tCgSFA, 0, 3),
+        )
+        tAsSFA = cute.filter_zeros(tAsSFA)
+        tAgSFA = cute.filter_zeros(tAgSFA)
         griddepcontrol_wait()
         total_m_tiles = cute.ceil_div(weights.shape[0], 128)
         total_tiles = num_tiles[0] * total_m_tiles
         k_tiles = cute.ceil_div(weights.shape[1], self.tile_k)
         padded_k = cute.ceil_div(weights.shape[1], self.sf_block_k) * self.sf_block_k
-        weight_sf_expert_stride = (
-            cute.ceil_div(weights.shape[0], 128) * 128 * padded_k // self.sf_vec_size
-        )
 
         if warp < 4:
             copy_data = cute.make_copy_atom(
@@ -670,6 +730,61 @@ class Sm100BlockScaledGroupedGemmKernel:
                 route_start = route_idx * self.route_tile
                 expert = expert_idx[route_idx]
                 valid = cutlass.min(self.route_tile, mn_limit[route_idx] - route_start)
+                if cutlass.const_expr(self.activation_type is None):
+                    # N16 routing tiles can start halfway through a physical N32 tile.
+                    gB = cute.local_tile(
+                        cute.domain_offset((route_start, 0), tma_activations),
+                        (self.allocated_n, self.tile_k),
+                        (0, None),
+                    )
+                    tCgB = tiled_mma.get_slice(0).partition_B(gB)
+                    tBsB, tBgB = cpasync.tma_partition(
+                        tma_atom_b,
+                        0,
+                        cute.make_layout(1),
+                        cute.group_modes(sB, 0, 3),
+                        cute.group_modes(tCgB, 0, 3),
+                    )
+                values_per_copy = 128 // self.activation_dtype.width
+                column = (tidx % 8) * values_per_copy
+                source_offsets = cute.make_rmem_tensor(
+                    (self.allocated_n // 16,), cutlass.Int64
+                )
+                for row_block in cutlass.range_constexpr(self.allocated_n // 16):
+                    row = tidx // 8 + row_block * 16
+                    source_row = cutlass.Int32(0)
+                    if row < valid:
+                        if cutlass.const_expr(self.activation_type is not None):
+                            source_row = token_mapping[route_start + row] // self.top_k
+                        else:
+                            source_row = route_start + row
+                    source_offsets[row_block] = (
+                        source_row * activations.stride[0] + column
+                    )
+                # Give each lane a different SMEM bank for its four scale bytes.
+                sf_row = 8 * warp + 32 * ((tidx % 32) // 8) + tidx % 8
+                activation_sf_offsets = cute.make_rmem_tensor(
+                    (self.sfb_row_blocks,), cutlass.Int64
+                )
+                for row_block in cutlass.range_constexpr(self.sfb_row_blocks):
+                    row = sf_row + row_block * 128
+                    sf_source_row = cutlass.Int32(0)
+                    if row < valid:
+                        if cutlass.const_expr(self.activation_type is not None):
+                            sf_source_row = (
+                                token_mapping[route_start + row] // self.top_k
+                            )
+                        else:
+                            sf_source_row = route_start + row
+                    if cutlass.const_expr(self.activation_type is not None):
+                        activation_sf_offsets[row_block] = sf_source_row * (
+                            weights.shape[1] // self.sf_vec_size
+                        )
+                    else:
+                        activation_sf_offsets[row_block] = _blockscaled_sf_offset(
+                            sf_source_row, 0, padded_k, self.sf_vec_size
+                        )
+                shared_sf_offset = (sf_row % 32) * 16 + (sf_row // 32) * 4
                 for k_tile in cutlass.range(k_tiles):
                     ab.producer_acquire(producer)
                     if warp == 0:
@@ -681,89 +796,75 @@ class Sm100BlockScaledGroupedGemmKernel:
                             tAsA[(None, producer.index)],
                             tma_bar_ptr=a_pipe.producer_get_barrier(producer),
                         )
-                    values_per_copy = 128 // self.activation_dtype.width
-                    column = (tidx % 8) * values_per_copy
-                    for row_block in cutlass.range_constexpr(self.allocated_n // 16):
-                        row = tidx // 8 + row_block * 16
-                        source_row = cutlass.Int32(0)
-                        if row < valid:
+                        cute.copy(
+                            tma_atom_sfa,
+                            tAgSFA[(None, tile % total_m_tiles, k_tile, expert)],
+                            tAsSFA[(None, producer.index)],
+                            tma_bar_ptr=a_pipe.producer_get_barrier(producer),
+                        )
+                        if cutlass.const_expr(self.activation_type is None):
+                            cute.copy(
+                                tma_atom_b,
+                                tBgB[(None, k_tile)],
+                                tBsB[(None, producer.index)],
+                                tma_bar_ptr=a_pipe.producer_get_barrier(producer),
+                            )
+                    if cutlass.const_expr(self.activation_type is not None):
+                        for row_block in cutlass.range_constexpr(
+                            self.allocated_n // 16
+                        ):
+                            row = tidx // 8 + row_block * 16
+                            source_offset = cute.assume(
+                                source_offsets[row_block] + k_tile * self.tile_k,
+                                divby=values_per_copy,
+                            )
+                            source = activations.iterator + source_offset
+                            destination_offset = cute.assume(
+                                row * self.tile_k
+                                + producer.index * self.allocated_n * self.tile_k
+                                + column,
+                                divby=values_per_copy,
+                            )
+                            destination = sB_rows.iterator + destination_offset
+                            self._copy_tile(
+                                copy_data,
+                                source,
+                                destination,
+                                values_per_copy,
+                                (row < valid)
+                                & (k_tile * self.tile_k + column < weights.shape[1]),
+                            )
+                    # Four contiguous SF bytes form one prepared scale-factor block.
+                    for row_block in cutlass.range_constexpr(self.sfb_row_blocks):
+                        row = sf_row + row_block * 128
+                        for sf_block in cutlass.range_constexpr(
+                            self.tile_k // self.sf_block_k
+                        ):
+                            channel = k_tile * self.tile_k + sf_block * self.sf_block_k
+                            shared_offset = (
+                                producer.index * self.sfb_stage_bytes
+                                + row_block * self.sf_stage_bytes
+                                + sf_block * 512
+                                + shared_sf_offset
+                            )
                             if cutlass.const_expr(self.activation_type is not None):
-                                source_row = (
-                                    token_mapping[route_start + row] // self.top_k
+                                activation_offset = (
+                                    activation_sf_offsets[row_block]
+                                    + channel // self.sf_vec_size
                                 )
                             else:
-                                source_row = route_start + row
-                        source_offset = cute.assume(
-                            source_row * activations.stride[0]
-                            + k_tile * self.tile_k
-                            + column,
-                            divby=values_per_copy,
-                        )
-                        source = activations.iterator + source_offset
-                        destination_offset = cute.assume(
-                            row * self.tile_k
-                            + producer.index * self.allocated_n * self.tile_k
-                            + column,
-                            divby=values_per_copy,
-                        )
-                        destination = sB_rows.iterator + destination_offset
-                        self._copy_tile(
-                            copy_data,
-                            source,
-                            destination,
-                            values_per_copy,
-                            (row < valid)
-                            & (k_tile * self.tile_k + column < weights.shape[1]),
-                        )
-                    # Four contiguous SF bytes form one prepared scale-factor block.
-                    row = tidx
-                    source_row = cutlass.Int32(0)
-                    if row < valid:
-                        if cutlass.const_expr(self.activation_type is not None):
-                            source_row = token_mapping[route_start + row] // self.top_k
-                        else:
-                            source_row = route_start + row
-                    for sf_block in cutlass.range_constexpr(
-                        self.tile_k // self.sf_block_k
-                    ):
-                        channel = k_tile * self.tile_k + sf_block * self.sf_block_k
-                        shared_offset = (
-                            producer.index * self.sf_stage_bytes
-                            + sf_block * 512
-                            + (row % 32) * 16
-                            + (row // 32) * 4
-                        )
-                        weight_offset = (
-                            expert * weight_sf_expert_stride
-                            + _blockscaled_sf_offset(
-                                channel_start + row, channel, padded_k, self.sf_vec_size
+                                activation_offset = (
+                                    activation_sf_offsets[row_block]
+                                    + (channel // self.sf_block_k) * 512
+                                )
+                            self._copy_tile(
+                                copy_sf,
+                                activations_sf.iterator
+                                + cute.assume(activation_offset, divby=4),
+                                sSFB.iterator + cute.assume(shared_offset, divby=4),
+                                4,
+                                (row < valid) & (channel < weights.shape[1]),
                             )
-                        )
-                        self._copy_tile(
-                            copy_sf,
-                            weights_sf.iterator + cute.assume(weight_offset, divby=4),
-                            sSFA.iterator + cute.assume(shared_offset, divby=4),
-                            4,
-                            (channel_start + row < weights.shape[0])
-                            & (channel < weights.shape[1]),
-                        )
-                        if cutlass.const_expr(self.activation_type is not None):
-                            activation_offset = (
-                                source_row * (weights.shape[1] // self.sf_vec_size)
-                                + channel // self.sf_vec_size
-                            )
-                        else:
-                            activation_offset = _blockscaled_sf_offset(
-                                source_row, channel, padded_k, self.sf_vec_size
-                            )
-                        self._copy_tile(
-                            copy_sf,
-                            activations_sf.iterator
-                            + cute.assume(activation_offset, divby=4),
-                            sSFB.iterator + cute.assume(shared_offset, divby=4),
-                            4,
-                            (row < valid) & (channel < weights.shape[1]),
-                        )
                     ab.producer_commit(producer)
                     producer.advance()
                 acc_pipe.consumer_wait(consumer)
