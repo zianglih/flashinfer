@@ -1395,6 +1395,10 @@ class Sm100BlockScaledGroupedGemmKernel:
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("mma_sf_ready")
                         ab.consumer_wait(consumer)
+                        if cutlass.const_expr(self.cta_group_size == 1):
+                            # Non-bulk cp.async writes use the generic proxy;
+                            # publish the completed SF bytes before TCGEN reads.
+                            cute.arch.fence_proxy("async.shared", space="cta")
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
                     if cutlass.const_expr(
