@@ -238,7 +238,9 @@ def _run_blockscaled_gemm(
         )
         compiled = cute.compile(kernel.wrapper, *args, stream=stream)
         _blockscaled_kernel_cache[key] = compiled
-    compiled(*args, stream=stream)
+    # Channels, reduction, and experts already specialize the cache entry.
+    # Only routed capacity and token count remain runtime shape arguments.
+    compiled(*pointers, routes, num_tokens, stream=stream)
 
 
 @functools.cache

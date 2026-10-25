@@ -451,10 +451,10 @@ class Sm100BlockScaledGroupedGemmKernel:
         num_tiles_ptr: cute.Pointer,
         token_final_scales_ptr: Optional[cute.Pointer],
         per_token_scale_ptr: Optional[cute.Pointer],
-        num_channels: cutlass.Int64,
+        num_channels: cutlass.Constexpr,
         num_routes: cutlass.Int64,
-        reduction_size: cutlass.Int64,
-        num_experts: cutlass.Int64,
+        reduction_size: cutlass.Constexpr,
+        num_experts: cutlass.Constexpr,
         num_tokens: cutlass.Int64,
         stream: cuda.CUstream,
     ):
