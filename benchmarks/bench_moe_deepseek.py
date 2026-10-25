@@ -1647,14 +1647,13 @@ def run_benchmark(
             use_cuda_graph,
             use_cupti,
             routing_bias_scale,
-            use_per_token_activation=use_per_token_activation,
             include_activation_quant=include_activation_quant,
             use_fused_finalize=use_fused_finalize,
             quant_family=quant_family,
         )
         for row, histogram_record in rows_and_histograms:
             _print_row(row, histogram_record, quant_family=quant_family)
-        _print_footer(use_per_token_activation, quant_family=quant_family)
+        _print_footer(quant_family=quant_family)
 
     return results
 
@@ -1805,7 +1804,7 @@ def _benchmark_single(
     return results, histogram_record
 
 
-def _table_layout(quant_family, use_per_token_activation):
+def _table_layout(quant_family):
     if quant_family == "nvfp4":
         modes = ("W4A4", "W4A16")
         backends = [
@@ -1853,15 +1852,12 @@ def _print_header(
     use_cuda_graph,
     use_cupti,
     routing_bias_scale,
-    use_per_token_activation=False,
     include_activation_quant=False,
     use_fused_finalize=True,
     quant_family="nvfp4",
 ):
     """Print either precision family's comparison with the same table layout."""
-    modes, backends, baselines, winner_width, table_width = _table_layout(
-        quant_family, use_per_token_activation
-    )
+    modes, backends, baselines, winner_width, table_width = _table_layout(quant_family)
     print("\n" + "=" * table_width)
     if quant_family == "mxfp":
         print(
@@ -1955,9 +1951,7 @@ def _print_header(
 def _print_row(results, histogram_record, quant_family="nvfp4"):
     """Print latency, throughput and both CuTe modes' baseline speedups."""
     rows = {result.backend: result for result in results}
-    modes, backends, baselines, winner_width, _ = _table_layout(
-        quant_family, "CUTLASS" not in rows
-    )
+    modes, backends, baselines, winner_width, _ = _table_layout(quant_family)
     cute = [rows[key] for key, _, _ in backends[:2]]
     fields = [f"{cute[0].tokens:>6}"]
     for key, _, width in backends:
@@ -1990,9 +1984,9 @@ def _print_row(results, histogram_record, quant_family="nvfp4"):
     print(" | ".join(fields))
 
 
-def _print_footer(use_per_token_activation, quant_family="nvfp4"):
+def _print_footer(quant_family="nvfp4"):
     """Print benchmark footer."""
-    table_width = _table_layout(quant_family, use_per_token_activation)[-1]
+    table_width = _table_layout(quant_family)[-1]
     print("-" * table_width)
     print(
         "Speedup > 1.0 means that CuTe DSL mode is faster than the comparison backend"
