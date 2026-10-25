@@ -124,11 +124,11 @@ def _blockscaled_dynamic_mma(
     loc=None,
     ip=None,
 ):
-    """Issue four native blockscaled MMAs with a runtime token-width descriptor."""
+    """Issue native blockscaled MMAs with a runtime token-width descriptor."""
     i32 = ir.IntegerType.get_signless(32)
     i64 = ir.IntegerType.get_signless(64)
     n_bits = (((cutlass.Int32(valid_tokens) + 15) & -16) >> 3) << 17
-    for inner_k in range(4):
+    for inner_k in range(cute.size(a, mode=[2])):
         a_atom = a[(None, 0, inner_k)]
         b_atom = b[(None, 0, inner_k)]
         sfa_atom = sfa[(None, 0, inner_k)]
@@ -228,13 +228,26 @@ class Sm100BlockScaledGroupedGemmKernel:
             activation_dtype is cutlass.Float4E2M1FN
             and weight_dtype is cutlass.Float4E2M1FN
         )
-        self.tile_k = 256 if both_fp4 else 128
+        self.gather_k = 256 if both_fp4 else 128
+        # Eight native K steps reduce mainloop barriers for two-CTA FC1 N128.
+        if (
+            mma_tiler_mnk[0] == 256
+            and mma_tiler_mnk[1] == 128
+            and activation_type is not None
+        ):
+            self.k_steps = 8
+        else:
+            self.k_steps = 4
+        if mma_tiler_mnk[2] != self.gather_k:
+            raise ValueError("Unsupported public blockscaled K tile")
+        self.tile_k = self.gather_k * self.k_steps // 4
+        mma_tiler_mnk = (mma_tiler_mnk[0], mma_tiler_mnk[1], self.tile_k)
         self.unpack_weights = weight_dtype.width < activation_dtype.width
         self.a_storage_dtype = cutlass.Int8 if self.unpack_weights else weight_dtype
         self.mma_m = mma_tiler_mnk[0]
-        if self.mma_m not in (128, 256) or mma_tiler_mnk[2] != self.tile_k:
+        if self.mma_m not in (128, 256):
             raise ValueError(
-                "Blockscaled split MoE requires M128 or M256 and four native MMA K steps"
+                "Blockscaled split MoE requires M128 or M256 with a supported K tile"
             )
         if mma_tiler_mnk[1] not in (16, 32, 64, 128, 256):
             raise ValueError("Unsupported routed-token tile")
@@ -292,11 +305,13 @@ class Sm100BlockScaledGroupedGemmKernel:
         elif self.route_tile == 256:
             self.num_stages = 3 if activation_type is not None else 4
         elif self.route_tile == 128:
-            self.num_stages = 4
+            self.num_stages = 5 if activation_type is None else 4
         elif self.route_tile in (16, 32, 64):
             self.num_stages = 5
         else:
             raise ValueError("Unsupported routed-token tile")
+        if self.k_steps == 8:
+            self.num_stages = 3
         # Dedicated epilogue warps let small tiles load the next tile while
         # storing results. Mixed-format FC1 keeps the smaller warp group.
         self.overlap_epilogue = activation_type is None or (
@@ -306,7 +321,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.threads_per_cta = 288 if self.overlap_epilogue else 160
         self.acc_cols = self.allocated_n
         self.acc_stages = 2 if self.overlap_epilogue and self.allocated_n <= 128 else 1
-        self.sf_cols = 16
+        self.sf_cols = 16 * self.k_steps // 4
         self.sfb_cols = self.sf_cols * self.sfb_row_blocks
         self.tmem_cols = (
             1
@@ -601,7 +616,7 @@ class Sm100BlockScaledGroupedGemmKernel:
 
         else:
             # Keep both dimensions dynamic so token-count one still has a 2D
-            # descriptor. Every supported B mode has one 128-byte row per K tile.
+            # descriptor. Each Gather4 instruction moves a 128-byte row chunk.
             gather_source = cute.make_tensor(
                 activations.iterator,
                 cute.make_layout(
@@ -615,13 +630,13 @@ class Sm100BlockScaledGroupedGemmKernel:
             gather_layout = cute.make_composed_layout(
                 cute.make_swizzle(3, 4, 3),
                 0,
-                cute.make_layout((1, self.tile_k), stride=(self.tile_k, 1)),
+                cute.make_layout((1, self.gather_k), stride=(self.gather_k, 1)),
             )
             tma_atom_b, _ = cpasync.make_tiled_tma_atom(
                 cpasync.CopyBulkTensorTileG2SOp(),
                 gather_source,
                 gather_layout,
-                (1, self.tile_k),
+                (1, self.gather_k),
             )
 
         # Preserve the operand pipeline depth. Use the largest row-scatter
@@ -647,17 +662,17 @@ class Sm100BlockScaledGroupedGemmKernel:
             and not self.epilogue.generate_sfc
             and self.route_tile >= 128
         ):
-            if cutlass.const_expr(available >= 64 * 128 * 2 * 2):
+            if cutlass.const_expr(available >= 64 * 136 * 2 * 2):
                 self.epilogue.bulk_tokens = 64
                 self.epilogue.bulk_stages = 2
-            elif cutlass.const_expr(available >= 32 * 128 * 2):
+            elif cutlass.const_expr(available >= 32 * 136 * 2):
                 self.epilogue.bulk_tokens = 32
                 self.epilogue.bulk_stages = 1
             else:
                 self.epilogue.bulk_tokens = 0
                 self.epilogue.bulk_stages = 0
             self.epilogue_scratch_floats = max(
-                128, self.epilogue.bulk_tokens * 128 * self.epilogue.bulk_stages // 2
+                128, self.epilogue.bulk_tokens * 136 * self.epilogue.bulk_stages // 2
             )
         else:
             self.epilogue.bulk_tokens = 0
@@ -1051,27 +1066,30 @@ class Sm100BlockScaledGroupedGemmKernel:
                     if cutlass.const_expr(self.activation_type is not None):
                         # Four arrivals jointly register the transaction count;
                         # each warp can issue its Gather4 loads after its arrival.
-                        for run in cutlass.range_constexpr(self.b_rows // 32):
-                            row_base = (warp + 4 * run) * 8
-                            for half in cutlass.range_constexpr(2):
-                                offset = cute.assume(
-                                    (producer.index * self.b_rows + row_base + half * 4)
-                                    * self.tile_k,
-                                    divby=4 * self.tile_k,
-                                )
-                                first = run * 8 + half * 4
-                                with cute.arch.elect_one():
-                                    _blockscaled_tma_gather4(
-                                        tma_atom_b,
-                                        sB.iterator + offset,
-                                        a_pipe.producer_get_barrier(producer),
-                                        k_tile * self.tile_k,
-                                        gather_row_ids[first],
-                                        gather_row_ids[first + 1],
-                                        gather_row_ids[first + 2],
-                                        gather_row_ids[first + 3],
-                                        self.cta_group_size,
+                        for k_chunk in cutlass.range_constexpr(self.k_steps // 4):
+                            for run in cutlass.range_constexpr(self.b_rows // 32):
+                                row_base = (warp + 4 * run) * 8
+                                for half in cutlass.range_constexpr(2):
+                                    offset = cute.assume(
+                                        producer.index * self.b_rows * self.tile_k
+                                        + k_chunk * self.b_rows * self.gather_k
+                                        + (row_base + half * 4) * self.gather_k,
+                                        divby=4 * self.gather_k,
                                     )
+                                    first = run * 8 + half * 4
+                                    with cute.arch.elect_one():
+                                        _blockscaled_tma_gather4(
+                                            tma_atom_b,
+                                            sB.iterator + offset,
+                                            a_pipe.producer_get_barrier(producer),
+                                            k_tile * self.tile_k
+                                            + k_chunk * self.gather_k,
+                                            gather_row_ids[first],
+                                            gather_row_ids[first + 1],
+                                            gather_row_ids[first + 2],
+                                            gather_row_ids[first + 3],
+                                            self.cta_group_size,
+                                        )
                     ab.producer_commit(producer)
                     producer.advance()
                 if cutlass.const_expr(not self.overlap_epilogue):

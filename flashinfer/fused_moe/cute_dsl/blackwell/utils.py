@@ -93,6 +93,26 @@ from ..common.kernel_utils import (  # noqa: F401
 
 
 @dsl_user_op
+def _bulk_stmatrix4(destination, word0, word1, word2, word3, loc=None, ip=None):
+    """Transpose four 8x8 BF16/FP16 fragments into token-major shared rows."""
+    llvm.inline_asm(
+        None,
+        [
+            cutlass.Int32(destination.toint(loc=loc, ip=ip)).ir_value(loc=loc, ip=ip),
+            word0.ir_value(loc=loc, ip=ip),
+            word1.ir_value(loc=loc, ip=ip),
+            word2.ir_value(loc=loc, ip=ip),
+            word3.ir_value(loc=loc, ip=ip),
+        ],
+        "stmatrix.sync.aligned.m8n8.x4.trans.shared::cta.b16 [$0], {$1, $2, $3, $4};",
+        "r,r,r,r,r",
+        has_side_effects=True,
+        loc=loc,
+        ip=ip,
+    )
+
+
+@dsl_user_op
 def blk_copy(dst_gemm, src_smem, size, loc=None, ip=None):
     llvm.inline_asm(
         None,
@@ -636,11 +656,7 @@ class Sm100BlockScaledMoeEpilogue:
         groups = max(1, self.tile_n // 32)
         tokens = self.bulk_tokens
         stages = self.bulk_stages
-        if cutlass.const_expr(tokens == 64):
-            repeat = tcgen05.Repetition.x64
-        elif cutlass.const_expr(tokens == 32):
-            repeat = tcgen05.Repetition.x32
-        else:
+        if cutlass.const_expr(tokens not in (32, 64)):
             raise ValueError("Unsupported FC2 bulk token slab")
         uniform_scale = alpha
         if cutlass.const_expr(
@@ -664,9 +680,11 @@ class Sm100BlockScaledMoeEpilogue:
                 ):
                     scale = cutlass.Float32(self.final_scale_dtype(scale))
                 scales[group] = scale
+        # Eight padding elements rotate row banks for the transposed matrix
+        # store while keeping each 128-channel bulk-copy row 16-byte aligned.
         shared_all = cute.make_tensor(
             cute.recast_ptr(smem_scratch, dtype=self.output_dtype),
-            cute.make_layout((tokens, 128, stages), stride=(128, 1, tokens * 128)),
+            cute.make_layout((tokens, 128, stages), stride=(136, 1, tokens * 136)),
         )
         for group in cutlass.range_constexpr(self.tile_n // tokens):
             if group * tokens < valid_tokens:
@@ -679,29 +697,54 @@ class Sm100BlockScaledMoeEpilogue:
                     + group * tokens
                     + cute.assume(warp * (32 << 16), divby=32)
                 )
-                values = cute.make_rmem_tensor((tokens,), cutlass.Float32)
-                cute.copy(
-                    cute.make_copy_atom(tcgen05.Ld32x32bOp(repeat), cutlass.Float32),
-                    _blockscaled_tmem_view(ptr, 32, tokens),
-                    _blockscaled_rmem_view(values, tokens),
-                )
-                if cutlass.const_expr(self.use_per_token_scale):
-                    for i in cutlass.range_constexpr(tokens):
-                        scale = cute.arch.shuffle_sync(
-                            scales[group * (tokens // 32) + i // 32], i % 32
-                        )
-                        shared[i, warp * 32 + lane] = (values[i] * scale).to(
-                            self.output_dtype
-                        )
-                else:
-                    for i in cutlass.range_constexpr(0, tokens, 2):
-                        values[i], values[i + 1] = cute.arch.mul_packed_f32x2(
-                            (values[i], values[i + 1]), (uniform_scale, uniform_scale)
-                        )
-                    converted = cute.make_rmem_tensor((tokens,), self.output_dtype)
+                # Ld16x256 assigns lane//4 to one of 8 channels and lane%4
+                # to a pair of tokens. Alternate register pairs select the
+                # second 8 channels; subsequent quartets select 8 more tokens.
+                # After conversion this is stmatrix.trans's native fragment.
+                packed = cute.make_rmem_tensor((tokens,), self.output_dtype)
+                for half in cutlass.range_constexpr(2):
+                    values = cute.make_rmem_tensor((tokens // 2,), cutlass.Float32)
+                    cute.copy(
+                        cute.make_copy_atom(
+                            tcgen05.Ld16x256bOp(tcgen05.Repetition(tokens // 8)),
+                            cutlass.Float32,
+                        ),
+                        _blockscaled_tmem_view(ptr + (half * 16 << 16), 16, tokens),
+                        _blockscaled_rmem_view(values, tokens // 2),
+                    )
+                    if cutlass.const_expr(self.use_per_token_scale):
+                        for i in cutlass.range_constexpr(tokens // 2):
+                            token = (i // 4) * 8 + (lane % 4) * 2 + i % 2
+                            scale = cute.arch.shuffle_sync(
+                                scales[group * (tokens // 32) + i // 16], token % 32
+                            )
+                            values[i] = values[i] * scale
+                    else:
+                        for i in cutlass.range_constexpr(0, tokens // 2, 2):
+                            values[i], values[i + 1] = cute.arch.mul_packed_f32x2(
+                                (values[i], values[i + 1]),
+                                (uniform_scale, uniform_scale),
+                            )
+                    converted = cute.make_tensor(
+                        packed.iterator + half * (tokens // 2),
+                        cute.make_layout((tokens // 2,)),
+                    )
                     converted.store(values.load().to(self.output_dtype))
-                    for i in cutlass.range_constexpr(tokens):
-                        shared[i, warp * 32 + lane] = converted[i]
+                words = cute.recast_tensor(packed, cutlass.Uint32)
+                for token8 in cutlass.range_constexpr(tokens // 8):
+                    address = (
+                        shared.iterator
+                        + (token8 * 8 + lane % 8) * 136
+                        + warp * 32
+                        + (lane // 8) * 8
+                    )
+                    _bulk_stmatrix4(
+                        address,
+                        words[token8 * 2],
+                        words[token8 * 2 + 1],
+                        words[tokens // 4 + token8 * 2],
+                        words[tokens // 4 + token8 * 2 + 1],
+                    )
                 cute.arch.fence_proxy("async.shared", space="cta")
                 self.transpose_barrier.arrive_and_wait()
                 # Distribute row transactions across all four epilogue warps.
