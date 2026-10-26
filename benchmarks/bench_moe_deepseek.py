@@ -104,7 +104,7 @@ class DeepSeekConfig:
     name: str = "DeepSeek-V3"
     routing: str = "deepseek_v3"
     swiglu_limit: float = DEFAULT_SWIGLU_LIMIT
-    default_ep: int = 1
+    default_ep: int = 8
 
 
 MODEL_CONFIGS = {
@@ -1313,7 +1313,7 @@ def run_benchmark(
     token_counts,
     warmup=10,
     iters=100,
-    ep_config=1,
+    ep_config=None,
     tp_config=1,
     do_autotune=True,
     verbose=True,
@@ -1352,7 +1352,7 @@ def run_benchmark(
         token_counts: List of token counts to benchmark
         warmup: Warmup iterations
         iters: Benchmark iterations
-        ep_config: Expert Parallelism config (1, 8, or 16)
+        ep_config: Expert parallelism degree; defaults to the selected model's EP
         tp_config: Tensor Parallelism degree used to reduce expert intermediate size
         do_autotune: Whether to autotune during benchmarking
         verbose: Print results to stdout
@@ -1373,6 +1373,8 @@ def run_benchmark(
     Returns:
         List of BenchResult objects
     """
+    if ep_config is None:
+        ep_config = CFG.default_ep
     if tp_config < 1 or BASE_INTERMEDIATE_SIZE % tp_config != 0:
         raise ValueError(
             f"tp_config must be a positive divisor of {BASE_INTERMEDIATE_SIZE}"
@@ -1875,7 +1877,7 @@ def main():
         type=int,
         default=None,
         choices=[1, 2, 4, 8, 16],
-        help="Expert parallelism simulation (default: V3 EP1, V4.1-Flash EP4).",
+        help="Expert parallelism simulation (default: V3 EP8, V4.1-Flash EP4).",
     )
     parser.add_argument(
         "--tp",
