@@ -24,13 +24,29 @@ _kernel_cache: dict[tuple, Any] = {}
 
 @dsl_user_op
 def _fma_rn(a, b, c, *, loc=None, ip=None):
-    # Match the native finalizer's --use_fast_math FP32 FMA, including FTZ.
     return cutlass.Float32(
         llvm.inline_asm(
             T.f32(),
             [cutlass.Float32(x).ir_value(loc=loc, ip=ip) for x in (a, b, c)],
-            "fma.rn.ftz.f32 $0, $1, $2, $3;",
+            "fma.rn.f32 $0, $1, $2, $3;",
             "=f,f,f,f",
+            has_side_effects=False,
+            asm_dialect=llvm.AsmDialect.AD_ATT,
+            loc=loc,
+            ip=ip,
+        )
+    )
+
+
+@dsl_user_op
+def _mul_rn(a, b, loc=None, ip=None):
+    # A separate first multiply preserves signed zero, as in MegaMoE combine.
+    return cutlass.Float32(
+        llvm.inline_asm(
+            T.f32(),
+            [cutlass.Float32(x).ir_value(loc=loc, ip=ip) for x in (a, b)],
+            "mul.rn.f32 $0, $1, $2;",
+            "=f,f,f",
             has_side_effects=False,
             asm_dialect=llvm.AsmDialect.AD_ATT,
             loc=loc,
@@ -124,7 +140,7 @@ class _MoeFinalizeKernel:
         if cutlass.const_expr(self.enable_pdl):
             cute.arch.griddepcontrol_wait()
 
-        # Preserve native moeUnpermuteKernel's top-k order and fast-math FMA.
+        # Match MegaMoE's first-slot multiply and subsequent ordered FP32 FMA.
         # Mask before loading: nonlocal routes have no initialized expert row.
         for slot in cutlass.range_constexpr(self.top_k):
             row = cutlass.Int64(rows[slot])
@@ -139,11 +155,16 @@ class _MoeFinalizeKernel:
                         offset = row * self.hidden_size + vector_column
                         cute.copy(copy_atom, _bf16_vector(input_ptr + offset), values)
                         for element in cutlass.range_constexpr(8):
-                            accum[element, vector] = _fma_rn(
-                                cutlass.Float32(values[element]),
-                                weights[slot],
-                                accum[element, vector],
-                            )
+                            if cutlass.const_expr(slot == 0):
+                                accum[element, vector] = _mul_rn(
+                                    cutlass.Float32(values[element]), weights[slot]
+                                )
+                            else:
+                                accum[element, vector] = _fma_rn(
+                                    cutlass.Float32(values[element]),
+                                    weights[slot],
+                                    accum[element, vector],
+                                )
         for vector in cutlass.range_constexpr(self.vectors_per_thread):
             vector_column = column + vector * self.threads * 8
             if vector_column < self.hidden_size:
@@ -168,13 +189,15 @@ def moe_unpermute(
     """Reduce BF16 expert rows in ascending top-k order using FP32 FMA.
 
     Routing metadata must be ready before FC2 signals this dependent grid.
-    Both FC2 paths wait for input dependencies before signaling this kernel.
-    W4A4's wait also precedes routing reads; W4A16's earlier permute waits
-    for sort before signaling FC1. Metadata reads precede this kernel's
-    PDL wait; all expert-output reads follow it.
+    Blockscaled FC2 may read routing before its dependency wait, using the
+    prior grid's publication; it republishes routing before signaling combine.
+    W4A16's earlier permute waits for sort before signaling FC1. Metadata reads
+    precede this kernel's PDL wait; all expert-output reads follow it.
     Negative mapping entries skip their row entirely. An all-masked token
-    writes exactly zero. FP32 FMA flushes subnormals to zero to match native
-    ``moeUnpermuteKernel`` compiled with ``--use_fast_math``.
+    writes exactly positive zero. Like MegaMoE's deterministic combine, slot
+    zero uses an FP32 multiply and later slots use FP32 FMA, with round-to-nearest
+    and subnormal preservation. This rounding contract applies to both W4A4
+    and W4A16 callers.
 
     With ``input_is_expanded=True``, input rows are ``token * top_k + slot``;
     otherwise each nonnegative mapping value is the permuted input row.
@@ -218,6 +241,14 @@ def moe_unpermute(
     # over more columns once there are enough token rows to fill the GPU.
     threads = 32 if num_tokens <= 8 else 128
     vectors_per_thread = 4 if num_tokens > 1024 else 1
+    if num_tokens > 1024 and input_is_expanded:
+        if hidden_size % (threads * 8 * vectors_per_thread):
+            # Avoid a partially occupied final CTA while bounding the
+            # larger tile to seven vectors per thread.
+            for candidate_vectors in (7, 6, 5):
+                if hidden_size % (threads * 8 * candidate_vectors) == 0:
+                    vectors_per_thread = candidate_vectors
+                    break
     cache_key = (
         output.device.index,
         hidden_size,
