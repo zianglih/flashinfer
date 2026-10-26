@@ -78,7 +78,7 @@ _iket = None
 
 @dsl_user_op
 def _blockscaled_release_gpu(loc=None, ip=None):
-    """Publish prerequisite routing writes before starting the finalizer."""
+    """Publish completed writes before triggering the dependent grid."""
     llvm.fence(llvm.AtomicOrdering.release, syncscope="device", loc=loc, ip=ip)
 
 
@@ -237,6 +237,8 @@ class Sm100BlockScaledGroupedGemmKernel:
         final_scale_dtype=cutlass.Float32,
         max_active_clusters=1,
         generate_sfc=False,
+        prefetch_weights_before_wait=False,
+        publish_routing_before_signal=False,
         enable_iket=False,
     ):
         if not self.is_valid_dtypes(
@@ -256,6 +258,8 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.scatter_output = scatter_output
         self.per_token_scale_is_routed = per_token_scale_is_routed
         self.pdl_signal_at = pdl_signal_at
+        self.prefetch_weights_before_wait = prefetch_weights_before_wait
+        self.publish_routing_before_signal = publish_routing_before_signal
         self.enable_iket = enable_iket
         if enable_iket:
             # Compile with options="iket" to collect these ranges. Keep optional
@@ -327,6 +331,17 @@ class Sm100BlockScaledGroupedGemmKernel:
             )
         if sf_dtype is cutlass.Float8E8M0FNU:
             self.descriptor |= 1 << 23
+        if publish_routing_before_signal and pdl_signal_at != "startup":
+            raise ValueError("Routing publication requires a startup signal")
+        if prefetch_weights_before_wait and (
+            not scatter_output
+            or use_fused_finalize
+            or use_clc_scheduler
+            or self.cta_group_size != 1
+        ):
+            raise ValueError(
+                "Weight startup prefetch requires static one-CTA nonfused scattering"
+            )
         self.route_tile = mma_tiler_mnk[1]
         # The epilogue transposes 32-column chunks even for a 16-row tile.
         self.allocated_n = max(32, self.route_tile)
@@ -979,6 +994,71 @@ class Sm100BlockScaledGroupedGemmKernel:
                 tile = cutlass.Int32(-1)
         return tile, expert, valid, state
 
+    @cute.jit
+    def load_weight_stage(
+        self,
+        a_pipe,
+        producer,
+        tma_atom_a,
+        tAgA,
+        tAsA,
+        tma_atom_sfa,
+        tAgSFA,
+        tAsSFA,
+        tile,
+        total_m_tiles,
+        k_tile,
+        expert,
+    ):
+        # TMA copy lowering elects internally; keep the whole warp active.
+        if cutlass.const_expr(self.enable_iket):
+            _iket.range_push("producer_tma_empty")
+        a_pipe.producer_acquire(producer)
+        if cutlass.const_expr(self.enable_iket):
+            _iket.range_pop()
+        if cutlass.const_expr(self.enable_iket):
+            _iket.range_push("producer_weight_tma")
+        for channel_tile in cutlass.range_constexpr(self.channel_tiles):
+            cute.copy(
+                tma_atom_a,
+                tAgA[
+                    (
+                        None,
+                        (tile % total_m_tiles) * self.channel_tiles + channel_tile,
+                        k_tile,
+                        expert,
+                    )
+                ],
+                tAsA[
+                    (
+                        None,
+                        producer.index * self.channel_tiles + channel_tile,
+                    )
+                ],
+                tma_bar_ptr=a_pipe.producer_get_barrier(producer),
+                cache_policy=cutlass.Int64(self.weight_cache_policy),
+            )
+            cute.copy(
+                tma_atom_sfa,
+                tAgSFA[
+                    (
+                        None,
+                        (tile % total_m_tiles) * self.channel_tiles + channel_tile,
+                        k_tile,
+                        expert,
+                    )
+                ],
+                tAsSFA[
+                    (
+                        None,
+                        producer.index * self.channel_tiles + channel_tile,
+                    )
+                ],
+                tma_bar_ptr=a_pipe.producer_get_barrier(producer),
+            )
+        if cutlass.const_expr(self.enable_iket):
+            _iket.range_pop()
+
     @cute.kernel
     def kernel(
         self,
@@ -1118,14 +1198,59 @@ class Sm100BlockScaledGroupedGemmKernel:
         )
         tAsSFA = cute.filter_zeros(tAsSFA)
         tAgSFA = cute.filter_zeros(tAgSFA)
-        griddepcontrol_wait()
-        if cutlass.const_expr(self.pdl_signal_at == "startup"):
-            if cutlass.const_expr(
-                self.enable_pdl and self.scatter_output and not self.use_fused_finalize
-            ):
-                _blockscaled_release_gpu()
-            griddepcontrol_launch_dependents()
         total_m_tiles = cute.ceil_div(weights.shape[0], self.mma_m * self.channel_tiles)
+        k_tiles = cute.ceil_div(weights.shape[1], self.tile_k)
+        startup_stages = min(self.num_stages, k_tiles)
+        if cutlass.const_expr(self.prefetch_weights_before_wait):
+            # The caller must bind this to a prerequisite startup release+signal
+            # in the same memory domain. B/SFB remain protected by the wait.
+            if warp == 0:
+                if block < num_tiles[0] * total_m_tiles:
+                    first_expert = expert_idx[block // total_m_tiles]
+                    first_producer = pipeline.make_pipeline_state(
+                        pipeline.PipelineUserType.Producer, self.num_stages
+                    )
+                    if cutlass.const_expr(self.enable_iket):
+                        _iket.range_push("startup_weight_prefetch")
+                    for k_tile in cutlass.range_constexpr(startup_stages):
+                        self.load_weight_stage(
+                            a_pipe,
+                            first_producer,
+                            tma_atom_a,
+                            tAgA,
+                            tAsA,
+                            tma_atom_sfa,
+                            tAgSFA,
+                            tAsSFA,
+                            block,
+                            total_m_tiles,
+                            k_tile,
+                            first_expert,
+                        )
+                        first_producer.advance()
+                    if cutlass.const_expr(self.enable_iket):
+                        _iket.range_pop()
+        if cutlass.const_expr(self.enable_iket):
+            _iket.range_push("startup_dependency_wait")
+        griddepcontrol_wait()
+        if cutlass.const_expr(self.enable_iket):
+            _iket.range_pop()
+        if cutlass.const_expr(self.pdl_signal_at == "startup"):
+            if cutlass.const_expr(self.publish_routing_before_signal):
+                # The first triggering warp must publish the completed routing
+                # ancestors; other warps must not trigger before that release.
+                if warp == 0:
+                    if cutlass.const_expr(self.enable_pdl):
+                        _blockscaled_release_gpu()
+                    griddepcontrol_launch_dependents()
+            else:
+                if cutlass.const_expr(
+                    self.enable_pdl
+                    and self.scatter_output
+                    and not self.use_fused_finalize
+                ):
+                    _blockscaled_release_gpu()
+                griddepcontrol_launch_dependents()
         num_routed_tiles = num_tiles[0]
         total_tiles = num_routed_tiles * total_m_tiles
         sInfo = None
@@ -1133,7 +1258,6 @@ class Sm100BlockScaledGroupedGemmKernel:
             sInfo = storage.tile_info.get_tensor(
                 cute.make_layout((4, self.num_tile_info_stages), stride=(1, 4))
             )
-        k_tiles = cute.ceil_div(weights.shape[1], self.tile_k)
         padded_k = cute.ceil_div(weights.shape[1], self.sf_block_k) * self.sf_block_k
 
         if warp < 4:
@@ -1215,58 +1339,39 @@ class Sm100BlockScaledGroupedGemmKernel:
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
                     if warp == 0:
-                        # TMA copy lowering elects internally; keep the whole warp active.
-                        if cutlass.const_expr(self.enable_iket):
-                            _iket.range_push("producer_tma_empty")
-                        a_pipe.producer_acquire(producer)
-                        if cutlass.const_expr(self.enable_iket):
-                            _iket.range_pop()
-                        if cutlass.const_expr(self.enable_iket):
-                            _iket.range_push("producer_weight_tma")
-                        for channel_tile in cutlass.range_constexpr(self.channel_tiles):
-                            cute.copy(
+                        if cutlass.const_expr(self.prefetch_weights_before_wait):
+                            # Startup acquired the first weight stages. B/SFB
+                            # complete their existing expected-byte counts below.
+                            if tile != block or k_tile >= startup_stages:
+                                self.load_weight_stage(
+                                    a_pipe,
+                                    producer,
+                                    tma_atom_a,
+                                    tAgA,
+                                    tAsA,
+                                    tma_atom_sfa,
+                                    tAgSFA,
+                                    tAsSFA,
+                                    tile,
+                                    total_m_tiles,
+                                    k_tile,
+                                    expert,
+                                )
+                        else:
+                            self.load_weight_stage(
+                                a_pipe,
+                                producer,
                                 tma_atom_a,
-                                tAgA[
-                                    (
-                                        None,
-                                        (tile % total_m_tiles) * self.channel_tiles
-                                        + channel_tile,
-                                        k_tile,
-                                        expert,
-                                    )
-                                ],
-                                tAsA[
-                                    (
-                                        None,
-                                        producer.index * self.channel_tiles
-                                        + channel_tile,
-                                    )
-                                ],
-                                tma_bar_ptr=a_pipe.producer_get_barrier(producer),
-                                cache_policy=cutlass.Int64(self.weight_cache_policy),
-                            )
-                            cute.copy(
+                                tAgA,
+                                tAsA,
                                 tma_atom_sfa,
-                                tAgSFA[
-                                    (
-                                        None,
-                                        (tile % total_m_tiles) * self.channel_tiles
-                                        + channel_tile,
-                                        k_tile,
-                                        expert,
-                                    )
-                                ],
-                                tAsSFA[
-                                    (
-                                        None,
-                                        producer.index * self.channel_tiles
-                                        + channel_tile,
-                                    )
-                                ],
-                                tma_bar_ptr=a_pipe.producer_get_barrier(producer),
+                                tAgSFA,
+                                tAsSFA,
+                                tile,
+                                total_m_tiles,
+                                k_tile,
+                                expert,
                             )
-                        if cutlass.const_expr(self.enable_iket):
-                            _iket.range_pop()
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("producer_activation_tma")
                         cute.copy(

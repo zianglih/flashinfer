@@ -123,6 +123,8 @@ def _run_blockscaled_gemm(
     use_clc_scheduler,
     num_tile_info_stages,
     sm_count=None,
+    prefetch_weights_before_wait=False,
+    publish_routing_before_signal=False,
 ):
     mma_m, route_tile = mma_tiler_mn
     if mma_m == 128:
@@ -245,6 +247,8 @@ def _run_blockscaled_gemm(
         pdl_signal_at,
         use_clc_scheduler,
         num_tile_info_stages,
+        prefetch_weights_before_wait,
+        publish_routing_before_signal,
         activation_type,
         swiglu_alpha,
         swiglu_beta,
@@ -280,6 +284,8 @@ def _run_blockscaled_gemm(
             pdl_signal_at=pdl_signal_at,
             use_clc_scheduler=use_clc_scheduler,
             num_tile_info_stages=num_tile_info_stages,
+            prefetch_weights_before_wait=prefetch_weights_before_wait,
+            publish_routing_before_signal=publish_routing_before_signal,
             generate_sfc=output_sf is not None,
             output_dtype=output_dtype,
             final_scale_dtype=scale_dtype,
@@ -600,6 +606,7 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
     mma_inst_shape: Optional[Tuple[int, int, int]] = None,
     enable_pdl: bool = True,
     use_fused_finalize: bool = True,
+    prefetch_weights_before_wait: bool = False,
 ) -> torch.Tensor:
     """Blockscaled contiguous grouped GEMM for MoE GEMM2 workloads.
 
@@ -643,6 +650,11 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
              a caller-provided output with twice the shard's output width.
         use_fused_finalize: Use atomic fused finalize; otherwise write expanded
              rows for deterministic reduction. Default: True.
+        prefetch_weights_before_wait: Prefetch weights before the dependency wait.
+             The preceding producer must publish completed routing metadata with
+             a GPU release before its PDL signal in the same memory synchronization
+             domain. Supported only by static one-CTA Blackwell unfused scatter;
+             defaults to False for arbitrary standalone producers.
 
     Returns:
         out: Output tensor with dtype out_dtype. The shape is ``(seq_len, n)``
@@ -726,6 +738,15 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
     # Check compute capability
     major, minor = get_compute_capability(a.device)
     is_rubin = mma_tiler is not None and mma_inst_shape is not None
+    if prefetch_weights_before_wait and (
+        is_rubin
+        or use_fused_finalize
+        or mma_tiler_mn[0] != 128
+        or cluster_shape_mn != (1, 1)
+    ):
+        raise ValueError(
+            "Weight startup prefetch requires static one-CTA Blackwell unfused scatter"
+        )
     if major != 10:
         raise ValueError(
             f"Blockscaled contiguous grouped GEMM with finalize fusion requires SM10x family. "
@@ -892,6 +913,7 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
             overlap_epilogue=True,
             overlap_activation_accumulators=False,
             pdl_signal_at="producer_exit",
+            prefetch_weights_before_wait=prefetch_weights_before_wait,
             use_clc_scheduler=False,
             num_tile_info_stages=1,
             sm_count=sm_count,

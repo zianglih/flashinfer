@@ -866,6 +866,7 @@ def bench_cute_dsl(
                     enable_pdl=True,
                     **sort,
                 )
+                prefetch_weights_before_wait = gemm2[0][0] == 128 and gemm2[1] == (1, 1)
                 common = dict(
                     tile_idx_to_expert_idx=expert_idx,
                     tile_idx_to_mn_limit=limits,
@@ -893,6 +894,7 @@ def bench_cute_dsl(
                     cluster_shape_mn=gemm1[1],
                     raster_along_m=gemm1[2],
                     swiglu_limit=CFG.swiglu_limit,
+                    publish_routing_before_signal=prefetch_weights_before_wait,
                     **common,
                 )
                 fc2(
@@ -909,6 +911,7 @@ def bench_cute_dsl(
                     mma_tiler_mn=gemm2[0],
                     cluster_shape_mn=gemm2[1],
                     raster_along_m=gemm2[2],
+                    prefetch_weights_before_wait=prefetch_weights_before_wait,
                     **common,
                 )
                 moe_unpermute(

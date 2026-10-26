@@ -464,6 +464,7 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
     situ_beta: Optional[float] = None,
     situ_linear_beta: Optional[float] = None,
     gated: bool = True,
+    publish_routing_before_signal: bool = False,
 ) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
     """Blockscaled contiguous gather grouped GEMM with fused FC1 activation.
 
@@ -531,6 +532,10 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
         raster_along_m: If True, raster tiles along M dimension. Default: False
         sm_count: Number of SMs to use. Default: max available.
         enable_pdl: Enable Programmatic Dependent Launch. Default: True.
+        publish_routing_before_signal: Publish completed routing metadata before
+            the Blackwell startup PDL signal so a dependent GEMM can prefetch
+            weights. Both launches must use the same memory synchronization domain.
+            Defaults to False for standalone calls; unsupported on Rubin.
         activation_type: Activation type for the epilogue. Use
             ActivationType.Swiglu for gated SwiGLU/OAI/SiTU,
             ActivationType.GegluTanh for tanh-approximate GeGLU, and
@@ -619,6 +624,8 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
     intermediate_size = n // (2 if gated else 1)
     permuted_m = token_id_mapping.shape[0]
     is_rubin = mma_tiler is not None and mma_inst_shape is not None
+    if publish_routing_before_signal and is_rubin:
+        raise ValueError("Routing publication is supported only by Blackwell")
 
     use_a_per_token_scale = a_per_token_scale is not None
     if use_a_per_token_scale:
@@ -885,6 +892,7 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             overlap_epilogue=overlap_epilogue,
             overlap_activation_accumulators=overlap_activation_accumulators,
             pdl_signal_at="startup",
+            publish_routing_before_signal=publish_routing_before_signal,
             use_clc_scheduler=cluster_shape_mn == (1, 1),
             num_tile_info_stages=1,
             sm_count=sm_count,

@@ -611,6 +611,18 @@ def _moe_core_impl(
         main_event.record()
         moe_output.record_stream(aux_stream)
 
+    # Only this complete chain guarantees that FC1 can republish routing
+    # before FC2 starts. Per-token quantization inserts a separate PDL producer.
+    prefetch_weights_before_wait = (
+        enable_pdl
+        and not is_rubin
+        and not use_localized_path
+        and not use_per_token_activation
+        and not use_fused_finalize
+        and gemm2_mma_tiler_mn[0] == 128
+        and gemm2_cluster_shape_mn == (1, 1)
+    )
+
     # Step 2: GEMM1 + activation
     a_dtype = "float8_e4m3fn" if is_mxfp8 else "float4_e2m1fn"
     sf_dtype = "float8_e8m0fnu" if is_mxfp8 else "float8_e4m3fn"
@@ -704,6 +716,7 @@ def _moe_core_impl(
                 num_non_exiting_tiles=num_non_exiting_tiles,
                 out=gemm1_out,
                 out_scale=None if use_per_token_activation else gemm1_out_scale,
+                publish_routing_before_signal=prefetch_weights_before_wait,
                 global_scale=(
                     fc2_input_scale
                     if not is_mxfp8 and not use_per_token_activation
@@ -831,6 +844,7 @@ def _moe_core_impl(
             token_final_scales=token_final_scales,
             out=gemm2_output,
             a_per_token_scale=intermediate_per_token_scale,
+            prefetch_weights_before_wait=prefetch_weights_before_wait,
             a_dtype=a_dtype,
             b_dtype="float4_e2m1fn",
             sf_dtype=sf_dtype,
