@@ -239,6 +239,8 @@ class Sm100BlockScaledGroupedGemmKernel:
         generate_sfc=False,
         prefetch_weights_before_wait=False,
         publish_routing_before_signal=False,
+        weight_scale_cache_policy=0,
+        activation_cache_policy=0,
         enable_iket=False,
     ):
         if not self.is_valid_dtypes(
@@ -260,6 +262,8 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.pdl_signal_at = pdl_signal_at
         self.prefetch_weights_before_wait = prefetch_weights_before_wait
         self.publish_routing_before_signal = publish_routing_before_signal
+        self.weight_scale_cache_policy = weight_scale_cache_policy
+        self.activation_cache_policy = activation_cache_policy
         self.enable_iket = enable_iket
         if enable_iket:
             # Compile with options="iket" to collect these ranges. Keep optional
@@ -1055,6 +1059,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                     )
                 ],
                 tma_bar_ptr=a_pipe.producer_get_barrier(producer),
+                cache_policy=cutlass.Int64(self.weight_scale_cache_policy),
             )
         if cutlass.const_expr(self.enable_iket):
             _iket.range_pop()
@@ -1379,6 +1384,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                             tBgB[(None, k_tile)],
                             tBsB[(None, producer.index)],
                             tma_bar_ptr=a_pipe.producer_get_barrier(producer),
+                            cache_policy=cutlass.Int64(self.activation_cache_policy),
                         )
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()

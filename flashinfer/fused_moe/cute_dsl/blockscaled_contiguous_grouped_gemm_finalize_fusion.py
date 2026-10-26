@@ -125,6 +125,8 @@ def _run_blockscaled_gemm(
     sm_count=None,
     prefetch_weights_before_wait=False,
     publish_routing_before_signal=False,
+    weight_scale_cache_policy=0,
+    activation_cache_policy=0,
 ):
     mma_m, route_tile = mma_tiler_mn
     if mma_m == 128:
@@ -249,6 +251,8 @@ def _run_blockscaled_gemm(
         num_tile_info_stages,
         prefetch_weights_before_wait,
         publish_routing_before_signal,
+        weight_scale_cache_policy,
+        activation_cache_policy,
         activation_type,
         swiglu_alpha,
         swiglu_beta,
@@ -286,6 +290,8 @@ def _run_blockscaled_gemm(
             num_tile_info_stages=num_tile_info_stages,
             prefetch_weights_before_wait=prefetch_weights_before_wait,
             publish_routing_before_signal=publish_routing_before_signal,
+            weight_scale_cache_policy=weight_scale_cache_policy,
+            activation_cache_policy=activation_cache_policy,
             generate_sfc=output_sf is not None,
             output_dtype=output_dtype,
             final_scale_dtype=scale_dtype,
@@ -874,6 +880,21 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
     if not is_rubin:
         mma_m, route_tile = mma_tiler_mn
         k_steps = 8 if mma_m == 128 and route_tile < 128 else 4
+        # Stream weight scales with their payload while FC1 activations are live.
+        weight_scale_cache_policy = (
+            0x12F0000000000000
+            if prefetch_weights_before_wait
+            and cluster_shape_mn == (1, 1)
+            and k_steps == 8
+            else 0
+        )
+        activation_cache_policy = (
+            0x14F0000000000000
+            if prefetch_weights_before_wait
+            and cluster_shape_mn == (1, 1)
+            and k_steps == 8
+            else 0
+        )
         _run_blockscaled_gemm(
             weight=b,
             weight_sf=b_scale,
@@ -914,6 +935,8 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
             overlap_activation_accumulators=False,
             pdl_signal_at="producer_exit",
             prefetch_weights_before_wait=prefetch_weights_before_wait,
+            weight_scale_cache_policy=weight_scale_cache_policy,
+            activation_cache_policy=activation_cache_policy,
             use_clc_scheduler=False,
             num_tile_info_stages=1,
             sm_count=sm_count,
