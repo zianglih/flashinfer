@@ -136,25 +136,8 @@ def _run_blockscaled_gemm(
     for policy in (weight_scale_cache_policy, activation_cache_policy):
         if policy not in cache_policies:
             raise ValueError(f"Unsupported block-scaled cache policy: {policy!r}")
-    # Prioritize live activations over streamed weight scales in the narrow
-    # prefetch pipeline. Wider tiles retain the default cache behavior.
-    if prefetch_weights_before_wait and cluster_shape_mn == (1, 1) and k_steps == 8:
-        weight_scale_cache_hint = cache_policies[weight_scale_cache_policy]
-        activation_cache_hint = cache_policies[activation_cache_policy]
-    else:
-        weight_scale_cache_hint = 0
-        activation_cache_hint = 0
-    mma_m, route_tile = mma_tiler_mn
-    if mma_m == 128:
-        valid_tile = cluster_shape_mn == (1, 1) and route_tile in (16, 32, 64, 128, 256)
-    elif mma_m == 256:
-        valid_tile = cluster_shape_mn == (2, 1) and route_tile in (128, 256)
-    elif mma_m == 512:
-        valid_tile = cluster_shape_mn == (2, 1) and route_tile == 128
-    else:
-        valid_tile = False
-    if not valid_tile:
-        raise ValueError(f"Unsupported block-scaled runtime-N tile {mma_tiler_mn}")
+    weight_scale_cache_hint = cache_policies[weight_scale_cache_policy]
+    activation_cache_hint = cache_policies[activation_cache_policy]
     if output.dtype == torch.uint8:
         output_dtype = cutlass.Float4E2M1FN
     else:
@@ -163,6 +146,26 @@ def _run_blockscaled_gemm(
         scale_dtype = cutlass.Float32
     else:
         scale_dtype = torch_to_cutlass_dtype(token_final_scales.dtype)
+    channels, reduction, experts = (
+        weight.shape[1],
+        weight.shape[2] * (2 if weight_dtype is cutlass.Float4E2M1FN else 1),
+        weight.shape[0],
+    )
+    routes = token_mapping.numel()
+    if not Sm100BlockScaledGroupedGemmKernel.can_implement(
+        m=channels,
+        n=routes,
+        k=reduction,
+        output_dtype=output_dtype,
+        activation_dtype=activation_dtype,
+        weight_dtype=weight_dtype,
+        sf_dtype=sf_dtype,
+        sf_vec_size=sf_vec_size,
+        mma_tiler_mn=mma_tiler_mn,
+        cluster_shape_mn=cluster_shape_mn,
+    ):
+        raise ValueError("Unsupported split block-scaled GEMM shape or output dtype")
+    mma_m, route_tile = mma_tiler_mn
     stream = cuda.CUstream(torch.cuda.current_stream().cuda_stream)
     if prepare_input:
         from .blackwell.moe_prepare import allocate, prepare
@@ -207,25 +210,6 @@ def _run_blockscaled_gemm(
         _blockscaled_ptr(token_final_scales, scale_dtype),
         _blockscaled_ptr(per_token_scale, cutlass.Float32),
     )
-    channels, reduction, experts = (
-        weight.shape[1],
-        weight.shape[2] * (2 if weight_dtype is cutlass.Float4E2M1FN else 1),
-        weight.shape[0],
-    )
-    routes = token_mapping.numel()
-    if not Sm100BlockScaledGroupedGemmKernel.can_implement(
-        m=channels,
-        n=routes,
-        k=reduction,
-        output_dtype=output_dtype,
-        activation_dtype=activation_dtype,
-        weight_dtype=weight_dtype,
-        sf_dtype=sf_dtype,
-        sf_vec_size=sf_vec_size,
-        mma_tiler_mn=mma_tiler_mn,
-        cluster_shape_mn=cluster_shape_mn,
-    ):
-        raise ValueError("Unsupported split block-scaled GEMM shape or output dtype")
     device_sms = get_num_sm(activation.device)
     num_sms = device_sms if sm_count is None else sm_count
     # A CLC grid can occupy the whole device, so honor an explicit SM budget

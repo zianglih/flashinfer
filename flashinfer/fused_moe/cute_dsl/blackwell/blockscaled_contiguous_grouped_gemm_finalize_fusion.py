@@ -351,6 +351,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.allocated_n = max(32, self.route_tile)
         self.physical_tiler = (self.mma_m, self.allocated_n, self.tile_k)
         self.b_rows = self.allocated_n // self.cta_group_size
+        self.b_copy_rows = self.route_tile // self.cta_group_size
         self.sf_block_k = 4 * sf_vec_size
         self.sf_stage_bytes = 128 * self.tile_k // sf_vec_size
         # Group-2 S2T reads each CTA's local scales: SFB remains full-N even
@@ -401,12 +402,8 @@ class Sm100BlockScaledGroupedGemmKernel:
                 - 1
             ).bit_length()
         )
-        # Narrow one-CTA K8 tiles stream weights while reusing activation rows
-        # across output-channel tiles. Prefer preserving the latter in L2.
-        if self.cta_group_size == 1 and self.k_steps == 8:
-            self.weight_cache_policy = 0x12F0000000000000  # EVICT_FIRST
-        else:
-            self.weight_cache_policy = 0
+        # Stream weights while preserving activation reuse across channel tiles.
+        self.weight_cache_policy = 0x12F0000000000000  # EVICT_FIRST
         self.epilogue = Sm100BlockScaledMoeEpilogue(
             mma_tiler_mnk=(128, mma_tiler_mnk[1], mma_tiler_mnk[2]),
             activation_type=activation_type,
@@ -793,13 +790,20 @@ class Sm100BlockScaledGroupedGemmKernel:
             cluster_layout.shape,
             internal_type=cutlass.Int16,
         )
-        tma_atom_b, tma_activations = cute.nvgpu.make_tiled_tma_atom_B(
+        # Copy the logical route extent while retaining the MMA allocation's
+        # K-slab and stage strides, including any epilogue row padding.
+        b_copy_layout = cute.composition(
+            self.b_layout,
+            cute.make_layout(
+                (self.b_copy_rows, self.tile_k, self.num_stages),
+                stride=(1, self.b_rows, self.b_rows * self.tile_k),
+            ),
+        )
+        tma_atom_b, tma_activations = cpasync.make_tiled_tma_atom(
             cpasync.CopyBulkTensorTileG2SOp(self.cta_group),
             activations,
-            cute.slice_(self.b_layout, (None, None, None, 0)),
-            self.physical_tiler,
-            tiled_mma,
-            cluster_layout.shape,
+            cute.slice_(b_copy_layout, (None, None, 0)),
+            (self.b_copy_rows, self.tile_k),
         )
 
         tma_atom_sfb = None
@@ -932,6 +936,7 @@ class Sm100BlockScaledGroupedGemmKernel:
             cluster_layout,
             self.a_layout,
             self.b_layout,
+            b_copy_layout,
             self.sfa_layout,
             self.sfb_layout,
             self.acc_layout,
@@ -1071,6 +1076,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         cluster_layout,
         a_layout,
         b_layout,
+        b_copy_layout,
         sfa_layout,
         sfb_layout,
         acc_layout,
@@ -1112,7 +1118,7 @@ class Sm100BlockScaledGroupedGemmKernel:
             * (
                 (128 * self.tile_k * self.weight_dtype.width // 8 + self.sf_stage_bytes)
                 * self.channel_tiles
-                + self.b_rows * self.tile_k * self.activation_dtype.width // 8
+                + self.b_copy_rows * self.tile_k * self.activation_dtype.width // 8
                 + (self.sfb_stage_bytes if self.tma_sfb else 0)
             ),
         )
@@ -1179,6 +1185,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         tmem_ptr = tmem.retrieve_ptr(cutlass.Float32)
         sA = storage.a.get_tensor(a_layout.outer, swizzle=a_layout.inner)
         sB = storage.b.get_tensor(b_layout.outer, swizzle=b_layout.inner)
+        sB_copy = storage.b.get_tensor(b_copy_layout.outer, swizzle=b_copy_layout.inner)
         sSFA = storage.sfa.get_tensor(sfa_layout)
         sSFB = storage.sfb.get_tensor(sfb_layout)
         gA = cute.local_tile(weights, (self.mma_m, self.tile_k), (None, None, None))
@@ -1297,30 +1304,24 @@ class Sm100BlockScaledGroupedGemmKernel:
                     if cutlass.const_expr(self.use_clc_scheduler)
                     else cutlass.min(self.route_tile, mn_limit[route_idx] - route_start)
                 )
-                # N16 routing tiles can start halfway through a physical N32 tile.
                 gB = cute.local_tile(
                     cute.domain_offset(
                         (
                             route_start
-                            + cta_rank
-                            * (
-                                ((valid + 15) & -16) // self.cta_group_size
-                                - self.allocated_n // self.cta_group_size
-                            ),
+                            + cta_rank * (((valid + 15) & -16) // self.cta_group_size),
                             0,
                         ),
                         tma_activations,
                     ),
-                    (self.allocated_n, self.tile_k),
+                    (self.b_copy_rows, self.tile_k),
                     (0, None),
                 )
-                tCgB = tiled_mma.get_slice(cta_rank).partition_B(gB)
                 tBsB, tBgB = cpasync.tma_partition(
                     tma_atom_b,
                     0,
                     cute.make_layout(1),
-                    cute.group_modes(sB, 0, 3),
-                    cute.group_modes(tCgB, 0, 3),
+                    cute.group_modes(sB_copy, 0, 2),
+                    cute.group_modes(gB, 0, 2),
                 )
                 # Give each lane a different SMEM bank for its four scale bytes.
                 sf_row = 8 * warp + 32 * ((tidx % 32) // 8) + tidx % 8
