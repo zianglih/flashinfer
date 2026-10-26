@@ -15,7 +15,7 @@ limitations under the License.
 """
 
 """
-Numerical accuracy tests for CuteDSL Fused MoE NVFP4 on Blackwell and Rubin GPUs.
+Numerical accuracy tests for CuteDSL block-scaled MoE on Blackwell and Rubin GPUs.
 
 This test file covers both APIs:
 1. Functional API: `cute_dsl_fused_moe`
@@ -878,7 +878,7 @@ class TestTacticEnumeration:
     accuracy tests can fail to detect when a tile size is gated out of
     ALL_BLACKWELL_MOE_TACTICS as a workaround.
 
-    Blackwell W4A4/W4A8 place output channels on M and routed tokens on N.
+    Blackwell block-scaled GEMMs put output channels on M and routed tokens on N.
     GEMM1 and GEMM2 must share the routed-token N capacity and use the
     supported one- or two-CTA channel geometry independently; the intermediate
     layout does not depend on the channel tile width.
@@ -987,17 +987,19 @@ class TestTacticEnumeration:
             assert params["gemm1_use_clc_scheduler"] is scheduler
             assert (*tactic[:4], not scheduler) in ALL_BLACKWELL_MOE_TACTICS
             legacy = _extract_tactic_params(tactic[:3])
-            assert legacy["gemm1_k_steps"] is legacy["gemm2_k_steps"] is None
-            assert legacy["gemm1_use_clc_scheduler"] is True
             previous = _extract_tactic_params(tactic[:4])
+            assert legacy["gemm1_use_clc_scheduler"] is True
             assert previous["gemm1_use_clc_scheduler"] is True
-            for key in params.keys() - {
-                "gemm1_k_steps",
-                "gemm2_k_steps",
-                "gemm1_use_clc_scheduler",
-            }:
-                assert legacy[key] == previous[key] == params[key]
-            assert (previous["gemm1_k_steps"], previous["gemm2_k_steps"]) == k_steps
+            assert legacy == {
+                **params,
+                "gemm1_k_steps": None,
+                "gemm2_k_steps": None,
+                "gemm1_use_clc_scheduler": True,
+            }
+            assert previous == {
+                **params,
+                "gemm1_use_clc_scheduler": True,
+            }
         rubin = _extract_tactic_params(DEFAULT_RUBIN_MOE_TACTIC)
         assert rubin["is_rubin"]
         assert rubin["gemm1_use_clc_scheduler"] is False
@@ -4276,17 +4278,12 @@ class TestUnsupportedMoeTacticRejected:
     Blackwell MMA N must equal the routing tile size for both GEMMs.
     A Rubin tactic with ``cluster_shape_m > 1`` must also be refused.
 
-    ``moe_sort`` leaves tile-metadata entries past ``num_non_exiting_tiles``
-    uninitialized. A multi-CTA cluster would require the tile count handed to
-    the kernel to be rounded up to a multiple of ``cluster_shape_m`` so every
-    cluster reaches its barrier uniformly, which widens the kernels' bounds
-    check past what routing wrote. Neither the rounding nor the matching
-    buffer initialization is implemented.
+    Rubin lacks the tile-count rounding and metadata initialization required
+    to keep padding CTAs at cluster barriers. Blackwell supports those CTAs,
+    but both GEMMs must consume the same routing tile size.
 
-    ``get_valid_tactics`` filters these out during autotuning, but that path
-    is bypassed by an explicitly supplied or cache-restored tactic, so
-    ``_moe_core_impl`` refuses them too. Both paths are covered here, and the
-    rejection is asserted to happen *before* routing runs.
+    Explicit or cached tactics bypass autotuner filtering, so the core must
+    reject unsupported geometry before routing or GEMM launches.
     """
 
     pytestmark = _requires_dsl_arch

@@ -35,11 +35,11 @@ tokens on runtime N. SM107 retains its in-kernel gather path. The public
 ``a``/``b`` tensor order is unchanged.
 
 Key features:
-- NVFP4 x NVFP4 and MXFP8 x MXFP4 grouped GEMM paths
+- NVFP4 x NVFP4, MXFP8 x MXFP4, and MXFP8 x MXFP8 grouped GEMM paths
 - Original-token mapping through token_id_mapping
 - No caller-side permutation; Blackwell performs preparation inside the wrapper
 - Fused FC1 activation in the epilogue
-- Optional FP4 quantization of output with scale factor generation
+- Fused FP4 or MXFP8 output quantization with scale factor generation
 - Persistent tile scheduling with per-expert group mapping
 - Warp specialization for overlapped memory and compute
 - Support for SM100 (Blackwell) and SM107 (Rubin) architectures

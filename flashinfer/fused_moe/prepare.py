@@ -2644,8 +2644,6 @@ def prepare_cute_dsl_weights(
 
     w2_flat = w2_bf16.view(num_local_experts * hidden_size, intermediate_size)
     if is_mxfp8:
-        from ..quantization.fp8_quantization import mxfp8_quantize
-
         w2_q_flat, w2_sf_flat = mxfp8_quantize(
             w2_flat,
             is_sf_swizzled_layout=True,

@@ -189,10 +189,10 @@ def moe_unpermute(
     """Reduce BF16 expert rows in ascending top-k order using FP32 FMA.
 
     Routing metadata must be ready before FC2 signals this dependent grid.
-    Both FC2 paths wait for input dependencies before signaling this kernel.
-    W4A4's wait also precedes routing reads; W4A16's earlier permute waits
-    for sort before signaling FC1. Metadata reads precede this kernel's
-    PDL wait; all expert-output reads follow it.
+    Blockscaled FC2 may read routing before its dependency wait, using the
+    prior grid's publication; it republishes routing before signaling combine.
+    W4A16's earlier permute waits for sort before signaling FC1. Metadata reads
+    precede this kernel's PDL wait; all expert-output reads follow it.
     Negative mapping entries skip their row entirely. An all-masked token
     writes exactly positive zero. Like MegaMoE's deterministic combine, slot
     zero uses an FP32 multiply and later slots use FP32 FMA, with round-to-nearest

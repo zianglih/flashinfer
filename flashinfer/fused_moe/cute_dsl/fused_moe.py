@@ -1645,7 +1645,7 @@ def cute_dsl_fused_moe(
         Per-expert global scale for GEMM1.
     fc2_input_scale : Optional[torch.Tensor]
         Global scale for W4A4 GEMM2 input quantization; must be ``None`` for
-        W4A8, MXFP8, and W4A16.
+        W4A8, W8A8, and W4A16.
     w2_weight : torch.Tensor
         GEMM2 weights (down projection).
     w2_weight_sf : torch.Tensor

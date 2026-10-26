@@ -147,7 +147,7 @@ MODEL_CONFIGS = {
         default_ep=8,
     ),
 }
-CFG = MODEL_CONFIGS["v3"]
+CFG = replace(MODEL_CONFIGS["v3"])
 BASE_INTERMEDIATE_SIZE = CFG.intermediate_size
 TOKEN_COUNTS = [128, 256, 512, 1024, 2048, 4096]
 
@@ -211,16 +211,6 @@ def calc_tflops(n, ms, num_local_experts=None):
         )
     )
     return flops / (ms * 1e-3) / 1e12
-
-
-def interleave(x, gs=64):
-    M, K = x.shape[-2], x.shape[-1]
-    return (
-        x.view(*x.shape[:-2], 2, M // (gs * 2), gs, K)
-        .transpose(-4, -3)
-        .contiguous()
-        .view(*x.shape)
-    )
 
 
 def create_inputs(n, dev="cuda", routing_bias_scale=0.01):
@@ -564,7 +554,10 @@ def bench_cute_dsl(
             cudaProfilerStart/Stop instead of benchmarking.
         profile_iters: Number of cold-L2 graph replays to capture.
     """
-    from flashinfer.fused_moe.prepare import _cute_dsl_gated_weight_group_size
+    from flashinfer.fused_moe.prepare import (
+        _cute_dsl_gated_weight_group_size,
+        _interleave_linear_and_gate,
+    )
     from flashinfer.cute_dsl.utils import convert_sf_to_mma_layout
     from flashinfer.fp4_quantization import fp4_quantize
 
@@ -662,7 +655,7 @@ def bench_cute_dsl(
                 x_sf = x_sf.unsqueeze(-1)
             return x, x_sf, per_token_scale
 
-        w1i = interleave(w1_local, gated_group_size)
+        w1i = _interleave_linear_and_gate(w1_local, gated_group_size, dim=-2)
         w1f = w1i.view(num_local_experts * 2 * CFG.intermediate_size, CFG.hidden_size)
         w1q, w1s = fp4_quantize(w1f, gs1, sv, False, True, nvfp4_4over6=None)
         w1q = w1q.view(
@@ -1368,11 +1361,6 @@ def bench_trtllm(
 
 
 # =============================================================================
-# Autotune
-# =============================================================================
-
-
-# =============================================================================
 # Main Benchmark
 # =============================================================================
 
@@ -1432,7 +1420,7 @@ def run_benchmark(
     quant_family="nvfp4",
 ):
     """
-    Unified benchmark for the selected DeepSeek MoE model and precision family.
+    Unified benchmark for the selected MoE model and precision family.
 
     Autotuning runs in each backend's pre-warm step (under ``autotune(True)``)
     so the autotuner profiles all tactics on the default stream before
@@ -1459,8 +1447,8 @@ def run_benchmark(
         use_cupti: Whether to use CUPTI for accurate GPU timing
         use_wrapper: Whether to use CuteDslMoEWrapper API (recommended)
         routing_bias_scale: Scale for random routing bias generation
-        include_activation_quant: Include the initial activation FP4
-            quantization in each backend's timing.
+        include_activation_quant: Include initial activation quantization where
+            supported; W4A16 and TRTLLM BF16 consume BF16 directly.
         use_fused_finalize: Use atomic fused CuTe DSL finalize and allow
             CUTLASS fused-finalize tactics; otherwise use non-fused finalize.
         profile_cuda: Capture one backend for an external CUDA profiler.

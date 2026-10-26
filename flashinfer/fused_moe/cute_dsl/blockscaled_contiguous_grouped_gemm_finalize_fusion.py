@@ -29,7 +29,8 @@ grouped GEMM kernel with fused finalize operation designed for MoE GEMM2 layers:
 - Output C: finalized token rows or unfinalized expanded token/top-k rows
 
 Key features:
-- NVFP4 x NVFP4 or MXFP8 x MXFP4 grouped GEMM with FP8 scale factors
+- NVFP4 x NVFP4, MXFP8 x MXFP4, and MXFP8 x MXFP8 grouped GEMM
+- E4M3 block scales for NVFP4 and E8M0 block scales for MX formats
 - Optional fused finalize operation in epilogue:
   a) Map permuted rows to (token_idx, topk_idx) using permuted_idx_to_expanded_idx
   b) Apply router scale: scaled_output = gemm_output * token_final_scales[token_idx, topk_idx]

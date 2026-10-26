@@ -379,8 +379,6 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.sfb_stage_bytes = self.sfb_row_blocks * self.sf_stage_bytes
         # Route tiles aligned to 128 rows expose complete canonical SF atoms.
         # Smaller route tiles can start inside an atom and retain cp.async.
-        # Both call configurations consume routed payload and canonical SF.
-        # Activation type controls only the numerical activation.
         self.tma_sfb = self.route_tile >= 128
         self.sf_requires_cluster_join = self.cta_group_size > 1 and not self.tma_sfb
         self.activation_type = activation_type

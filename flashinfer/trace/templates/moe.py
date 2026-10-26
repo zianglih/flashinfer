@@ -4149,9 +4149,13 @@ cute_dsl_fused_moe_trace = TraceTemplate(
             abbrev="", value=4, description="MMA SF atom inner-K count."
         ),
         "w1_sf_m_tiles": Var(description="ceil(gemm1_out_size / 128)."),
-        "w1_sf_k_tiles": Var(description="ceil(hidden_size / 128)."),
+        "w1_sf_k_tiles": Var(
+            description="ceil(hidden_size / 64) for NVFP4, / 128 for MX formats."
+        ),
         "w2_sf_m_tiles": Var(description="ceil(hidden_size / 128)."),
-        "w2_sf_k_tiles": Var(description="ceil(intermediate_size / 128)."),
+        "w2_sf_k_tiles": Var(
+            description="ceil(intermediate_size / 64) for NVFP4, / 128 for MX formats."
+        ),
         "gemm1_out_size": Const(
             abbrev="",
             description=(
@@ -4169,7 +4173,10 @@ cute_dsl_fused_moe_trace = TraceTemplate(
         "x_sf": Tensor(
             ["num_tokens", "num_fp4_hidden_blocks"],
             optional=True,
-            description="Activation scales for W4A4/W4A8/W8A8; omitted for W4A16.",
+            description=(
+                "Linear activation scales for W4A4/W4A8/W8A8; omitted for W4A16. "
+                "W4A4 also accepts a trailing singleton dimension."
+            ),
         ),
         "token_selected_experts": Tensor(
             ["num_tokens", "top_k"],
@@ -5005,6 +5012,7 @@ def _cute_dsl_fused_moe_reference(
     if quant_mode in ("nvfp4", "w4a4"):
         if x_sf is None:
             raise ValueError("x_sf is required when quant_mode='w4a4'")
+        x_sf = x_sf.view(torch.float8_e4m3fn).reshape(x.shape[0], x.shape[1] // 8)
         hs_deq = _dequantize_fp4_tensor(x, x_sf, is_ue8m0_scales=False)
     elif quant_mode in ("w4a8", "w8a8"):
         if x_sf is None:
@@ -5016,24 +5024,24 @@ def _cute_dsl_fused_moe_reference(
         hs_deq = x.to(torch.float32)
     else:
         raise ValueError(f"Unsupported quant_mode {quant_mode!r}")
-    is_mxfp4 = quant_mode == "w4a8"
-    if quant_mode in ("w4a8", "w8a8"):
-        weight_packing = 2 if is_mxfp4 else 1
+    is_mxfp = quant_mode in ("w4a8", "w8a8")
+    sf_vec_size = 32 if is_mxfp else 16
+    weight_packing = 1 if quant_mode == "w8a8" else 2
 
-        def mma_scales_to_logical(scales, rows, columns):
-            groups = scales.shape[5]
-            return (
-                scales.permute(5, 2, 1, 0, 4, 3)
-                .contiguous()
-                .reshape(groups, -1, scales.shape[4] * 4)[:, :rows, : columns // 32]
-            )
+    def mma_scales_to_logical(scales, weight):
+        # All CuTe DSL weight formats use the same 6D MMA scale layout.
+        scales = (
+            scales.permute(5, 2, 1, 0, 4, 3)
+            .contiguous()
+            .reshape(E_local, -1, scales.shape[4] * 4)
+        )
+        scales = scales[
+            :, : weight.shape[1], : weight.shape[2] * weight_packing // sf_vec_size
+        ]
+        return scales if is_mxfp else scales.view(torch.float8_e4m3fn)
 
-        w1_weight_sf = mma_scales_to_logical(
-            w1_weight_sf, w1_weight.shape[1], w1_weight.shape[2] * weight_packing
-        )
-        w2_weight_sf = mma_scales_to_logical(
-            w2_weight_sf, w2_weight.shape[1], w2_weight.shape[2] * weight_packing
-        )
+    w1_weight_sf = mma_scales_to_logical(w1_weight_sf, w1_weight)
+    w2_weight_sf = mma_scales_to_logical(w2_weight_sf, w2_weight)
     if quant_mode == "w8a8":
         W1 = w1_weight.to(torch.float32) * _decode_block_scales(
             w1_weight_sf, is_ue8m0=True
@@ -5042,16 +5050,15 @@ def _cute_dsl_fused_moe_reference(
             w2_weight_sf, is_ue8m0=True
         ).repeat_interleave(32, dim=-1)
     else:
-        W1 = _dequantize_fp4_tensor(w1_weight, w1_weight_sf, is_ue8m0_scales=is_mxfp4)
-        W2 = _dequantize_fp4_tensor(w2_weight, w2_weight_sf, is_ue8m0_scales=is_mxfp4)
-    if (
-        quant_mode in ("w4a8", "w8a8")
-        and int(activation_type) != ActivationType.Relu2.value
-    ):
-        # SM100/103 MX weights interleave 16 up rows with 16 gate rows.
-        # The shared numerical reference expects contiguous up/gate halves.
+        W1 = _dequantize_fp4_tensor(w1_weight, w1_weight_sf, is_ue8m0_scales=is_mxfp)
+        W2 = _dequantize_fp4_tensor(w2_weight, w2_weight_sf, is_ue8m0_scales=is_mxfp)
+    if int(activation_type) != ActivationType.Relu2.value:
+        from ...fused_moe.prepare import _cute_dsl_gated_weight_group_size
+
+        # Undo the weight-preparation interleave for the shared reference.
+        group_size = _cute_dsl_gated_weight_group_size(w1_weight.device)
         W1 = (
-            W1.reshape(E_local, -1, 2, 16, W1.shape[-1])
+            W1.reshape(E_local, -1, 2, group_size, W1.shape[-1])
             .transpose(1, 2)
             .reshape(E_local, -1, W1.shape[-1])
         )

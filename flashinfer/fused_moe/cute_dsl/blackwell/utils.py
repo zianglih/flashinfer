@@ -46,10 +46,9 @@
 """
 Blackwell (SM100) specific kernel utilities.
 
-Re-exports shared utilities from common/kernel_utils.py (pointer helpers, the
-f32 activation functions, fmin) and adds Blackwell-specific functions:
-blk_reduce_bf16, blk_reduce_fp32, blk_reduce_fp16, and the channel-major
-block-scaled epilogue shared by the split MoE FC1 and FC2 kernels.
+Re-exports common pointer and activation helpers. Blackwell additions include
+PDL publication, bulk output stores and BF16 reduction, and the channel-major
+blockscaled epilogue shared by the split MoE FC1 and FC2 kernels.
 """
 
 import cutlass
@@ -147,40 +146,6 @@ def blk_reduce_bf16(dst_gemm, src_smem, size, loc=None, ip=None):
             size.ir_value(),
         ],
         "cp.reduce.async.bulk.global.shared::cta.bulk_group.add.noftz.bf16 [$0], [$1], $2;",
-        "l,l,r",
-        has_side_effects=True,
-        loc=loc,
-        ip=ip,
-    )
-
-
-@dsl_user_op
-def blk_reduce_fp32(dst_gemm, src_smem, size, loc=None, ip=None):
-    llvm.inline_asm(
-        None,
-        [
-            dst_gemm.iterator.llvm_ptr,
-            src_smem.iterator.llvm_ptr,
-            size.ir_value(),
-        ],
-        "cp.reduce.async.bulk.global.shared::cta.bulk_group.add.f32 [$0], [$1], $2;",
-        "l,l,r",
-        has_side_effects=True,
-        loc=loc,
-        ip=ip,
-    )
-
-
-@dsl_user_op
-def blk_reduce_fp16(dst_gemm, src_smem, size, loc=None, ip=None):
-    llvm.inline_asm(
-        None,
-        [
-            dst_gemm.iterator.llvm_ptr,
-            src_smem.iterator.llvm_ptr,
-            size.ir_value(),
-        ],
-        "cp.reduce.async.bulk.global.shared::cta.bulk_group.noftz.f16 [$0], [$1], $2;",
         "l,l,r",
         has_side_effects=True,
         loc=loc,
@@ -302,6 +267,8 @@ def _blockscaled_atomic_add_pair(values, output, loc=None, ip=None):
 
 
 class Sm100BlockScaledMoeEpilogue:
+    """Process each CTA's 128-channel slice of a one/two-CTA GEMM."""
+
     def __init__(
         self,
         mma_tiler_mnk,
@@ -323,7 +290,9 @@ class Sm100BlockScaledMoeEpilogue:
         generate_sfc,
     ):
         if mma_tiler_mnk[0] != 128:
-            raise ValueError("The split block-scaled epilogue requires one-CTA M128")
+            raise ValueError(
+                "The split block-scaled epilogue requires 128 channels per CTA"
+            )
         if activation_type not in (
             None,
             ActivationType.Swiglu.value,
