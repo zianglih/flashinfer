@@ -655,12 +655,13 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
              a caller-provided output with twice the shard's output width.
         use_fused_finalize: Use atomic fused finalize; otherwise write expanded
              rows for deterministic reduction. Default: True.
-        enable_pdl: Enable Programmatic Dependent Launch, including weight
-             prefetch before the dependency wait for supported Blackwell tiles.
-             Weights and routing metadata must be ready before early launch;
+        enable_pdl: Enable Programmatic Dependent Launch, including Blackwell
+             weight and scale prefetch before the dependency wait. Weights and
+             immutable routing metadata must be ready before early launch;
              a preceding PDL producer must release-publish completed metadata
              before its first signal in the same memory synchronization domain.
-             The built-in GEMM1 handles this publication. Default: True.
+             The built-in GEMM1 and per-token quantizer preserve this publication.
+             Default: True.
 
     Returns:
         out: Output tensor with dtype out_dtype. The shape is ``(seq_len, n)``
@@ -910,14 +911,7 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
             overlap_epilogue=True,
             overlap_activation_accumulators=False,
             pdl_signal_at="producer_exit",
-            # The per-token quantizer does not republish routing metadata.
-            prefetch_weights_before_wait=(
-                enable_pdl
-                and not use_fused_finalize
-                and not use_a_per_token_scale
-                and mma_m == 128
-                and cluster_shape_mn == (1, 1)
-            ),
+            prefetch_weights_before_wait=enable_pdl,
             weight_scale_cache_policy="evict_first",
             activation_cache_policy="evict_last",
             use_clc_scheduler=False,

@@ -69,17 +69,12 @@ from .utils import (
     Sm100BlockScaledMoeEpilogue,
     griddepcontrol_launch_dependents,
     griddepcontrol_wait,
+    release_gpu,
 )
 
 
 # Imported only for explicitly instrumented diagnostic builds.
 _iket = None
-
-
-@dsl_user_op
-def _blockscaled_release_gpu(loc=None, ip=None):
-    """Publish completed writes before triggering the dependent grid."""
-    llvm.fence(llvm.AtomicOrdering.release, syncscope="device", loc=loc, ip=ip)
 
 
 @dsl_user_op
@@ -337,15 +332,6 @@ class Sm100BlockScaledGroupedGemmKernel:
             self.descriptor |= 1 << 23
         if publish_routing_before_signal and pdl_signal_at != "startup":
             raise ValueError("Routing publication requires a startup signal")
-        if prefetch_weights_before_wait and (
-            not scatter_output
-            or use_fused_finalize
-            or use_clc_scheduler
-            or self.cta_group_size != 1
-        ):
-            raise ValueError(
-                "Weight startup prefetch requires static one-CTA nonfused scattering"
-            )
         self.route_tile = mma_tiler_mnk[1]
         # The epilogue transposes 32-column chunks even for a 16-row tile.
         self.allocated_n = max(32, self.route_tile)
@@ -1213,12 +1199,32 @@ class Sm100BlockScaledGroupedGemmKernel:
         total_m_tiles = cute.ceil_div(weights.shape[0], self.mma_m * self.channel_tiles)
         k_tiles = cute.ceil_div(weights.shape[1], self.tile_k)
         startup_stages = min(self.num_stages, k_tiles)
+        first_tile = block
+        first_tile_valid = cutlass.Boolean(True)
+        sched = None
+        initial_work = None
+        if cutlass.const_expr(self.use_clc_scheduler):
+            sched = utils.ClcDynamicPersistentTileScheduler.create(
+                sched_params,
+                cute.arch.block_idx(),
+                cute.arch.grid_dim(),
+                storage.clc_response.data_ptr(),
+            )
+            initial_work = sched.initial_work_tile_info()
+            first_tile = (
+                initial_work.tile_idx[1] * total_m_tiles
+                + initial_work.tile_idx[0] // self.cta_group_size
+            )
+            first_tile_valid = initial_work.is_valid_tile
         if cutlass.const_expr(self.prefetch_weights_before_wait):
             # The caller must bind this to a prerequisite startup release+signal
-            # in the same memory domain. B/SFB remain protected by the wait.
+            # in the same memory domain. Initial CLC work uses the same mapping
+            # as the scheduler; padded routes leave the operand ring unacquired.
+            # Both CTA producers use the existing group-scaled A/SFA/B barrier.
+            # B/SFB remain protected by the wait.
             if warp == 0:
-                if block < num_tiles[0] * total_m_tiles:
-                    first_expert = expert_idx[block // total_m_tiles]
+                if first_tile_valid and first_tile < num_tiles[0] * total_m_tiles:
+                    first_expert = expert_idx[first_tile // total_m_tiles]
                     first_producer = pipeline.make_pipeline_state(
                         pipeline.PipelineUserType.Producer, self.num_stages
                     )
@@ -1234,7 +1240,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                             tma_atom_sfa,
                             tAgSFA,
                             tAsSFA,
-                            block,
+                            first_tile,
                             total_m_tiles,
                             k_tile,
                             first_expert,
@@ -1253,7 +1259,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                 # ancestors; other warps must not trigger before that release.
                 if warp == 0:
                     if cutlass.const_expr(self.enable_pdl):
-                        _blockscaled_release_gpu()
+                        release_gpu()
                     griddepcontrol_launch_dependents()
             else:
                 if cutlass.const_expr(
@@ -1261,7 +1267,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                     and self.scatter_output
                     and not self.use_fused_finalize
                 ):
-                    _blockscaled_release_gpu()
+                    release_gpu()
                 griddepcontrol_launch_dependents()
         num_routed_tiles = num_tiles[0]
         total_tiles = num_routed_tiles * total_m_tiles
@@ -1348,7 +1354,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                         if cutlass.const_expr(self.prefetch_weights_before_wait):
                             # Startup acquired the first weight stages. B/SFB
                             # complete their existing expected-byte counts below.
-                            if tile != block or k_tile >= startup_stages:
+                            if tile != first_tile or k_tile >= startup_stages:
                                 self.load_weight_stage(
                                     a_pipe,
                                     producer,
@@ -1499,7 +1505,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                     ):
                         # Republish prior routing writes before combine can
                         # preload them. Queued MMA/epilogue work remains.
-                        _blockscaled_release_gpu()
+                        release_gpu()
                     griddepcontrol_launch_dependents()
                 # Each drain mutates its state through every ring stage.
                 # Keep independent copies even when warp zero drains A first.
@@ -1789,13 +1795,7 @@ class Sm100BlockScaledGroupedGemmKernel:
                 acc_pipe.producer_tail(producer)
         elif warp == self.schedule_warp:
             if cutlass.const_expr(self.use_clc_scheduler):
-                sched = utils.ClcDynamicPersistentTileScheduler.create(
-                    sched_params,
-                    cute.arch.block_idx(),
-                    cute.arch.grid_dim(),
-                    storage.clc_response.data_ptr(),
-                )
-                work = sched.initial_work_tile_info()
+                work = initial_work
                 info_producer = pipeline.make_pipeline_state(
                     pipeline.PipelineUserType.Producer, self.num_tile_info_stages
                 )

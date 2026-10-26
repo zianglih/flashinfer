@@ -530,10 +530,12 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
         vectorized_f32: Use vectorized f32x2 operations. Default: True
         raster_along_m: If True, raster tiles along M dimension. Default: False
         sm_count: Number of SMs to use. Default: max available.
-        enable_pdl: Enable Programmatic Dependent Launch. Blackwell publishes
-            completed routing metadata before its startup signal so a dependent
-            GEMM can prefetch weights in the same memory synchronization domain.
-            Default: True.
+        enable_pdl: Enable Programmatic Dependent Launch. Blackwell input
+            preparation publishes routing metadata before early GEMM startup,
+            allowing weights and their scales to load before the dependency wait.
+            Weights must be ready before early launch. The GEMM republishes
+            immutable routing metadata before signaling its dependent kernel
+            in the same memory synchronization domain. Default: True.
         activation_type: Activation type for the epilogue. Use
             ActivationType.Swiglu for gated SwiGLU/OAI/SiTU,
             ActivationType.GegluTanh for tanh-approximate GeGLU, and
@@ -888,6 +890,7 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             overlap_epilogue=overlap_epilogue,
             overlap_activation_accumulators=overlap_activation_accumulators,
             pdl_signal_at="startup",
+            prefetch_weights_before_wait=enable_pdl,
             publish_routing_before_signal=enable_pdl,
             weight_scale_cache_policy="evict_first",
             activation_cache_policy="evict_last",

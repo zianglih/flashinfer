@@ -93,6 +93,12 @@ from ..common.kernel_utils import (  # noqa: F401
 
 
 @dsl_user_op
+def release_gpu(loc=None, ip=None):
+    """Publish completed writes before triggering the dependent grid."""
+    llvm.fence(llvm.AtomicOrdering.release, syncscope="device", loc=loc, ip=ip)
+
+
+@dsl_user_op
 def _bulk_stmatrix4(destination, word0, word1, word2, word3, loc=None, ip=None):
     """Transpose four 8x8 BF16/FP16 fragments into token-major shared rows."""
     llvm.inline_asm(

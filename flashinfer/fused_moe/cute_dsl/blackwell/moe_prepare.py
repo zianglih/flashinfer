@@ -21,6 +21,7 @@ import cutlass
 import cutlass.cute as cute
 import torch
 from flashinfer.cute_dsl.utils import current_cuda_stream, make_ptr
+from .utils import release_gpu
 
 _CACHE: dict[tuple, Any] = {}
 
@@ -59,7 +60,6 @@ class PrepareRouted:
         mapping_ptr: cute.Pointer,
         limits_ptr: cute.Pointer,
         num_tiles_ptr: cute.Pointer,
-        capacity: cutlass.Int32,
         stream: cuda.CUstream,
     ):
         self.kernel(
@@ -70,7 +70,6 @@ class PrepareRouted:
             mapping_ptr,
             limits_ptr,
             num_tiles_ptr,
-            capacity,
         ).launch(
             grid=(self.grid, 1, 1),
             block=(self.threads, 1, 1),
@@ -88,24 +87,19 @@ class PrepareRouted:
         mapping_ptr,
         limits_ptr,
         num_tiles_ptr,
-        capacity,
     ):
         tidx, _, _ = cute.arch.thread_idx()
         bidx, _, _ = cute.arch.block_idx()
         if cutlass.const_expr(self.enable_pdl):
             cute.arch.griddepcontrol_wait()
-            # Permit dependent-grid startup; its dependency wait still protects
-            # consumption of this grid's payload and scale-factor writes.
-            cute.arch.griddepcontrol_launch_dependents()
+            # Publish completed routing ancestors for the next grid's weight
+            # prefetch. Its wait still protects this grid's payload/SF writes.
+            if tidx < 32:
+                release_gpu()
+                cute.arch.griddepcontrol_launch_dependents()
         count = cute.make_tensor(num_tiles_ptr, cute.make_layout((1,)))[0]
         active_rows = count * self.route_tile
-        payload_rows = active_rows
-        if cutlass.const_expr(self.route_tile == 16):
-            if count > 0:
-                payload_rows = active_rows + 16
-                if payload_rows > capacity:
-                    payload_rows = capacity
-        sf_rows = cute.ceil_div(payload_rows, 128) * 128
+        sf_rows = cute.ceil_div(active_rows, 128) * 128
         mapping = cute.make_tensor(mapping_ptr, cute.make_layout((active_rows,)))
         limits = cute.make_tensor(limits_ptr, cute.make_layout((count,)))
         copy = cute.make_copy_atom(
@@ -278,7 +272,7 @@ def prepare(
         kernel = PrepareRouted(
             payload_bytes, sf_columns, route_tile, top_k, grid, enable_pdl
         )
-        compiled = cute.compile(kernel, *ptrs, capacity, stream)
+        compiled = cute.compile(kernel, *ptrs, stream)
         _CACHE[key] = compiled
-    compiled(*ptrs, capacity, stream)
+    compiled(*ptrs, stream)
     return routed, routed_sf
