@@ -827,9 +827,7 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             )
             else 4
         )
-        overlap_epilogue = b_dtype_cutlass.width >= a_dtype_cutlass.width and (
-            route_tile < 128 or mma_m >= 256
-        )
+        overlap_epilogue = route_tile < 128 or mma_m >= 256
         channel_tiles = 2 if mma_m == 512 else 1
         allocated_n = max(32, route_tile)
         tile_k = (
