@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""DeepSeek MoE Performance Benchmark - CuteDSL vs TRTLLM.
+"""MoE Performance Benchmark - CuteDSL vs TRTLLM.
 
 Compares NVFP4, MXFP8, MXFP4x8, and BF16 MoE backends:
 - CuteDSL W4A4: NVFP4 activations and weights
@@ -14,6 +14,9 @@ Compares NVFP4, MXFP8, MXFP4x8, and BF16 MoE backends:
 - TRTLLM BF16: unquantized BF16 activations and weights
 
 Usage:
+    # Kimi K3 routed latent experts, EP8, SiTU(4, 25); unsupported arms print N/A
+    python bench_moe_deepseek.py --model kimi-k3 --no-fused-finalize
+
     # V4.1-Flash EP4: shared sqrtsoftplus routes are prepared outside timing
     python bench_moe_deepseek.py --model v41-flash --ep 4 --no-fused-finalize
 
@@ -105,6 +108,9 @@ class DeepSeekConfig:
     routing: str = "deepseek_v3"
     swiglu_limit: float = DEFAULT_SWIGLU_LIMIT
     default_ep: int = 8
+    activation: str = "swiglu"
+    situ_beta: float | None = None
+    situ_linear_beta: float | None = None
 
 
 MODEL_CONFIGS = {
@@ -123,6 +129,22 @@ MODEL_CONFIGS = {
         routing="sqrtsoftplus",
         swiglu_limit=10.0,
         default_ep=4,
+    ),
+    # Same routed-latent-expert contract as bench_cute_dsl_moe_distributed.py.
+    "kimi-k3": DeepSeekConfig(
+        hidden_size=3584,
+        intermediate_size=3072,
+        num_experts=896,
+        n_group=1,
+        topk_group=1,
+        top_k=16,
+        routed_scaling_factor=1.0,
+        name="Kimi-K3",
+        routing="sigmoid",
+        activation="situ",
+        situ_beta=4.0,
+        situ_linear_beta=25.0,
+        default_ep=8,
     ),
 }
 CFG = MODEL_CONFIGS["v3"]
@@ -381,7 +403,7 @@ def _measure_or_profile(
 
 
 def _routing_tensors(inputs):
-    """Allocate V3 outputs or share V4.1's precomputed model routes."""
+    """Allocate V3 outputs or share the selected model's precomputed routes."""
     logits = inputs["router_logits"]
     if CFG.routing == "deepseek_v3":
         shape = (logits.shape[0], CFG.top_k)
@@ -389,12 +411,16 @@ def _routing_tensors(inputs):
             torch.empty(shape, dtype=torch.float32, device=logits.device),
             torch.empty(shape, dtype=torch.int32, device=logits.device),
         )
-    elif CFG.routing == "sqrtsoftplus":
+    elif CFG.routing in ("sqrtsoftplus", "sigmoid"):
         if "_model_routes" not in inputs:
-            # Neither fused_topk_deepseek nor TRTLLM's native router implements
-            # sqrtsoftplus. Match the distributed benchmark: prepare routes on
-            # CPU once, outside tuning/timing/graphs, and share them across arms.
-            scores = torch.nn.functional.softplus(logits.float().cpu()).sqrt()
+            # Match the distributed benchmark's model-specific routing on CPU,
+            # outside tuning/timing/graphs, and share it across all backend arms.
+            if CFG.routing == "sqrtsoftplus":
+                scores = torch.nn.functional.softplus(logits.float().cpu()).sqrt()
+            elif CFG.routing == "sigmoid":
+                scores = logits.float().cpu().sigmoid()
+            else:
+                raise ValueError(f"Unsupported precomputed routing: {CFG.routing}")
             bias = inputs["routing_bias"].float().cpu()
             ids = torch.argsort(scores + bias, dim=-1, descending=True, stable=True)[
                 :, : CFG.top_k
@@ -426,11 +452,52 @@ def _route_tokens(router_logits, routing_bias, topk_values, topk_indices):
             topk_values=topk_values,
             topk_indices=topk_indices,
         )
-    elif CFG.routing == "sqrtsoftplus":
+    elif CFG.routing in ("sqrtsoftplus", "sigmoid"):
         # _routing_tensors supplied shared immutable routes before timing.
         return
     else:
         raise ValueError(f"Unsupported model routing: {CFG.routing}")
+
+
+def _model_activation():
+    from flashinfer.fused_moe import SiTU, SwiGLU
+
+    if CFG.activation == "swiglu":
+        return SwiGLU(limit=CFG.swiglu_limit)
+    elif CFG.activation == "situ":
+        if CFG.situ_beta is None or CFG.situ_linear_beta is None:
+            raise ValueError("The SiTU preset requires gate and linear scales")
+        return SiTU(gate_scale=CFG.situ_beta, linear_scale=CFG.situ_linear_beta)
+    else:
+        raise ValueError(f"Unsupported model activation: {CFG.activation}")
+
+
+def _backend_skip_reason(backend):
+    """Return an unsupported activation reason, never hide execution failures."""
+    if backend not in (
+        "CuteDSL W4A4",
+        "CuteDSL PER-TOKEN",
+        "CuteDSL W4A16",
+        "CuteDSL MXFP8",
+        "CuteDSL MXFP4x8",
+        "CUTLASS",
+        "TRTLLM NVFP4",
+        "TRTLLM PER-TOKEN",
+        "TRTLLM BF16",
+        "TRTLLM MXFP8",
+        "TRTLLM MXFP4x8",
+    ):
+        raise ValueError(f"Unknown benchmark backend: {backend}")
+    if CFG.activation == "swiglu":
+        return None
+    elif CFG.activation == "situ":
+        if backend in ("TRTLLM BF16", "TRTLLM MXFP8"):
+            return f"{backend} has no SiTU kernel"
+        elif backend == "CUTLASS":
+            return "The CUTLASS benchmark arm does not implement SiTU"
+        return None
+    else:
+        raise ValueError(f"Unsupported model activation: {CFG.activation}")
 
 
 @contextlib.contextmanager
@@ -655,6 +722,18 @@ def bench_cute_dsl(
     else:
         raise ValueError(f"Unsupported CuTe DSL quant mode: {quant_mode}")
 
+    if CFG.activation == "swiglu":
+        activation_kwargs = {"swiglu_limit": CFG.swiglu_limit}
+    elif CFG.activation == "situ":
+        activation = _model_activation()
+        # CuTe DSL encodes SiTU as SwiGLU with explicit SiTU scales.
+        activation_kwargs = {
+            "situ_beta": activation.gate_scale,
+            "situ_linear_beta": activation.linear_scale,
+        }
+    else:
+        raise ValueError(f"Unsupported model activation: {CFG.activation}")
+
     if use_wrapper:
         # Use CuteDslMoEWrapper (recommended for CUDA graph)
         from flashinfer import CuteDslMoEWrapper
@@ -673,7 +752,7 @@ def bench_cute_dsl(
             autotune_use_cuda_graph=(
                 use_cuda_graph if quant_mode in ("w4a8", "w8a8") else False
             ),
-            swiglu_limit=CFG.swiglu_limit,
+            **activation_kwargs,
         )
 
         def run_moe(x, x_sf, topk_values, topk_indices, per_token_scale):
@@ -720,7 +799,7 @@ def bench_cute_dsl(
                 per_token_scale=per_token_scale,
                 nvfp4_4over6=activation_recipe,
                 use_fused_finalize=use_fused_finalize,
-                swiglu_limit=CFG.swiglu_limit,
+                **activation_kwargs,
             )
 
     def run(x, x_sf, router_logits, routing_bias, topk_values, topk_indices):
@@ -914,13 +993,24 @@ def bench_trtllm(
             outside timing. NVFP4 per-token/4over6 flags do not affect the
             MX modes or BF16.
     """
-    from flashinfer.fused_moe import RoutingMethodType, SwiGLU
+    from flashinfer.fused_moe import RoutingMethodType
     from flashinfer.fused_moe.prepare import _activation_param_view
     from flashinfer.fused_moe.da_tuner import (
         RoutingRealizationFactory,
         RoutingRealizationKey,
     )
 
+    if precision not in ("nvfp4", "mxfp8", "mxfp4", "bf16"):
+        raise ValueError(f"Unsupported TRTLLM precision: {precision}")
+    backend = {
+        "nvfp4": "TRTLLM PER-TOKEN" if use_per_token_activation else "TRTLLM NVFP4",
+        "mxfp8": "TRTLLM MXFP8",
+        "mxfp4": "TRTLLM MXFP4x8",
+        "bf16": "TRTLLM BF16",
+    }[precision]
+    skip_reason = _backend_skip_reason(backend)
+    if skip_reason is not None:
+        raise ValueError(skip_reason)
     if use_per_token_activation and precision != "nvfp4":
         raise ValueError("Per-token NVFP4 requires precision='nvfp4'")
     if num_local_experts is None:
@@ -1174,13 +1264,20 @@ def bench_trtllm(
 
     moe_kwargs.update(
         _activation_param_view(
-            SwiGLU(limit=CFG.swiglu_limit), num_local_experts, torch.device(dev)
+            _model_activation(), num_local_experts, torch.device(dev)
         )
     )
+    if CFG.activation == "situ":
+        from flashinfer.tllm_enums import ActivationType
+
+        moe_kwargs["activation_type"] = ActivationType.Situ.value
     routing_ids = None
     routing_weights = None
-    is_routed = routing_input_mode == "routed" or CFG.routing == "sqrtsoftplus"
-    if CFG.routing == "sqrtsoftplus":
+    is_routed = routing_input_mode == "routed" or CFG.routing in (
+        "sqrtsoftplus",
+        "sigmoid",
+    )
+    if CFG.routing in ("sqrtsoftplus", "sigmoid"):
         routing_weights, routing_ids = _routing_tensors(inputs)
         moe_kwargs.update(n_group=None, topk_group=None)
     elif is_routed:
@@ -1476,9 +1573,6 @@ def _benchmark_single(
         use_wrapper: If True, use CuteDslMoEWrapper API for CuteDSL.
         do_autotune: Forwarded to each bench_* function — wraps pre-warm only.
     """
-    inputs = create_inputs(n, routing_bias_scale=routing_bias_scale)
-    histogram_record = _collect_expert_histogram(inputs, num_local, local_offset)
-
     selected = set(backends or _family_backends(quant_family))
     if backends is None and profile_backend in (
         "cute-dsl-mxfp8",
@@ -1487,6 +1581,33 @@ def _benchmark_single(
         "trtllm-mxfp4",
     ):
         selected = {profile_backend}
+    trtllm_backends = (
+        ("trtllm-nvfp4", "nvfp4", False, "TRTLLM NVFP4"),
+        ("trtllm-per-token", "nvfp4", True, "TRTLLM PER-TOKEN"),
+        ("trtllm-bf16", "bf16", False, "TRTLLM BF16"),
+        ("trtllm-mxfp4", "mxfp4", False, "TRTLLM MXFP4x8"),
+        ("trtllm-mxfp8", "mxfp8", False, "TRTLLM MXFP8"),
+    )
+    for selector, _, _, label in trtllm_backends:
+        if selector in selected and profile_backend in (None, selector):
+            skip_reason = _backend_skip_reason(label)
+            if skip_reason is not None:
+                if profile_backend is not None:
+                    raise ValueError(skip_reason)
+                if backends is not None:
+                    print(f"Skipping {label}: {skip_reason}.")
+                selected.remove(selector)
+    if "cutlass" in selected and profile_backend in (None, "cutlass"):
+        skip_reason = _backend_skip_reason("CUTLASS")
+        if skip_reason is not None:
+            if profile_backend is not None:
+                raise ValueError(skip_reason)
+            print(f"Skipping CUTLASS: {skip_reason}.")
+            selected.remove("cutlass")
+    if not selected:
+        return [], {}
+    inputs = create_inputs(n, routing_bias_scale=routing_bias_scale)
+    histogram_record = _collect_expert_histogram(inputs, num_local, local_offset)
     run_cutlass = "cutlass" in selected and profile_backend in (None, "cutlass")
     lat = {}
     for selector, profile_selector, quant_mode, per_token, label in (
@@ -1539,13 +1660,7 @@ def _benchmark_single(
             profile_iters=profile_iters,
             autotune_cache=autotune_cache,
         )
-    for selector, precision, per_token, label in (
-        ("trtllm-nvfp4", "nvfp4", False, "TRTLLM NVFP4"),
-        ("trtllm-per-token", "nvfp4", True, "TRTLLM PER-TOKEN"),
-        ("trtllm-bf16", "bf16", False, "TRTLLM BF16"),
-        ("trtllm-mxfp4", "mxfp4", False, "TRTLLM MXFP4x8"),
-        ("trtllm-mxfp8", "mxfp8", False, "TRTLLM MXFP8"),
-    ):
+    for selector, precision, per_token, label in trtllm_backends:
         if selector in selected and profile_backend in (None, selector):
             lat[label] = bench_trtllm(
                 inputs,
@@ -1684,6 +1799,21 @@ def _print_header(
             f"Activation: SwiGLU, gate clamped above {CFG.swiglu_limit:g}, "
             f"up clamped to [-{CFG.swiglu_limit:g}, {CFG.swiglu_limit:g}]."
         )
+    elif CFG.routing == "sigmoid":
+        print(
+            "Routing: shared precomputed sigmoid(logits), bias selects only, "
+            f"top-{CFG.top_k} normalized then scaled by {CFG.routed_scaling_factor}; "
+            "routing excluded from every backend's timing."
+        )
+        print(f"Activation: SiTU({CFG.situ_beta:g}, {CFG.situ_linear_beta:g}).")
+        print(
+            "Scope: routed latent experts only; latent projections, RMSNorm, "
+            "shared experts, router GEMM and communication excluded."
+        )
+    for backend, _, _ in backends:
+        skip_reason = _backend_skip_reason(backend)
+        if skip_reason is not None:
+            print(f"N/A: {skip_reason}; skipped before preparation and timing.")
     if quant_family == "nvfp4":
         print(
             "Timed initial activation quantization for FP4-activation backends: "
@@ -1738,18 +1868,31 @@ def _print_row(results, histogram_record, quant_family="nvfp4"):
     """Print latency, throughput and the explicitly paired TRTLLM comparisons."""
     rows = {result.backend: result for result in results}
     modes, backends, baselines, winner_width, _ = _table_layout(quant_family)
-    fields = [f"{rows[backends[0][0]].tokens:>6}"]
+    for key, _, _ in backends:
+        if key not in rows and _backend_skip_reason(key) is None:
+            raise ValueError(f"Missing result for supported backend: {key}")
+    fields = [f"{results[0].tokens:>6}"]
     for key, _, width in backends:
-        latency = f"{rows[key].latency_ms:>7.3f} {rows[key].tflops:>7.1f}"
+        if key in rows:
+            latency = f"{rows[key].latency_ms:>7.3f} {rows[key].tflops:>7.1f}"
+        else:
+            latency = "N/A"
         fields.append(f"{latency:>{width}}")
     for key, width, indices in baselines:
-        speedups = " ".join(
-            f"{rows[key].latency_ms / rows[backends[index][0]].latency_ms:>{max(8, len(modes[index])) - 1}.2f}x"
-            for index in indices
-        )
-        fields.append(f"{speedups:>{width}}")
+        speedups = []
+        for index in indices:
+            comparison = backends[index][0]
+            ratio_width = max(8, len(modes[index]))
+            if key in rows and comparison in rows:
+                speedups.append(
+                    f"{rows[key].latency_ms / rows[comparison].latency_ms:>{ratio_width - 1}.2f}x"
+                )
+            else:
+                speedups.append(f"{'N/A':>{ratio_width}}")
+        fields.append(f"{' '.join(speedups):>{width}}")
     if winner_width:
-        _, winner, _ = min(backends, key=lambda entry: rows[entry[0]].latency_ms)
+        available = [entry for entry in backends if entry[0] in rows]
+        _, winner, _ = min(available, key=lambda entry: rows[entry[0]].latency_ms)
         fields.append(f"{winner:^{winner_width}}")
     stats = (
         f"{histogram_record['min_count']:>3}/"
@@ -1809,12 +1952,12 @@ def _collect_expert_histogram(inputs, num_local, local_offset):
 def main():
     global CFG, BASE_INTERMEDIATE_SIZE
 
-    parser = argparse.ArgumentParser(description="DeepSeek MoE Performance Benchmark")
+    parser = argparse.ArgumentParser(description="MoE Performance Benchmark")
     parser.add_argument(
         "--model",
         choices=tuple(MODEL_CONFIGS),
         default="v3",
-        help="Model shape, routing and activation preset. V4.1-Flash shares precomputed routes across all backends, excluded from timing.",
+        help="Model shape, routing and activation preset. V4.1-Flash and Kimi K3 share precomputed routes across all backends, excluded from timing.",
     )
     parser.add_argument(
         "--num-tokens",
@@ -1877,7 +2020,7 @@ def main():
         type=int,
         default=None,
         choices=[1, 2, 4, 8, 16],
-        help="Expert parallelism simulation (default: V3 EP8, V4.1-Flash EP4).",
+        help="Expert parallelism simulation (default: V3 EP8, V4.1-Flash EP4, Kimi K3 EP8).",
     )
     parser.add_argument(
         "--tp",
@@ -2050,6 +2193,11 @@ def main():
     if CFG.routing == "sqrtsoftplus":
         print(
             "Routing: model sqrtsoftplus routes precomputed and shared by all backends; "
+            "routing excluded from timing, TRTLLM uses routed APIs."
+        )
+    elif CFG.routing == "sigmoid":
+        print(
+            "Routing: model sigmoid routes precomputed and shared by all backends; "
             "routing excluded from timing, TRTLLM uses routed APIs."
         )
     elif CFG.routing == "deepseek_v3":
