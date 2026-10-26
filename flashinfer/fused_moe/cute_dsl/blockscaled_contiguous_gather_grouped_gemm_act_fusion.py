@@ -521,10 +521,10 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             c_dtype because float8_e4m3fn may also be used as a plain output
             dtype without MXFP8 scale generation.
         mma_tiler_mn: Channel/token tile shape (M, N). For Blackwell, M
-            covers weight channels and N covers routed tokens; supported shapes
-            are M128 with N16/32/64/128/256, M256 with N128/256, and logical
-            M512 with N128. Logical M512 issues two physical M256 MMAs sharing
-            one activation tile. Default: (128, 128).
+            covers weight channels and N covers routed tokens. M128/M256 use
+            N16/32/64/128/256; logical M512 uses the widths admitted by the
+            resource planner and shares one activation tile across two physical
+            M256 MMAs. Default: (128, 128).
         cluster_shape_mn: Cluster shape (ClusterM, ClusterN). Blackwell uses
             (1, 1) with M128 or (2, 1) with M256/M512. Default: (1, 1).
         vectorized_f32: Use vectorized f32x2 operations. Default: True
@@ -595,6 +595,89 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
         ...     topk=topk,
         ... )  # out shape: (valid_m, intermediate_dim)
     """
+    return _blockscaled_contiguous_gather_grouped_gemm_act_fusion_impl(
+        a=a,
+        b=b,
+        a_scale=a_scale,
+        b_scale=b_scale,
+        alpha=alpha,
+        tile_idx_to_expert_idx=tile_idx_to_expert_idx,
+        tile_idx_to_mn_limit=tile_idx_to_mn_limit,
+        token_id_mapping=token_id_mapping,
+        num_non_exiting_tiles=num_non_exiting_tiles,
+        out=out,
+        out_scale=out_scale,
+        global_scale=global_scale,
+        a_per_token_scale=a_per_token_scale,
+        topk=topk,
+        a_dtype=a_dtype,
+        b_dtype=b_dtype,
+        sf_dtype=sf_dtype,
+        c_dtype=c_dtype,
+        sf_vec_size=sf_vec_size,
+        quantize_output=quantize_output,
+        mma_tiler_mn=mma_tiler_mn,
+        cluster_shape_mn=cluster_shape_mn,
+        vectorized_f32=vectorized_f32,
+        raster_along_m=raster_along_m,
+        sm_count=sm_count,
+        domain_id=domain_id,
+        mma_tiler=mma_tiler,
+        mma_inst_shape=mma_inst_shape,
+        enable_pdl=enable_pdl,
+        activation_type=activation_type,
+        swiglu_alpha=swiglu_alpha,
+        swiglu_beta=swiglu_beta,
+        swiglu_limit=swiglu_limit,
+        situ_beta=situ_beta,
+        situ_linear_beta=situ_linear_beta,
+        gated=gated,
+    )
+
+
+def _blockscaled_contiguous_gather_grouped_gemm_act_fusion_impl(
+    a: torch.Tensor,
+    b: torch.Tensor,
+    a_scale: torch.Tensor,
+    b_scale: torch.Tensor,
+    alpha: torch.Tensor,
+    tile_idx_to_expert_idx: torch.Tensor,
+    tile_idx_to_mn_limit: torch.Tensor,
+    token_id_mapping: torch.Tensor,
+    num_non_exiting_tiles: torch.Tensor,
+    out: Optional[torch.Tensor] = None,
+    out_scale: Optional[torch.Tensor] = None,
+    global_scale: Optional[torch.Tensor] = None,
+    *,
+    a_per_token_scale: Optional[torch.Tensor] = None,
+    topk: int = 8,
+    a_dtype: str = "float4_e2m1fn",
+    b_dtype: str = "float4_e2m1fn",
+    sf_dtype: str = "float8_e4m3fn",
+    c_dtype: str = "bfloat16",
+    sf_vec_size: int = 16,
+    quantize_output: bool = False,
+    mma_tiler_mn: Tuple[int, int] = (128, 128),
+    cluster_shape_mn: Tuple[int, int] = (1, 1),
+    vectorized_f32: bool = True,
+    raster_along_m: bool = False,
+    sm_count: Optional[int] = None,
+    domain_id: int = -1,
+    # Rubin-specific parameters (optional; when set, use SM107 kernel)
+    mma_tiler: Optional[Tuple[int, int, int]] = None,
+    mma_inst_shape: Optional[Tuple[int, int, int]] = None,
+    enable_pdl: bool = True,
+    activation_type: Union[int, ActivationType] = ActivationType.Swiglu.value,
+    swiglu_alpha: float = DEFAULT_SWIGLU_ALPHA,
+    swiglu_beta: float = DEFAULT_SWIGLU_BETA,
+    swiglu_limit: float = DEFAULT_SWIGLU_LIMIT,
+    situ_beta: Optional[float] = None,
+    situ_linear_beta: Optional[float] = None,
+    gated: bool = True,
+    k_steps: Optional[int] = None,
+    use_clc_scheduler: Optional[bool] = None,
+) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
+    """Shared preparation with internal reduction-depth and scheduler choices."""
     # Validate inputs
     assert a.device.type == "cuda", "Input tensors must be on CUDA device"
     assert b.device.type == "cuda", "Input tensors must be on CUDA device"
@@ -624,6 +707,17 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
     intermediate_size = n // (2 if gated else 1)
     permuted_m = token_id_mapping.shape[0]
     is_rubin = mma_tiler is not None and mma_inst_shape is not None
+    if k_steps is not None and (type(k_steps) is not int or k_steps not in (4, 8)):
+        raise ValueError("Blackwell k_steps must be None, 4, or 8")
+    if is_rubin and k_steps is not None:
+        raise ValueError("k_steps is supported only by the Blackwell kernels")
+
+    if use_clc_scheduler is None:
+        use_clc_scheduler = not is_rubin
+    elif type(use_clc_scheduler) is not bool:
+        raise ValueError("use_clc_scheduler must be None or a boolean")
+    if is_rubin and use_clc_scheduler:
+        raise ValueError("CLC scheduling is supported only by the Blackwell kernels")
 
     use_a_per_token_scale = a_per_token_scale is not None
     if use_a_per_token_scale:
@@ -823,34 +917,6 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
         )
 
     if not is_rubin:
-        mma_m, route_tile = mma_tiler_mn
-        k_steps = (
-            8
-            if (
-                (mma_m == 128 and route_tile < 128)
-                or (mma_m == 256 and route_tile == 128)
-            )
-            else 4
-        )
-        overlap_epilogue = route_tile < 128 or mma_m >= 256
-        channel_tiles = 2 if mma_m == 512 else 1
-        allocated_n = max(32, route_tile)
-        tile_k = (
-            (
-                256
-                if a_dtype_cutlass is cutlass.Float4E2M1FN
-                and b_dtype_cutlass is cutlass.Float4E2M1FN
-                else 128
-            )
-            * k_steps
-            // 4
-        )
-        sf_cols = tile_k // sf_vec_size
-        overlap_activation_accumulators = (
-            overlap_epilogue
-            and allocated_n * channel_tiles == 256
-            and sf_cols * (channel_tiles + max(1, allocated_n // 128)) <= 64
-        )
         _run_blockscaled_gemm(
             weight=b,
             weight_sf=b_scale,
@@ -887,14 +953,14 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             per_token_scale_is_routed=False,
             k_steps=k_steps,
             num_stages=None,
-            overlap_epilogue=overlap_epilogue,
-            overlap_activation_accumulators=overlap_activation_accumulators,
+            overlap_epilogue=True,
+            overlap_activation_accumulators=None,
             pdl_signal_at="startup",
             prefetch_weights_before_wait=enable_pdl,
             publish_routing_before_signal=enable_pdl,
             weight_scale_cache_policy="evict_first",
             activation_cache_policy="evict_last",
-            use_clc_scheduler=cluster_shape_mn == (1, 1),
+            use_clc_scheduler=use_clc_scheduler,
             num_tile_info_stages=1,
             sm_count=sm_count,
         )

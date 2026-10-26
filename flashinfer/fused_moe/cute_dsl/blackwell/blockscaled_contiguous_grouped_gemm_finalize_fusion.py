@@ -36,7 +36,7 @@ FC1 preparation preserves payload and scale bytes; per-token activation
 scales retain their original token indexing through the routing map.
 
 M128 uses one CTA; M256 uses two CTAs with 128 channels each. Logical M512
-FC1 reuses an activation tile across two M256 channel tiles. Allocation
+reuses an activation tile across two M256 channel tiles. Allocation
 uses the tactic width while each MMA descriptor rounds the live routed-token
 count to 16 columns.
 """
@@ -52,7 +52,7 @@ import cutlass.utils.blackwell_helpers as sm100_utils
 import cutlass.utils.blockscaled_layout as blockscaled_utils
 from cutlass.cute.nvgpu import cpasync, tcgen05
 from cutlass._mlir import ir
-from cutlass._mlir.dialects import builtin, llvm
+from cutlass._mlir.dialects import builtin, llvm, nvvm
 from cutlass._mlir.dialects import cute as _cute_ir
 from cutlass._mlir.dialects import cute_nvgpu as _cute_nvgpu_ir
 from cutlass.cute.typing import AddressSpace
@@ -75,6 +75,22 @@ from .utils import (
 
 # Imported only for explicitly instrumented diagnostic builds.
 _iket = None
+
+
+@dsl_user_op
+def _blockscaled_cluster_try_wait(mbarrier, phase, loc=None, ip=None):
+    """Acquire the peer CTA's scale publication at cluster scope."""
+    return cutlass.Boolean(
+        nvvm.mbarrier_wait_parity(
+            mbarrier.to_llvm_ptr(loc=loc, ip=ip),
+            cutlass.Int32(phase).ir_value(loc=loc, ip=ip),
+            nvvm.MBarrierWaitKind.TRY,
+            scope=nvvm.MemScopeKind.CLUSTER,
+            order=nvvm.MemOrderKind.ACQUIRE,
+            loc=loc,
+            ip=ip,
+        )
+    )
 
 
 @dsl_user_op
@@ -242,7 +258,9 @@ class Sm100BlockScaledGroupedGemmKernel:
             activation_dtype, weight_dtype, sf_dtype, sf_vec_size
         ):
             raise ValueError("Unsupported SM100 blockscaled operand/scale types")
-        if k_steps not in (4, 8) or (num_stages is not None and num_stages < 1):
+        if (
+            k_steps is not None and (type(k_steps) is not int or k_steps not in (4, 8))
+        ) or (num_stages is not None and num_stages < 1):
             raise ValueError("Invalid block-scaled pipeline depth or K steps")
         if pdl_signal_at not in ("startup", "producer_exit"):
             raise ValueError("Unsupported PDL signal boundary")
@@ -276,17 +294,34 @@ class Sm100BlockScaledGroupedGemmKernel:
             activation_dtype is cutlass.Float4E2M1FN
             and weight_dtype is cutlass.Float4E2M1FN
         )
-        # Logical M512 reuses one activation tile across two physical M256
-        # instructions in the same two-CTA group. Existing M256 keeps wide K.
-        self.channel_tiles = 1
-        if mma_tiler_mnk[0] == 512:
-            if mma_tiler_mnk[1] != 128:
-                raise ValueError("Logical M512 requires N128")
-            self.channel_tiles = 2
+        # Reuse the routed activation tile across physical M256 channel tiles.
+        if mma_tiler_mnk[0] not in (128, 256, 512):
+            raise ValueError("Unsupported logical output-channel tile")
+        self.channel_tiles = max(1, mma_tiler_mnk[0] // 256)
         self.gather_k = 256 if both_fp4 else 128
-        self.k_steps = k_steps
         if mma_tiler_mnk[2] != self.gather_k:
             raise ValueError("Unsupported public blockscaled K tile")
+        if k_steps is None:
+            k_steps = self._select_k_steps(
+                mma_tiler_mnk,
+                activation_dtype,
+                weight_dtype,
+                sf_vec_size,
+                num_stages,
+                overlap_epilogue,
+                overlap_activation_accumulators,
+                output_dtype.width // 8
+                if (
+                    scatter_output
+                    and not use_fused_finalize
+                    and output_dtype in (cutlass.BFloat16, cutlass.Float16)
+                    and not generate_sfc
+                )
+                else 0,
+                use_clc_scheduler,
+                num_tile_info_stages,
+            )
+        self.k_steps = k_steps
         self.tile_k = self.gather_k * self.k_steps // 4
         mma_tiler_mnk = (
             mma_tiler_mnk[0] // self.channel_tiles,
@@ -302,8 +337,6 @@ class Sm100BlockScaledGroupedGemmKernel:
             )
         if mma_tiler_mnk[1] not in (16, 32, 64, 128, 256):
             raise ValueError("Unsupported routed-token tile")
-        if self.mma_m == 256 and mma_tiler_mnk[1] not in (128, 256):
-            raise ValueError("Two-CTA blockscaled MoE requires N128 or N256")
         self.cta_group_size = self.mma_m // 128
         self.cta_group = (
             tcgen05.CtaGroup.ONE if self.cta_group_size == 1 else tcgen05.CtaGroup.TWO
@@ -349,6 +382,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         # Both call configurations consume routed payload and canonical SF.
         # Activation type controls only the numerical activation.
         self.tma_sfb = self.route_tile >= 128
+        self.sf_requires_cluster_join = self.cta_group_size > 1 and not self.tma_sfb
         self.activation_type = activation_type
         self.top_k = top_k
         self.use_fused_finalize = use_fused_finalize
@@ -367,17 +401,18 @@ class Sm100BlockScaledGroupedGemmKernel:
             self.threads_per_cta += 32
         self.overlap_acc = False
         self.acc_cols = self.allocated_n * self.channel_tiles
-        self.acc_stages = 2 if self.overlap_epilogue and self.allocated_n <= 128 else 1
-        if self.channel_tiles == 2:
-            self.acc_stages = 1
         self.sf_cols = self.tile_k // self.sf_vec_size
         self.sfb_cols = self.sf_cols * self.sfb_row_blocks
-        self.overlap_activation_accumulators = overlap_activation_accumulators
-        if self.overlap_activation_accumulators and not (
-            self.overlap_epilogue
-            and self.acc_cols == 256
-            and self.sf_cols * self.channel_tiles + self.sfb_cols <= 64
-        ):
+        scale_cols = self.sf_cols * self.channel_tiles + self.sfb_cols
+        self.acc_stages, self.can_overlap_accumulators = self._accumulator_storage(
+            self.acc_cols, scale_cols, self.overlap_epilogue
+        )
+        self.overlap_activation_accumulators = (
+            self.can_overlap_accumulators
+            if overlap_activation_accumulators is None
+            else overlap_activation_accumulators
+        )
+        if self.overlap_activation_accumulators and not self.can_overlap_accumulators:
             raise ValueError("Unsupported overlapping activation accumulator geometry")
         self.tmem_cols = (
             1
@@ -408,6 +443,216 @@ class Sm100BlockScaledGroupedGemmKernel:
             sf_vec_size=sf_vec_size,
             sf_dtype=sf_dtype,
             generate_sfc=generate_sfc,
+        )
+
+    @staticmethod
+    def _accumulator_storage(acc_cols, scale_cols, overlap_epilogue):
+        capacity = cute.arch.get_max_tmem_alloc_cols("sm_100")
+        stages = min(2, (capacity - scale_cols) // acc_cols) if overlap_epilogue else 1
+        if stages < 1 or stages * acc_cols + scale_cols > capacity:
+            raise ValueError("Not enough SM100 tensor memory for one accumulator tile")
+        # The current epilogues release at most 64 columns before the next MMA:
+        # one/two 32-column activation slabs, or the first 64-column bulk slab.
+        # This ownership constraint is separate from the hardware capacity.
+        can_overlap = overlap_epilogue and 2 * acc_cols == capacity and scale_cols <= 64
+        return stages, can_overlap
+
+    @staticmethod
+    def _stage_storage_bytes(
+        tile_k,
+        allocated_n,
+        cta_group_size,
+        channel_tiles,
+        activation_dtype,
+        weight_dtype,
+        sf_vec_size,
+    ):
+        # Each CTA owns 128 weight rows. Mixed FP4 weights occupy byte slots
+        # for mxf8f6f4, and each SFB atom retains all 128 scale rows.
+        return (
+            128
+            * tile_k
+            * max(weight_dtype.width, activation_dtype.width)
+            // 8
+            * channel_tiles
+            + allocated_n // cta_group_size * tile_k * activation_dtype.width // 8
+            + 128 * tile_k // sf_vec_size * (channel_tiles + max(1, allocated_n // 128))
+        )
+
+    @staticmethod
+    def _pipeline_metadata_bytes(
+        num_stages,
+        acc_stages,
+        use_clc_scheduler,
+        num_tile_info_stages,
+        sf_requires_cluster_join,
+    ):
+        scheduler_bytes = 32 * num_tile_info_stages + 48 if use_clc_scheduler else 0
+        return (
+            (
+                (num_stages * (4 + int(sf_requires_cluster_join)) + acc_stages * 2) * 8
+                + 4
+                + scheduler_bytes
+                + 127
+            )
+            // 128
+        ) * 128 + 128
+
+    @staticmethod
+    def _epilogue_storage(available_bytes, element_bytes):
+        if element_bytes:
+            # Supported TMEM/stmatrix slabs, in preference order.
+            for tokens, stages in ((64, 2), (32, 1)):
+                scratch_bytes = tokens * 136 * stages * element_bytes
+                if scratch_bytes <= available_bytes:
+                    return tokens, stages, scratch_bytes
+        return 0, 0, 128 * 4
+
+    @classmethod
+    def _operand_stage_capacity(
+        cls,
+        stage_bytes,
+        bulk_output_bytes,
+        acc_stages,
+        use_clc_scheduler,
+        num_tile_info_stages,
+        sf_requires_cluster_join,
+    ):
+        capacity = utils.get_smem_capacity_in_bytes("sm_100")
+        available = (
+            capacity
+            - stage_bytes
+            - cls._pipeline_metadata_bytes(
+                1,
+                acc_stages,
+                use_clc_scheduler,
+                num_tile_info_stages,
+                sf_requires_cluster_join,
+            )
+        )
+        _, _, scratch_bytes = cls._epilogue_storage(available, bulk_output_bytes)
+        stages = (capacity - scratch_bytes) // stage_bytes
+        while stages > 0 and (
+            stages * stage_bytes
+            + scratch_bytes
+            + cls._pipeline_metadata_bytes(
+                stages,
+                acc_stages,
+                use_clc_scheduler,
+                num_tile_info_stages,
+                sf_requires_cluster_join,
+            )
+            > capacity
+        ):
+            stages -= 1
+        return stages
+
+    @classmethod
+    def _k_stage_capacity(
+        cls,
+        mma_tiler_mnk,
+        activation_dtype,
+        weight_dtype,
+        sf_vec_size,
+        overlap_epilogue,
+        bulk_output_bytes,
+        use_clc_scheduler,
+        num_tile_info_stages,
+    ):
+        """Return the operand-ring capacity and accumulator overlap eligibility."""
+        logical_m, route_tile, tile_k = mma_tiler_mnk
+        channel_tiles = max(1, logical_m // 256)
+        cta_group_size = logical_m // channel_tiles // 128
+        allocated_n = max(32, route_tile)
+        acc_cols = allocated_n * channel_tiles
+        scale_cols = (
+            tile_k // sf_vec_size * (channel_tiles + max(1, allocated_n // 128))
+        )
+        if acc_cols + scale_cols > cute.arch.get_max_tmem_alloc_cols("sm_100"):
+            return 0, False
+        acc_stages, can_overlap = cls._accumulator_storage(
+            acc_cols, scale_cols, overlap_epilogue
+        )
+        sf_requires_cluster_join = cta_group_size > 1 and route_tile < 128
+        stage_bytes = cls._stage_storage_bytes(
+            tile_k,
+            allocated_n,
+            cta_group_size,
+            channel_tiles,
+            activation_dtype,
+            weight_dtype,
+            sf_vec_size,
+        )
+        return cls._operand_stage_capacity(
+            stage_bytes,
+            bulk_output_bytes if route_tile >= 128 else 0,
+            acc_stages,
+            use_clc_scheduler,
+            num_tile_info_stages,
+            sf_requires_cluster_join,
+        ), can_overlap
+
+    @classmethod
+    def _select_k_steps(
+        cls,
+        mma_tiler_mnk,
+        activation_dtype,
+        weight_dtype,
+        sf_vec_size,
+        num_stages,
+        overlap_epilogue,
+        overlap_activation_accumulators,
+        bulk_output_bytes,
+        use_clc_scheduler,
+        num_tile_info_stages,
+    ):
+        """Maximize staged reduction coverage within the actual storage budget.
+
+        Automatic depth reserves at least two operand slots. Explicit stage
+        counts remain authoritative. Prefer the larger K tile on equal coverage
+        to reduce issue overhead, while preserving the epilogue's early-release
+        window when two full accumulator buffers cannot coexist with scales.
+        """
+        logical_m, route_tile, base_k = mma_tiler_mnk
+        channel_tiles = max(1, logical_m // 256)
+        allocated_n = max(32, route_tile)
+        acc_cols = allocated_n * channel_tiles
+        tmem_capacity = cute.arch.get_max_tmem_alloc_cols("sm_100")
+        bulk_output = bulk_output_bytes > 0 and route_tile >= 128
+        bulk_overlap = (
+            bulk_output and channel_tiles == 1 and allocated_n == tmem_capacity // 2
+        )
+        preserve_overlap = (
+            overlap_epilogue
+            and 2 * acc_cols == tmem_capacity
+            and (overlap_activation_accumulators is not False or bulk_overlap)
+        )
+        minimum_stages = 2 if num_stages is None else num_stages
+        selected_steps = None
+        queued_k = 0
+        for steps in (8, 4):
+            tile_k = base_k * steps // 4
+            stage_capacity, can_overlap = cls._k_stage_capacity(
+                (logical_m, route_tile, tile_k),
+                activation_dtype,
+                weight_dtype,
+                sf_vec_size,
+                overlap_epilogue,
+                bulk_output_bytes,
+                use_clc_scheduler,
+                num_tile_info_stages,
+            )
+            if preserve_overlap and not can_overlap:
+                continue
+            if minimum_stages <= stage_capacity:
+                stages = stage_capacity if num_stages is None else num_stages
+                if stages * tile_k > queued_k:
+                    selected_steps = steps
+                    queued_k = stages * tile_k
+        if selected_steps is not None:
+            return selected_steps
+        raise ValueError(
+            "No supported K tile fits the requested SM100 pipeline storage"
         )
 
     def _operand_layouts(self, tiled_mma, num_stages):
@@ -442,15 +687,14 @@ class Sm100BlockScaledGroupedGemmKernel:
         )
 
     def _metadata_bytes(self, num_stages):
-        # Include scheduler storage before fitting operand stages. The CLC
-        # response has its own 16-byte alignment inside the metadata slab.
-        scheduler_bytes = (
-            32 * self.num_tile_info_stages + 48 if self.use_clc_scheduler else 0
+        # The CLC response has its own 16-byte alignment inside the slab.
+        return self._pipeline_metadata_bytes(
+            num_stages,
+            self.acc_stages,
+            self.use_clc_scheduler,
+            self.num_tile_info_stages,
+            self.sf_requires_cluster_join,
         )
-        return (
-            ((num_stages * 4 + self.acc_stages * 2) * 8 + 4 + scheduler_bytes + 127)
-            // 128
-        ) * 128 + 128
 
     def _configure_pipeline_storage(self, tiled_mma, reduction_size):
         """Fit SM100 operand stages around the epilogue's working storage.
@@ -461,6 +705,18 @@ class Sm100BlockScaledGroupedGemmKernel:
         """
         capacity = utils.get_smem_capacity_in_bytes("sm_100")
         stage_bytes = self._operand_bytes(self._operand_layouts(tiled_mma, 1))
+        if stage_bytes != self._stage_storage_bytes(
+            self.tile_k,
+            self.allocated_n,
+            self.cta_group_size,
+            self.channel_tiles,
+            self.activation_dtype,
+            self.weight_dtype,
+            self.sf_vec_size,
+        ):
+            raise ValueError(
+                "SM100 operand layout no longer matches the storage planner"
+            )
         bulk_output = (
             self.scatter_output
             and not self.use_fused_finalize
@@ -468,25 +724,17 @@ class Sm100BlockScaledGroupedGemmKernel:
             and not self.epilogue.generate_sfc
             and self.route_tile >= 128
         )
-        # These are the supported TMEM/stmatrix slabs, not model dimensions.
-        bulk_configurations = ((64, 2), (32, 1)) if bulk_output else ()
+        bulk_output_bytes = self.output_dtype.width // 8 if bulk_output else 0
         num_stages = self.requested_num_stages
         if num_stages is None:
-            scratch_bytes = 128 * 4
-            for tokens, stages in bulk_configurations:
-                candidate_bytes = tokens * 136 * stages * self.output_dtype.width // 8
-                if stage_bytes + self._metadata_bytes(1) + candidate_bytes <= capacity:
-                    scratch_bytes = candidate_bytes
-                    break
-            num_stages = (capacity - scratch_bytes) // stage_bytes
-            while (
-                num_stages > 0
-                and num_stages * stage_bytes
-                + self._metadata_bytes(num_stages)
-                + scratch_bytes
-                > capacity
-            ):
-                num_stages -= 1
+            num_stages = self._operand_stage_capacity(
+                stage_bytes,
+                bulk_output_bytes,
+                self.acc_stages,
+                self.use_clc_scheduler,
+                self.num_tile_info_stages,
+                self.sf_requires_cluster_join,
+            )
             if not self.overlap_epilogue:
                 # This producer executes its own epilogue before the next tile.
                 # Dedicated epilogue warps instead permit cross-tile prefetch.
@@ -501,21 +749,10 @@ class Sm100BlockScaledGroupedGemmKernel:
             - self._operand_bytes(layouts)
             - self._metadata_bytes(self.num_stages)
         )
-        self.epilogue.bulk_tokens = 0
-        self.epilogue.bulk_stages = 0
-        for tokens, stages in bulk_configurations:
-            if tokens * 136 * stages * self.output_dtype.width // 8 <= available:
-                self.epilogue.bulk_tokens = tokens
-                self.epilogue.bulk_stages = stages
-                break
-        self.epilogue_scratch_floats = max(
-            128,
-            self.epilogue.bulk_tokens
-            * 136
-            * self.epilogue.bulk_stages
-            * self.output_dtype.width
-            // 32,
+        (self.epilogue.bulk_tokens, self.epilogue.bulk_stages, scratch_bytes) = (
+            self._epilogue_storage(available, bulk_output_bytes)
         )
+        self.epilogue_scratch_floats = scratch_bytes // 4
         if available < self.epilogue_scratch_floats * 4:
             raise ValueError(
                 "Blockscaled pipeline exceeds SM100 shared memory capacity"
@@ -555,8 +792,15 @@ class Sm100BlockScaledGroupedGemmKernel:
         weight_dtype,
         sf_dtype,
         sf_vec_size,
+        k_steps=None,
     ):
-        """M is output channels; N is allocated routed-token capacity."""
+        """M is output channels; N is allocated routed-token capacity.
+
+        Explicit K choices must fit at least one operand and accumulator slot.
+        The constructor applies the requested overlap and stage-count policy.
+        """
+        if k_steps is not None and (type(k_steps) is not int or k_steps not in (4, 8)):
+            return False
         if not Sm100BlockScaledGroupedGemmKernel.is_valid_dtypes(
             activation_dtype, weight_dtype, sf_dtype, sf_vec_size
         ):
@@ -573,16 +817,27 @@ class Sm100BlockScaledGroupedGemmKernel:
         if len(mma_tiler_mn) != 2:
             return False
         tile_m, tile_n = mma_tiler_mn
-        if tile_m == 128:
-            if cluster_shape_mn != (1, 1) or tile_n not in (16, 32, 64, 128, 256):
-                return False
-        elif tile_m == 256:
-            if cluster_shape_mn != (2, 1) or tile_n not in (128, 256):
-                return False
-        elif tile_m == 512:
-            if cluster_shape_mn != (2, 1) or tile_n != 128:
-                return False
-        else:
+        if tile_m not in (128, 256, 512) or tile_n not in (16, 32, 64, 128, 256):
+            return False
+        channel_tiles = max(1, tile_m // 256)
+        cta_group_size = tile_m // channel_tiles // 128
+        if cluster_shape_mn != (cta_group_size, 1):
+            return False
+        base_k = (
+            256 if activation_dtype is weight_dtype is cutlass.Float4E2M1FN else 128
+        )
+        steps = 4 if k_steps is None else k_steps
+        stage_capacity, _ = Sm100BlockScaledGroupedGemmKernel._k_stage_capacity(
+            (tile_m, tile_n, base_k * steps // 4),
+            activation_dtype,
+            weight_dtype,
+            sf_vec_size,
+            False,
+            0,
+            False,
+            1,
+        )
+        if stage_capacity < 1:
             return False
         if m <= 0 or n <= 0 or k <= 0:
             return False
@@ -822,8 +1077,8 @@ class Sm100BlockScaledGroupedGemmKernel:
         # Alternate overlapping accumulator windows while keeping scales
         # disjoint. The epilogue reads their shared interval before release.
         self.overlap_acc = (
-            self.allocated_n == 256
-            and self.overlap_epilogue
+            self.can_overlap_accumulators
+            and self.allocated_n == 256
             and self.epilogue.bulk_tokens > 0
         ) or self.overlap_activation_accumulators
         if cutlass.const_expr(
@@ -851,6 +1106,10 @@ class Sm100BlockScaledGroupedGemmKernel:
         class SharedStorage:
             a_barriers: cute.struct.MemRange[cutlass.Int64, self.num_stages * 2]
             ab_barriers: cute.struct.MemRange[cutlass.Int64, self.num_stages * 2]
+            sf_ready_barriers: cute.struct.MemRange[
+                cutlass.Int64,
+                self.num_stages if self.sf_requires_cluster_join else 0,
+            ]
             acc_barriers: cute.struct.MemRange[cutlass.Int64, 2 * self.acc_stages]
             tmem_holding: cutlass.Int32
             tile_info_barriers: cute.struct.MemRange[
@@ -1088,9 +1347,14 @@ class Sm100BlockScaledGroupedGemmKernel:
     ):
         tidx, _, _ = cute.arch.thread_idx()
         warp = tidx // 32
-        block, _, _ = cute.arch.block_idx()
+        block, block_y, block_z = cute.arch.block_idx()
         grid, _, _ = cute.arch.grid_dim()
         cta_rank = cute.arch.make_warp_uniform(cute.arch.block_idx_in_cluster())
+        # Static grids have a guaranteed physical CTA0. CLC can cancel it, so
+        # each executing cluster keeps its own ancestor-publication owner.
+        publishes_ancestors = (block == 0) and (block_y == 0) and (block_z == 0)
+        if cutlass.const_expr(self.use_clc_scheduler):
+            publishes_ancestors = (self.cta_group_size == 1) or (cta_rank == 0)
         block = block // self.cta_group_size
         grid = grid // self.cta_group_size
         storage = utils.SmemAllocator().allocate(self.storage_type)
@@ -1161,7 +1425,14 @@ class Sm100BlockScaledGroupedGemmKernel:
             if self.cta_group_size == 2
             else None,
         )
-        if cutlass.const_expr(self.use_clc_scheduler):
+        if cutlass.const_expr(self.sf_requires_cluster_join):
+            if tidx == 0 and cta_rank == 0:
+                for stage in cutlass.range_constexpr(self.num_stages):
+                    cute.arch.mbarrier_init(
+                        storage.sf_ready_barriers.data_ptr() + stage,
+                        self.cta_group_size,
+                    )
+        if cutlass.const_expr(self.use_clc_scheduler or self.sf_requires_cluster_join):
             cute.arch.mbarrier_init_fence()
         if cutlass.const_expr(self.cta_group_size == 2):
             cute.arch.cluster_arrive_relaxed()
@@ -1255,11 +1526,12 @@ class Sm100BlockScaledGroupedGemmKernel:
             _iket.range_pop()
         if cutlass.const_expr(self.pdl_signal_at == "startup"):
             if cutlass.const_expr(self.publish_routing_before_signal):
-                # The first triggering warp must publish the completed routing
-                # ancestors; other warps must not trigger before that release.
+                # Only warp zero triggers at startup; on publication owners,
+                # its first trigger follows the completed-ancestor release.
                 if warp == 0:
                     if cutlass.const_expr(self.enable_pdl):
-                        release_gpu()
+                        if publishes_ancestors:
+                            release_gpu()
                     griddepcontrol_launch_dependents()
             else:
                 if cutlass.const_expr(
@@ -1267,7 +1539,8 @@ class Sm100BlockScaledGroupedGemmKernel:
                     and self.scatter_output
                     and not self.use_fused_finalize
                 ):
-                    release_gpu()
+                    if publishes_ancestors:
+                        release_gpu()
                 griddepcontrol_launch_dependents()
         num_routed_tiles = num_tiles[0]
         total_tiles = num_routed_tiles * total_m_tiles
@@ -1505,7 +1778,8 @@ class Sm100BlockScaledGroupedGemmKernel:
                     ):
                         # Republish prior routing writes before combine can
                         # preload them. Queued MMA/epilogue work remains.
-                        release_gpu()
+                        if publishes_ancestors:
+                            release_gpu()
                     griddepcontrol_launch_dependents()
                 # Each drain mutates its state through every ring stage.
                 # Keep independent copies even when warp zero drains A first.
@@ -1693,10 +1967,23 @@ class Sm100BlockScaledGroupedGemmKernel:
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_push("mma_sf_ready")
                         ab.consumer_wait(consumer)
-                        if cutlass.const_expr(self.cta_group_size == 1):
-                            # Non-bulk cp.async writes use the generic proxy;
-                            # publish the completed SF bytes before TCGEN reads.
-                            cute.arch.fence_proxy("async.shared", space="cta")
+                        # Publish each CTA's local cp.async scale bytes before
+                        # group-wide S2T reads. The operand empty ring prevents
+                        # reuse of this readiness slot until UMMA releases it.
+                        cute.arch.fence_proxy("async.shared", space="cta")
+                        if cutlass.const_expr(self.sf_requires_cluster_join):
+                            ready = (
+                                storage.sf_ready_barriers.data_ptr() + consumer.index
+                            )
+                            with cute.arch.elect_one():
+                                cute.arch.mbarrier_arrive(
+                                    ready, 0, scope=nvvm.MemScopeKind.CLUSTER
+                                )
+                            if cta_rank == 0:
+                                while not _blockscaled_cluster_try_wait(
+                                    ready, consumer.phase
+                                ):
+                                    pass
                         if cutlass.const_expr(self.enable_iket):
                             _iket.range_pop()
                     if cta_rank == 0:
@@ -1890,7 +2177,7 @@ class Sm100BlockScaledContiguousGroupedGemmFinalizeFusionKernel(
     ):
         if a_major != "k" or b_major != "k" or out_major != "n" or l <= 0:
             return False
-        if len(mma_tiler_mn) != 2 or mma_tiler_mn[0] == 512:
+        if len(mma_tiler_mn) != 2:
             return False
         if final_scale_dtype not in (
             cutlass.Float32,

@@ -93,10 +93,10 @@ from .moe_utils import (
     validate_cute_dsl_moe_situ_config,
 )
 from .blockscaled_contiguous_gather_grouped_gemm_act_fusion import (
-    blockscaled_contiguous_gather_grouped_gemm_act_fusion,
+    _blockscaled_contiguous_gather_grouped_gemm_act_fusion_impl,
 )
 from .blockscaled_contiguous_grouped_gemm_finalize_fusion import (
-    blockscaled_contiguous_grouped_gemm_finalize_fusion,
+    _blockscaled_contiguous_grouped_gemm_finalize_fusion_impl,
 )
 from .tuner import (
     ALL_W4A8_MOE_TACTICS,
@@ -351,6 +351,9 @@ def _moe_core_impl(
     situ_beta: Optional[float] = None,
     situ_linear_beta: Optional[float] = None,
     nvfp4_4over6: Optional[NVFP44Over6Config] = _UNSET,
+    gemm1_k_steps: Optional[int] = None,
+    gemm2_k_steps: Optional[int] = None,
+    gemm1_use_clc_scheduler: Optional[bool] = None,
 ) -> torch.Tensor:
     """Core MoE implementation shared by functional and wrapper APIs.
 
@@ -661,7 +664,7 @@ def _moe_core_impl(
         def _fc1_die(i):
             """Compute domain i's FC1 shard on its current CUDA stream."""
             shard = localized_weights[i]
-            blockscaled_contiguous_gather_grouped_gemm_act_fusion(
+            _blockscaled_contiguous_gather_grouped_gemm_act_fusion_impl(
                 a=x,
                 b=shard["w1_weight"],
                 a_scale=x_sf,
@@ -696,6 +699,8 @@ def _moe_core_impl(
                 situ_beta=situ_beta,
                 situ_linear_beta=situ_linear_beta,
                 gated=gated,
+                k_steps=gemm1_k_steps,
+                use_clc_scheduler=gemm1_use_clc_scheduler,
             )
 
         localized_memset_done = None
@@ -721,7 +726,7 @@ def _moe_core_impl(
         intermediate, intermediate_sf = gemm1_out, gemm1_out_scale
     else:
         intermediate, intermediate_sf = (
-            blockscaled_contiguous_gather_grouped_gemm_act_fusion(
+            _blockscaled_contiguous_gather_grouped_gemm_act_fusion_impl(
                 a=x,
                 b=w1_weight,
                 a_scale=x_sf,
@@ -758,6 +763,8 @@ def _moe_core_impl(
                 situ_beta=situ_beta,
                 situ_linear_beta=situ_linear_beta,
                 gated=gated,
+                k_steps=gemm1_k_steps,
+                use_clc_scheduler=gemm1_use_clc_scheduler,
             )
         )
     if use_per_token_activation:
@@ -810,7 +817,7 @@ def _moe_core_impl(
         def _fc2_die(i):
             """Compute domain i's output columns using the full intermediate."""
             shard = localized_weights[i]
-            blockscaled_contiguous_grouped_gemm_finalize_fusion(
+            _blockscaled_contiguous_grouped_gemm_finalize_fusion_impl(
                 a=intermediate,
                 b=shard["w2_weight"],
                 a_scale=intermediate_sf,
@@ -836,6 +843,7 @@ def _moe_core_impl(
                 domain_id=i,
                 enable_pdl=enable_pdl,
                 use_fused_finalize=use_fused_finalize,
+                k_steps=gemm2_k_steps,
             )
 
         try:
@@ -847,7 +855,7 @@ def _moe_core_impl(
                 localization_main_stream.wait_stream(stream)
             raise
     else:
-        blockscaled_contiguous_grouped_gemm_finalize_fusion(
+        _blockscaled_contiguous_grouped_gemm_finalize_fusion_impl(
             a=intermediate,
             b=w2_weight,
             a_scale=intermediate_sf,
@@ -871,6 +879,7 @@ def _moe_core_impl(
             mma_inst_shape=gemm2_mma_inst_shape,
             enable_pdl=enable_pdl,
             use_fused_finalize=use_fused_finalize,
+            k_steps=gemm2_k_steps,
         )
 
     # Step 4: Deterministic routing-weight reduction
@@ -1195,6 +1204,9 @@ class CuteDslMoEWrapper:
         enable_pdl: bool = True,
         use_async_memset: bool = True,
         nvfp4_4over6: Optional[NVFP44Over6Config] = _UNSET,
+        gemm1_k_steps: Optional[int] = None,
+        gemm2_k_steps: Optional[int] = None,
+        gemm1_use_clc_scheduler: Optional[bool] = None,
         **kwargs,
     ) -> torch.Tensor:
         """Forward implementation called by auto-tuner."""
@@ -1242,6 +1254,9 @@ class CuteDslMoEWrapper:
             situ_beta=self.situ_beta,
             situ_linear_beta=self.situ_linear_beta,
             nvfp4_4over6=nvfp4_4over6,
+            gemm1_k_steps=gemm1_k_steps,
+            gemm2_k_steps=gemm2_k_steps,
+            gemm1_use_clc_scheduler=gemm1_use_clc_scheduler,
         )
 
     @flashinfer_api(trace=cute_dsl_moe_wrapper_run_trace)
@@ -1501,6 +1516,9 @@ def _cute_dsl_fused_moe_impl(
     localized_weights: Optional[list] = None,
     localized_streams: Optional[list] = None,
     sm_count: Optional[int] = None,
+    gemm1_k_steps: Optional[int] = None,
+    gemm2_k_steps: Optional[int] = None,
+    gemm1_use_clc_scheduler: Optional[bool] = None,
 ) -> torch.Tensor:
     """Internal implementation called by auto-tuner for functional API."""
     return _moe_core_impl(
@@ -1546,6 +1564,9 @@ def _cute_dsl_fused_moe_impl(
         localized_weights=localized_weights,
         localized_streams=localized_streams,
         sm_count=sm_count,
+        gemm1_k_steps=gemm1_k_steps,
+        gemm2_k_steps=gemm2_k_steps,
+        gemm1_use_clc_scheduler=gemm1_use_clc_scheduler,
     )
 
 

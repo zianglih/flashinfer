@@ -29,6 +29,7 @@ Tests include:
 """
 
 import gc
+import json
 import weakref
 
 import pytest
@@ -893,7 +894,19 @@ class TestTacticEnumeration:
 
         tactics = get_w4a8_moe_valid_tactics()
         assert tactics == ALL_BLACKWELL_MOE_TACTICS
-        assert canonicalize_w4a8_tactic(list(tactics[0])) == tactics[0]
+        for tactic in tactics:
+            assert canonicalize_w4a8_tactic(json.loads(json.dumps(tactic))) == tactic
+        legacy = tactics[0][:3]
+        for previous in (legacy, tactics[0][:4]):
+            assert (
+                canonicalize_w4a8_tactic(json.loads(json.dumps(previous))) == previous
+            )
+        for scheduler in (None, 0, 1, "true", (), (True,)):
+            with pytest.raises(ValueError, match="scheduler|bool|CLC"):
+                canonicalize_w4a8_tactic((*tactics[0][:4], scheduler))
+        for pair in (None, (), (4,), (4, 8, 4), (0, 8), (4, 16), (True, 8), (4.0, 8)):
+            with pytest.raises(ValueError, match="K-step|k_steps_pair"):
+                canonicalize_w4a8_tactic((*legacy, pair))
         with pytest.raises(ValueError, match="unsupported W4A8 MoE tactic"):
             canonicalize_w4a8_tactic(
                 (128, ((128, 128), (1, 1), False), ((128, 96), (1, 1), False))
@@ -901,7 +914,7 @@ class TestTacticEnumeration:
 
     @pytest.mark.parametrize("tile_size", [16, 32, 64, 128, 256])
     def test_gemm1_tactics_match_tile_size(self, tile_size):
-        """GEMM1 puts routing on N and pairs M128/M256 with one/two CTAs."""
+        """GEMM1 puts routing on N and enumerates supported channel geometries."""
         from flashinfer.fused_moe.cute_dsl.tuner import (
             get_blackwell_gemm1_valid_tactics,
         )
@@ -918,8 +931,6 @@ class TestTacticEnumeration:
                 (256, (2, 1)),
                 (512, (2, 1)),
             }
-            if mma_tiler_mn[0] == 512:
-                assert tile_size == 128
 
     @pytest.mark.parametrize("tile_size", [16, 32, 64, 128, 256])
     def test_gemm2_tactics_match_tile_size(self, tile_size):
@@ -935,22 +946,70 @@ class TestTacticEnumeration:
                 f"gemm2 MMA shape {mma_tiler_mn} does not place routed tokens on N "
                 f"tile_size={tile_size}; tactic={(mma_tiler_mn, cluster_shape_mn)}"
             )
-            assert (mma_tiler_mn[0], cluster_shape_mn) in {(128, (1, 1)), (256, (2, 1))}
+            assert (mma_tiler_mn[0], cluster_shape_mn) in {
+                (128, (1, 1)),
+                (256, (2, 1)),
+                (512, (2, 1)),
+            }
 
     def test_all_moe_tactics_pair_gemm1_and_gemm2_consistently(self):
         """Keep every supported routing capacity and pair compatible GEMMs."""
-        from flashinfer.fused_moe.cute_dsl.tuner import ALL_BLACKWELL_MOE_TACTICS
+        from flashinfer.fused_moe.cute_dsl.tuner import (
+            ALL_BLACKWELL_MOE_TACTICS,
+            DEFAULT_RUBIN_MOE_TACTIC,
+            _extract_tactic_params,
+        )
 
         assert ALL_BLACKWELL_MOE_TACTICS
-        assert {tile_size for tile_size, _, _ in ALL_BLACKWELL_MOE_TACTICS} == {
+        assert len(ALL_BLACKWELL_MOE_TACTICS) == len(set(ALL_BLACKWELL_MOE_TACTICS))
+        assert {tactic[0] for tactic in ALL_BLACKWELL_MOE_TACTICS} == {
             16,
             32,
             64,
             128,
             256,
         }
-        for tile_size, gemm1_tactic, gemm2_tactic in ALL_BLACKWELL_MOE_TACTICS:
+        assert {tactic[3] for tactic in ALL_BLACKWELL_MOE_TACTICS} == {
+            (4, 4),
+            (4, 8),
+            (8, 4),
+            (8, 8),
+        }
+        assert len(ALL_BLACKWELL_MOE_TACTICS) == 360
+        assert {tactic[4] for tactic in ALL_BLACKWELL_MOE_TACTICS} == {False, True}
+        for tactic in ALL_BLACKWELL_MOE_TACTICS:
+            assert len(tactic) == 5
+            tile_size, gemm1_tactic, gemm2_tactic, k_steps, scheduler = tactic
+            assert type(scheduler) is bool
             assert gemm1_tactic[0][1] == gemm2_tactic[0][1] == tile_size
+            params = _extract_tactic_params(tactic)
+            assert (params["gemm1_k_steps"], params["gemm2_k_steps"]) == k_steps
+            assert params["gemm1_use_clc_scheduler"] is scheduler
+            assert (*tactic[:4], not scheduler) in ALL_BLACKWELL_MOE_TACTICS
+            legacy = _extract_tactic_params(tactic[:3])
+            assert legacy["gemm1_k_steps"] is legacy["gemm2_k_steps"] is None
+            assert legacy["gemm1_use_clc_scheduler"] is True
+            previous = _extract_tactic_params(tactic[:4])
+            assert previous["gemm1_use_clc_scheduler"] is True
+            for key in params.keys() - {
+                "gemm1_k_steps",
+                "gemm2_k_steps",
+                "gemm1_use_clc_scheduler",
+            }:
+                assert legacy[key] == previous[key] == params[key]
+            assert (previous["gemm1_k_steps"], previous["gemm2_k_steps"]) == k_steps
+        rubin = _extract_tactic_params(DEFAULT_RUBIN_MOE_TACTIC)
+        assert rubin["is_rubin"]
+        assert rubin["gemm1_use_clc_scheduler"] is False
+        assert rubin["gemm1_k_steps"] is rubin["gemm2_k_steps"] is None
+        with pytest.raises(ValueError, match="Blackwell-only"):
+            _extract_tactic_params((*DEFAULT_RUBIN_MOE_TACTIC, (4, 8)))
+        with pytest.raises(ValueError, match="Blackwell-only"):
+            _extract_tactic_params((*DEFAULT_RUBIN_MOE_TACTIC, (4, 8), True))
+        with pytest.raises(ValueError, match="same architecture format"):
+            _extract_tactic_params(
+                (128, ALL_BLACKWELL_MOE_TACTICS[0][1], DEFAULT_RUBIN_MOE_TACTIC[2])
+            )
 
     def test_w4a16_tactic_enumeration_invariants(self):
         from flashinfer.fused_moe.cute_dsl.blackwell.moe_w4a16 import (
@@ -4720,11 +4779,11 @@ def test_localized_streams_are_joined_on_failure(
     monkeypatch.setattr(module, "moe_output_memset_inplace", memset)
     monkeypatch.setattr(
         module,
-        "blockscaled_contiguous_gather_grouped_gemm_act_fusion",
+        "_blockscaled_contiguous_gather_grouped_gemm_act_fusion_impl",
         lambda **kw: launch("fc1", **kw),
     )
     monkeypatch.setattr(
-        module, "blockscaled_contiguous_grouped_gemm_finalize_fusion", finalize
+        module, "_blockscaled_contiguous_grouped_gemm_finalize_fusion_impl", finalize
     )
     monkeypatch.setattr(torch.cuda, "current_stream", lambda: main_stream)
     monkeypatch.setattr(torch.cuda, "stream", lambda stream: nullcontext())

@@ -92,12 +92,12 @@ def _gemm1_ok(
         (512, (256, 256), (2, 1), True),
         (384, (256, 256), (2, 1), True),
         (128, (256, 128), (2, 1), True),
-        (256, (256, 64), (2, 1), False),
+        (256, (256, 64), (2, 1), True),
         (128, (128, 128), (1, 2), False),
         (256, (128, 128), (2, 1), False),
         (256, (256, 128), (1, 1), False),
-        # Reusing B across two channel tiles is an FC1-only tactic.
-        (512, (512, 128), (2, 1), False),
+        # Both GEMMs can reuse B across two channel tiles.
+        (512, (512, 128), (2, 1), True),
     ],
 )
 def test_finalize_n_tiling(n, mma, cluster, expect):

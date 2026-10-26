@@ -163,8 +163,11 @@ def _run_blockscaled_gemm(
         sf_vec_size=sf_vec_size,
         mma_tiler_mn=mma_tiler_mn,
         cluster_shape_mn=cluster_shape_mn,
+        k_steps=k_steps,
     ):
-        raise ValueError("Unsupported split block-scaled GEMM shape or output dtype")
+        raise ValueError(
+            "Unsupported split block-scaled GEMM shape, output dtype, or K steps"
+        )
     mma_m, route_tile = mma_tiler_mn
     stream = cuda.CUstream(torch.cuda.current_stream().cuda_stream)
     if prepare_input:
@@ -646,7 +649,8 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
         mma_tiler_mn: Physical MMA tile shape (M, N). Blackwell uses channels on M
             and routed tokens on N. Default: (128, 128).
         cluster_shape_mn: Cluster shape (ClusterM, ClusterN). Blackwell uses
-            (1, 1) with M128 or (2, 1) with M256. M256 supports N128/N256.
+            (1, 1) with M128 or (2, 1) with M256/M512. Resource admission
+            checks the selected channel and token widths.
             Default: (1, 1).
         raster_along_m: If True, raster tiles along M dimension. Default: False
         sm_count: Number of SMs to use. Default: max available.
@@ -706,6 +710,68 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
         ...     b_dtype="float4_e2m1fn",
         ... )  # out shape: (seq_len, hidden_dim)
     """
+    return _blockscaled_contiguous_grouped_gemm_finalize_fusion_impl(
+        a=a,
+        b=b,
+        a_scale=a_scale,
+        b_scale=b_scale,
+        alpha=alpha,
+        tile_idx_to_expert_idx=tile_idx_to_expert_idx,
+        num_non_exiting_tiles=num_non_exiting_tiles,
+        tile_idx_to_mn_limit=tile_idx_to_mn_limit,
+        permuted_idx_to_expanded_idx=permuted_idx_to_expanded_idx,
+        token_final_scales=token_final_scales,
+        out=out,
+        a_per_token_scale=a_per_token_scale,
+        a_dtype=a_dtype,
+        b_dtype=b_dtype,
+        sf_dtype=sf_dtype,
+        out_dtype=out_dtype,
+        sf_vec_size=sf_vec_size,
+        mma_tiler_mn=mma_tiler_mn,
+        cluster_shape_mn=cluster_shape_mn,
+        raster_along_m=raster_along_m,
+        sm_count=sm_count,
+        domain_id=domain_id,
+        mma_tiler=mma_tiler,
+        mma_inst_shape=mma_inst_shape,
+        enable_pdl=enable_pdl,
+        use_fused_finalize=use_fused_finalize,
+    )
+
+
+def _blockscaled_contiguous_grouped_gemm_finalize_fusion_impl(
+    a: torch.Tensor,
+    b: torch.Tensor,
+    a_scale: torch.Tensor,
+    b_scale: torch.Tensor,
+    alpha: torch.Tensor,
+    tile_idx_to_expert_idx: torch.Tensor,
+    num_non_exiting_tiles: torch.Tensor,
+    tile_idx_to_mn_limit: torch.Tensor,
+    permuted_idx_to_expanded_idx: torch.Tensor,
+    token_final_scales: torch.Tensor,
+    out: Optional[torch.Tensor] = None,
+    *,
+    a_per_token_scale: Optional[torch.Tensor] = None,
+    a_dtype: str,
+    b_dtype: str,
+    sf_dtype: str = "float8_e4m3fn",
+    out_dtype: str = "bfloat16",
+    sf_vec_size: int = 16,
+    mma_tiler_mn: Tuple[int, int] = (128, 128),
+    cluster_shape_mn: Tuple[int, int] = (1, 1),
+    raster_along_m: bool = False,
+    sm_count: Optional[int] = None,
+    domain_id: int = -1,
+    # Rubin-specific parameters (optional; when set, use SM107 kernel)
+    mma_tiler: Optional[Tuple[int, int, int]] = None,
+    mma_inst_shape: Optional[Tuple[int, int, int]] = None,
+    enable_pdl: bool = True,
+    use_fused_finalize: bool = True,
+    k_steps: Optional[int] = None,
+) -> torch.Tensor:
+    """Shared preparation and validation with an internal K-depth override."""
     # Validate inputs
     assert a.device.type == "cuda", "Input tensors must be on CUDA device"
     assert b.device.type == "cuda", "Input tensors must be on CUDA device"
@@ -745,6 +811,10 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
     # Check compute capability
     major, minor = get_compute_capability(a.device)
     is_rubin = mma_tiler is not None and mma_inst_shape is not None
+    if k_steps is not None and (type(k_steps) is not int or k_steps not in (4, 8)):
+        raise ValueError("Blackwell k_steps must be None, 4, or 8")
+    if is_rubin and k_steps is not None:
+        raise ValueError("k_steps is supported only by the Blackwell kernels")
     if major != 10:
         raise ValueError(
             f"Blockscaled contiguous grouped GEMM with finalize fusion requires SM10x family. "
@@ -870,8 +940,6 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
             raise ValueError("out must be contiguous")
 
     if not is_rubin:
-        mma_m, route_tile = mma_tiler_mn
-        k_steps = 8 if mma_m == 128 and route_tile < 128 else 4
         _run_blockscaled_gemm(
             weight=b,
             weight_sf=b_scale,

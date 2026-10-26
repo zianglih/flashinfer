@@ -25,6 +25,11 @@ Tactic format follows TRT-LLM's style and is architecture-dependent:
   for both GEMM1 (Gather + FC1 activation) and GEMM2 (Finalize)
 - Rubin (SM107): tactic = (mma_tiler, mma_inst_shape, cluster_shape_mn, raster_along_m)
 
+Internal MoE tactic/cache entries wrap both sub-tactics as
+(route_tile, gemm1, gemm2). Blackwell tuning adds a fourth field containing
+independent K-step depths for the two phases. Legacy three-field entries
+keep automatic depth.
+
 Reference: TensorRT-LLM/tensorrt_llm/_torch/custom_ops/cute_dsl_custom_ops.py
 """
 
@@ -82,44 +87,32 @@ BLACKWELL_ROUTE_TILES = (16, 32, 64, 128, 256)
 
 def get_blackwell_gemm1_valid_tactics(tile_size: int) -> List[Tuple]:
     """Block-scaled FC1: physical M is output channels and N is routed tokens."""
-    if tile_size in (16, 32, 64):
-        return [((128, tile_size), (1, 1), False)]
-    elif tile_size == 128:
-        return [
-            ((128, 128), (1, 1), False),
-            ((256, 128), (2, 1), False),
-            # Two M256 instructions reuse B/SFB in one two-CTA group.
-            ((512, 128), (2, 1), False),
-        ]
-    elif tile_size == 256:
-        return [
-            ((128, 256), (1, 1), False),
-            ((256, 256), (2, 1), False),
-        ]
-    else:
-        raise ValueError(f"Unsupported Blackwell routing tile: {tile_size}")
+    return get_blackwell_gemm2_valid_tactics(tile_size)
 
 
 def get_blackwell_gemm2_valid_tactics(tile_size: int) -> List[Tuple]:
-    """FC2 shares token capacity and uses one physical channel tile."""
-    if tile_size in (16, 32, 64):
-        return [((128, tile_size), (1, 1), False)]
-    elif tile_size in (128, 256):
-        return [
-            ((128, tile_size), (1, 1), False),
-            ((256, tile_size), (2, 1), False),
-        ]
-    else:
+    """Channel tilings shared by both phases; can_implement checks capacity."""
+    if tile_size not in BLACKWELL_ROUTE_TILES:
         raise ValueError(f"Unsupported Blackwell routing tile: {tile_size}")
+    return [
+        (
+            (128 * cta_group_size * channel_tiles, tile_size),
+            (cta_group_size, 1),
+            False,
+        )
+        for cta_group_size, channel_tiles in ((1, 1), (2, 1), (2, 2))
+    ]
 
 
 def get_blackwell_moe_valid_tactics() -> List[Tuple]:
-    """Get split block-scaled runtime-N tactics as (route_tile, FC1, FC2)."""
+    """Pair geometry and reduction depths with the FC1 scheduling choice."""
     return [
-        (route_tile, gemm1, gemm2)
+        (route_tile, gemm1, gemm2, k_steps, use_clc_scheduler)
         for route_tile in BLACKWELL_ROUTE_TILES
         for gemm1 in get_blackwell_gemm1_valid_tactics(route_tile)
         for gemm2 in get_blackwell_gemm2_valid_tactics(route_tile)
+        for k_steps in itertools.product((4, 8), repeat=2)
+        for use_clc_scheduler in (False, True)
     ]
 
 
@@ -298,8 +291,6 @@ DEFAULT_RUBIN_MOE_TACTIC = (
 
 def _canonicalize_mxfp_tactic(tactic: Any, quant_mode: str) -> Tuple:
     """Canonicalize a Blackwell MXFP activation tactic from Python or JSON."""
-    if not isinstance(tactic, (tuple, list)) or len(tactic) != 3:
-        raise ValueError("tactic must be (tile_size, gemm1_tactic, gemm2_tactic)")
 
     def as_tuple(value: Any) -> Any:
         if isinstance(value, (tuple, list)):
@@ -307,7 +298,11 @@ def _canonicalize_mxfp_tactic(tactic: Any, quant_mode: str) -> Tuple:
         return value
 
     result = as_tuple(tactic)
-    if result not in ALL_W4A8_MOE_TACTICS:
+    _split_moe_tactic(result)
+    supported = any(
+        candidate[: len(result)] == result for candidate in ALL_W4A8_MOE_TACTICS
+    )
+    if not supported:
         raise ValueError(f"unsupported {quant_mode.upper()} MoE tactic: {result!r}")
     return result
 
@@ -322,14 +317,44 @@ def canonicalize_w4a8_tactic(tactic: Any) -> Tuple:
 # =============================================================================
 
 
-def _is_rubin_tactic(tactic: Tuple) -> bool:
-    """Detect whether a tactic is Rubin format by checking sub-tactic length.
+def _split_moe_tactic(tactic: Tuple) -> Tuple:
+    """Keep legacy/Rubin geometry distinct from Blackwell tuning controls."""
+    if not isinstance(tactic, (tuple, list)) or len(tactic) not in (3, 4, 5):
+        raise ValueError(
+            "tactic must be (tile_size, gemm1, gemm2[, k_steps_pair[, fc1_use_clc]])"
+        )
+    tile_size, gemm1, gemm2 = tactic[:3]
+    if not isinstance(gemm1, (tuple, list)) or not isinstance(gemm2, (tuple, list)):
+        raise ValueError("GEMM sub-tactics must be tuples or lists")
+    if len(gemm1) == len(gemm2) == 3:
+        is_rubin = False
+    elif len(gemm1) == len(gemm2) == 4:
+        is_rubin = True
+    else:
+        raise ValueError("GEMM sub-tactics must use the same architecture format")
+    if len(tactic) == 3:
+        k_steps = (None, None)
+    else:
+        k_steps = tactic[3]
+        if is_rubin:
+            raise ValueError("An explicit K-step pair is Blackwell-only")
+        if not isinstance(k_steps, (tuple, list)) or len(k_steps) != 2:
+            raise ValueError("k_steps_pair must contain FC1 and FC2 depths")
+        if any(type(depth) is not int or depth not in (4, 8) for depth in k_steps):
+            raise ValueError("Blackwell K-step depths must be 4 or 8")
+    if is_rubin:
+        use_clc_scheduler = False
+    else:
+        use_clc_scheduler = True
+    if len(tactic) == 5:
+        use_clc_scheduler = tactic[4]
+        if type(use_clc_scheduler) is not bool:
+            raise ValueError("FC1 CLC scheduling choice must be a boolean")
+    return tile_size, gemm1, gemm2, k_steps, is_rubin, use_clc_scheduler
 
-    Blackwell sub-tactic: (mma_tiler_mn, cluster_shape_mn, raster_along_m) — 3 elements
-    Rubin sub-tactic: (mma_tiler, mma_inst_shape, cluster_shape_mn, raster_along_m) — 4 elements
-    """
-    _, gemm1_tactic, _ = tactic
-    return len(gemm1_tactic) == 4
+
+def _is_rubin_tactic(tactic: Tuple) -> bool:
+    return _split_moe_tactic(tactic)[4]
 
 
 def _extract_tactic_params(tactic: Tuple) -> Dict[str, Any]:
@@ -342,9 +367,11 @@ def _extract_tactic_params(tactic: Tuple) -> Dict[str, Any]:
         'gemm1_mma_tiler', 'gemm1_mma_inst_shape', etc. in addition to
         the standard keys.
     """
-    tile_size, gemm1_tactic, gemm2_tactic = tactic
+    tile_size, gemm1_tactic, gemm2_tactic, k_steps, is_rubin, use_clc_scheduler = (
+        _split_moe_tactic(tactic)
+    )
 
-    if _is_rubin_tactic(tactic):
+    if is_rubin:
         (
             gemm1_mma_tiler,
             gemm1_mma_inst_shape,
@@ -359,6 +386,9 @@ def _extract_tactic_params(tactic: Tuple) -> Dict[str, Any]:
         ) = gemm2_tactic
         return {
             "tile_size": tile_size,
+            "gemm1_k_steps": k_steps[0],
+            "gemm2_k_steps": k_steps[1],
+            "gemm1_use_clc_scheduler": use_clc_scheduler,
             "is_rubin": True,
             "gemm1_mma_tiler_mn": (gemm1_mma_tiler[0], gemm1_mma_tiler[1]),
             "gemm1_cluster_shape_mn": gemm1_cluster_shape_mn,
@@ -376,6 +406,9 @@ def _extract_tactic_params(tactic: Tuple) -> Dict[str, Any]:
         gemm2_mma_tiler_mn, gemm2_cluster_shape_mn, gemm2_raster_along_m = gemm2_tactic
         return {
             "tile_size": tile_size,
+            "gemm1_k_steps": k_steps[0],
+            "gemm2_k_steps": k_steps[1],
+            "gemm1_use_clc_scheduler": use_clc_scheduler,
             "is_rubin": False,
             "gemm1_mma_tiler_mn": gemm1_mma_tiler_mn,
             "gemm1_cluster_shape_mn": gemm1_cluster_shape_mn,
@@ -422,11 +455,13 @@ class CuteDslFusedMoERunner(TunableRunner):
     trying different combinations of GEMM tactics.
 
     Tactic format follows TRT-LLM style:
-        (tile_size, gemm1_tactic, gemm2_tactic)
+        (tile_size, gemm1_tactic, gemm2_tactic[, k_steps_pair[, fc1_use_clc]])
     where:
         - tile_size: routed-token capacity (16, 32, 64, 128, or 256 on Blackwell)
         - gemm1_tactic: (mma_tiler_mn, cluster_shape_mn, raster_along_m)
         - gemm2_tactic: (mma_tiler_mn, cluster_shape_mn, raster_along_m)
+        - k_steps_pair: optional Blackwell (FC1, FC2) depths, each 4 or 8
+        - fc1_use_clc: optional Blackwell scheduler choice; legacy tactics request CLC
 
     Input tensor indices (for dynamic_tensor_specs):
         0: x (num_tokens, hidden_size//2) - FP4 packed input
@@ -695,7 +730,7 @@ class CuteDslFusedMoERunner(TunableRunner):
             self.output_dtype,
             self.enable_pdl,
         )
-        extras += ("blockscaled_route_n_v3",)
+        extras += ("blockscaled_route_n_v4",)
         if self.use_cuda_graph:
             extras += ("cuda_graph",)
         return extras + self._localization_signature()
@@ -760,12 +795,14 @@ class CuteDslFusedMoERunner(TunableRunner):
         all_tactics = ALL_W4A8_MOE_TACTICS if is_mxfp8 else _get_arch_tactics()
 
         def _tactic_ok(tactic):
-            tile_size, gemm1_tactic, gemm2_tactic = tactic
+            tile_size, gemm1_tactic, gemm2_tactic, k_steps, is_rubin, _ = (
+                _split_moe_tactic(tactic)
+            )
             permuted_m = get_max_num_permuted_tokens(
                 num_tokens, self.top_k, self.num_local_experts, tile_size
             )
 
-            if _is_rubin_tactic(tactic):
+            if is_rubin:
                 # The Rubin (SM107) gather kernel implements SwiGLU (and its
                 # SiTU variant) plus Relu2, but not GeGLU-tanh; skip Rubin
                 # tactics for the unimplemented activation.
@@ -841,9 +878,9 @@ class CuteDslFusedMoERunner(TunableRunner):
                     Sm100BlockScaledGroupedGemmKernel,
                 )
 
-                for weight, gemm_tactic, output_dtype in (
-                    (w1_weight, gemm1_tactic, gemm1_c_dtype),
-                    (w2_weight, gemm2_tactic, gemm2_out_dtype),
+                for weight, gemm_tactic, output_dtype, depth in (
+                    (w1_weight, gemm1_tactic, gemm1_c_dtype, k_steps[0]),
+                    (w2_weight, gemm2_tactic, gemm2_out_dtype, k_steps[1]),
                 ):
                     mma_tiler_mn, cluster_shape_mn, _ = gemm_tactic
                     if mma_tiler_mn[1] != tile_size:
@@ -859,6 +896,7 @@ class CuteDslFusedMoERunner(TunableRunner):
                         sf_vec_size=sf_vec_size,
                         mma_tiler_mn=mma_tiler_mn,
                         cluster_shape_mn=cluster_shape_mn,
+                        k_steps=depth,
                     ):
                         return False
                 return True
@@ -867,9 +905,8 @@ class CuteDslFusedMoERunner(TunableRunner):
         valid_tactics = [t for t in all_tactics if _tactic_ok(t)]
 
         if not valid_tactics:
-            # The default tactic is a member of the arch tactic list, so an empty
-            # list means even the default fails can_implement -- do not fall
-            # back to it unvalidated (gh #3957). This early refusal is
+            # Do not fall back to an unvalidated legacy default when this
+            # resource-filtered candidate list is empty (gh #3957). This refusal is
             # diagnostics/defense-in-depth: the kernel wrappers re-validate
             # can_implement at launch and raise, so an unvalidated tactic
             # cannot reach the device -- but refusing here avoids pointless
@@ -901,7 +938,8 @@ class CuteDslFusedMoERunner(TunableRunner):
                  w1_weight, w1_weight_sf, w1_alpha, fc2_input_scale,
                  w2_weight, w2_weight_sf, w2_alpha, per_token_scale (optional),
                  moe_output (optional)]
-            tactic: Tactic tuple (tile_size, gemm1_tactic, gemm2_tactic) or None for default.
+            tactic: Tactic tuple (tile_size, gemm1_tactic, gemm2_tactic[, k_steps_pair[, fc1_use_clc]]),
+                or None for default.
             do_preparation: If True, perform one-time setup (not used).
             **kwargs: Additional keyword arguments passed to forward_impl.
 
@@ -989,6 +1027,9 @@ class CuteDslFusedMoERunner(TunableRunner):
             swiglu_limit=self.swiglu_limit,
             situ_beta=self.situ_beta,
             situ_linear_beta=self.situ_linear_beta,
+            gemm1_k_steps=params["gemm1_k_steps"],
+            gemm2_k_steps=params["gemm2_k_steps"],
+            gemm1_use_clc_scheduler=params["gemm1_use_clc_scheduler"],
             **kwargs,
         )
 
@@ -1298,13 +1339,17 @@ def print_all_tactics():
     ]:
         logger.info("%s MoE tactics: %d", label, len(tactics))
         for i, tactic in enumerate(tactics):
-            tile_size, gemm1_tactic, gemm2_tactic = tactic
+            tile_size, gemm1_tactic, gemm2_tactic, k_steps, _, use_clc_scheduler = (
+                _split_moe_tactic(tactic)
+            )
             logger.info(
-                "  Tactic %d: tile_size=%s, gemm1=%s, gemm2=%s",
+                "  Tactic %d: tile_size=%s, gemm1=%s, gemm2=%s, k_steps=%s, fc1_clc=%s",
                 i,
                 tile_size,
                 gemm1_tactic,
                 gemm2_tactic,
+                k_steps,
+                use_clc_scheduler,
             )
 
 

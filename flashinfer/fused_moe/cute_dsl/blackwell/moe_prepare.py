@@ -95,7 +95,8 @@ class PrepareRouted:
             # Publish completed routing ancestors for the next grid's weight
             # prefetch. Its wait still protects this grid's payload/SF writes.
             if tidx < 32:
-                release_gpu()
+                if bidx == 0:
+                    release_gpu()
                 cute.arch.griddepcontrol_launch_dependents()
         count = cute.make_tensor(num_tiles_ptr, cute.make_layout((1,)))[0]
         active_rows = count * self.route_tile
