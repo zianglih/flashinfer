@@ -186,7 +186,7 @@ def is_sm100_family():
     if not torch.cuda.is_available():
         return False
     props = torch.cuda.get_device_properties(0)
-    return props.major == 10
+    return (props.major, props.minor) in ((10, 0), (10, 3))
 
 
 def calc_tflops(n, ms, num_local_experts=None):
@@ -493,6 +493,8 @@ def _backend_skip_reason(backend):
     elif CFG.activation == "situ":
         if backend in ("TRTLLM BF16", "TRTLLM MXFP8"):
             return f"{backend} has no SiTU kernel"
+        elif backend == "TRTLLM PER-TOKEN":
+            return "TRTLLM PER-TOKEN has no per-token SiTU kernel"
         elif backend == "CUTLASS":
             return "The CUTLASS benchmark arm does not implement SiTU"
         return None
@@ -1705,7 +1707,12 @@ def _table_layout(quant_family):
             "TRTLLM PER-TOKEN",
             "TRTLLM BF16",
         )
-        comparisons = (("TRTLLM NVFP4", (0, 2, 1, 4)),)
+        comparisons = (
+            (
+                "TRTLLM NVFP4",
+                tuple((index, "TRTLLM NVFP4", labels[index]) for index in (0, 2, 1, 4)),
+            ),
+        )
         winner_width = max(map(len, labels))
     elif quant_family == "mxfp":
         labels = (
@@ -1716,8 +1723,10 @@ def _table_layout(quant_family):
             "TRTLLM BF16",
         )
         comparisons = (
-            ("TRTLLM MXFP4x8", (0,)),
-            ("TRTLLM MXFP8", (1,)),
+            (
+                "TRTLLM",
+                ((0, "TRTLLM MXFP4x8", "MXFP4x8"), (1, "TRTLLM MXFP8", "MXFP8")),
+            ),
         )
         winner_width = 0
     else:
@@ -1728,11 +1737,11 @@ def _table_layout(quant_family):
             baseline,
             max(
                 len("Speedup vs " + baseline),
-                sum(max(8, len(labels[index])) for index in indices) + len(indices) - 1,
+                sum(max(8, len(label)) for _, _, label in pairs) + len(pairs) - 1,
             ),
-            indices,
+            pairs,
         )
-        for baseline, indices in comparisons
+        for baseline, pairs in comparisons
     ]
     widths = [
         6,
@@ -1758,7 +1767,7 @@ def _print_header(
     quant_family="nvfp4",
 ):
     """Print either precision family's comparison with the same table layout."""
-    modes, backends, baselines, winner_width, table_width = _table_layout(quant_family)
+    _, backends, baselines, winner_width, table_width = _table_layout(quant_family)
     print("\n" + "=" * table_width)
     if quant_family == "mxfp":
         print(
@@ -1852,10 +1861,8 @@ def _print_header(
         f"{('ms'.rjust(7) + ' ' + 'TFLOPS'.rjust(7)):>{width}}"
         for _, _, width in backends
     )
-    for _, width, indices in baselines:
-        labels = " ".join(
-            modes[index].rjust(max(8, len(modes[index]))) for index in indices
-        )
+    for _, width, pairs in baselines:
+        labels = " ".join(label.rjust(max(8, len(label))) for _, _, label in pairs)
         units.append(f"{labels:>{width}}")
     if winner_width:
         units.append(f"{'':^{winner_width}}")
@@ -1867,7 +1874,7 @@ def _print_header(
 def _print_row(results, histogram_record, quant_family="nvfp4"):
     """Print latency, throughput and the explicitly paired TRTLLM comparisons."""
     rows = {result.backend: result for result in results}
-    modes, backends, baselines, winner_width, _ = _table_layout(quant_family)
+    _, backends, baselines, winner_width, _ = _table_layout(quant_family)
     for key, _, _ in backends:
         if key not in rows and _backend_skip_reason(key) is None:
             raise ValueError(f"Missing result for supported backend: {key}")
@@ -1878,11 +1885,11 @@ def _print_row(results, histogram_record, quant_family="nvfp4"):
         else:
             latency = "N/A"
         fields.append(f"{latency:>{width}}")
-    for key, width, indices in baselines:
+    for _, width, pairs in baselines:
         speedups = []
-        for index in indices:
+        for index, key, label in pairs:
             comparison = backends[index][0]
-            ratio_width = max(8, len(modes[index]))
+            ratio_width = max(8, len(label))
             if key in rows and comparison in rows:
                 speedups.append(
                     f"{rows[key].latency_ms / rows[comparison].latency_ms:>{ratio_width - 1}.2f}x"
