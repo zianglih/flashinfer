@@ -125,9 +125,25 @@ def _run_blockscaled_gemm(
     sm_count=None,
     prefetch_weights_before_wait=False,
     publish_routing_before_signal=False,
-    weight_scale_cache_policy=0,
-    activation_cache_policy=0,
+    weight_scale_cache_policy: str = "normal",
+    activation_cache_policy: str = "normal",
 ):
+    cache_policies = {
+        "normal": 0,
+        "evict_first": 0x12F0000000000000,
+        "evict_last": 0x14F0000000000000,
+    }
+    for policy in (weight_scale_cache_policy, activation_cache_policy):
+        if policy not in cache_policies:
+            raise ValueError(f"Unsupported block-scaled cache policy: {policy!r}")
+    # Prioritize live activations over streamed weight scales in the narrow
+    # prefetch pipeline. Wider tiles retain the default cache behavior.
+    if prefetch_weights_before_wait and cluster_shape_mn == (1, 1) and k_steps == 8:
+        weight_scale_cache_hint = cache_policies[weight_scale_cache_policy]
+        activation_cache_hint = cache_policies[activation_cache_policy]
+    else:
+        weight_scale_cache_hint = 0
+        activation_cache_hint = 0
     mma_m, route_tile = mma_tiler_mn
     if mma_m == 128:
         valid_tile = cluster_shape_mn == (1, 1) and route_tile in (16, 32, 64, 128, 256)
@@ -251,8 +267,8 @@ def _run_blockscaled_gemm(
         num_tile_info_stages,
         prefetch_weights_before_wait,
         publish_routing_before_signal,
-        weight_scale_cache_policy,
-        activation_cache_policy,
+        weight_scale_cache_hint,
+        activation_cache_hint,
         activation_type,
         swiglu_alpha,
         swiglu_beta,
@@ -290,8 +306,8 @@ def _run_blockscaled_gemm(
             num_tile_info_stages=num_tile_info_stages,
             prefetch_weights_before_wait=prefetch_weights_before_wait,
             publish_routing_before_signal=publish_routing_before_signal,
-            weight_scale_cache_policy=weight_scale_cache_policy,
-            activation_cache_policy=activation_cache_policy,
+            weight_scale_cache_policy=weight_scale_cache_hint,
+            activation_cache_policy=activation_cache_hint,
             generate_sfc=output_sf is not None,
             output_dtype=output_dtype,
             final_scale_dtype=scale_dtype,
@@ -612,7 +628,6 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
     mma_inst_shape: Optional[Tuple[int, int, int]] = None,
     enable_pdl: bool = True,
     use_fused_finalize: bool = True,
-    prefetch_weights_before_wait: bool = False,
 ) -> torch.Tensor:
     """Blockscaled contiguous grouped GEMM for MoE GEMM2 workloads.
 
@@ -656,11 +671,12 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
              a caller-provided output with twice the shard's output width.
         use_fused_finalize: Use atomic fused finalize; otherwise write expanded
              rows for deterministic reduction. Default: True.
-        prefetch_weights_before_wait: Prefetch weights before the dependency wait.
-             The preceding producer must publish completed routing metadata with
-             a GPU release before its PDL signal in the same memory synchronization
-             domain. Supported only by static one-CTA Blackwell unfused scatter;
-             defaults to False for arbitrary standalone producers.
+        enable_pdl: Enable Programmatic Dependent Launch, including weight
+             prefetch before the dependency wait for supported Blackwell tiles.
+             Weights and routing metadata must be ready before early launch;
+             a preceding PDL producer must release-publish completed metadata
+             before its first signal in the same memory synchronization domain.
+             The built-in GEMM1 handles this publication. Default: True.
 
     Returns:
         out: Output tensor with dtype out_dtype. The shape is ``(seq_len, n)``
@@ -744,15 +760,6 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
     # Check compute capability
     major, minor = get_compute_capability(a.device)
     is_rubin = mma_tiler is not None and mma_inst_shape is not None
-    if prefetch_weights_before_wait and (
-        is_rubin
-        or use_fused_finalize
-        or mma_tiler_mn[0] != 128
-        or cluster_shape_mn != (1, 1)
-    ):
-        raise ValueError(
-            "Weight startup prefetch requires static one-CTA Blackwell unfused scatter"
-        )
     if major != 10:
         raise ValueError(
             f"Blockscaled contiguous grouped GEMM with finalize fusion requires SM10x family. "
@@ -880,21 +887,6 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
     if not is_rubin:
         mma_m, route_tile = mma_tiler_mn
         k_steps = 8 if mma_m == 128 and route_tile < 128 else 4
-        # Stream weight scales with their payload while FC1 activations are live.
-        weight_scale_cache_policy = (
-            0x12F0000000000000
-            if prefetch_weights_before_wait
-            and cluster_shape_mn == (1, 1)
-            and k_steps == 8
-            else 0
-        )
-        activation_cache_policy = (
-            0x14F0000000000000
-            if prefetch_weights_before_wait
-            and cluster_shape_mn == (1, 1)
-            and k_steps == 8
-            else 0
-        )
         _run_blockscaled_gemm(
             weight=b,
             weight_sf=b_scale,
@@ -934,9 +926,16 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
             overlap_epilogue=True,
             overlap_activation_accumulators=False,
             pdl_signal_at="producer_exit",
-            prefetch_weights_before_wait=prefetch_weights_before_wait,
-            weight_scale_cache_policy=weight_scale_cache_policy,
-            activation_cache_policy=activation_cache_policy,
+            # The per-token quantizer does not republish routing metadata.
+            prefetch_weights_before_wait=(
+                enable_pdl
+                and not use_fused_finalize
+                and not use_a_per_token_scale
+                and mma_m == 128
+                and cluster_shape_mn == (1, 1)
+            ),
+            weight_scale_cache_policy="evict_first",
+            activation_cache_policy="evict_last",
             use_clc_scheduler=False,
             num_tile_info_stages=1,
             sm_count=sm_count,

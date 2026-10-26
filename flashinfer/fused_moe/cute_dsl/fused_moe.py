@@ -444,8 +444,6 @@ def _moe_core_impl(
         raise ValueError("per_token_scale is not supported for MXFP8 activations")
     if is_mxfp8 and output_dtype is not torch.bfloat16:
         raise ValueError("MXFP8 activations support only torch.bfloat16 output")
-    if is_mxfp8 and (situ_beta is not None or situ_linear_beta is not None):
-        raise ValueError("SiTU is not supported for MXFP8 activations")
     validate_cute_dsl_moe_situ_config(activation, situ_beta, situ_linear_beta)
     if is_mxfp8:
         validate_mxfp_inputs(
@@ -637,18 +635,6 @@ def _moe_core_impl(
         main_event.record()
         moe_output.record_stream(aux_stream)
 
-    # Only this complete chain guarantees that FC1 can republish routing
-    # before FC2 starts. Per-token quantization inserts a separate PDL producer.
-    prefetch_weights_before_wait = (
-        enable_pdl
-        and not is_rubin
-        and not use_localized_path
-        and not use_per_token_activation
-        and not use_fused_finalize
-        and gemm2_mma_tiler_mn[0] == 128
-        and gemm2_cluster_shape_mn == (1, 1)
-    )
-
     # Step 2: GEMM1 + activation
     a_dtype = "float8_e4m3fn" if is_mxfp8 else "float4_e2m1fn"
     b_dtype = (
@@ -747,7 +733,6 @@ def _moe_core_impl(
                 num_non_exiting_tiles=num_non_exiting_tiles,
                 out=gemm1_out,
                 out_scale=None if use_per_token_activation else gemm1_out_scale,
-                publish_routing_before_signal=prefetch_weights_before_wait,
                 global_scale=(
                     fc2_input_scale
                     if not is_mxfp8 and not use_per_token_activation
@@ -875,7 +860,6 @@ def _moe_core_impl(
             token_final_scales=token_final_scales,
             out=gemm2_output,
             a_per_token_scale=intermediate_per_token_scale,
-            prefetch_weights_before_wait=prefetch_weights_before_wait,
             a_dtype=a_dtype,
             b_dtype=b_dtype,
             sf_dtype=sf_dtype,
@@ -1032,7 +1016,7 @@ class CuteDslMoEWrapper:
             When set with ``ActivationType.Swiglu``, use the SiTU gate
             ``beta * tanh(gate / beta) * sigmoid(gate)``.
         situ_linear_beta : Optional[float]
-            Optional SiTU tanh clamp for the up branch.
+            Optional SiTU tanh clamp for the up branch; ``None`` leaves it unclamped.
         use_fused_finalize : bool
             Use atomic fused finalize; otherwise use the deterministic
             two-stage finalize. Defaults to ``True``.
@@ -1042,7 +1026,8 @@ class CuteDslMoEWrapper:
             ``"w4a4"``. W4A8 uses packed MXFP4 weights and MXFP8 activations;
             W8A8 uses float8_e4m3fn weights and activations. Both use E8M0
             block-32 scales, BF16 output, and either finalize mode on Blackwell
-            (SM100/SM103); neither supports Rubin, per-token scales, or SiTU.
+            (SM100/SM103), including SiTU; neither supports Rubin or per-token
+            scales.
         autotune_use_cuda_graph : bool
             Profile autotuning candidates with CUDA Graph replay. Defaults to
             ``False`` independently of ``use_cuda_graph``, which controls the
@@ -1079,8 +1064,6 @@ class CuteDslMoEWrapper:
                 raise ValueError(
                     f"quant_mode={quant_mode!r} supports only bfloat16 output"
                 )
-            if situ_beta is not None or situ_linear_beta is not None:
-                raise ValueError("SiTU is not supported for MXFP8 activations")
             device_obj = torch.device(device)
             if (
                 device_obj.type == "cuda"
@@ -1681,13 +1664,13 @@ def cute_dsl_fused_moe(
         ``"w4a4"``. ``"nvfp4"`` is a deprecated alias for ``"w4a4"``.
         W4A8 uses packed MXFP4 weights; W8A8 uses float8_e4m3fn weights.
         Both use MXFP8 activations, E8M0 block-32 scales, BF16 output and
-        either finalize mode on Blackwell (SM100/SM103), without Rubin,
-        per-token scales, or SiTU support.
+        either finalize mode on Blackwell (SM100/SM103), including SiTU,
+        without Rubin or per-token scale support.
     situ_beta : Optional[float]
         When set with ``ActivationType.Swiglu``, use the SiTU gate
         ``beta * tanh(gate / beta) * sigmoid(gate)``.
     situ_linear_beta : Optional[float]
-        Optional SiTU tanh clamp for the up branch.
+        Optional SiTU tanh clamp for the up branch; ``None`` leaves it unclamped.
     per_token_scale : Optional[torch.Tensor]
         Optional W4A4 per-token input row scale for GEMM1.
     nvfp4_4over6 : NVFP44Over6Config or None

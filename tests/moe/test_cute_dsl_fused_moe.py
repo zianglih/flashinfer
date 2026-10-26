@@ -276,7 +276,7 @@ def test_invalid_situ_config(activation_type, situ_beta, situ_linear_beta, error
         validate_cute_dsl_moe_situ_config(activation_type, situ_beta, situ_linear_beta)
 
 
-@pytest.mark.parametrize("quant_mode", _MOE_QUANT_MODES)
+@pytest.mark.parametrize("quant_mode", ["w4a4", "w4a8", "w8a8", "w4a16"])
 def test_situ_changes_autotuner_cache_key(quant_mode: str):
     from flashinfer.fused_moe.cute_dsl.tuner import (
         CuteDslFusedMoERunner,
@@ -288,9 +288,10 @@ def test_situ_changes_autotuner_cache_key(quant_mode: str):
         "top_k": 2,
         "num_local_experts": 8,
     }
-    if quant_mode == "w4a4":
+    if quant_mode in ("w4a4", "w4a8", "w8a8"):
         runner_cls = CuteDslFusedMoERunner
         kwargs["forward_impl"] = lambda *args, **kwargs: None
+        kwargs["quant_mode"] = quant_mode
     elif quant_mode == "w4a16":
         runner_cls = CuteDslFusedMoEW4A16Runner
     else:
@@ -5067,6 +5068,11 @@ def test_cute_dsl_pinned_recipe_matches_env(recipe):
 @mxfp8_required
 @pytest.mark.parametrize("quant_mode", ["w4a8", "w8a8"])
 @pytest.mark.parametrize(
+    "situ_beta,situ_linear_beta",
+    [(None, None), (1.75, None), (0.8, 1.5)],
+    ids=["swiglu", "situ-gate", "situ-gate-and-up"],
+)
+@pytest.mark.parametrize(
     "tactic",
     [
         (16, ((128, 16), (1, 1), False), ((128, 16), (1, 1), False)),
@@ -5074,7 +5080,7 @@ def test_cute_dsl_pinned_recipe_matches_env(recipe):
     ],
     ids=["n16", "n128-two-cta"],
 )
-def test_mxfp_unfused_public_apis(quant_mode, tactic):
+def test_mxfp_unfused_public_apis(quant_mode, tactic, situ_beta, situ_linear_beta):
     from flashinfer import CuteDslMoEWrapper, cute_dsl_fused_moe, mxfp8_quantize
     from flashinfer.fused_moe import CuteDslConfig, QuantConfig, QuantFormat
 
@@ -5121,6 +5127,8 @@ def test_mxfp_unfused_public_apis(quant_mode, tactic):
         top_k=top_k,
         quant_mode=quant_mode,
         use_fused_finalize=False,
+        situ_beta=situ_beta,
+        situ_linear_beta=situ_linear_beta,
     )
     expected = cute_dsl_fused_moe(**inputs, **config, tactic=tactic)
     wrapper = CuteDslMoEWrapper(
@@ -5133,6 +5141,21 @@ def test_mxfp_unfused_public_apis(quant_mode, tactic):
     actual = wrapper.run(**inputs, tactic=tactic)
     torch.testing.assert_close(actual, expected, atol=0, rtol=0)
     assert wrapper._runner.use_cuda_graph
+
+    if situ_beta is not None:
+        from flashinfer.trace.templates.moe import _cute_dsl_fused_moe_reference
+
+        reference = _cute_dsl_fused_moe_reference(**inputs, **config)
+        swiglu_reference = _cute_dsl_fused_moe_reference(
+            **inputs, **dict(config, situ_beta=None, situ_linear_beta=None)
+        )
+        passed, percent_within, atol = check_accuracy(actual, reference)
+        assert passed, (
+            f"Only {percent_within * 100:.2f}% within tolerance (atol={atol:.4f})"
+        )
+        situ_error = torch.mean(torch.abs(actual.float() - reference.float()))
+        swiglu_error = torch.mean(torch.abs(actual.float() - swiglu_reference.float()))
+        assert situ_error < swiglu_error
 
     invalid = dict(inputs, w1_weight=inputs["w1_weight"].to(torch.bfloat16))
     with pytest.raises(TypeError, match="GEMM1 and GEMM2 weights"):
