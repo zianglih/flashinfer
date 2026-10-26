@@ -220,6 +220,8 @@ class Sm100BlockScaledGroupedGemmKernel:
         overlap_epilogue,
         overlap_activation_accumulators,
         pdl_signal_at,
+        use_clc_scheduler,
+        num_tile_info_stages,
         mma_tiler_mnk=(128, 128, 256),
         activation_type=None,
         top_k=1,
@@ -247,6 +249,10 @@ class Sm100BlockScaledGroupedGemmKernel:
             raise ValueError("Unsupported PDL signal boundary")
         if use_fused_finalize and not scatter_output:
             raise ValueError("Fused finalization requires output scattering")
+        if num_tile_info_stages < 1:
+            raise ValueError("Tile metadata needs at least one pipeline stage")
+        self.use_clc_scheduler = use_clc_scheduler
+        self.num_tile_info_stages = num_tile_info_stages
         self.scatter_output = scatter_output
         self.per_token_scale_is_routed = per_token_scale_is_routed
         self.pdl_signal_at = pdl_signal_at
@@ -349,6 +355,10 @@ class Sm100BlockScaledGroupedGemmKernel:
         self.num_stages = num_stages
         self.overlap_epilogue = overlap_epilogue
         self.threads_per_cta = 288 if self.overlap_epilogue else 160
+        self.mma_warp = self.threads_per_cta // 32 - 1
+        self.schedule_warp = self.threads_per_cta // 32
+        if self.use_clc_scheduler:
+            self.threads_per_cta += 32
         self.overlap_acc = False
         self.acc_cols = self.allocated_n * self.channel_tiles
         self.acc_stages = 2 if self.overlap_epilogue and self.allocated_n <= 128 else 1
@@ -430,9 +440,14 @@ class Sm100BlockScaledGroupedGemmKernel:
         )
 
     def _metadata_bytes(self, num_stages):
-        # Operand/accumulator barriers, TMEM handle and both alignment gaps.
+        # Include scheduler storage before fitting operand stages. The CLC
+        # response has its own 16-byte alignment inside the metadata slab.
+        scheduler_bytes = (
+            32 * self.num_tile_info_stages + 48 if self.use_clc_scheduler else 0
+        )
         return (
-            ((num_stages * 4 + self.acc_stages * 2) * 8 + 4 + 127) // 128
+            ((num_stages * 4 + self.acc_stages * 2) * 8 + 4 + scheduler_bytes + 127)
+            // 128
         ) * 128 + 128
 
     def _configure_pipeline_storage(self, tiled_mma, reduction_size):
@@ -829,6 +844,21 @@ class Sm100BlockScaledGroupedGemmKernel:
             ab_barriers: cute.struct.MemRange[cutlass.Int64, self.num_stages * 2]
             acc_barriers: cute.struct.MemRange[cutlass.Int64, 2 * self.acc_stages]
             tmem_holding: cutlass.Int32
+            tile_info_barriers: cute.struct.MemRange[
+                cutlass.Int64,
+                2 * self.num_tile_info_stages if self.use_clc_scheduler else 0,
+            ]
+            tile_info: cute.struct.MemRange[
+                cutlass.Int32,
+                4 * self.num_tile_info_stages if self.use_clc_scheduler else 0,
+            ]
+            clc_barriers: cute.struct.MemRange[
+                cutlass.Int64, 2 if self.use_clc_scheduler else 0
+            ]
+            clc_response: cute.struct.Align[
+                cute.struct.MemRange[cutlass.Int32, 4 if self.use_clc_scheduler else 0],
+                16,
+            ]
             epilogue_scratch: cute.struct.Align[
                 cute.struct.MemRange[cutlass.Float32, self.epilogue_scratch_floats], 128
             ]
@@ -859,6 +889,25 @@ class Sm100BlockScaledGroupedGemmKernel:
             SharedStorage.size_in_bytes() > utils.get_smem_capacity_in_bytes("sm_100")
         ):
             raise ValueError("SharedStorage exceeds SM100 shared memory capacity")
+        sched_params = None
+        launch_grid = (
+            self.max_active_clusters // self.cta_group_size * self.cta_group_size,
+            1,
+            1,
+        )
+        if cutlass.const_expr(self.use_clc_scheduler):
+            sched_params = utils.ClcDynamicPersistentTileSchedulerParams(
+                (
+                    cute.ceil_div(weights.shape[0], self.mma_m * self.channel_tiles)
+                    * self.cta_group_size,
+                    expert_idx.shape[0],
+                    1,
+                ),
+                (self.cta_group_size, 1, 1),
+            )
+            launch_grid = utils.ClcDynamicPersistentTileScheduler.get_grid_shape(
+                sched_params
+            )
         self.kernel(
             tiled_mma,
             cluster_layout,
@@ -885,12 +934,9 @@ class Sm100BlockScaledGroupedGemmKernel:
             num_tiles,
             token_final_scales,
             per_token_scale,
+            sched_params,
         ).launch(
-            grid=(
-                self.max_active_clusters // self.cta_group_size * self.cta_group_size,
-                1,
-                1,
-            ),
+            grid=launch_grid,
             cluster=(self.cta_group_size, 1, 1),
             block=(self.threads_per_cta, 1, 1),
             smem=SharedStorage.size_in_bytes(),
@@ -915,6 +961,23 @@ class Sm100BlockScaledGroupedGemmKernel:
         predicate = cute.make_rmem_tensor((1,), cutlass.Boolean)
         predicate[0] = valid
         cute.copy_atom_call(atom, source, destination, pred=predicate)
+
+    @cute.jit
+    def next_work(self, info_pipe, state, info, static_tile, total_tiles):
+        tile = cutlass.Int32(static_tile)
+        expert = cutlass.Int32(0)
+        valid = cutlass.Int32(0)
+        if cutlass.const_expr(self.use_clc_scheduler):
+            info_pipe.consumer_wait(state)
+            tile = info[0, state.index]
+            expert = info[1, state.index]
+            valid = info[2, state.index]
+            info_pipe.consumer_release(state)
+            state.advance()
+        else:
+            if tile >= total_tiles:
+                tile = cutlass.Int32(-1)
+        return tile, expert, valid, state
 
     @cute.kernel
     def kernel(
@@ -944,6 +1007,7 @@ class Sm100BlockScaledGroupedGemmKernel:
         num_tiles,
         token_final_scales,
         per_token_scale,
+        sched_params,
     ):
         tidx, _, _ = cute.arch.thread_idx()
         warp = tidx // 32
@@ -986,6 +1050,29 @@ class Sm100BlockScaledGroupedGemmKernel:
             ),
             cta_layout_vmnk=cluster_layout,
         )
+        info_pipe = None
+        clc_pipe = None
+        if cutlass.const_expr(self.use_clc_scheduler):
+            info_pipe = pipeline.PipelineAsync.create(
+                barrier_storage=storage.tile_info_barriers.data_ptr(),
+                num_stages=self.num_tile_info_stages,
+                producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread, 32),
+                consumer_group=pipeline.CooperativeGroup(
+                    pipeline.Agent.Thread, self.threads_per_cta - 32
+                ),
+                defer_sync=True,
+            )
+            clc_pipe = pipeline.PipelineClcFetchAsync.create(
+                barrier_storage=storage.clc_barriers.data_ptr(),
+                num_stages=1,
+                producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread),
+                consumer_group=pipeline.CooperativeGroup(
+                    pipeline.Agent.Thread, 32 * self.cta_group_size
+                ),
+                tx_count=16,
+                cta_layout_vmnk=cluster_layout,
+                defer_sync=True,
+            )
         tmem = utils.TmemAllocator(
             storage.tmem_holding.ptr,
             barrier_for_retrieve=pipeline.NamedBarrier(
@@ -997,6 +1084,8 @@ class Sm100BlockScaledGroupedGemmKernel:
             if self.cta_group_size == 2
             else None,
         )
+        if cutlass.const_expr(self.use_clc_scheduler):
+            cute.arch.mbarrier_init_fence()
         if cutlass.const_expr(self.cta_group_size == 2):
             cute.arch.cluster_arrive_relaxed()
             cute.arch.cluster_wait()
@@ -1037,7 +1126,13 @@ class Sm100BlockScaledGroupedGemmKernel:
                 _blockscaled_release_gpu()
             griddepcontrol_launch_dependents()
         total_m_tiles = cute.ceil_div(weights.shape[0], self.mma_m * self.channel_tiles)
-        total_tiles = num_tiles[0] * total_m_tiles
+        num_routed_tiles = num_tiles[0]
+        total_tiles = num_routed_tiles * total_m_tiles
+        sInfo = None
+        if cutlass.const_expr(self.use_clc_scheduler):
+            sInfo = storage.tile_info.get_tensor(
+                cute.make_layout((4, self.num_tile_info_stages), stride=(1, 4))
+            )
         k_tiles = cute.ceil_div(weights.shape[1], self.tile_k)
         padded_k = cute.ceil_div(weights.shape[1], self.sf_block_k) * self.sf_block_k
 
@@ -1051,14 +1146,28 @@ class Sm100BlockScaledGroupedGemmKernel:
             consumer = pipeline.make_pipeline_state(
                 pipeline.PipelineUserType.Consumer, self.acc_stages
             )
-            for tile in cutlass.range(block, total_tiles, grid):
+            info_state = pipeline.make_pipeline_state(
+                pipeline.PipelineUserType.Consumer, self.num_tile_info_stages
+            )
+            tile, scheduled_expert, scheduled_valid, info_state = self.next_work(
+                info_pipe, info_state, sInfo, block, total_tiles
+            )
+            while tile >= 0:
                 route_idx = tile // total_m_tiles
                 channel_start = (
                     tile % total_m_tiles
                 ) * self.mma_m * self.channel_tiles + cta_rank * 128
                 route_start = route_idx * self.route_tile
-                expert = expert_idx[route_idx]
-                valid = cutlass.min(self.route_tile, mn_limit[route_idx] - route_start)
+                expert = (
+                    scheduled_expert
+                    if cutlass.const_expr(self.use_clc_scheduler)
+                    else expert_idx[route_idx]
+                )
+                valid = (
+                    scheduled_valid
+                    if cutlass.const_expr(self.use_clc_scheduler)
+                    else cutlass.min(self.route_tile, mn_limit[route_idx] - route_start)
+                )
                 # N16 routing tiles can start halfway through a physical N32 tile.
                 gB = cute.local_tile(
                     cute.domain_offset(
@@ -1266,6 +1375,9 @@ class Sm100BlockScaledGroupedGemmKernel:
                     if cutlass.const_expr(self.enable_iket):
                         _iket.range_pop()
                     consumer.advance()
+                tile, scheduled_expert, scheduled_valid, info_state = self.next_work(
+                    info_pipe, info_state, sInfo, tile + grid, total_tiles
+                )
             if warp == 0:
                 if cutlass.const_expr(self.pdl_signal_at == "producer_exit"):
                     if cutlass.const_expr(
@@ -1286,14 +1398,28 @@ class Sm100BlockScaledGroupedGemmKernel:
             consumer = pipeline.make_pipeline_state(
                 pipeline.PipelineUserType.Consumer, self.acc_stages
             )
-            for tile in cutlass.range(block, total_tiles, grid):
+            info_state = pipeline.make_pipeline_state(
+                pipeline.PipelineUserType.Consumer, self.num_tile_info_stages
+            )
+            tile, scheduled_expert, scheduled_valid, info_state = self.next_work(
+                info_pipe, info_state, sInfo, block, total_tiles
+            )
+            while tile >= 0:
                 route_idx = tile // total_m_tiles
                 channel_start = (
                     tile % total_m_tiles
                 ) * self.mma_m * self.channel_tiles + cta_rank * 128
                 route_start = route_idx * self.route_tile
-                expert = expert_idx[route_idx]
-                valid = cutlass.min(self.route_tile, mn_limit[route_idx] - route_start)
+                expert = (
+                    scheduled_expert
+                    if cutlass.const_expr(self.use_clc_scheduler)
+                    else expert_idx[route_idx]
+                )
+                valid = (
+                    scheduled_valid
+                    if cutlass.const_expr(self.use_clc_scheduler)
+                    else cutlass.min(self.route_tile, mn_limit[route_idx] - route_start)
+                )
                 if cutlass.const_expr(self.enable_iket):
                     _iket.range_push("epi_acc_wait")
                 acc_pipe.consumer_wait(consumer)
@@ -1368,7 +1494,10 @@ class Sm100BlockScaledGroupedGemmKernel:
                 if cutlass.const_expr(self.enable_iket):
                     _iket.range_pop()
                 consumer.advance()
-        else:
+                tile, scheduled_expert, scheduled_valid, info_state = self.next_work(
+                    info_pipe, info_state, sInfo, tile + grid, total_tiles
+                )
+        elif warp == self.mma_warp:
             tSFA = cute.make_tensor(
                 cute.recast_ptr(tmem_ptr + self.acc_reserved_cols, dtype=self.sf_dtype),
                 blockscaled_utils.make_tmem_layout_sfa(
@@ -1411,10 +1540,20 @@ class Sm100BlockScaledGroupedGemmKernel:
             producer = pipeline.make_pipeline_state(
                 pipeline.PipelineUserType.Producer, self.acc_stages
             )
-            for tile in cutlass.range(block, total_tiles, grid):
+            info_state = pipeline.make_pipeline_state(
+                pipeline.PipelineUserType.Consumer, self.num_tile_info_stages
+            )
+            tile, scheduled_expert, scheduled_valid, info_state = self.next_work(
+                info_pipe, info_state, sInfo, block, total_tiles
+            )
+            while tile >= 0:
                 route_idx = tile // total_m_tiles
                 route_start = route_idx * self.route_tile
-                valid = cutlass.min(self.route_tile, mn_limit[route_idx] - route_start)
+                valid = (
+                    scheduled_valid
+                    if cutlass.const_expr(self.use_clc_scheduler)
+                    else cutlass.min(self.route_tile, mn_limit[route_idx] - route_start)
+                )
                 mma_accumulator = cute.make_tensor(
                     tmem_ptr
                     + cute.assume(
@@ -1531,8 +1670,79 @@ class Sm100BlockScaledGroupedGemmKernel:
                 if cta_rank == 0:
                     acc_pipe.producer_commit(producer)
                 producer.advance()
+                tile, scheduled_expert, scheduled_valid, info_state = self.next_work(
+                    info_pipe, info_state, sInfo, tile + grid, total_tiles
+                )
             if cta_rank == 0:
                 acc_pipe.producer_tail(producer)
+        elif warp == self.schedule_warp:
+            if cutlass.const_expr(self.use_clc_scheduler):
+                sched = utils.ClcDynamicPersistentTileScheduler.create(
+                    sched_params,
+                    cute.arch.block_idx(),
+                    cute.arch.grid_dim(),
+                    storage.clc_response.data_ptr(),
+                )
+                work = sched.initial_work_tile_info()
+                info_producer = pipeline.make_pipeline_state(
+                    pipeline.PipelineUserType.Producer, self.num_tile_info_stages
+                )
+                clc_producer = pipeline.make_pipeline_state(
+                    pipeline.PipelineUserType.ProducerConsumer, 1
+                )
+                clc_consumer = pipeline.make_pipeline_state(
+                    pipeline.PipelineUserType.Consumer, 1
+                )
+                active = cutlass.Boolean(True)
+                while active:
+                    if cutlass.const_expr(self.enable_iket):
+                        _iket.range_push("scheduler_item")
+                    route = work.tile_idx[1]
+                    is_routed = work.is_valid_tile and (route < num_routed_tiles)
+                    if is_routed or not work.is_valid_tile:
+                        info_pipe.producer_acquire(info_producer)
+                    if work.is_valid_tile and cta_rank == 0:
+                        clc_pipe.producer_acquire(clc_producer)
+                        sched.advance_to_next_work(
+                            clc_pipe.producer_get_barrier(clc_producer)
+                        )
+                        clc_producer.advance()
+                    if is_routed or not work.is_valid_tile:
+                        next_tile = cutlass.Int32(-1)
+                        next_expert = cutlass.Int32(0)
+                        next_valid = cutlass.Int32(0)
+                        if is_routed:
+                            next_tile = (
+                                route * total_m_tiles
+                                + work.tile_idx[0] // self.cta_group_size
+                            )
+                            next_expert = expert_idx[route]
+                            next_valid = cutlass.min(
+                                self.route_tile,
+                                mn_limit[route] - route * self.route_tile,
+                            )
+                        with cute.arch.elect_one():
+                            sInfo[0, info_producer.index] = next_tile
+                            sInfo[1, info_producer.index] = next_expert
+                            sInfo[2, info_producer.index] = next_valid
+                        cute.arch.fence_proxy("async.shared", space="cta")
+                        pipeline.NamedBarrier(
+                            barrier_id=5, num_threads=32
+                        ).arrive_and_wait()
+                        info_pipe.producer_commit(info_producer)
+                        info_producer.advance()
+                    if work.is_valid_tile:
+                        clc_pipe.consumer_wait(clc_consumer)
+                        work = sched.get_current_work()
+                        clc_pipe.consumer_release(clc_consumer)
+                        clc_consumer.advance()
+                    else:
+                        active = cutlass.Boolean(False)
+                    if cutlass.const_expr(self.enable_iket):
+                        _iket.range_pop()
+                info_pipe.producer_tail(info_producer)
+                if cta_rank == 0:
+                    clc_pipe.producer_tail(clc_producer)
         pipeline.NamedBarrier(
             barrier_id=1, num_threads=self.threads_per_cta
         ).arrive_and_wait()

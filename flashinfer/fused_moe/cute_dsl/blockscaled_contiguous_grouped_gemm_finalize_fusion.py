@@ -68,6 +68,8 @@ from .blackwell.blockscaled_contiguous_grouped_gemm_finalize_fusion import (
 )
 
 
+_CUDA_GRID_Y_MAX = 65_535
+
 _blockscaled_kernel_cache: Dict[Tuple, Any] = {}
 
 
@@ -118,6 +120,8 @@ def _run_blockscaled_gemm(
     overlap_epilogue,
     overlap_activation_accumulators,
     pdl_signal_at,
+    use_clc_scheduler,
+    num_tile_info_stages,
     sm_count=None,
 ):
     mma_m, route_tile = mma_tiler_mn
@@ -202,7 +206,18 @@ def _run_blockscaled_gemm(
         cluster_shape_mn=cluster_shape_mn,
     ):
         raise ValueError("Unsupported split block-scaled GEMM shape or output dtype")
-    num_sms = get_num_sm(activation.device) if sm_count is None else sm_count
+    device_sms = get_num_sm(activation.device)
+    num_sms = device_sms if sm_count is None else sm_count
+    # A CLC grid can occupy the whole device, so honor an explicit SM budget
+    # with the bounded persistent launch. There is also no cancellation
+    # opportunity when the entire allocated work grid fits concurrently.
+    # The CLC grid's Y axis is the allocated route-tile capacity.
+    work_clusters = ((channels + mma_m - 1) // mma_m) * (routes // route_tile)
+    use_clc_scheduler = use_clc_scheduler and (
+        num_sms >= device_sms
+        and work_clusters > num_sms // cluster_shape_mn[0]
+        and routes // route_tile <= _CUDA_GRID_Y_MAX
+    )
     key = (
         activation.device.index,
         mma_tiler_mn,
@@ -228,6 +243,8 @@ def _run_blockscaled_gemm(
         overlap_epilogue,
         overlap_activation_accumulators,
         pdl_signal_at,
+        use_clc_scheduler,
+        num_tile_info_stages,
         activation_type,
         swiglu_alpha,
         swiglu_beta,
@@ -261,6 +278,8 @@ def _run_blockscaled_gemm(
             overlap_epilogue=overlap_epilogue,
             overlap_activation_accumulators=overlap_activation_accumulators,
             pdl_signal_at=pdl_signal_at,
+            use_clc_scheduler=use_clc_scheduler,
+            num_tile_info_stages=num_tile_info_stages,
             generate_sfc=output_sf is not None,
             output_dtype=output_dtype,
             final_scale_dtype=scale_dtype,
@@ -873,6 +892,8 @@ def blockscaled_contiguous_grouped_gemm_finalize_fusion(
             overlap_epilogue=True,
             overlap_activation_accumulators=False,
             pdl_signal_at="producer_exit",
+            use_clc_scheduler=False,
+            num_tile_info_stages=1,
             sm_count=sm_count,
         )
         return out

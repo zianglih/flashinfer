@@ -887,6 +887,8 @@ def blockscaled_contiguous_gather_grouped_gemm_act_fusion(
             overlap_epilogue=overlap_epilogue,
             overlap_activation_accumulators=overlap_activation_accumulators,
             pdl_signal_at="startup",
+            use_clc_scheduler=cluster_shape_mn == (1, 1),
+            num_tile_info_stages=1,
             sm_count=sm_count,
         )
         return out, out_scale if generate_sfc else None
