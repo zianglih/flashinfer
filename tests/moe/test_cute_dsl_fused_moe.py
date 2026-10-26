@@ -238,7 +238,8 @@ def test_geglu_tanh_activation_is_supported():
     assert gated
 
 
-def test_w4a4_and_w4a8_use_distinct_tuner_cache_keys():
+@pytest.mark.parametrize("other_mode", ["w4a8", "w8a8"])
+def test_blockscaled_modes_use_distinct_tuner_cache_keys(other_mode):
     from flashinfer.fused_moe.cute_dsl.tuner import CuteDslFusedMoERunner
 
     kwargs = dict(
@@ -248,9 +249,13 @@ def test_w4a4_and_w4a8_use_distinct_tuner_cache_keys():
         num_local_experts=8,
     )
     w4a4 = CuteDslFusedMoERunner(**kwargs, quant_mode="w4a4")
-    w4a8 = CuteDslFusedMoERunner(**kwargs, quant_mode="w4a8")
-    assert hash(w4a4) != hash(w4a8)
-    assert w4a4.get_cache_key_extras([]) != w4a8.get_cache_key_extras([])
+    other = CuteDslFusedMoERunner(**kwargs, quant_mode=other_mode)
+    assert hash(w4a4) != hash(other)
+    assert w4a4.get_cache_key_extras([]) != other.get_cache_key_extras([])
+    if other_mode == "w8a8":
+        w4a8 = CuteDslFusedMoERunner(**kwargs, quant_mode="w4a8")
+        assert hash(w4a8) != hash(other)
+        assert w4a8.get_cache_key_extras([]) != other.get_cache_key_extras([])
 
 
 @pytest.mark.parametrize(
@@ -5056,3 +5061,81 @@ def test_cute_dsl_pinned_recipe_matches_env(recipe):
         assert not torch.equal(env_on[leg], env_off[leg])
         assert torch.equal(pinned_under_env_off[leg], env_on[leg])
         assert torch.equal(none_under_env_on[leg], env_off[leg])
+
+
+@cute_dsl_available
+@mxfp8_required
+@pytest.mark.parametrize("quant_mode", ["w4a8", "w8a8"])
+@pytest.mark.parametrize(
+    "tactic",
+    [
+        (16, ((128, 16), (1, 1), False), ((128, 16), (1, 1), False)),
+        (128, ((256, 128), (2, 1), False), ((256, 128), (2, 1), False)),
+    ],
+    ids=["n16", "n128-two-cta"],
+)
+def test_mxfp_unfused_public_apis(quant_mode, tactic):
+    from flashinfer import CuteDslMoEWrapper, cute_dsl_fused_moe, mxfp8_quantize
+    from flashinfer.fused_moe import CuteDslConfig, QuantConfig, QuantFormat
+
+    torch.manual_seed(42)
+    device = torch.device("cuda")
+    tokens, hidden, intermediate, experts, top_k = 17, 256, 128, 2, 2
+    x_bf16 = torch.randn(tokens, hidden, dtype=torch.bfloat16, device=device) / 2
+    x, x_sf = mxfp8_quantize(
+        x_bf16, is_sf_swizzled_layout=False, alignment=128, backend="cuda"
+    )
+    x_sf = x_sf.view(torch.uint8).reshape(tokens, hidden // 32)
+    if quant_mode == "w4a8":
+        weight_format = QuantFormat.MXFP4
+    elif quant_mode == "w8a8":
+        weight_format = QuantFormat.MXFP8
+    else:
+        raise ValueError(quant_mode)
+    weights = CuteDslConfig.prepare_weights(
+        torch.randn(
+            experts, 2 * intermediate, hidden, device=device, dtype=torch.bfloat16
+        )
+        / 4,
+        torch.randn(experts, hidden, intermediate, device=device, dtype=torch.bfloat16)
+        / 4,
+        quant=QuantConfig(weight_format, QuantFormat.MXFP8),
+        num_local_experts=experts,
+        hidden_size=hidden,
+        intermediate_size=intermediate,
+    )
+    inputs = dict(
+        x=x,
+        x_sf=x_sf,
+        token_selected_experts=torch.arange(experts, device=device, dtype=torch.int32)
+        .expand(tokens, top_k)
+        .contiguous(),
+        token_final_scales=torch.full(
+            (tokens, top_k), 1 / top_k, dtype=torch.float32, device=device
+        ),
+        fc2_input_scale=None,
+        **weights,
+    )
+    config = dict(
+        num_experts=experts,
+        top_k=top_k,
+        quant_mode=quant_mode,
+        use_fused_finalize=False,
+    )
+    expected = cute_dsl_fused_moe(**inputs, **config, tactic=tactic)
+    wrapper = CuteDslMoEWrapper(
+        **config,
+        hidden_size=hidden,
+        intermediate_size=intermediate,
+        use_cuda_graph=True,
+        autotune_use_cuda_graph=True,
+    )
+    actual = wrapper.run(**inputs, tactic=tactic)
+    torch.testing.assert_close(actual, expected, atol=0, rtol=0)
+    assert wrapper._runner.use_cuda_graph
+
+    invalid = dict(inputs, w1_weight=inputs["w1_weight"].to(torch.bfloat16))
+    with pytest.raises(TypeError, match="GEMM1 and GEMM2 weights"):
+        wrapper.run(**invalid, tactic=tactic)
+    with pytest.raises(TypeError, match="GEMM1 and GEMM2 weights"):
+        cute_dsl_fused_moe(**invalid, **config, tactic=tactic)

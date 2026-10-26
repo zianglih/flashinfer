@@ -2530,14 +2530,17 @@ def prepare_cute_dsl_weights(
     device: Optional[torch.device] = None,
     nvfp4_4over6: Optional[NVFP44Over6Config] = None,
 ) -> Dict[str, torch.Tensor]:
-    """Build the CuteDSL FP4 ``cute_dsl`` weight view.
+    """Build the CuteDSL block-scaled ``cute_dsl`` weight view.
 
     Gemm1 weights get the linear/gate interleave only for gated activations;
     Blackwell SM100/SM103 pairs 16 up rows with 16 gate rows so both operands
     stay in one epilogue warp. Rubin SM107 retains its 64-row pairing.
     Previously prepared Blackwell gated weights must be prepared again;
     non-gated ones (ReLU2) skip it and keep their ``[E, I, H]`` rows as-is.
-    ``quant`` selects NVFP4×NVFP4, MXFP4×MXFP8, or NVFP4×BF16 (CuTe-DSL W4A16).
+    ``quant`` selects NVFP4×NVFP4, MXFP4×MXFP8, MXFP8×MXFP8, or NVFP4×BF16.
+    MXFP8×MXFP8 prepares weights for the SM100/SM103 public CuTe DSL function
+    and wrapper (``quant_mode="w8a8"``); the unified ``MoELayer`` does not
+    support that pair.
     Starts from the same canonical bf16 expert weights as
     :func:`prepare_trtllm_fp4_weights`, so a single weight set can feed both
     backends and a shared reference.
@@ -2571,10 +2574,11 @@ def prepare_cute_dsl_weights(
     allowed = {
         (QuantFormat.NVFP4, QuantFormat.NVFP4),
         (QuantFormat.MXFP4, QuantFormat.MXFP8),
+        (QuantFormat.MXFP8, QuantFormat.MXFP8),
         (QuantFormat.NVFP4, QuantFormat.BF16),
     }
     if quant.pair not in allowed:
-        raise ValueError(f"CuTe-DSL FP4 weight preparation does not support {quant!r}")
+        raise ValueError(f"CuTe-DSL weight preparation does not support {quant!r}")
 
     if device is None:
         device = w1_bf16.device
@@ -2584,11 +2588,19 @@ def prepare_cute_dsl_weights(
     w2_bf16 = w2_bf16.to(device)
 
     is_mxfp4 = quant.pair == (QuantFormat.MXFP4, QuantFormat.MXFP8)
-    if is_mxfp4 and (hidden_size % 128 or intermediate_size % 128):
+    is_mxfp8 = quant.pair == (QuantFormat.MXFP8, QuantFormat.MXFP8)
+    is_mxfp = is_mxfp4 or is_mxfp8
+    if is_mxfp8 and get_compute_capability(torch.device(device)) not in (
+        (10, 0),
+        (10, 3),
+    ):
+        raise ValueError("CuTe-DSL MXFP8 weights require SM100 or SM103")
+    if is_mxfp and (hidden_size % 128 or intermediate_size % 128):
         raise ValueError(
-            "CuTe-DSL MXFP4 requires hidden and intermediate sizes divisible by 128"
+            "CuTe-DSL MXFP requires hidden and intermediate sizes divisible by 128"
         )
-    sf_vec_size = 32 if is_mxfp4 else 16
+    sf_vec_size = 32 if is_mxfp else 16
+    weight_packing = 1 if is_mxfp8 else 2
     gs = torch.tensor([1.0], device=device, dtype=torch.float32)
 
     activation = _normalize_activation(activation)
@@ -2601,14 +2613,27 @@ def prepare_cute_dsl_weights(
         else w1_bf16
     )
     w1_flat = w1_interleaved.view(num_local_experts * gemm1_rows, hidden_size)
-    w1_q_flat, w1_sf_flat = fp4_quantize(
-        w1_flat,
-        global_scale=gs,
-        sf_vec_size=sf_vec_size,
-        sf_use_ue8m0=is_mxfp4,
-        is_sf_swizzled_layout=True,
+    if is_mxfp8:
+        from ..quantization.fp8_quantization import mxfp8_quantize
+
+        w1_q_flat, w1_sf_flat = mxfp8_quantize(
+            w1_flat,
+            is_sf_swizzled_layout=True,
+            alignment=128,
+            backend="cuda",
+        )
+        w1_sf_flat = w1_sf_flat.view(torch.uint8)
+    else:
+        w1_q_flat, w1_sf_flat = fp4_quantize(
+            w1_flat,
+            global_scale=gs,
+            sf_vec_size=sf_vec_size,
+            sf_use_ue8m0=is_mxfp4,
+            is_sf_swizzled_layout=True,
+        )
+    w1_weight = w1_q_flat.view(
+        num_local_experts, gemm1_rows, hidden_size // weight_packing
     )
-    w1_weight = w1_q_flat.view(num_local_experts, gemm1_rows, hidden_size // 2)
     w1_weight_sf = convert_sf_to_mma_layout(
         w1_sf_flat,
         m=gemm1_rows,
@@ -2618,14 +2643,27 @@ def prepare_cute_dsl_weights(
     )
 
     w2_flat = w2_bf16.view(num_local_experts * hidden_size, intermediate_size)
-    w2_q_flat, w2_sf_flat = fp4_quantize(
-        w2_flat,
-        global_scale=gs,
-        sf_vec_size=sf_vec_size,
-        sf_use_ue8m0=is_mxfp4,
-        is_sf_swizzled_layout=True,
+    if is_mxfp8:
+        from ..quantization.fp8_quantization import mxfp8_quantize
+
+        w2_q_flat, w2_sf_flat = mxfp8_quantize(
+            w2_flat,
+            is_sf_swizzled_layout=True,
+            alignment=128,
+            backend="cuda",
+        )
+        w2_sf_flat = w2_sf_flat.view(torch.uint8)
+    else:
+        w2_q_flat, w2_sf_flat = fp4_quantize(
+            w2_flat,
+            global_scale=gs,
+            sf_vec_size=sf_vec_size,
+            sf_use_ue8m0=is_mxfp4,
+            is_sf_swizzled_layout=True,
+        )
+    w2_weight = w2_q_flat.view(
+        num_local_experts, hidden_size, intermediate_size // weight_packing
     )
-    w2_weight = w2_q_flat.view(num_local_experts, hidden_size, intermediate_size // 2)
     w2_weight_sf = convert_sf_to_mma_layout(
         w2_sf_flat,
         m=hidden_size,
@@ -2643,7 +2681,7 @@ def prepare_cute_dsl_weights(
         "w2_weight_sf": w2_weight_sf,
         "w2_alpha": ones,
     }
-    if not is_mxfp4:
+    if not is_mxfp:
         # A pinned recipe fixes the GEMM2-input scale to 1 / (6 * e4m3_max).
         # w2_bf16 is passed for its device only.
         nvfp4_4over6_config = resolve_nvfp4_4over6(nvfp4_4over6)

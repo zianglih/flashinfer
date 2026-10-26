@@ -2596,8 +2596,10 @@ class CuteDslConfig:
         """Build the ``cute_dsl`` weight view from canonical BF16 weights.
 
         Register the result with ``MoEWeightPack.prepare_for("cute_dsl", ...)``.
-        ``quant`` selects NVFP4×NVFP4, MXFP4×MXFP8, or NVFP4×BF16 (CuTe-DSL W4A16).
-        Defaults to NVFP4×NVFP4.
+        ``quant`` selects NVFP4×NVFP4, MXFP4×MXFP8, MXFP8×MXFP8, or NVFP4×BF16.
+        Defaults to NVFP4×NVFP4. MXFP8×MXFP8 prepares weights for the SM100/SM103
+        public ``cute_dsl_fused_moe`` function and ``CuteDslMoEWrapper`` with
+        ``quant_mode="w8a8"``; ``MoELayer`` does not support that pair.
 
         ``nvfp4_4over6`` must equal the layer's ``QuantConfig.nvfp4_4over6``
         (see that field): it selects the NVFP4×NVFP4 pack's

@@ -296,8 +296,8 @@ DEFAULT_RUBIN_MOE_TACTIC = (
 )
 
 
-def canonicalize_w4a8_tactic(tactic: Any) -> Tuple:
-    """Canonicalize and validate a W4A8 tactic from Python or JSON."""
+def _canonicalize_mxfp_tactic(tactic: Any, quant_mode: str) -> Tuple:
+    """Canonicalize a Blackwell MXFP activation tactic from Python or JSON."""
     if not isinstance(tactic, (tuple, list)) or len(tactic) != 3:
         raise ValueError("tactic must be (tile_size, gemm1_tactic, gemm2_tactic)")
 
@@ -308,8 +308,13 @@ def canonicalize_w4a8_tactic(tactic: Any) -> Tuple:
 
     result = as_tuple(tactic)
     if result not in ALL_W4A8_MOE_TACTICS:
-        raise ValueError(f"unsupported W4A8 MoE tactic: {result!r}")
+        raise ValueError(f"unsupported {quant_mode.upper()} MoE tactic: {result!r}")
     return result
+
+
+def canonicalize_w4a8_tactic(tactic: Any) -> Tuple:
+    """Canonicalize and validate a W4A8 tactic from Python or JSON."""
+    return _canonicalize_mxfp_tactic(tactic, "w4a8")
 
 
 # =============================================================================
@@ -481,10 +486,12 @@ class CuteDslFusedMoERunner(TunableRunner):
         activation_type, gated = normalize_cute_dsl_moe_activation_type(activation_type)
         validate_cute_dsl_moe_situ_config(activation_type, situ_beta, situ_linear_beta)
         quant_mode = quant_mode.lower()
-        if quant_mode not in ("w4a4", "w4a8"):
+        if quant_mode not in ("w4a4", "w4a8", "w8a8"):
             raise ValueError(f"unsupported CuTe-DSL quant_mode {quant_mode!r}")
-        if quant_mode == "w4a8" and use_per_token_activation:
-            raise ValueError("per-token activation scaling is not supported for W4A8")
+        if quant_mode in ("w4a8", "w8a8") and use_per_token_activation:
+            raise ValueError(
+                "per-token activation scaling is not supported for MXFP8 activations"
+            )
         if localized_weights is not None and quant_mode != "w4a4":
             raise ValueError("localized runner supports quant_mode='w4a4' only")
         self.forward_impl = forward_impl
@@ -721,7 +728,8 @@ class CuteDslFusedMoERunner(TunableRunner):
 
         gated = self.gated
         num_tokens = x.shape[0]
-        is_mxfp8 = self.quant_mode == "w4a8"
+        is_mxfp8 = self.quant_mode in ("w4a8", "w8a8")
+        weight_packing = 1 if self.quant_mode == "w8a8" else 2
         hidden_size = x.shape[1] * (1 if is_mxfp8 else 2)
         num_local_experts = w1_weight.shape[0]
         # Gated SwiGLU fuses gate+up (2*intermediate rows); non-gated ReLU^2
@@ -729,10 +737,12 @@ class CuteDslFusedMoERunner(TunableRunner):
         gemm1_n = w1_weight.shape[1]
         intermediate_size = gemm1_n // 2 if gated else gemm1_n
         gemm2_n = w2_weight.shape[1]
-        gemm2_k = w2_weight.shape[2] * 2
+        gemm2_k = w2_weight.shape[2] * weight_packing
 
         a_dtype = cutlass.Float8E4M3FN if is_mxfp8 else cutlass.Float4E2M1FN
-        b_dtype = cutlass.Float4E2M1FN
+        b_dtype = (
+            cutlass.Float8E4M3FN if self.quant_mode == "w8a8" else cutlass.Float4E2M1FN
+        )
         sf_dtype = cutlass.Float8E8M0FNU if is_mxfp8 else cutlass.Float8E4M3FN
         sf_vec_size = 32 if is_mxfp8 else 16
 
@@ -841,7 +851,7 @@ class CuteDslFusedMoERunner(TunableRunner):
                     if not Sm100BlockScaledGroupedGemmKernel.can_implement(
                         m=weight.shape[1],
                         n=permuted_m,
-                        k=weight.shape[2] * 2,
+                        k=weight.shape[2] * weight_packing,
                         output_dtype=output_dtype,
                         activation_dtype=a_dtype,
                         weight_dtype=b_dtype,
@@ -901,11 +911,11 @@ class CuteDslFusedMoERunner(TunableRunner):
         if tactic is None or tactic == -1:
             tactic = (
                 DEFAULT_BLACKWELL_MOE_TACTIC
-                if self.quant_mode == "w4a8"
+                if self.quant_mode in ("w4a8", "w8a8")
                 else _get_default_tactic()
             )
-        elif self.quant_mode == "w4a8":
-            tactic = canonicalize_w4a8_tactic(tactic)
+        elif self.quant_mode in ("w4a8", "w8a8"):
+            tactic = _canonicalize_mxfp_tactic(tactic, self.quant_mode)
 
         params = _extract_tactic_params(tactic)
 
