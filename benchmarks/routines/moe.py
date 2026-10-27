@@ -1297,6 +1297,7 @@ def _create_nvfp4_moe_test_data(
     """
     from flashinfer.fp4_quantization import fp4_quantize
     from flashinfer.cute_dsl.utils import convert_sf_to_mma_layout
+    from flashinfer.fused_moe.prepare import _cute_dsl_gated_weight_group_size
 
     if backend not in ("cute-dsl", "b12x"):
         raise ValueError(f"Unsupported backend: {backend!r}")
@@ -1336,7 +1337,11 @@ def _create_nvfp4_moe_test_data(
     )
     # cute-dsl (SM100) expects gate/up interleaved; b12x (SM120) does not.
     if backend == "cute-dsl":
-        w1_bf16_prepared = _interleave_linear_and_gate(w1_bf16, group_size=64, dim=1)
+        w1_bf16_prepared = _interleave_linear_and_gate(
+            w1_bf16,
+            group_size=_cute_dsl_gated_weight_group_size(w1_bf16.device),
+            dim=1,
+        )
     else:
         w1_bf16_prepared = w1_bf16
     w1_gs = torch.tensor([1.0], device=device, dtype=torch.float32)
