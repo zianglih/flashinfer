@@ -17,6 +17,9 @@ Usage:
     # Kimi K3 routed latent experts, EP8, SiTU(4, 25); unsupported arms print N/A
     python bench_moe_deepseek.py --model kimi-k3 --no-fused-finalize
 
+    # Nemotron-3 Ultra routed latent experts, EP8, ReLU2
+    python bench_moe_deepseek.py --model nemo3-ultra --no-fused-finalize
+
     # V4.1-Flash EP4: shared sqrtsoftplus routes are prepared outside timing
     python bench_moe_deepseek.py --model v41-flash --ep 4 --no-fused-finalize
 
@@ -112,6 +115,15 @@ class DeepSeekConfig:
     situ_beta: float | None = None
     situ_linear_beta: float | None = None
 
+    @property
+    def gemm1_rows(self):
+        if self.activation in ("swiglu", "situ"):
+            return 2 * self.intermediate_size
+        elif self.activation == "relu2":
+            return self.intermediate_size
+        else:
+            raise ValueError(f"Unsupported model activation: {self.activation}")
+
 
 MODEL_CONFIGS = {
     "v3": DeepSeekConfig(),
@@ -144,6 +156,21 @@ MODEL_CONFIGS = {
         activation="situ",
         situ_beta=4.0,
         situ_linear_beta=25.0,
+        default_ep=8,
+    ),
+    # https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Ultra-550B-A55B-BF16/blob/77df655d5e9f8362164ed14dd8b48f8bce657498/config.json
+    # Routed experts operate in the 2048-wide latent space, not model width 8192.
+    "nemo3-ultra": DeepSeekConfig(
+        hidden_size=2048,
+        intermediate_size=5120,
+        num_experts=512,
+        n_group=1,
+        topk_group=1,
+        top_k=22,
+        routed_scaling_factor=5.0,
+        name="Nemotron-3-Ultra",
+        routing="sigmoid",
+        activation="relu2",
         default_ep=8,
     ),
 }
@@ -206,7 +233,7 @@ def calc_tflops(n, ms, num_local_experts=None):
         * CFG.top_k
         * local_fraction  # Only local expert pairs are computed
         * (
-            2 * CFG.hidden_size * 2 * CFG.intermediate_size
+            2 * CFG.hidden_size * CFG.gemm1_rows
             + 2 * CFG.intermediate_size * CFG.hidden_size
         )
     )
@@ -241,7 +268,7 @@ def create_inputs(n, dev="cuda", routing_bias_scale=0.01):
     w1b = (
         torch.randn(
             CFG.num_experts,
-            2 * CFG.intermediate_size,
+            CFG.gemm1_rows,
             CFG.hidden_size,
             device=dev,
             dtype=torch.bfloat16,
@@ -450,7 +477,7 @@ def _route_tokens(router_logits, routing_bias, topk_values, topk_indices):
 
 
 def _model_activation():
-    from flashinfer.fused_moe import SiTU, SwiGLU
+    from flashinfer.fused_moe import ReLU2, SiTU, SwiGLU
 
     if CFG.activation == "swiglu":
         return SwiGLU(limit=CFG.swiglu_limit)
@@ -458,6 +485,8 @@ def _model_activation():
         if CFG.situ_beta is None or CFG.situ_linear_beta is None:
             raise ValueError("The SiTU preset requires gate and linear scales")
         return SiTU(gate_scale=CFG.situ_beta, linear_scale=CFG.situ_linear_beta)
+    elif CFG.activation == "relu2":
+        return ReLU2()
     else:
         raise ValueError(f"Unsupported model activation: {CFG.activation}")
 
@@ -487,6 +516,10 @@ def _backend_skip_reason(backend):
             return "TRTLLM PER-TOKEN has no per-token SiTU kernel"
         elif backend == "CUTLASS":
             return "The CUTLASS benchmark arm does not implement SiTU"
+        return None
+    elif CFG.activation == "relu2":
+        if backend == "CUTLASS":
+            return "The CUTLASS benchmark arm does not implement ReLU2"
         return None
     else:
         raise ValueError(f"Unsupported model activation: {CFG.activation}")
@@ -554,11 +587,7 @@ def bench_cute_dsl(
             cudaProfilerStart/Stop instead of benchmarking.
         profile_iters: Number of cold-L2 graph replays to capture.
     """
-    from flashinfer.fused_moe.prepare import (
-        _cute_dsl_gated_weight_group_size,
-        _interleave_linear_and_gate,
-    )
-    from flashinfer.cute_dsl.utils import convert_sf_to_mma_layout
+    from flashinfer.fused_moe import CuteDslConfig, QuantConfig, QuantFormat
     from flashinfer.fp4_quantization import fp4_quantize
 
     if use_per_token_activation and quant_mode != "w4a4":
@@ -569,11 +598,9 @@ def bench_cute_dsl(
     if quant_mode not in ("w4a4", "w4a16", "mxfp8", "w4a8"):
         raise ValueError(f"Unsupported CuTe DSL quant mode: {quant_mode}")
     if quant_mode in ("mxfp8", "w4a8") and (
-        use_fused_finalize or use_per_token_activation or include_activation_quant
+        use_per_token_activation or include_activation_quant
     ):
-        raise ValueError(
-            "CuTe DSL MX modes require unfused finalize and prequantized activations"
-        )
+        raise ValueError("CuTe DSL MX modes require prequantized activations")
 
     n, dev = inputs["router_logits"].shape[0], inputs["hidden_bf16"].device
     # Expert range for this EP partition
@@ -582,7 +609,6 @@ def bench_cute_dsl(
     # Slice weights to LOCAL experts only
     w1_local = inputs["w1_bf16"][expert_start:expert_end]
     w2_local = inputs["w2_bf16"][expert_start:expert_end]
-    gated_group_size = _cute_dsl_gated_weight_group_size(dev)
     tv, ti = _routing_tensors(inputs)
     # Alpha sized for LOCAL experts only
     alpha = torch.ones(num_local_experts, dtype=torch.float32, device=dev)
@@ -659,22 +685,24 @@ def bench_cute_dsl(
                 x_sf = x_sf.unsqueeze(-1)
             return x, x_sf, per_token_scale
 
-        w1i = _interleave_linear_and_gate(w1_local, gated_group_size, dim=-2)
-        w1f = w1i.view(num_local_experts * 2 * CFG.intermediate_size, CFG.hidden_size)
-        w1q, w1s = fp4_quantize(w1f, gs1, sv, False, True, nvfp4_4over6=None)
-        w1q = w1q.view(
-            num_local_experts, 2 * CFG.intermediate_size, CFG.hidden_size // 2
+        weights = CuteDslConfig.prepare_weights(
+            w1_local,
+            w2_local,
+            quant=QuantConfig(
+                weight=QuantFormat.NVFP4,
+                activation=(
+                    QuantFormat.BF16 if quant_mode == "w4a16" else QuantFormat.NVFP4
+                ),
+            ),
+            num_local_experts=num_local_experts,
+            hidden_size=CFG.hidden_size,
+            intermediate_size=CFG.intermediate_size,
+            activation=_model_activation(),
+            device=dev,
+            nvfp4_4over6=None,
         )
-        w1s = convert_sf_to_mma_layout(
-            w1s, 2 * CFG.intermediate_size, CFG.hidden_size, num_local_experts, sv
-        )
-
-        w2f = w2_local.view(num_local_experts * CFG.hidden_size, CFG.intermediate_size)
-        w2q, w2s = fp4_quantize(w2f, gs1, sv, False, True, nvfp4_4over6=None)
-        w2q = w2q.view(num_local_experts, CFG.hidden_size, CFG.intermediate_size // 2)
-        w2s = convert_sf_to_mma_layout(
-            w2s, CFG.hidden_size, CFG.intermediate_size, num_local_experts, sv
-        )
+        w1q, w1s = weights["w1_weight"], weights["w1_weight_sf"]
+        w2q, w2s = weights["w2_weight"], weights["w2_weight_sf"]
 
         if quant_mode == "w4a16":
             fc2sc = None
@@ -686,7 +714,6 @@ def bench_cute_dsl(
 
     elif quant_mode in ("mxfp8", "w4a8"):
         from flashinfer import mxfp8_quantize
-        from flashinfer.fused_moe import CuteDslConfig, QuantConfig, QuantFormat
 
         xf, xs = mxfp8_quantize(
             inputs["hidden_bf16"],
@@ -708,6 +735,7 @@ def bench_cute_dsl(
             num_local_experts=num_local_experts,
             hidden_size=CFG.hidden_size,
             intermediate_size=CFG.intermediate_size,
+            activation=_model_activation(),
             device=dev,
         )
         w1q, w1s = weights["w1_weight"], weights["w1_weight_sf"]
@@ -730,6 +758,8 @@ def bench_cute_dsl(
             "situ_beta": activation.gate_scale,
             "situ_linear_beta": activation.linear_scale,
         }
+    elif CFG.activation == "relu2":
+        activation_kwargs = {"activation_type": _model_activation().type.value}
     else:
         raise ValueError(f"Unsupported model activation: {CFG.activation}")
 
@@ -1049,6 +1079,7 @@ def bench_trtllm(
             num_local_experts=num_local_experts,
             hidden_size=CFG.hidden_size,
             intermediate_size=CFG.intermediate_size,
+            activation=_model_activation(),
             device=dev,
         )
         moe_kwargs.update(
@@ -1091,6 +1122,7 @@ def bench_trtllm(
             num_local_experts=num_local_experts,
             hidden_size=CFG.hidden_size,
             intermediate_size=CFG.intermediate_size,
+            activation=_model_activation(),
             device=dev,
         )
         moe_kwargs.update(
@@ -1205,7 +1237,7 @@ def bench_trtllm(
         w1f, w1s = prep(
             inputs["w1_bf16"],
             inputs["w1_gs"],
-            2 * CFG.intermediate_size,
+            CFG.gemm1_rows,
             CFG.hidden_size,
         )
         w2f, w2s = prep(
@@ -1226,10 +1258,15 @@ def bench_trtllm(
                 )
             return torch.stack(fsh), torch.stack(ssh)
 
-        w1f, w1s = shuf(w1f, w1s, _maybe_get_cached_w3_w1_permute_indices)
+        w1_permute = (
+            _maybe_get_cached_w3_w1_permute_indices
+            if _model_activation().is_gated
+            else get_w2_permute_indices_with_cache
+        )
+        w1f, w1s = shuf(w1f, w1s, w1_permute)
         w2f, w2s = shuf(w2f, w2s, get_w2_permute_indices_with_cache)
         w1s = w1s.view(torch.float8_e4m3fn).reshape(
-            num_local_experts, 2 * CFG.intermediate_size, CFG.hidden_size // sv
+            num_local_experts, CFG.gemm1_rows, CFG.hidden_size // sv
         )
         w2s = w2s.view(torch.float8_e4m3fn).reshape(
             num_local_experts, CFG.hidden_size, CFG.intermediate_size // sv
@@ -1266,10 +1303,8 @@ def bench_trtllm(
             _model_activation(), num_local_experts, torch.device(dev)
         )
     )
-    if CFG.activation == "situ":
-        from flashinfer.tllm_enums import ActivationType
-
-        moe_kwargs["activation_type"] = ActivationType.Situ.value
+    if CFG.activation in ("situ", "relu2"):
+        moe_kwargs["activation_type"] = _model_activation().type.value
     routing_ids = None
     routing_weights = None
     is_routed = routing_input_mode == "routed" or CFG.routing in (
@@ -1806,7 +1841,12 @@ def _print_header(
             f"top-{CFG.top_k} normalized then scaled by {CFG.routed_scaling_factor}; "
             "routing excluded from every backend's timing."
         )
-        print(f"Activation: SiTU({CFG.situ_beta:g}, {CFG.situ_linear_beta:g}).")
+        if CFG.activation == "situ":
+            print(f"Activation: SiTU({CFG.situ_beta:g}, {CFG.situ_linear_beta:g}).")
+        elif CFG.activation == "relu2":
+            print("Activation: ReLU2 (non-gated squared ReLU).")
+        else:
+            raise ValueError(f"Unsupported sigmoid-preset activation: {CFG.activation}")
         print(
             "Scope: routed latent experts only; latent projections, RMSNorm, "
             "shared experts, router GEMM and communication excluded."
@@ -1958,7 +1998,7 @@ def main():
         "--model",
         choices=tuple(MODEL_CONFIGS),
         default="v3",
-        help="Model shape, routing and activation preset. V4.1-Flash and Kimi K3 share precomputed routes across all backends, excluded from timing.",
+        help="Model shape, routing and activation preset. V4.1-Flash, Kimi K3 and Nemotron-3 Ultra share precomputed routes across all backends, excluded from timing.",
     )
     parser.add_argument(
         "--num-tokens",
@@ -1992,12 +2032,12 @@ def main():
         "--quant-family",
         choices=("nvfp4", "mxfp"),
         default="nvfp4",
-        help="Default comparison table: NVFP4 W4A4/PER-TOKEN/W4A16 or MXFP4x8/MXFP8; both include TRTLLM BF16. MX requires --no-fused-finalize.",
+        help="Default comparison table: NVFP4 W4A4/PER-TOKEN/W4A16 or MXFP4x8/MXFP8; both include TRTLLM BF16.",
     )
     parser.add_argument(
         "--backends",
         type=str,
-        help="Override the family with a comma-separated subset of cutedsl,cute-dsl-per-token,cutlass,trtllm-nvfp4,trtllm-per-token,trtllm-bf16,cute-dsl-mxfp8,cute-dsl-w4a8,trtllm-mxfp8,trtllm-mxfp4; prints CSV. CuTe DSL MX modes require --no-fused-finalize.",
+        help="Override the family with a comma-separated subset of cutedsl,cute-dsl-per-token,cutlass,trtllm-nvfp4,trtllm-per-token,trtllm-bf16,cute-dsl-mxfp8,cute-dsl-w4a8,trtllm-mxfp8,trtllm-mxfp4; prints CSV.",
     )
     parser.add_argument(
         "--distributions",
@@ -2021,7 +2061,7 @@ def main():
         type=int,
         default=None,
         choices=[1, 2, 4, 8, 16],
-        help="Expert parallelism simulation (default: V3 EP8, V4.1-Flash EP4, Kimi K3 EP8).",
+        help="Expert parallelism simulation (default: V3 EP8, V4.1-Flash EP4, Kimi K3 EP8, Nemotron-3 Ultra EP8).",
     )
     parser.add_argument(
         "--tp",
@@ -2154,8 +2194,6 @@ def main():
     if args.profile_backend is not None:
         selected = {args.profile_backend}
     if selected & {"cute-dsl-mxfp8", "cute-dsl-w4a8"}:
-        if args.use_fused_finalize:
-            parser.error("CuTe DSL MX modes require --no-fused-finalize")
         if args.include_activation_quant:
             parser.error("CuTe DSL MX modes do not support --include-activation-quant")
         if args.routing_input_mode != "logits":
