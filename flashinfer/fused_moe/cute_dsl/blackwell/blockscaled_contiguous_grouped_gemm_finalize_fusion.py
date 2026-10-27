@@ -1054,12 +1054,16 @@ class Sm100BlockScaledMoeEpilogue:
                         cute.arch.fence_view_async_tmem_load()
                         acc_pipeline.consumer_release(acc_state)
                     if cutlass.const_expr(self.use_per_token_scale):
-                        for i in cutlass.range_constexpr(tokens // 2):
-                            token = (i // 4) * 8 + (lane % 4) * 2 + i % 2
-                            scale = cute.arch.shuffle_sync(
-                                scales[group * (tokens // 32) + i // 16], token % 32
+                        for i in cutlass.range_constexpr(0, tokens // 2, 2):
+                            token = (i // 4) * 8 + (lane % 4) * 2
+                            scale = scales[group * (tokens // 32) + i // 16]
+                            scale_pair = (
+                                cute.arch.shuffle_sync(scale, token % 32),
+                                cute.arch.shuffle_sync(scale, (token + 1) % 32),
                             )
-                            values[i] = values[i] * scale
+                            values[i], values[i + 1] = cute.arch.mul_packed_f32x2(
+                                (values[i], values[i + 1]), scale_pair
+                            )
                     else:
                         for i in cutlass.range_constexpr(0, tokens // 2, 2):
                             values[i], values[i + 1] = cute.arch.mul_packed_f32x2(
