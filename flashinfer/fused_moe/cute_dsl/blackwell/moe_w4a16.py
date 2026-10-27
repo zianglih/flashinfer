@@ -32,7 +32,7 @@ from flashinfer.tllm_enums import (
 
 from .moe_finalize import moe_unpermute
 from .moe_w4a16_kernel import Sm100W4A16GroupedGemmKernel
-from .moe_w4a16_prepare import moe_permute_w4a16
+from .moe_prepare import prepare
 
 
 W4A16GemmTactic = Tuple[Tuple[int, int, int], Tuple[int, int], bool]
@@ -133,6 +133,9 @@ def _get_compiled_kernel(
     )
     cache_key = (
         num_local_experts,
+        m,
+        k,
+        max_active_clusters,
         activation_type,
         swiglu_alpha,
         swiglu_beta,
@@ -358,9 +361,7 @@ def _run_grouped_gemm(
         output_ptr,
         permuted_idx_to_expanded_idx_ptr,
         token_final_scales_ptr,
-        m,
         n,
-        k,
         num_tokens,
         stream=stream,
     )
@@ -445,15 +446,17 @@ def launch_w4a16_moe(
     permuted_idx_to_expanded_idx = permuted_idx_to_expanded_idx[:route_slots]
     hidden_workspace = workspace.hidden_workspace[:route_slots]
     intermediate = workspace.intermediate[:route_slots]
-    moe_permute_w4a16(
-        input=x,
-        permuted_output=hidden_workspace,
-        tile_idx_to_mn_limit=tile_idx_to_mn_limit,
-        permuted_idx_to_expanded_idx=permuted_idx_to_expanded_idx,
-        num_non_exiting_tiles=num_non_exiting_tiles,
-        max_num_permuted_tokens=route_slots,
+    prepare(
+        activation=x,
+        activation_sf=None,
+        routed=hidden_workspace,
+        routed_sf=None,
+        mapping=permuted_idx_to_expanded_idx,
+        limits=tile_idx_to_mn_limit,
+        num_tiles=num_non_exiting_tiles,
+        route_tile=route_tile,
         top_k=top_k,
-        tile_size=route_tile,
+        sf_vec_size=None,
         enable_pdl=enable_pdl,
     )
     _run_grouped_gemm(

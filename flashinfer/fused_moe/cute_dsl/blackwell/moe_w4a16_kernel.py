@@ -359,7 +359,6 @@ class Sm100W4A16GroupedGemmKernel:
             1, 32 * len(self.epilog_warp_id)
         )
         self.tmem_ptr_sync_barrier = pipeline.NamedBarrier(2, self.threads_per_cta)
-        self.sched_sync_barrier = pipeline.NamedBarrier(5, 32)
 
         self.smem_buffer_align_bytes = 1024
 
@@ -708,7 +707,7 @@ class Sm100W4A16GroupedGemmKernel:
         tArA_transform: cute.Tensor,
         tArA_transform_store: cute.Tensor,
         transform_tiler: cute.Layout,
-        k_tile_cnt: cutlass.Int32,
+        k_tile_cnt: cutlass.Constexpr[int],
     ) -> tuple[pipeline.PipelineState, pipeline.PipelineState]:
         a_load2trans_consumer_state.reset_count()
         peek_load2trans_full_status = cutlass.Boolean(1)
@@ -825,9 +824,9 @@ class Sm100W4A16GroupedGemmKernel:
         output_ptr: cute.Pointer,
         permuted_idx_to_expanded_idx_ptr: Optional[cute.Pointer],
         token_final_scales_ptr: Optional[cute.Pointer],
-        m: cutlass.Int64,
+        m: cutlass.Constexpr[int],
         n: cutlass.Int64,
-        k: cutlass.Int64,
+        k: cutlass.Constexpr[int],
         num_tokens: cutlass.Int64,
         top_k: cutlass.Constexpr,
         max_active_clusters: cutlass.Constexpr,
@@ -1214,7 +1213,7 @@ class Sm100W4A16GroupedGemmKernel:
         tile_info_pipeline = pipeline.PipelineAsync.create(
             barrier_storage=storage.tile_info_full_mbar_ptr.data_ptr(),
             num_stages=self.num_tile_info_stage,
-            producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread, 32 * 1),
+            producer_group=pipeline.CooperativeGroup(pipeline.Agent.Thread, 1),
             consumer_group=pipeline.CooperativeGroup(
                 pipeline.Agent.Thread,
                 num_tile_info_pipeline_consumer_threads,
@@ -1365,7 +1364,7 @@ class Sm100W4A16GroupedGemmKernel:
             cute.slice_(self.mma_tiler_c, (None, None, 0)),
             (None, None, None),
         )
-        k_tile_cnt = cutlass.Int32(cute.size(gA_mkl, mode=[3]))
+        k_tile_cnt = cute.size(gA_mkl, mode=[3])
 
         # Partition global tensor for TiledMMA_A/B/C
         thr_mma = tiled_mma.get_slice(mma_tile_coord_v)
@@ -1506,9 +1505,7 @@ class Sm100W4A16GroupedGemmKernel:
                             cur_sTile_info[1] = route_start
                             cur_sTile_info[2] = group_idx
                             cur_sTile_info[3] = distance_to_boundary
-                        cute.arch.fence_proxy("async.shared", space="cta")
-                        self.sched_sync_barrier.arrive_and_wait()
-                        tile_info_pipeline.producer_commit(tile_info_producer_state)
+                            tile_info_pipeline.producer_commit(tile_info_producer_state)
                         tile_info_producer_state.advance()
 
                     if work_tile.is_valid_tile:
@@ -1566,9 +1563,7 @@ class Sm100W4A16GroupedGemmKernel:
                             cur_sTile_info[1] = route_start
                             cur_sTile_info[2] = group_idx
                             cur_sTile_info[3] = distance_to_boundary
-                        cute.arch.fence_proxy("async.shared", space="cta")
-                        self.sched_sync_barrier.arrive_and_wait()
-                        tile_info_pipeline.producer_commit(tile_info_producer_state)
+                            tile_info_pipeline.producer_commit(tile_info_producer_state)
                         tile_info_producer_state.advance()
                         tile_sched.advance_to_next_work()
                         work_tile = tile_sched.get_current_work()
@@ -1620,9 +1615,9 @@ class Sm100W4A16GroupedGemmKernel:
                                 cur_sTile_info[1] = route_start
                                 cur_sTile_info[2] = group_idx
                                 cur_sTile_info[3] = distance_to_boundary
-                            cute.arch.fence_proxy("async.shared", space="cta")
-                            self.sched_sync_barrier.arrive_and_wait()
-                            tile_info_pipeline.producer_commit(tile_info_producer_state)
+                                tile_info_pipeline.producer_commit(
+                                    tile_info_producer_state
+                                )
                             tile_info_producer_state.advance()
 
                         if has_work:
@@ -1642,10 +1637,6 @@ class Sm100W4A16GroupedGemmKernel:
             tile_info_pipeline.consumer_wait(tile_info_consumer_state)
             work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                 group_count, sTile_info[(None, tile_info_consumer_state.index)]
-            )
-            cute.arch.fence_proxy(
-                "async.shared",
-                space="cta",
             )
             tile_info_pipeline.consumer_release(tile_info_consumer_state)
             tile_info_consumer_state.advance()
@@ -1712,10 +1703,6 @@ class Sm100W4A16GroupedGemmKernel:
                 work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                     group_count, sTile_info[(None, tile_info_consumer_state.index)]
                 )
-                cute.arch.fence_proxy(
-                    "async.shared",
-                    space="cta",
-                )
                 tile_info_pipeline.consumer_release(tile_info_consumer_state)
                 tile_info_consumer_state.advance()
             b_load2mma_pipeline.producer_tail(b_load2mma_producer_state)
@@ -1729,10 +1716,6 @@ class Sm100W4A16GroupedGemmKernel:
             tile_info_pipeline.consumer_wait(tile_info_consumer_state)
             work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                 group_count, sTile_info[(None, tile_info_consumer_state.index)]
-            )
-            cute.arch.fence_proxy(
-                "async.shared",
-                space="cta",
             )
             tile_info_pipeline.consumer_release(tile_info_consumer_state)
             tile_info_consumer_state.advance()
@@ -1814,10 +1797,6 @@ class Sm100W4A16GroupedGemmKernel:
                 work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                     group_count, sTile_info[(None, tile_info_consumer_state.index)]
                 )
-                cute.arch.fence_proxy(
-                    "async.shared",
-                    space="cta",
-                )
                 tile_info_pipeline.consumer_release(tile_info_consumer_state)
                 tile_info_consumer_state.advance()
 
@@ -1864,10 +1843,6 @@ class Sm100W4A16GroupedGemmKernel:
             work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                 group_count, sTile_info[(None, tile_info_consumer_state.index)]
             )
-            cute.arch.fence_proxy(
-                "async.shared",
-                space="cta",
-            )
             tile_info_pipeline.consumer_release(tile_info_consumer_state)
             tile_info_consumer_state.advance()
             a_load2trans_consumer_state = pipeline.make_pipeline_state(
@@ -1904,10 +1879,6 @@ class Sm100W4A16GroupedGemmKernel:
                 work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                     group_count, sTile_info[(None, tile_info_consumer_state.index)]
                 )
-                cute.arch.fence_proxy(
-                    "async.shared",
-                    space="cta",
-                )
                 tile_info_pipeline.consumer_release(tile_info_consumer_state)
                 tile_info_consumer_state.advance()
             # Wait a_transform buffer empty
@@ -1939,10 +1910,6 @@ class Sm100W4A16GroupedGemmKernel:
             tile_info_pipeline.consumer_wait(tile_info_consumer_state)
             work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                 group_count, sTile_info[(None, tile_info_consumer_state.index)]
-            )
-            cute.arch.fence_proxy(
-                "async.shared",
-                space="cta",
             )
             tile_info_pipeline.consumer_release(tile_info_consumer_state)
             tile_info_consumer_state.advance()
@@ -2009,10 +1976,6 @@ class Sm100W4A16GroupedGemmKernel:
                 tile_info_pipeline.consumer_wait(tile_info_consumer_state)
                 work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                     group_count, sTile_info[(None, tile_info_consumer_state.index)]
-                )
-                cute.arch.fence_proxy(
-                    "async.shared",
-                    space="cta",
                 )
                 tile_info_pipeline.consumer_release(tile_info_consumer_state)
                 tile_info_consumer_state.advance()
@@ -2144,10 +2107,6 @@ class Sm100W4A16GroupedGemmKernel:
             tile_info_pipeline.consumer_wait(tile_info_consumer_state)
             work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                 group_count, sTile_info[(None, tile_info_consumer_state.index)]
-            )
-            cute.arch.fence_proxy(
-                "async.shared",
-                space="cta",
             )
             tile_info_pipeline.consumer_release(tile_info_consumer_state)
             tile_info_consumer_state.advance()
@@ -2610,10 +2569,6 @@ class Sm100W4A16GroupedGemmKernel:
                 tile_info_pipeline.consumer_wait(tile_info_consumer_state)
                 work_tile = mixed_input_utils.make_contiguous_group_work_tile_info(
                     group_count, sTile_info[(None, tile_info_consumer_state.index)]
-                )
-                cute.arch.fence_proxy(
-                    "async.shared",
-                    space="cta",
                 )
                 tile_info_pipeline.consumer_release(tile_info_consumer_state)
                 tile_info_consumer_state.advance()
