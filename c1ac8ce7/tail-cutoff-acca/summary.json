@@ -1,0 +1,97 @@
+{
+  "passed": true,
+  "complete_campaign": true,
+  "measured_cells": 2,
+  "retention_cells": 2,
+  "raw_samples": 800,
+  "loaded_kernels": 16,
+  "jobs": [
+    "tp-nemo3-ultra-w4a16",
+    "tp-v41-flash-w4a16"
+  ],
+  "pending_jobs": [],
+  "groups": {
+    "band/prefill": {
+      "cells": 2,
+      "speedup_percent": 0.23242293780374457,
+      "negative": 1,
+      "max_control_spread": 3.5367298364232136,
+      "max_candidate_spread": 0.10529026263732533
+    },
+    "band/all": {
+      "cells": 2,
+      "speedup_percent": 0.23242293780374457,
+      "negative": 1,
+      "max_control_spread": 3.5367298364232136,
+      "max_candidate_spread": 0.10529026263732533
+    },
+    "mode/CuteDSL W4A16": {
+      "cells": 2,
+      "speedup_percent": 0.23242293780374457,
+      "negative": 1,
+      "max_control_spread": 3.5367298364232136,
+      "max_candidate_spread": 0.10529026263732533
+    },
+    "model_topology/nemo3-ultra/tp": {
+      "cells": 1,
+      "speedup_percent": -0.9658476898369739,
+      "negative": 1,
+      "max_control_spread": 2.554734930372393,
+      "max_candidate_spread": 0.10529026263732533
+    },
+    "model_topology/v41-flash/tp": {
+      "cells": 1,
+      "speedup_percent": 1.445192124411987,
+      "negative": 0,
+      "max_control_spread": 3.5367298364232136,
+      "max_candidate_spread": 0.0921338579769726
+    },
+    "model_topology_mode/nemo3-ultra/tp/CuteDSL W4A16": {
+      "cells": 1,
+      "speedup_percent": -0.9658476898369739,
+      "negative": 1,
+      "max_control_spread": 2.554734930372393,
+      "max_candidate_spread": 0.10529026263732533
+    },
+    "model_topology_mode/v41-flash/tp/CuteDSL W4A16": {
+      "cells": 1,
+      "speedup_percent": 1.445192124411987,
+      "negative": 0,
+      "max_control_spread": 3.5367298364232136,
+      "max_candidate_spread": 0.0921338579769726
+    },
+    "implementation/w4a16": {
+      "cells": 2,
+      "speedup_percent": 0.23242293780374457,
+      "negative": 1,
+      "max_control_spread": 3.5367298364232136,
+      "max_candidate_spread": 0.10529026263732533
+    }
+  },
+  "clock_quartiles": 32,
+  "missing_clock_quartiles": 0,
+  "default_stage_resource_joins": 8,
+  "clock_exception_quartiles": 14,
+  "config_sha256": "340d2eadad937434c34adce96bb3af6e645b1fbf6f3ca2b1d686670973982064",
+  "source_label": "w4-tail-cutoff-prefill-acca",
+  "control_head": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "all_rows_retained": true,
+  "cross_groups": {
+    "CuteDSL W4A16/nemo3-ultra/tp/prefill": {
+      "cells": 1,
+      "speedup_percent": -0.9658476898369739,
+      "negative": 1
+    },
+    "CuteDSL W4A16/v41-flash/tp/prefill": {
+      "cells": 1,
+      "speedup_percent": 1.445192124411987,
+      "negative": 0
+    }
+  },
+  "audit_helper_sha256": "3d3a5f2b11094120f263bd10458741ecccb5ba5b7851d7e0bdc0aa959e009fc2",
+  "timeline_helper_sha256": "937fb03398de552678886f18b7c171b196e78d940fe31d3365ac738ef2443c5c",
+  "tight_negative_cells": [],
+  "tight_definition": "Both phase-median repeat spreads <=0.5%; descriptive only, not statistical confidence. All other losses remain in the full table.",
+  "estimator": "geometric mean of two phase medians; preserve all four raw phase medians and arithmetic diagnostic",
+  "boundary": "Only complete CAAC jobs; tokens 1/2 retained in raw rows but excluded from summaries. Clock/repeat anomalies retained. Components are per-phase medians; use extension/gap rather than adding overlapping kernel durations."
+}

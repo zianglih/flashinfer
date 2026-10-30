@@ -1,0 +1,383 @@
+{
+  "passed": true,
+  "config_sha256": "340d2eadad937434c34adce96bb3af6e645b1fbf6f3ca2b1d686670973982064",
+  "loaded_kernel_records": 16,
+  "cell_stage_records": 4,
+  "all_resources_equal": true,
+  "changed": [],
+  "rows": [
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "backend": "CuteDSL W4A16",
+      "stage": "fc1",
+      "resources_equal": true,
+      "phases": {
+        "0-candidate": {
+          "initial_regs": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": true,
+          "enable_pdl": true,
+          "compile_options": "--ptxas-options='-maxrregcount=96'"
+        },
+        "1-control": {
+          "initial_regs": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": true,
+          "enable_pdl": true,
+          "compile_options": "--ptxas-options='-maxrregcount=96'"
+        },
+        "2-control": {
+          "initial_regs": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": true,
+          "enable_pdl": true,
+          "compile_options": "--ptxas-options='-maxrregcount=96'"
+        },
+        "3-candidate": {
+          "initial_regs": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": true,
+          "enable_pdl": true,
+          "compile_options": "--ptxas-options='-maxrregcount=96'"
+        }
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "backend": "CuteDSL W4A16",
+      "stage": "fc2",
+      "resources_equal": true,
+      "phases": {
+        "0-candidate": {
+          "initial_regs": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": false,
+          "enable_pdl": true,
+          "compile_options": ""
+        },
+        "1-control": {
+          "initial_regs": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": false,
+          "enable_pdl": true,
+          "compile_options": ""
+        },
+        "2-control": {
+          "initial_regs": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": false,
+          "enable_pdl": true,
+          "compile_options": ""
+        },
+        "3-candidate": {
+          "initial_regs": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": false,
+          "enable_pdl": true,
+          "compile_options": ""
+        }
+      }
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "tokens": 4096,
+      "backend": "CuteDSL W4A16",
+      "stage": "fc1",
+      "resources_equal": true,
+      "phases": {
+        "0-candidate": {
+          "initial_regs": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": true,
+          "enable_pdl": true,
+          "compile_options": "--ptxas-options='-maxrregcount=96'"
+        },
+        "1-control": {
+          "initial_regs": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": true,
+          "enable_pdl": true,
+          "compile_options": "--ptxas-options='-maxrregcount=96'"
+        },
+        "2-control": {
+          "initial_regs": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": true,
+          "enable_pdl": true,
+          "compile_options": "--ptxas-options='-maxrregcount=96'"
+        },
+        "3-candidate": {
+          "initial_regs": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": true,
+          "enable_pdl": true,
+          "compile_options": "--ptxas-options='-maxrregcount=96'"
+        }
+      }
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "tokens": 4096,
+      "backend": "CuteDSL W4A16",
+      "stage": "fc2",
+      "resources_equal": true,
+      "phases": {
+        "0-candidate": {
+          "initial_regs": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": false,
+          "enable_pdl": true,
+          "compile_options": ""
+        },
+        "1-control": {
+          "initial_regs": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": false,
+          "enable_pdl": true,
+          "compile_options": ""
+        },
+        "2-control": {
+          "initial_regs": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": false,
+          "enable_pdl": true,
+          "compile_options": ""
+        },
+        "3-candidate": {
+          "initial_regs": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103,
+          "gather_input": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ],
+          "raster_along_m": true,
+          "use_clc_scheduler": false,
+          "enable_pdl": true,
+          "compile_options": ""
+        }
+      }
+    }
+  ],
+  "boundary": "Actual CUDA driver attributes joined to measured stage via the compiled library handle. This is not a claim of timed cubin identity. No timing or sample modifications."
+}

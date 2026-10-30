@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "node": "fi-gather-pipeline-recovery-1030",
+  "cluster": "c2",
+  "namespace": "ziangli",
+  "image": "nvcr.io/nvidia/pytorch:26.05-py3",
+  "records": {
+    "install.json": "607eea57ebcb1ef026228ec6214a4cf8f97c5d11d30610cec189b392d84f1837",
+    "runtime.json": "cc781fea1a532d7fe568f8f85e69db05509ecbd554b68273080f644f9c62560b",
+    "persistence.json": "0c1e1e1f5e7193ab067aa30c9172d0a9b599cf1adb4997a4d01b57cf78ef41d1",
+    "cache-ready.json": "6fc628e9204cd3e2b1625da3a69dcadd53c586ee674f8c2a60f185ee4524db93",
+    "winner-cache-postflight.json": "6f0134259f7083d27183c52d9b62d96504686225f751993ff73a5328f7d8d4c2",
+    "selection-postflight.json": "ce87c53c1e1d1857019d8a833e7f8fe9fdaae3b6e5ae44ed36ada6248eb5cdec"
+  },
+  "source_unchanged": true,
+  "strict_metadata_matches": true,
+  "native_all_noop": true,
+  "timing_started": false,
+  "boundary": "Environment recovery only; native routing/moe_utils ELF hashes changed through normal release rebuild and are bound in cache-ready.json. Requires parent review before a separate whole-job timing campaign."
+}

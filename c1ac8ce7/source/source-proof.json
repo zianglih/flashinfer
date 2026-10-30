@@ -1,0 +1,241 @@
+{
+  "passed": true,
+  "base": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "base_kernel_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "candidate_kernel_sha256": "cbef9186731e78806884f7fa2ba5aad18f5ece379664cf8d3181d5cd54548c10",
+  "source_file": "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+  "inverse_whole_module_ast_equal": true,
+  "algebra": {
+    "comparisons": 1677744,
+    "guarded": 1357056,
+    "constexpr_elided": 320688,
+    "group_counts": [
+      1,
+      2,
+      3,
+      4,
+      8
+    ],
+    "group_k": [
+      16,
+      32,
+      64,
+      128,
+      256
+    ],
+    "full_tiles": "0..7"
+  },
+  "baseline_native_evidence": [
+    {
+      "case": 1,
+      "consumed_k": 640,
+      "kernel": "FC2",
+      "configuration": {
+        "num_c_stage": 7,
+        "epi_tile_n": 16,
+        "gated": false,
+        "activation_type": null,
+        "gather_input": false,
+        "mma_tiler": [
+          128,
+          16,
+          256
+        ],
+        "use_2cta_instrs": false,
+        "use_clc_scheduler": true,
+        "enable_pdl": false
+      },
+      "resources": {
+        "registers": 128,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "ptx": "experiments/w4-raw-peek/qualification/evidence/1793386426136276000/data/control-w4a16-1/codegen/01-Sm100W4A16GroupedGemmKernel.ptx",
+      "ptx_sha256": "4b5954a76729fa36e8c7cd676f81f7123ccd84e2346d39e3904e3d10a455c8da",
+      "sass": "experiments/w4-raw-peek/qualification/evidence/1793386426136276000/data/control-w4a16-1/codegen/01-Sm100W4A16GroupedGemmKernel.sass",
+      "sass_sha256": "b5e35d7148b2f1ead0810c9af1a40a4a26e5c98e5715a6806a86adc0eec6a0d6",
+      "cubin_sha256": "4e5b6ca7825aaa822f77444a695750df0256f7bb985a80047b488d3353c30cee",
+      "window": [
+        {
+          "pc": "0x3160",
+          "instruction": "ULEA UR4, UR17, UR22, 0x1 ;"
+        },
+        {
+          "pc": "0x3170",
+          "instruction": "USHF.L.U32 UR4, UR4, 0x7, URZ ;"
+        },
+        {
+          "pc": "0x3180",
+          "instruction": "UISETP.GT.U32.AND UP0, UPT, UR4, 0x27f, UPT ;"
+        },
+        {
+          "pc": "0x3190",
+          "instruction": "BRA.U UP0, 0x3e40 ;"
+        }
+      ]
+    },
+    {
+      "case": 2,
+      "consumed_k": 640,
+      "kernel": "FC2",
+      "configuration": {
+        "num_c_stage": 5,
+        "epi_tile_n": 32,
+        "gated": false,
+        "activation_type": null,
+        "gather_input": false,
+        "mma_tiler": [
+          256,
+          64,
+          256
+        ],
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false,
+        "enable_pdl": true
+      },
+      "resources": {
+        "registers": 128,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "ptx": "experiments/w4-raw-peek/qualification/evidence/1793386426136276000/data/control-w4a16-2/codegen/01-Sm100W4A16GroupedGemmKernel.ptx",
+      "ptx_sha256": "5c81a0ac26992db111927f43cdb582e45ebff935747d9114cf539cbd019ea1e9",
+      "sass": "experiments/w4-raw-peek/qualification/evidence/1793386426136276000/data/control-w4a16-2/codegen/01-Sm100W4A16GroupedGemmKernel.sass",
+      "sass_sha256": "a1463f8cb852c9f94a37919d17743fdb2ef119256b15097297acda5a75f6b14b",
+      "cubin_sha256": "428a94bdf02fd05873b487a7b7ae06335640b6d8f6a10f1fdec18dd1c2b14b43",
+      "window": [
+        {
+          "pc": "0x36f0",
+          "instruction": "ULEA UR4, UR19, UR25, 0x1 ;"
+        },
+        {
+          "pc": "0x3700",
+          "instruction": "USHF.L.U32 UR4, UR4, 0x7, URZ ;"
+        },
+        {
+          "pc": "0x3710",
+          "instruction": "UISETP.GT.U32.AND UP0, UPT, UR4, 0x27f, UPT ;"
+        },
+        {
+          "pc": "0x3720",
+          "instruction": "BRA.U UP0, 0x43d0 ;"
+        }
+      ]
+    },
+    {
+      "case": 4,
+      "consumed_k": 640,
+      "kernel": "FC2",
+      "configuration": {
+        "num_c_stage": 2,
+        "epi_tile_n": 32,
+        "gated": false,
+        "activation_type": null,
+        "gather_input": false,
+        "mma_tiler": [
+          256,
+          192,
+          256
+        ],
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false,
+        "enable_pdl": false
+      },
+      "resources": {
+        "registers": 128,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "ptx": "experiments/w4-raw-peek/qualification/evidence/1793386426136276000/data/control-w4a16-4/codegen/01-Sm100W4A16GroupedGemmKernel.ptx",
+      "ptx_sha256": "726c876325196bec22d03a2d210f9314cf9e32112a928fcc436ef4ab81f98c3b",
+      "sass": "experiments/w4-raw-peek/qualification/evidence/1793386426136276000/data/control-w4a16-4/codegen/01-Sm100W4A16GroupedGemmKernel.sass",
+      "sass_sha256": "4632ae1b023c3796ccae7b671f60f30dba62e71ced7bba07d72058830b0a71e2",
+      "cubin_sha256": "08744e92c51dea9c5392b619b91492d152cf782ae6cf3d1dc070aa9ef20aff2e",
+      "window": [
+        {
+          "pc": "0x3330",
+          "instruction": "ULEA UR5, UR19, UR25, 0x1 ;"
+        },
+        {
+          "pc": "0x3340",
+          "instruction": "USHF.L.U32 UR5, UR5, 0x7, URZ ;"
+        },
+        {
+          "pc": "0x3350",
+          "instruction": "UISETP.GT.U32.AND UP0, UPT, UR5, 0x27f, UPT ;"
+        },
+        {
+          "pc": "0x3360",
+          "instruction": "BRA.U UP0, 0x4010 ;"
+        }
+      ]
+    },
+    {
+      "case": 5,
+      "consumed_k": 640,
+      "kernel": "FC2",
+      "configuration": {
+        "num_c_stage": 7,
+        "epi_tile_n": 32,
+        "gated": false,
+        "activation_type": null,
+        "gather_input": false,
+        "mma_tiler": [
+          256,
+          256,
+          256
+        ],
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": true,
+        "enable_pdl": true
+      },
+      "resources": {
+        "registers": 128,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "ptx": "experiments/w4-raw-peek/qualification/evidence/1793386426136276000/data/control-w4a16-5/codegen/01-Sm100W4A16GroupedGemmKernel.ptx",
+      "ptx_sha256": "8cef65f35b0ea494359fd178e39e32fd25fd581809f72a8b1b78ed76a5a151a7",
+      "sass": "experiments/w4-raw-peek/qualification/evidence/1793386426136276000/data/control-w4a16-5/codegen/01-Sm100W4A16GroupedGemmKernel.sass",
+      "sass_sha256": "f1a824ed6f335725e8bf82029ede9b02936cc4732f3765a5c8796d8ad0777eac",
+      "cubin_sha256": "cbe585899d78e9e71b81165cbf0a351f320390226d43cf3c068afeb89d26646d",
+      "window": [
+        {
+          "pc": "0x3170",
+          "instruction": "ULEA UR8, UR22, UR5, 0x1 ;"
+        },
+        {
+          "pc": "0x3180",
+          "instruction": "USHF.L.U32 UR8, UR8, 0x7, URZ ;"
+        },
+        {
+          "pc": "0x3190",
+          "instruction": "UISETP.GT.U32.AND UP0, UPT, UR8, 0x27f, UPT ;"
+        },
+        {
+          "pc": "0x31a0",
+          "instruction": "BRA.U UP0, 0x3e50 ;"
+        }
+      ]
+    }
+  ],
+  "unchanged": [
+    "function signature",
+    "both transform_valid uses",
+    "raw/decoded waits",
+    "pipeline advances/releases/arrivals",
+    "TMEM stores",
+    "iKET scopes",
+    "full-K/all-live-tail constexpr elision",
+    "Mega padded-K specialization"
+  ],
+  "boundary": "CPU source/algebra and retained native inspection only. Candidate codegen, resources, exact numerics and performance untested."
+}

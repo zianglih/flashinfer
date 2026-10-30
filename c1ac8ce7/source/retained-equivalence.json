@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "retained_head": "c1ac8ce7341039db65195b99445fcdeb193cf226",
+  "measured_base": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "candidate_kernel_sha256": "cbef9186731e78806884f7fa2ba5aad18f5ece379664cf8d3181d5cd54548c10",
+  "changed_paths": [
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py"
+  ],
+  "patch_sha256": "db3bc1e547ef265185434ed83f167180712322f4f780cd5bba2412c8cec5f2d1",
+  "boundary": "Committed kernel exactly equals qualified/measured immutable cutoff overlay; original measurement records retain2b8 base."
+}

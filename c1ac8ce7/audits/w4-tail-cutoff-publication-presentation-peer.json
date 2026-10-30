@@ -1,0 +1,46 @@
+{
+  "passed": true,
+  "body_sha256": "617e093dc928929f436ef96dc99900d529741954e72c57515b1760dfeac2dfa5",
+  "body_bytes": 11140,
+  "report_sha256": "3bbc4a4bf91138211517bedc06ab5dd452453bbefcdc006639d3f1f4bba8fde1",
+  "visual_receipt_sha256": "798d3e4520f4fc75e1441beacd68f05d952c1339df7fbc056d2fdc46d56f7e0b",
+  "plots": {
+    "plots/retained-speedup-ep.png": "095beb5064d66e057b48d0e4b6a200b185cdcc4636b35ba92a11a0d4c02ec10f",
+    "plots/retained-speedup-tp.png": "c23326d166ea7567de5576f083f9a9b59127bc2df00a28ea779e48f04268ce3a",
+    "plots/swap-ab-speedup-table-ep.png": "d922129e57b2c25361e0c603f4559ec22c978bf02bf5d49ae05ad3b9ab35b24b",
+    "plots/swap-ab-speedup-table-tp.png": "797ae27d0e91bc0f3f965df8a6b96c75bdb494a7211d6c6c53e9c1aad7fd3cea",
+    "plots/tail-cutoff-vs-retained.png": "d74375d620d407104575e34304e99dc0e1be2f5680f7866e0b959c1a5ae66c16"
+  },
+  "svg_numeric_checks": [
+    {
+      "svg": "retained-speedup-ep.svg",
+      "numeric_labels": 209,
+      "sha256": "9b768dc1aa0f42ecdda08b8f6084dc336b5e15472d584c6f09eef8e4b86c6b23"
+    },
+    {
+      "svg": "retained-speedup-tp.svg",
+      "numeric_labels": 187,
+      "sha256": "0b0d3aca5815cf3d16cbb7100bdeef127360263c9582893eb99f4ae05ba32ca1"
+    },
+    {
+      "svg": "swap-ab-speedup-table-ep.svg",
+      "numeric_labels": 352,
+      "sha256": "08e60ca8425bf9affd0f8f8c9de1b403acb956bdf0ea15db60428d0c9dfe3cb8"
+    },
+    {
+      "svg": "swap-ab-speedup-table-tp.svg",
+      "numeric_labels": 308,
+      "sha256": "d5b8275d57ac13792e124f738545fcb0a14a097cc0eecfdeb1898e5607180d8d"
+    },
+    {
+      "svg": "tail-cutoff-vs-retained.svg",
+      "numeric_labels": 33,
+      "sha256": "89841bd56855e5d5255cd64cd53002a9d763d167678c39384159f38cbb10da83"
+    }
+  ],
+  "all_five_pngs_independently_viewed": true,
+  "template_humansand_preserved": true,
+  "source_scope_checked": "Retainedc1ac equals tested2b8+cbef;39fresh primary/429qualified reuse;ACCA separate; historical denominators/runtime cohorts explicit.",
+  "limitations_present": "8primary retention losses, prefill\u22120.459%, repeat/clock exceptions, no fresh468paired claim, no new distributed benchmark, representative native reuse only.",
+  "boundary": "Five PNGs viewed with legible labels, unclipped titles/footers, matching signs/NAs and explicit historical/fresh captions. Actual SVG numeric labels replayed. Asset-base placeholders intentionally pending; archive is not covered here."
+}

@@ -1,0 +1,1442 @@
+[
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "gather_input": true,
+    "initial_regs": 96,
+    "max_threads": 640,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "gather_input": false,
+    "initial_regs": 128,
+    "max_threads": 512,
+    "local_bytes": 0,
+    "static_shared_bytes": 0,
+    "binary_version": 103
+  }
+]

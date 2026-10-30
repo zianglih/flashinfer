@@ -1,0 +1,1425 @@
+{
+  "retention_cells": 2,
+  "retention_geomean_percent": 0.23242293780374457,
+  "passed": true,
+  "config_sha256": "340d2eadad937434c34adce96bb3af6e645b1fbf6f3ca2b1d686670973982064",
+  "archive_sha256": "55663c5bcfddbf025e68008fa19464cff92f8ecfdefcc7544d825251768fd4a0",
+  "source_manifests": {
+    "candidate": "c46df2cc6222138434c86cdaaa680a0de6f74ce6a59cb159bddf0fb73753954c",
+    "control": "5329726ba448fc927b6272d3ef4115bcfa5e10d3c0cb3b36d83578a09cffddb6"
+  },
+  "jobs": 2,
+  "cells": 2,
+  "phase_medians": 8,
+  "samples": 800,
+  "loaded_resource_records": 16,
+  "clock_quartiles": 32,
+  "missing_clock_quartiles": 0,
+  "clock_exception_quartiles": 14,
+  "negative_cells": 1,
+  "geomean_percent": 0.23242293780374457,
+  "default_cells": [
+    [
+      "tp-nemo3-ultra-w4a16",
+      16384,
+      "CuteDSL W4A16"
+    ]
+  ],
+  "default_stage_joins": 8,
+  "all_report_cells_preserved": true,
+  "boundary": "Independent raw CUPTI correlation/span, median/CAAC, route/tactic/cache/source/resource and raw NVML quartile replay. Includes recorded-default to actual native geometry/library/resource joins. No new GPU execution; all negative and clock-exception cells preserved. No source or timing-helper changes.",
+  "resource_stage_joins": 16,
+  "distinct_cell_stage_resources": 4,
+  "resource_configs_identical_across_phases": true,
+  "native_release_cohort_equal": true,
+  "clock_details": [
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "0-candidate",
+      "quartile": 1,
+      "clock": {
+        "sm_mhz": {
+          "min": 2032,
+          "median": 2032,
+          "max": 2032
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 252487,
+          "median": 252487,
+          "max": 341178
+        },
+        "temperature_c": {
+          "min": 32,
+          "median": 32,
+          "max": 40
+        },
+        "available": true,
+        "reasons": {
+          "0": 15,
+          "4": 10
+        },
+        "samples": 25
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "0-candidate",
+      "quartile": 2,
+      "clock": {
+        "sm_mhz": {
+          "min": 2032,
+          "median": 2032,
+          "max": 2032
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 341178,
+          "median": 341178,
+          "max": 341178
+        },
+        "temperature_c": {
+          "min": 40,
+          "median": 40,
+          "max": 40
+        },
+        "available": true,
+        "reasons": {
+          "4": 27
+        },
+        "samples": 27
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "0-candidate",
+      "quartile": 3,
+      "clock": {
+        "sm_mhz": {
+          "min": 1282,
+          "median": 1282.0,
+          "max": 2032
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996.0,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 341178,
+          "median": 431320.0,
+          "max": 431320
+        },
+        "temperature_c": {
+          "min": 40,
+          "median": 41.0,
+          "max": 41
+        },
+        "available": true,
+        "reasons": {
+          "4": 26
+        },
+        "samples": 26
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "1-control",
+      "quartile": 2,
+      "clock": {
+        "sm_mhz": {
+          "min": 1320,
+          "median": 1320,
+          "max": 2032
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 288919,
+          "median": 386115,
+          "max": 386115
+        },
+        "temperature_c": {
+          "min": 39,
+          "median": 41,
+          "max": 41
+        },
+        "available": true,
+        "reasons": {
+          "0": 6,
+          "4": 21
+        },
+        "samples": 27
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "1-control",
+      "quartile": 3,
+      "clock": {
+        "sm_mhz": {
+          "min": 1320,
+          "median": 1320.0,
+          "max": 1320
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996.0,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 386115,
+          "median": 386115.0,
+          "max": 386115
+        },
+        "temperature_c": {
+          "min": 41,
+          "median": 41.0,
+          "max": 41
+        },
+        "available": true,
+        "reasons": {
+          "4": 26
+        },
+        "samples": 26
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "2-control",
+      "quartile": 0,
+      "clock": {
+        "sm_mhz": {
+          "min": 1980,
+          "median": 2006.0,
+          "max": 2032
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996.0,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 248586,
+          "median": 248586.0,
+          "max": 295640
+        },
+        "temperature_c": {
+          "min": 32,
+          "median": 32.0,
+          "max": 32
+        },
+        "available": true,
+        "reasons": {
+          "0": 22
+        },
+        "samples": 22
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "2-control",
+      "quartile": 1,
+      "clock": {
+        "sm_mhz": {
+          "min": 1980,
+          "median": 1980,
+          "max": 1980
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 295640,
+          "median": 295640,
+          "max": 295640
+        },
+        "temperature_c": {
+          "min": 32,
+          "median": 32,
+          "max": 32
+        },
+        "available": true,
+        "reasons": {
+          "0": 25
+        },
+        "samples": 25
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "2-control",
+      "quartile": 2,
+      "clock": {
+        "sm_mhz": {
+          "min": 1432,
+          "median": 1980.0,
+          "max": 1980
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996.0,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 295640,
+          "median": 295640.0,
+          "max": 397738
+        },
+        "temperature_c": {
+          "min": 32,
+          "median": 32.0,
+          "max": 41
+        },
+        "available": true,
+        "reasons": {
+          "0": 16,
+          "4": 10
+        },
+        "samples": 26
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "2-control",
+      "quartile": 3,
+      "clock": {
+        "sm_mhz": {
+          "min": 1432,
+          "median": 1432.0,
+          "max": 1432
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996.0,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 397738,
+          "median": 397738.0,
+          "max": 397738
+        },
+        "temperature_c": {
+          "min": 41,
+          "median": 41.0,
+          "max": 41
+        },
+        "available": true,
+        "reasons": {
+          "4": 26
+        },
+        "samples": 26
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "3-candidate",
+      "quartile": 2,
+      "clock": {
+        "sm_mhz": {
+          "min": 1312,
+          "median": 1312,
+          "max": 2032
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 298132,
+          "median": 395914,
+          "max": 395914
+        },
+        "temperature_c": {
+          "min": 40,
+          "median": 41,
+          "max": 41
+        },
+        "available": true,
+        "reasons": {
+          "0": 14,
+          "4": 13
+        },
+        "samples": 27
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "phase": "3-candidate",
+      "quartile": 3,
+      "clock": {
+        "sm_mhz": {
+          "min": 1312,
+          "median": 1312.0,
+          "max": 1312
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996.0,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 395914,
+          "median": 395914.0,
+          "max": 395914
+        },
+        "temperature_c": {
+          "min": 41,
+          "median": 41.0,
+          "max": 41
+        },
+        "available": true,
+        "reasons": {
+          "4": 26
+        },
+        "samples": 26
+      }
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "tokens": 4096,
+      "phase": "2-control",
+      "quartile": 2,
+      "clock": {
+        "sm_mhz": {
+          "min": 1732,
+          "median": 1882.0,
+          "max": 2032
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996.0,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 238953,
+          "median": 238953.0,
+          "max": 273595
+        },
+        "temperature_c": {
+          "min": 31,
+          "median": 31.0,
+          "max": 38
+        },
+        "available": true,
+        "reasons": {
+          "0": 8
+        },
+        "samples": 8
+      }
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "tokens": 4096,
+      "phase": "2-control",
+      "quartile": 3,
+      "clock": {
+        "sm_mhz": {
+          "min": 1732,
+          "median": 1732,
+          "max": 1732
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 273595,
+          "median": 273595,
+          "max": 273595
+        },
+        "temperature_c": {
+          "min": 38,
+          "median": 38,
+          "max": 38
+        },
+        "available": true,
+        "reasons": {
+          "0": 9
+        },
+        "samples": 9
+      }
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "tokens": 4096,
+      "phase": "3-candidate",
+      "quartile": 3,
+      "clock": {
+        "sm_mhz": {
+          "min": 1672,
+          "median": 1672,
+          "max": 2032
+        },
+        "memory_mhz": {
+          "min": 3996,
+          "median": 3996,
+          "max": 3996
+        },
+        "power_mw": {
+          "min": 242167,
+          "median": 303662,
+          "max": 303662
+        },
+        "temperature_c": {
+          "min": 31,
+          "median": 33,
+          "max": 33
+        },
+        "available": true,
+        "reasons": {
+          "0": 9
+        },
+        "samples": 9
+      }
+    }
+  ],
+  "negative_rows": [
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "backend": "CuteDSL W4A16",
+      "control_us": 1945.206762888267,
+      "candidate_us": 1964.1777280994074,
+      "phase_us": {
+        "control": [
+          1969.8975,
+          1920.8255
+        ],
+        "candidate": [
+          1963.1444999999999,
+          1965.2115
+        ]
+      },
+      "speedup_percent": -0.9658476898369739,
+      "repeat_spread_percent": {
+        "control": 2.554734930372393,
+        "candidate": 0.10529026263732533
+      },
+      "gpu": "GPU-ee4aef4a-e7f5-91fb-213c-d87a88482df1, 0 MiB, 0 %, 120 MHz, 30, 186.29 W",
+      "clock_flags": [
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "0-candidate",
+          "quartile": 1,
+          "clock": {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 252487,
+              "median": 252487,
+              "max": 341178
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 15,
+              "4": 10
+            },
+            "samples": 25
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "0-candidate",
+          "quartile": 2,
+          "clock": {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 341178,
+              "median": 341178,
+              "max": 341178
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "4": 27
+            },
+            "samples": 27
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "0-candidate",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1282,
+              "median": 1282.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 341178,
+              "median": 431320.0,
+              "max": 431320
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "4": 26
+            },
+            "samples": 26
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "1-control",
+          "quartile": 2,
+          "clock": {
+            "sm_mhz": {
+              "min": 1320,
+              "median": 1320,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 288919,
+              "median": 386115,
+              "max": 386115
+            },
+            "temperature_c": {
+              "min": 39,
+              "median": 41,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 6,
+              "4": 21
+            },
+            "samples": 27
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "1-control",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1320,
+              "median": 1320.0,
+              "max": 1320
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 386115,
+              "median": 386115.0,
+              "max": 386115
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "4": 26
+            },
+            "samples": 26
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "2-control",
+          "quartile": 0,
+          "clock": {
+            "sm_mhz": {
+              "min": 1980,
+              "median": 2006.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 248586,
+              "median": 248586.0,
+              "max": 295640
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 22
+            },
+            "samples": 22
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "2-control",
+          "quartile": 1,
+          "clock": {
+            "sm_mhz": {
+              "min": 1980,
+              "median": 1980,
+              "max": 1980
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 295640,
+              "median": 295640,
+              "max": 295640
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 25
+            },
+            "samples": 25
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "2-control",
+          "quartile": 2,
+          "clock": {
+            "sm_mhz": {
+              "min": 1432,
+              "median": 1980.0,
+              "max": 1980
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 295640,
+              "median": 295640.0,
+              "max": 397738
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 16,
+              "4": 10
+            },
+            "samples": 26
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "2-control",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1432,
+              "median": 1432.0,
+              "max": 1432
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 397738,
+              "median": 397738.0,
+              "max": 397738
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "4": 26
+            },
+            "samples": 26
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "3-candidate",
+          "quartile": 2,
+          "clock": {
+            "sm_mhz": {
+              "min": 1312,
+              "median": 1312,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 298132,
+              "median": 395914,
+              "max": 395914
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 41,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 14,
+              "4": 13
+            },
+            "samples": 27
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "3-candidate",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1312,
+              "median": 1312.0,
+              "max": 1312
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 395914,
+              "median": 395914.0,
+              "max": 395914
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "4": 26
+            },
+            "samples": 26
+          }
+        }
+      ]
+    }
+  ],
+  "all_rows": [
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "backend": "CuteDSL W4A16",
+      "control_us": 1945.206762888267,
+      "candidate_us": 1964.1777280994074,
+      "phase_us": {
+        "control": [
+          1969.8975,
+          1920.8255
+        ],
+        "candidate": [
+          1963.1444999999999,
+          1965.2115
+        ]
+      },
+      "speedup_percent": -0.9658476898369739,
+      "repeat_spread_percent": {
+        "control": 2.554734930372393,
+        "candidate": 0.10529026263732533
+      },
+      "gpu": "GPU-ee4aef4a-e7f5-91fb-213c-d87a88482df1, 0 MiB, 0 %, 120 MHz, 30, 186.29 W",
+      "clock_flags": [
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "0-candidate",
+          "quartile": 1,
+          "clock": {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 252487,
+              "median": 252487,
+              "max": 341178
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 15,
+              "4": 10
+            },
+            "samples": 25
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "0-candidate",
+          "quartile": 2,
+          "clock": {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 341178,
+              "median": 341178,
+              "max": 341178
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "4": 27
+            },
+            "samples": 27
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "0-candidate",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1282,
+              "median": 1282.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 341178,
+              "median": 431320.0,
+              "max": 431320
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "4": 26
+            },
+            "samples": 26
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "1-control",
+          "quartile": 2,
+          "clock": {
+            "sm_mhz": {
+              "min": 1320,
+              "median": 1320,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 288919,
+              "median": 386115,
+              "max": 386115
+            },
+            "temperature_c": {
+              "min": 39,
+              "median": 41,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 6,
+              "4": 21
+            },
+            "samples": 27
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "1-control",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1320,
+              "median": 1320.0,
+              "max": 1320
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 386115,
+              "median": 386115.0,
+              "max": 386115
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "4": 26
+            },
+            "samples": 26
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "2-control",
+          "quartile": 0,
+          "clock": {
+            "sm_mhz": {
+              "min": 1980,
+              "median": 2006.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 248586,
+              "median": 248586.0,
+              "max": 295640
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 22
+            },
+            "samples": 22
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "2-control",
+          "quartile": 1,
+          "clock": {
+            "sm_mhz": {
+              "min": 1980,
+              "median": 1980,
+              "max": 1980
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 295640,
+              "median": 295640,
+              "max": 295640
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 25
+            },
+            "samples": 25
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "2-control",
+          "quartile": 2,
+          "clock": {
+            "sm_mhz": {
+              "min": 1432,
+              "median": 1980.0,
+              "max": 1980
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 295640,
+              "median": 295640.0,
+              "max": 397738
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 16,
+              "4": 10
+            },
+            "samples": 26
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "2-control",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1432,
+              "median": 1432.0,
+              "max": 1432
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 397738,
+              "median": 397738.0,
+              "max": 397738
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "4": 26
+            },
+            "samples": 26
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "3-candidate",
+          "quartile": 2,
+          "clock": {
+            "sm_mhz": {
+              "min": 1312,
+              "median": 1312,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 298132,
+              "median": 395914,
+              "max": 395914
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 41,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 14,
+              "4": 13
+            },
+            "samples": 27
+          }
+        },
+        {
+          "job": "tp-nemo3-ultra-w4a16",
+          "tokens": 16384,
+          "phase": "3-candidate",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1312,
+              "median": 1312.0,
+              "max": 1312
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 395914,
+              "median": 395914.0,
+              "max": 395914
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "4": 26
+            },
+            "samples": 26
+          }
+        }
+      ]
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "tokens": 4096,
+      "backend": "CuteDSL W4A16",
+      "control_us": 563.4531666900099,
+      "candidate_us": 555.426191119036,
+      "phase_us": {
+        "control": [
+          553.746,
+          573.3305
+        ],
+        "candidate": [
+          555.682,
+          555.1705
+        ]
+      },
+      "speedup_percent": 1.445192124411987,
+      "repeat_spread_percent": {
+        "control": 3.5367298364232136,
+        "candidate": 0.0921338579769726
+      },
+      "gpu": "GPU-14d73137-de93-acb5-b75d-0dc8dd32a7f2, 0 MiB, 0 %, 120 MHz, 29, 186.16 W",
+      "clock_flags": [
+        {
+          "job": "tp-v41-flash-w4a16",
+          "tokens": 4096,
+          "phase": "2-control",
+          "quartile": 2,
+          "clock": {
+            "sm_mhz": {
+              "min": 1732,
+              "median": 1882.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238953,
+              "median": 238953.0,
+              "max": 273595
+            },
+            "temperature_c": {
+              "min": 31,
+              "median": 31.0,
+              "max": 38
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          }
+        },
+        {
+          "job": "tp-v41-flash-w4a16",
+          "tokens": 4096,
+          "phase": "2-control",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1732,
+              "median": 1732,
+              "max": 1732
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 273595,
+              "median": 273595,
+              "max": 273595
+            },
+            "temperature_c": {
+              "min": 38,
+              "median": 38,
+              "max": 38
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          }
+        },
+        {
+          "job": "tp-v41-flash-w4a16",
+          "tokens": 4096,
+          "phase": "3-candidate",
+          "quartile": 3,
+          "clock": {
+            "sm_mhz": {
+              "min": 1672,
+              "median": 1672,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 242167,
+              "median": 303662,
+              "max": 303662
+            },
+            "temperature_c": {
+              "min": 31,
+              "median": 33,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          }
+        }
+      ]
+    }
+  ],
+  "retention_by_job": {
+    "tp-nemo3-ultra-w4a16": -0.9658476898369739,
+    "tp-v41-flash-w4a16": 1.445192124411987
+  },
+  "retention_by_range": {
+    "prefill": 0.23242293780374457
+  },
+  "primary_is_separate_and_unmodified": true,
+  "primary_audit_sha256": "8db889212b3fb066b21c976c26867822632a72085c6e2ac1dc2203fcb8fe8078",
+  "negative_retention_cells": 1
+}

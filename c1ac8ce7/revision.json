@@ -1,0 +1,7 @@
+{
+  "retained_head": "c1ac8ce7341039db65195b99445fcdeb193cf226",
+  "source_base": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "candidate_kernel_sha256": "cbef9186731e78806884f7fa2ba5aad18f5ece379664cf8d3181d5cd54548c10",
+  "label": "c1ac8ce7 \u00b7 39 fresh / 429 reused cells",
+  "boundary": "Actual measurement base2b8 plus qualified cutoff patch; eventual retained commit is an equivalence label, not a relabeled measured Git HEAD."
+}

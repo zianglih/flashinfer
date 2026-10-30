@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "retained_head": "c1ac8ce7341039db65195b99445fcdeb193cf226",
+  "fresh": 39,
+  "reused_exact_dictionaries": 429,
+  "total_cells": 468,
+  "all_baseline_fields_unchanged": true,
+  "negative_cells": 198,
+  "native_original_suffix_replays": 54,
+  "native_tables": 15,
+  "records": 858,
+  "fresh_native_records": 39,
+  "all_stdout_logs": 154,
+  "source_reuse_proof_sha256": "e1830007210738fd55f70f9ac806c56ebd7d2e4e5d617a675633b887539836a4",
+  "actual_tactic_coverage_proof_sha256": "32a7dcb7abac914c2ccb385bf93562f766e125e2a22a038c4aa207a0d931eb2b",
+  "manifest_sha256": "dc391ca2399a92fc4c135a07d0a912afa60bc9c0a749595fe28c7bbb25254af6",
+  "report_sha256": "3bbc4a4bf91138211517bedc06ab5dd452453bbefcdc006639d3f1f4bba8fde1",
+  "native_tables_manifest_sha256": "88b8c34bd43b1a75c70d5588378b933efaf57fa1f8a0cbcdb03c7588499de5c6",
+  "renderer_sha256": "d052d132c5eabc1717dabcb960b732ecec3af70b72a60a63116bd61c01aef001",
+  "boundary": "Read-only independent overlay/phase-record/source/native-printer replay. Every preserved negative and all input records retained. Fresh primary39 only, ACCA not substituted. Reused429 keep exact prior dictionaries/runtime provenance. No archive or visual review in this receipt."
+}

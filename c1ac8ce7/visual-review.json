@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "report_sha256": "3bbc4a4bf91138211517bedc06ab5dd452453bbefcdc006639d3f1f4bba8fde1",
+  "plots": {
+    "plots/retained-speedup-ep.png": "095beb5064d66e057b48d0e4b6a200b185cdcc4636b35ba92a11a0d4c02ec10f",
+    "plots/retained-speedup-tp.png": "c23326d166ea7567de5576f083f9a9b59127bc2df00a28ea779e48f04268ce3a",
+    "plots/swap-ab-speedup-table-ep.png": "d922129e57b2c25361e0c603f4559ec22c978bf02bf5d49ae05ad3b9ab35b24b",
+    "plots/swap-ab-speedup-table-tp.png": "797ae27d0e91bc0f3f965df8a6b96c75bdb494a7211d6c6c53e9c1aad7fd3cea",
+    "plots/tail-cutoff-vs-retained.png": "d74375d620d407104575e34304e99dc0e1be2f5680f7866e0b959c1a5ae66c16"
+  },
+  "review": "All five rendered PNGs inspected by the publication author. No clipped text or overlapping labels; compact model names, red-green signs, unsupported N/A and 1/2 exclusion preserved.",
+  "numeric_checks": {
+    "rows": 468,
+    "fresh": 39,
+    "reused_exact": 429,
+    "historical_baselines_unchanged": true,
+    "all_ratios_recalculated": true
+  }
+}

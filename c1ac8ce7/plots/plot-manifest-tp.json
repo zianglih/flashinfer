@@ -1,0 +1,3228 @@
+{
+  "source_csv": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/publication-w4-tail-cutoff/external/tp/summary-cells.csv",
+  "source_sha256": "415446935699c35ad5a8a56fea1da89b43226f0b99c6bfe22750d8edf88eba34",
+  "script_sha256": "ed00ecd5f577d37b09eb425de3867c6f9b1e02e4f64cfb0ddeac0536bc60f8a9",
+  "commit_label": "c1ac8ce7 \u00b7 39 fresh / 429 reused cells",
+  "topology": "tp",
+  "source_scope": "39 fresh W4A16 cells plus 429 source-equivalent reused cells. Historical baseline values/revisions retained; no fresh same-GPU causal comparison implied.",
+  "rows": 44,
+  "columns": 9,
+  "measured_cells": 308,
+  "unsupported_cells": 88,
+  "colormap": "red_white_green",
+  "palette": [
+    "#b2182b",
+    "#ffffff",
+    "#1a9850"
+  ],
+  "ratio_limits": [
+    0.5,
+    1.0,
+    2.0
+  ],
+  "normalization_reference": "benchmarks/bench_nvfp4_quantize_backend_comparison.py:create_heatmap",
+  "models": {
+    "v3": "V3 TP8",
+    "v41-flash": "V41F TP4",
+    "kimi-k3": "K3 TP8",
+    "nemo3-ultra": "N3U TP8"
+  },
+  "tokens": [
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    4096,
+    8192,
+    16384
+  ],
+  "column_keys": [
+    "trtllm_w4a4",
+    "trtllm_per_token",
+    "trtllm_mxfp4x8",
+    "trtllm_mxfp8",
+    "legacy_w4a4",
+    "legacy_per_token",
+    "legacy_mxfp4x8",
+    "legacy_mxfp8",
+    "w4a16"
+  ],
+  "cells": [
+    {
+      "model": "v3",
+      "tokens": 4,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0396405833066997,
+      "percent": 3.964058330669973
+    },
+    {
+      "model": "v3",
+      "tokens": 4,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.050752972195699,
+      "percent": 5.075297219569896
+    },
+    {
+      "model": "v3",
+      "tokens": 4,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9898278657177539,
+      "percent": -1.017213428224606
+    },
+    {
+      "model": "v3",
+      "tokens": 4,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0872119674302867,
+      "percent": 8.72119674302867
+    },
+    {
+      "model": "v3",
+      "tokens": 4,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1078439163797469,
+      "percent": 10.78439163797469
+    },
+    {
+      "model": "v3",
+      "tokens": 4,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.1222635204284488,
+      "percent": 12.22635204284488
+    },
+    {
+      "model": "v3",
+      "tokens": 4,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1158982032874865,
+      "percent": 11.589820328748646
+    },
+    {
+      "model": "v3",
+      "tokens": 4,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.1303546742700008,
+      "percent": 13.03546742700008
+    },
+    {
+      "model": "v3",
+      "tokens": 4,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0935780002003905,
+      "percent": 9.357800020039054
+    },
+    {
+      "model": "v3",
+      "tokens": 8,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.056826030605749,
+      "percent": 5.682603060574909
+    },
+    {
+      "model": "v3",
+      "tokens": 8,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.098059474714443,
+      "percent": 9.805947471444298
+    },
+    {
+      "model": "v3",
+      "tokens": 8,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0822091739122506,
+      "percent": 8.220917391225058
+    },
+    {
+      "model": "v3",
+      "tokens": 8,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0937953317223799,
+      "percent": 9.379533172237986
+    },
+    {
+      "model": "v3",
+      "tokens": 8,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1567321908391923,
+      "percent": 15.673219083919232
+    },
+    {
+      "model": "v3",
+      "tokens": 8,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2005112904711608,
+      "percent": 20.051129047116078
+    },
+    {
+      "model": "v3",
+      "tokens": 8,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1872850882966184,
+      "percent": 18.728508829661838
+    },
+    {
+      "model": "v3",
+      "tokens": 8,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.109580940896189,
+      "percent": 10.958094089618896
+    },
+    {
+      "model": "v3",
+      "tokens": 8,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.179224057912447,
+      "percent": 17.92240579124471
+    },
+    {
+      "model": "v3",
+      "tokens": 16,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.076194454378759,
+      "percent": 7.619445437875894
+    },
+    {
+      "model": "v3",
+      "tokens": 16,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.137036605278719,
+      "percent": 13.703660527871907
+    },
+    {
+      "model": "v3",
+      "tokens": 16,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1386994946724958,
+      "percent": 13.869949467249576
+    },
+    {
+      "model": "v3",
+      "tokens": 16,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0515048402050307,
+      "percent": 5.1504840205030655
+    },
+    {
+      "model": "v3",
+      "tokens": 16,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1686061009507076,
+      "percent": 16.86061009507076
+    },
+    {
+      "model": "v3",
+      "tokens": 16,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2654492596260094,
+      "percent": 26.544925962600942
+    },
+    {
+      "model": "v3",
+      "tokens": 16,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.331269060649551,
+      "percent": 33.126906064955094
+    },
+    {
+      "model": "v3",
+      "tokens": 16,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.0916084002723359,
+      "percent": 9.160840027233586
+    },
+    {
+      "model": "v3",
+      "tokens": 16,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0672678875916741,
+      "percent": 6.7267887591674125
+    },
+    {
+      "model": "v3",
+      "tokens": 32,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0866218175909639,
+      "percent": 8.662181759096388
+    },
+    {
+      "model": "v3",
+      "tokens": 32,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.1235930363231648,
+      "percent": 12.359303632316475
+    },
+    {
+      "model": "v3",
+      "tokens": 32,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1173021016778644,
+      "percent": 11.730210167786437
+    },
+    {
+      "model": "v3",
+      "tokens": 32,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.004936759896777,
+      "percent": 0.493675989677711
+    },
+    {
+      "model": "v3",
+      "tokens": 32,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1593240858800755,
+      "percent": 15.93240858800755
+    },
+    {
+      "model": "v3",
+      "tokens": 32,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.324017991520958,
+      "percent": 32.4017991520958
+    },
+    {
+      "model": "v3",
+      "tokens": 32,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.2494405488718114,
+      "percent": 24.944054887181146
+    },
+    {
+      "model": "v3",
+      "tokens": 32,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.0587577663463057,
+      "percent": 5.8757766346305695
+    },
+    {
+      "model": "v3",
+      "tokens": 32,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0617296204046727,
+      "percent": 6.172962040467267
+    },
+    {
+      "model": "v3",
+      "tokens": 64,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.1046938800395272,
+      "percent": 10.469388003952718
+    },
+    {
+      "model": "v3",
+      "tokens": 64,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.1419031786608198,
+      "percent": 14.19031786608198
+    },
+    {
+      "model": "v3",
+      "tokens": 64,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1090137992096032,
+      "percent": 10.90137992096032
+    },
+    {
+      "model": "v3",
+      "tokens": 64,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.005987858168507,
+      "percent": 0.598785816850711
+    },
+    {
+      "model": "v3",
+      "tokens": 64,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1481395431223447,
+      "percent": 14.813954312234468
+    },
+    {
+      "model": "v3",
+      "tokens": 64,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2781768635733626,
+      "percent": 27.817686357336257
+    },
+    {
+      "model": "v3",
+      "tokens": 64,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.237719555463967,
+      "percent": 23.771955546396704
+    },
+    {
+      "model": "v3",
+      "tokens": 64,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.0573700593918465,
+      "percent": 5.737005939184647
+    },
+    {
+      "model": "v3",
+      "tokens": 64,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0458903749565704,
+      "percent": 4.5890374956570446
+    },
+    {
+      "model": "v3",
+      "tokens": 128,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.119714849973277,
+      "percent": 11.971484997327696
+    },
+    {
+      "model": "v3",
+      "tokens": 128,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.1664209144255147,
+      "percent": 16.642091442551465
+    },
+    {
+      "model": "v3",
+      "tokens": 128,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.118496526434858,
+      "percent": 11.849652643485808
+    },
+    {
+      "model": "v3",
+      "tokens": 128,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.022666994772275,
+      "percent": 2.2666994772275073
+    },
+    {
+      "model": "v3",
+      "tokens": 128,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1481013486593532,
+      "percent": 14.810134865935321
+    },
+    {
+      "model": "v3",
+      "tokens": 128,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2436932786628347,
+      "percent": 24.369327866283474
+    },
+    {
+      "model": "v3",
+      "tokens": 128,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.2204392062741822,
+      "percent": 22.043920627418224
+    },
+    {
+      "model": "v3",
+      "tokens": 128,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.0419690571279572,
+      "percent": 4.196905712795718
+    },
+    {
+      "model": "v3",
+      "tokens": 128,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0921385698098829,
+      "percent": 9.21385698098829
+    },
+    {
+      "model": "v3",
+      "tokens": 256,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.1195885602680888,
+      "percent": 11.958856026808885
+    },
+    {
+      "model": "v3",
+      "tokens": 256,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.2553277038073645,
+      "percent": 25.532770380736448
+    },
+    {
+      "model": "v3",
+      "tokens": 256,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1128048188567163,
+      "percent": 11.280481885671634
+    },
+    {
+      "model": "v3",
+      "tokens": 256,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.018249622933009,
+      "percent": 1.8249622933008913
+    },
+    {
+      "model": "v3",
+      "tokens": 256,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1482654862866226,
+      "percent": 14.826548628662263
+    },
+    {
+      "model": "v3",
+      "tokens": 256,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2660268094332925,
+      "percent": 26.602680943329247
+    },
+    {
+      "model": "v3",
+      "tokens": 256,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.184483788608836,
+      "percent": 18.448378860883597
+    },
+    {
+      "model": "v3",
+      "tokens": 256,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.028440474587375,
+      "percent": 2.8440474587374975
+    },
+    {
+      "model": "v3",
+      "tokens": 256,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.1231174552745835,
+      "percent": 12.311745527458351
+    },
+    {
+      "model": "v3",
+      "tokens": 512,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0010443545000807,
+      "percent": 0.10443545000806687
+    },
+    {
+      "model": "v3",
+      "tokens": 512,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0900905617409389,
+      "percent": 9.009056174093889
+    },
+    {
+      "model": "v3",
+      "tokens": 512,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0416326771789697,
+      "percent": 4.163267717896968
+    },
+    {
+      "model": "v3",
+      "tokens": 512,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0172714623054397,
+      "percent": 1.7271462305439744
+    },
+    {
+      "model": "v3",
+      "tokens": 512,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0283141443383175,
+      "percent": 2.831414433831747
+    },
+    {
+      "model": "v3",
+      "tokens": 512,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.1162156459242514,
+      "percent": 11.621564592425138
+    },
+    {
+      "model": "v3",
+      "tokens": 512,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0110066055203466,
+      "percent": 1.1006605520346602
+    },
+    {
+      "model": "v3",
+      "tokens": 512,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 0.9863483554319388,
+      "percent": -1.3651644568061228
+    },
+    {
+      "model": "v3",
+      "tokens": 512,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.186723615136007,
+      "percent": 18.6723615136007
+    },
+    {
+      "model": "v3",
+      "tokens": 4096,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.943481963027493,
+      "percent": -5.651803697250701
+    },
+    {
+      "model": "v3",
+      "tokens": 4096,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0124854483721848,
+      "percent": 1.2485448372184793
+    },
+    {
+      "model": "v3",
+      "tokens": 4096,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0264024543290127,
+      "percent": 2.640245432901267
+    },
+    {
+      "model": "v3",
+      "tokens": 4096,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0026545449881565,
+      "percent": 0.26545449881565375
+    },
+    {
+      "model": "v3",
+      "tokens": 4096,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0080619605316632,
+      "percent": 0.8061960531663193
+    },
+    {
+      "model": "v3",
+      "tokens": 4096,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.0245437907242432,
+      "percent": 2.4543790724243175
+    },
+    {
+      "model": "v3",
+      "tokens": 4096,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.8393765680372802,
+      "percent": -16.06234319627198
+    },
+    {
+      "model": "v3",
+      "tokens": 4096,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 0.8578927756419799,
+      "percent": -14.210722435802015
+    },
+    {
+      "model": "v3",
+      "tokens": 4096,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.360780163318105,
+      "percent": 36.07801633181049
+    },
+    {
+      "model": "v3",
+      "tokens": 8192,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.9629307541648103,
+      "percent": -3.706924583518967
+    },
+    {
+      "model": "v3",
+      "tokens": 8192,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 0.9940941752975379,
+      "percent": -0.5905824702462148
+    },
+    {
+      "model": "v3",
+      "tokens": 8192,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9360862009546483,
+      "percent": -6.391379904535166
+    },
+    {
+      "model": "v3",
+      "tokens": 8192,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 0.941580202205564,
+      "percent": -5.841979779443596
+    },
+    {
+      "model": "v3",
+      "tokens": 8192,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0664328312354956,
+      "percent": 6.643283123549559
+    },
+    {
+      "model": "v3",
+      "tokens": 8192,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 0.9937780732920275,
+      "percent": -0.6221926707972503
+    },
+    {
+      "model": "v3",
+      "tokens": 8192,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.7921326623728144,
+      "percent": -20.786733762718555
+    },
+    {
+      "model": "v3",
+      "tokens": 8192,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 0.8287943079600059,
+      "percent": -17.120569203999413
+    },
+    {
+      "model": "v3",
+      "tokens": 8192,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.334525492471331,
+      "percent": 33.4525492471331
+    },
+    {
+      "model": "v3",
+      "tokens": 16384,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.9845852251285502,
+      "percent": -1.5414774871449821
+    },
+    {
+      "model": "v3",
+      "tokens": 16384,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0253155078113316,
+      "percent": 2.531550781133163
+    },
+    {
+      "model": "v3",
+      "tokens": 16384,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9530316344200148,
+      "percent": -4.696836557998518
+    },
+    {
+      "model": "v3",
+      "tokens": 16384,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 0.9397408652554871,
+      "percent": -6.025913474451294
+    },
+    {
+      "model": "v3",
+      "tokens": 16384,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0641518214364236,
+      "percent": 6.415182143642362
+    },
+    {
+      "model": "v3",
+      "tokens": 16384,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 0.9970327773135291,
+      "percent": -0.2967222686470872
+    },
+    {
+      "model": "v3",
+      "tokens": 16384,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.8925693368971317,
+      "percent": -10.743066310286832
+    },
+    {
+      "model": "v3",
+      "tokens": 16384,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 0.8294419718205502,
+      "percent": -17.055802817944976
+    },
+    {
+      "model": "v3",
+      "tokens": 16384,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.289009957582304,
+      "percent": 28.900995758230398
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.111456594891352,
+      "percent": 11.145659489135195
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.080580041687189,
+      "percent": 8.058004168718892
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.23039722894288,
+      "percent": 23.039722894287994
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.1877049187723137,
+      "percent": 18.770491877231365
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.1392851181214951,
+      "percent": 13.928511812149512
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.1088057269860296,
+      "percent": 10.880572698602965
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.1095408418123105,
+      "percent": 10.95408418123105
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.187762272813872,
+      "percent": 18.776227281387193
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2362287189174217,
+      "percent": 23.62287189174217
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.034023670902821,
+      "percent": 3.402367090282099
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0565811802925287,
+      "percent": 5.658118029252868
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0580287316914043,
+      "percent": 5.802873169140432
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1612653365442385,
+      "percent": 16.126533654423845
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2571581767867082,
+      "percent": 25.715817678670817
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.027704163193825,
+      "percent": 2.770416319382507
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 32,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0238695825458675,
+      "percent": 2.3869582545867463
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 32,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0340922304906104,
+      "percent": 3.4092230490610387
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 32,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 32,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 32,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1218250543848054,
+      "percent": 12.18250543848054
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 32,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2692558280766655,
+      "percent": 26.925582807666547
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 32,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 32,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 32,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0223065447674888,
+      "percent": 2.2306544767488834
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 64,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0373134008526208,
+      "percent": 3.7313400852620804
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 64,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0685296432399143,
+      "percent": 6.852964323991428
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 64,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 64,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 64,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0856977909496963,
+      "percent": 8.569779094969633
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 64,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.3282530674029158,
+      "percent": 32.82530674029158
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 64,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 64,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 64,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.024979878432836,
+      "percent": 2.497987843283589
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 128,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0128205267187147,
+      "percent": 1.2820526718714698
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 128,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0379739962928936,
+      "percent": 3.7973996292893553
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 128,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 128,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 128,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0891251097714416,
+      "percent": 8.912510977144162
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 128,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2870954486920252,
+      "percent": 28.709544869202517
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 128,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 128,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 128,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0317229107441603,
+      "percent": 3.1722910744160338
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 256,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.006313213995795,
+      "percent": 0.6313213995795097
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 256,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0415937346866668,
+      "percent": 4.159373468666683
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 256,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 256,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 256,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0822171995236904,
+      "percent": 8.221719952369044
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 256,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2674236136340602,
+      "percent": 26.74236136340602
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 256,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 256,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 256,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0565823001789536,
+      "percent": 5.65823001789536
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 512,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0076459301169234,
+      "percent": 0.7645930116923383
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 512,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0425621180509181,
+      "percent": 4.256211805091814
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 512,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 512,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 512,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0820541036254205,
+      "percent": 8.205410362542054
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 512,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2704551671037638,
+      "percent": 27.045516710376383
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 512,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 512,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 512,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.061639393821292,
+      "percent": 6.163939382129202
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4096,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0248001819865347,
+      "percent": 2.4800181986534664
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4096,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 0.9550083375474374,
+      "percent": -4.499166245256259
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4096,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4096,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4096,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0795245285105186,
+      "percent": 7.952452851051861
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4096,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.0650268052150658,
+      "percent": 6.502680521506576
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4096,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4096,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 4096,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.1549354790810915,
+      "percent": 15.49354790810915
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8192,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0136550570193357,
+      "percent": 1.365505701933567
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8192,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 0.9544291983466283,
+      "percent": -4.557080165337169
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8192,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8192,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8192,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0490776903536922,
+      "percent": 4.907769035369225
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8192,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.0124914031979504,
+      "percent": 1.249140319795039
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8192,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8192,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 8192,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.1020091836635582,
+      "percent": 10.200918366355815
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16384,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.9869914984771283,
+      "percent": -1.3008501522871696
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16384,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 0.9753590610560262,
+      "percent": -2.464093894397379
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16384,
+      "column": "trtllm_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16384,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16384,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 0.9847277769644998,
+      "percent": -1.5272223035500243
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16384,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 0.9870191655830495,
+      "percent": -1.2980834416950526
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16384,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16384,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "v41-flash",
+      "tokens": 16384,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.135619106881563,
+      "percent": 13.56191068815631
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0066541977245527,
+      "percent": 0.6654197724552668
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0227659295923082,
+      "percent": 2.2765929592308165
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1766364501881519,
+      "percent": 17.66364501881519
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.273705986365026,
+      "percent": 27.370598636502596
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0132042950553974,
+      "percent": 1.3204295055397441
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.9996888763139652,
+      "percent": -0.031112368603480878
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9626851722516606,
+      "percent": -3.7314827748339385
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1667552851481944,
+      "percent": 16.675528514819437
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.3190515421836044,
+      "percent": 31.905154218360444
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0152193129319464,
+      "percent": 1.521931293194645
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0224526742747222,
+      "percent": 2.2452674274722195
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9318819539173298,
+      "percent": -6.811804608267025
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1915593519521293,
+      "percent": 19.155935195212926
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.4070589150233341,
+      "percent": 40.705891502333415
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.031334147915446,
+      "percent": 3.1334147915446087
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 32,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.033482970256697,
+      "percent": 3.3482970256696998
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 32,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 32,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0364713088300028,
+      "percent": 3.6471308830002824
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 32,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 32,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.168955290948896,
+      "percent": 16.895529094889604
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 32,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.4932949731626952,
+      "percent": 49.329497316269524
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 32,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 32,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 32,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0640837832160397,
+      "percent": 6.408378321603969
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 64,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0285358355937573,
+      "percent": 2.8535835593757275
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 64,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 64,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.055956320746293,
+      "percent": 5.595632074629298
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 64,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 64,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1505817603560864,
+      "percent": 15.05817603560864
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 64,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.5726009601986384,
+      "percent": 57.26009601986384
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 64,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 64,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 64,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0588474153764988,
+      "percent": 5.884741537649885
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 128,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.032158679974499,
+      "percent": 3.215867997449906
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 128,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 128,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0558565202679284,
+      "percent": 5.585652026792842
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 128,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 128,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.150179300683771,
+      "percent": 15.017930068377105
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 128,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.5028199452571551,
+      "percent": 50.28199452571551
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 128,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 128,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 128,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.067360370263017,
+      "percent": 6.7360370263017
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 256,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0385550126530498,
+      "percent": 3.8555012653049836
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 256,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 256,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0552216831006047,
+      "percent": 5.522168310060471
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 256,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 256,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1580034161859696,
+      "percent": 15.800341618596958
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 256,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.4761451977212463,
+      "percent": 47.61451977212463
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 256,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 256,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 256,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.091583518682648,
+      "percent": 9.158351868264791
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 512,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.035991819181421,
+      "percent": 3.5991819181421025
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 512,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 512,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.050708963834863,
+      "percent": 5.070896383486301
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 512,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 512,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1476125170085276,
+      "percent": 14.761251700852762
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 512,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.4603711490631355,
+      "percent": 46.03711490631355
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 512,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 512,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 512,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.1178528834835246,
+      "percent": 11.785288348352463
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4096,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.981062725376389,
+      "percent": -1.8937274623610945
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4096,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4096,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.048947556544603,
+      "percent": 4.894755654460292
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4096,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4096,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0186305429509406,
+      "percent": 1.8630542950940576
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4096,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.1855108347259762,
+      "percent": 18.551083472597618
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4096,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4096,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 4096,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.2247510084585327,
+      "percent": 22.47510084585327
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8192,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.19545703856161,
+      "percent": 19.54570385616099
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8192,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8192,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0716831081215523,
+      "percent": 7.168310812155232
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8192,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8192,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1183619856158677,
+      "percent": 11.836198561586775
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8192,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.097363626532445,
+      "percent": 9.736362653244491
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8192,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8192,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 8192,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.2449937793273875,
+      "percent": 24.499377932738753
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16384,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.1852056741010175,
+      "percent": 18.52056741010175
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16384,
+      "column": "trtllm_per_token",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16384,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0166370741557007,
+      "percent": 1.6637074155700704
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16384,
+      "column": "trtllm_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16384,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 0.9991739710138413,
+      "percent": -0.08260289861586889
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16384,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 0.9698078708011099,
+      "percent": -3.019212919889014
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16384,
+      "column": "legacy_mxfp4x8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16384,
+      "column": "legacy_mxfp8",
+      "status": "unsupported",
+      "ratio": null,
+      "percent": null
+    },
+    {
+      "model": "kimi-k3",
+      "tokens": 16384,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.2001319286792507,
+      "percent": 20.013192867925067
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.9832303338741097,
+      "percent": -1.676966612589026
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 0.9992846923262072,
+      "percent": -0.07153076737927977
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9501070668466652,
+      "percent": -4.989293315333477
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0605457483081389,
+      "percent": 6.054574830813886
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1027188768318608,
+      "percent": 10.271887683186076
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.2518384413792791,
+      "percent": 25.183844137927913
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1158438270081754,
+      "percent": 11.584382700817542
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.1033005259276656,
+      "percent": 10.33005259276656
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.063861401331667,
+      "percent": 6.386140133166696
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.9999906381519175,
+      "percent": -0.0009361848082534152
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0128358626330318,
+      "percent": 1.2835862633031825
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9553598367254865,
+      "percent": -4.464016327451348
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0127043019927213,
+      "percent": 1.2704301992721323
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1073446928197623,
+      "percent": 10.734469281976233
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.3824538981576373,
+      "percent": 38.24538981576373
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1263158189990954,
+      "percent": 12.631581899909538
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.07369552168047,
+      "percent": 7.369552168047
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0372796279153405,
+      "percent": 3.727962791534045
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.012545642722695,
+      "percent": 1.2545642722695094
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0060459837193698,
+      "percent": 0.6045983719369818
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9311685426728162,
+      "percent": -6.8831457327183765
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.022792520260824,
+      "percent": 2.27925202608239
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1476057862396403,
+      "percent": 14.760578623964026
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.6001256315916863,
+      "percent": 60.01256315916863
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1088087346337636,
+      "percent": 10.88087346337636
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.095652010242575,
+      "percent": 9.565201024257508
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0278459458910234,
+      "percent": 2.7845945891023405
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 32,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0265535887502446,
+      "percent": 2.6553588750244606
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 32,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0330763295760819,
+      "percent": 3.3076329576081864
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 32,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9227833841361984,
+      "percent": -7.721661586380158
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 32,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 0.996466952834406,
+      "percent": -0.35330471655939943
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 32,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1528072883184728,
+      "percent": 15.280728831847279
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 32,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.6373864868442851,
+      "percent": 63.73864868442851
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 32,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0849937784438881,
+      "percent": 8.49937784438881
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 32,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.0841883840587379,
+      "percent": 8.418838405873785
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 32,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.050317408364859,
+      "percent": 5.031740836485898
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 64,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0137066682708873,
+      "percent": 1.370666827088729
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 64,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.022992479480941,
+      "percent": 2.2992479480941075
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 64,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0388708986126691,
+      "percent": 3.8870898612669125
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 64,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 0.9997066362194568,
+      "percent": -0.02933637805432321
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 64,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1652228419303632,
+      "percent": 16.52228419303632
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 64,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.5861372116151187,
+      "percent": 58.61372116151187
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 64,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.2337454285032659,
+      "percent": 23.374542850326584
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 64,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.1023183395860572,
+      "percent": 10.23183395860572
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 64,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0514506664900518,
+      "percent": 5.145066649005181
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 128,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0265628765193906,
+      "percent": 2.65628765193906
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 128,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0591040161799163,
+      "percent": 5.910401617991634
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 128,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0376934538612113,
+      "percent": 3.7693453861211257
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 128,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0135208642432316,
+      "percent": 1.3520864243231623
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 128,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1526558809152916,
+      "percent": 15.265588091529159
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 128,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.6008738348238956,
+      "percent": 60.087383482389555
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 128,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.233108766719183,
+      "percent": 23.31087667191829
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 128,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.101079156892545,
+      "percent": 10.10791568925451
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 128,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.1147609532836655,
+      "percent": 11.476095328366554
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 256,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.076001288002831,
+      "percent": 7.60012880028309
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 256,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.104235055189592,
+      "percent": 10.423505518959209
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 256,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0733877638272808,
+      "percent": 7.338776382728085
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 256,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.022277766279819,
+      "percent": 2.2277766279819033
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 256,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1403451540129164,
+      "percent": 14.034515401291635
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 256,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.5691549104174365,
+      "percent": 56.91549104174365
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 256,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1947682283696914,
+      "percent": 19.47682283696914
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 256,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.0584423605617874,
+      "percent": 5.844236056178742
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 256,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.0978928591747945,
+      "percent": 9.78928591747945
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 512,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 1.0927563387957795,
+      "percent": 9.27563387957795
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 512,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 1.0847233563929775,
+      "percent": 8.472335639297746
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 512,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0980323090672324,
+      "percent": 9.803230906723236
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 512,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0409257226139135,
+      "percent": 4.092572261391347
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 512,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.1486651565095771,
+      "percent": 14.866515650957712
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 512,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.5014381670436032,
+      "percent": 50.14381670436032
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 512,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.1683173725965303,
+      "percent": 16.831737259653035
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 512,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 1.0531662870869247,
+      "percent": 5.316628708692472
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 512,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.1261247348909953,
+      "percent": 12.612473489099528
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4096,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.9904430379716799,
+      "percent": -0.9556962028320126
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4096,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 0.932919789422318,
+      "percent": -6.708021057768199
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4096,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.128904041643184,
+      "percent": 12.890404164318392
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4096,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0217213337208257,
+      "percent": 2.172133372082574
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4096,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0107961890376087,
+      "percent": 1.0796189037608706
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4096,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.1033200155680474,
+      "percent": 10.332001556804737
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4096,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9124792090765845,
+      "percent": -8.752079092341546
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4096,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 0.8843138302493687,
+      "percent": -11.56861697506313
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 4096,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.1376831955283597,
+      "percent": 13.768319552835973
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8192,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.9197033797519903,
+      "percent": -8.029662024800965
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8192,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 0.9268995103311711,
+      "percent": -7.310048966882887
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8192,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9729875109513872,
+      "percent": -2.7012489048612753
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8192,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0147364414823512,
+      "percent": 1.4736441482351204
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8192,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 1.0055112848530892,
+      "percent": 0.551128485308916
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8192,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.048264787604973,
+      "percent": 4.82647876049731
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8192,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.8209061009671275,
+      "percent": -17.909389903287256
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8192,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 0.8669723097009261,
+      "percent": -13.302769029907392
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 8192,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.2023509615406704,
+      "percent": 20.235096154067044
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16384,
+      "column": "trtllm_w4a4",
+      "status": "measured",
+      "ratio": 0.941270505396248,
+      "percent": -5.872949460375199
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16384,
+      "column": "trtllm_per_token",
+      "status": "measured",
+      "ratio": 0.9236842744522882,
+      "percent": -7.631572554771182
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16384,
+      "column": "trtllm_mxfp4x8",
+      "status": "measured",
+      "ratio": 1.0270197980718645,
+      "percent": 2.70197980718645
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16384,
+      "column": "trtllm_mxfp8",
+      "status": "measured",
+      "ratio": 1.0693063607441884,
+      "percent": 6.930636074418839
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16384,
+      "column": "legacy_w4a4",
+      "status": "measured",
+      "ratio": 0.9802556828516673,
+      "percent": -1.974431714833269
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16384,
+      "column": "legacy_per_token",
+      "status": "measured",
+      "ratio": 1.011402381292868,
+      "percent": 1.140238129286808
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16384,
+      "column": "legacy_mxfp4x8",
+      "status": "measured",
+      "ratio": 0.9011466612784775,
+      "percent": -9.885333872152247
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16384,
+      "column": "legacy_mxfp8",
+      "status": "measured",
+      "ratio": 0.9867851731976122,
+      "percent": -1.3214826802387836
+    },
+    {
+      "model": "nemo3-ultra",
+      "tokens": 16384,
+      "column": "w4a16",
+      "status": "measured",
+      "ratio": 1.1552088310977164,
+      "percent": 15.520883109771644
+    }
+  ],
+  "outputs": {
+    "swap-ab-speedup-table-tp.png": "797ae27d0e91bc0f3f965df8a6b96c75bdb494a7211d6c6c53e9c1aad7fd3cea",
+    "swap-ab-speedup-table-tp.svg": "d5b8275d57ac13792e124f738545fcb0a14a097cc0eecfdeb1898e5607180d8d"
+  }
+}

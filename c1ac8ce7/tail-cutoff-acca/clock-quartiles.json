@@ -1,0 +1,1942 @@
+[
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 1688.5520000000001,
+      "route_init_us": 1.28,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.28,
+      "route_init_extension_us": 1.28,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 10.976,
+      "route_sort_start_us": 1.088,
+      "route_sort_end_us": 12.065,
+      "route_sort_extension_us": 10.785,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 674.915,
+      "fc1_start_us": 11.68,
+      "fc1_end_us": 686.595,
+      "fc1_extension_us": 674.499,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 727.748,
+      "fc2_start_us": 678.083,
+      "fc2_end_us": 1406.662,
+      "fc2_extension_us": 719.908,
+      "fc2_gap_us": 0.0,
+      "combine_us": 314.817,
+      "combine_start_us": 1373.735,
+      "combine_end_us": 1688.552,
+      "combine_extension_us": 282.113,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 719.908
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 252487,
+        "median": 252487.0,
+        "max": 252487
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 22
+      },
+      "samples": 22
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 1873.3519999999999,
+      "route_init_us": 1.632,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.632,
+      "route_init_extension_us": 1.632,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 12.928,
+      "route_sort_start_us": 1.407,
+      "route_sort_end_us": 14.336,
+      "route_sort_extension_us": 12.704,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 790.531,
+      "fc1_start_us": 13.856,
+      "fc1_end_us": 804.323,
+      "fc1_extension_us": 790.051,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 781.411,
+      "fc2_start_us": 795.588,
+      "fc2_end_us": 1577.031,
+      "fc2_extension_us": 773.411,
+      "fc2_gap_us": 0.0,
+      "combine_us": 316.673,
+      "combine_start_us": 1558.215,
+      "combine_end_us": 1873.352,
+      "combine_extension_us": 297.025,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 773.4110000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 252487,
+        "median": 252487,
+        "max": 341178
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 15,
+        "4": 10
+      },
+      "samples": 25
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 1994.154,
+      "route_init_us": 1.696,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.696,
+      "route_init_extension_us": 1.696,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 13.28,
+      "route_sort_start_us": 1.471,
+      "route_sort_end_us": 14.753,
+      "route_sort_extension_us": 13.024,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 846.115,
+      "fc1_start_us": 14.241,
+      "fc1_end_us": 860.387,
+      "fc1_extension_us": 845.635,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 841.252,
+      "fc2_start_us": 851.044,
+      "fc2_end_us": 1693.736,
+      "fc2_extension_us": 830.916,
+      "fc2_gap_us": 0.0,
+      "combine_us": 323.266,
+      "combine_start_us": 1670.696,
+      "combine_end_us": 1994.154,
+      "combine_extension_us": 300.065,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 830.9159999999999
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 341178,
+        "median": 341178,
+        "max": 341178
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 40,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "4": 27
+      },
+      "samples": 27
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 1972.201,
+      "route_init_us": 1.664,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.664,
+      "route_init_extension_us": 1.664,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 13.216,
+      "route_sort_start_us": 1.44,
+      "route_sort_end_us": 14.656,
+      "route_sort_extension_us": 12.96,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 836.771,
+      "fc1_start_us": 14.144,
+      "fc1_end_us": 850.5,
+      "fc1_extension_us": 836.259,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 830.179,
+      "fc2_start_us": 840.964,
+      "fc2_end_us": 1672.616,
+      "fc2_extension_us": 820.516,
+      "fc2_gap_us": 0.0,
+      "combine_us": 324.001,
+      "combine_start_us": 1649.224,
+      "combine_end_us": 1972.201,
+      "combine_extension_us": 299.489,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 820.5160000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1282,
+        "median": 1282.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 341178,
+        "median": 431320.0,
+        "max": 431320
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 41.0,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "4": 26
+      },
+      "samples": 26
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 1715.56,
+      "route_init_us": 1.344,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.344,
+      "route_init_extension_us": 1.344,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 11.328,
+      "route_sort_start_us": 1.152,
+      "route_sort_end_us": 12.48,
+      "route_sort_extension_us": 11.104,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 694.307,
+      "fc1_start_us": 12.032,
+      "fc1_end_us": 706.819,
+      "fc1_extension_us": 693.859,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 729.348,
+      "fc2_start_us": 699.427,
+      "fc2_end_us": 1430.215,
+      "fc2_extension_us": 721.956,
+      "fc2_gap_us": 0.0,
+      "combine_us": 304.482,
+      "combine_start_us": 1411.367,
+      "combine_end_us": 1715.56,
+      "combine_extension_us": 285.698,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 721.9559999999999
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 244927,
+        "median": 288919,
+        "max": 288919
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 23
+      },
+      "samples": 23
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 1960.201,
+      "route_init_us": 1.664,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.664,
+      "route_init_extension_us": 1.664,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 12.96,
+      "route_sort_start_us": 1.408,
+      "route_sort_end_us": 14.368,
+      "route_sort_extension_us": 12.736,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 825.38,
+      "fc1_start_us": 13.824,
+      "fc1_end_us": 839.428,
+      "fc1_extension_us": 824.9,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 829.028,
+      "fc2_start_us": 830.148,
+      "fc2_end_us": 1660.68,
+      "fc2_extension_us": 819.492,
+      "fc2_gap_us": 0.0,
+      "combine_us": 325.986,
+      "combine_start_us": 1631.207,
+      "combine_end_us": 1960.201,
+      "combine_extension_us": 299.01,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 819.4920000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 288919,
+        "median": 288919,
+        "max": 288919
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 25
+      },
+      "samples": 25
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 2014.4730000000002,
+      "route_init_us": 1.696,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.696,
+      "route_init_extension_us": 1.696,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 13.312,
+      "route_sort_start_us": 1.472,
+      "route_sort_end_us": 14.752,
+      "route_sort_extension_us": 13.088,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 855.556,
+      "fc1_start_us": 14.272,
+      "fc1_end_us": 869.86,
+      "fc1_extension_us": 855.044,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 854.916,
+      "fc2_start_us": 859.844,
+      "fc2_end_us": 1714.184,
+      "fc2_extension_us": 844.356,
+      "fc2_gap_us": 0.0,
+      "combine_us": 326.85,
+      "combine_start_us": 1688.552,
+      "combine_end_us": 2014.473,
+      "combine_extension_us": 300.578,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 844.356
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1320,
+        "median": 1320,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 288919,
+        "median": 386115,
+        "max": 386115
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 41,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "0": 6,
+        "4": 21
+      },
+      "samples": 27
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 1973.002,
+      "route_init_us": 1.664,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.664,
+      "route_init_extension_us": 1.664,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 13.248,
+      "route_sort_start_us": 1.44,
+      "route_sort_end_us": 14.688,
+      "route_sort_extension_us": 12.993,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 832.035,
+      "fc1_start_us": 14.208,
+      "fc1_end_us": 845.924,
+      "fc1_extension_us": 831.555,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 835.62,
+      "fc2_start_us": 838.308,
+      "fc2_end_us": 1673.352,
+      "fc2_extension_us": 826.404,
+      "fc2_gap_us": 0.0,
+      "combine_us": 327.426,
+      "combine_start_us": 1645.095,
+      "combine_end_us": 1973.002,
+      "combine_extension_us": 299.521,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 826.4040000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1320,
+        "median": 1320.0,
+        "max": 1320
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 386115,
+        "median": 386115.0,
+        "max": 386115
+      },
+      "temperature_c": {
+        "min": 41,
+        "median": 41.0,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "4": 26
+      },
+      "samples": 26
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 1705.512,
+      "route_init_us": 1.28,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.28,
+      "route_init_extension_us": 1.28,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 10.912,
+      "route_sort_start_us": 1.088,
+      "route_sort_end_us": 12.032,
+      "route_sort_extension_us": 10.72,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 686.115,
+      "fc1_start_us": 11.648,
+      "fc1_end_us": 697.604,
+      "fc1_extension_us": 685.699,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 733.316,
+      "fc2_start_us": 689.411,
+      "fc2_end_us": 1422.919,
+      "fc2_extension_us": 724.964,
+      "fc2_gap_us": 0.0,
+      "combine_us": 314.465,
+      "combine_start_us": 1391.462,
+      "combine_end_us": 1705.512,
+      "combine_extension_us": 282.242,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 724.964
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1980,
+        "median": 2006.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248586,
+        "median": 248586.0,
+        "max": 295640
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 22
+      },
+      "samples": 22
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 1816.49,
+      "route_init_us": 1.568,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.568,
+      "route_init_extension_us": 1.568,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 12.449,
+      "route_sort_start_us": 1.344,
+      "route_sort_end_us": 13.792,
+      "route_sort_extension_us": 12.224,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 760.163,
+      "fc1_start_us": 13.312,
+      "fc1_end_us": 773.508,
+      "fc1_extension_us": 759.651,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 758.34,
+      "fc2_start_us": 764.58,
+      "fc2_end_us": 1522.471,
+      "fc2_extension_us": 748.324,
+      "fc2_gap_us": 0.0,
+      "combine_us": 315.137,
+      "combine_start_us": 1503.111,
+      "combine_end_us": 1816.49,
+      "combine_extension_us": 294.433,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 748.324
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1980,
+        "median": 1980,
+        "max": 1980
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 295640,
+        "median": 295640,
+        "max": 295640
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 25
+      },
+      "samples": 25
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 2016.2659999999998,
+      "route_init_us": 1.696,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.696,
+      "route_init_extension_us": 1.696,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 13.248,
+      "route_sort_start_us": 1.472,
+      "route_sort_end_us": 14.72,
+      "route_sort_extension_us": 13.024,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 852.836,
+      "fc1_start_us": 14.208,
+      "fc1_end_us": 866.98,
+      "fc1_extension_us": 852.324,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 851.108,
+      "fc2_start_us": 857.156,
+      "fc2_end_us": 1714.632,
+      "fc2_extension_us": 841.156,
+      "fc2_gap_us": 0.0,
+      "combine_us": 326.69,
+      "combine_start_us": 1685.384,
+      "combine_end_us": 2016.266,
+      "combine_extension_us": 300.737,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 841.156
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1432,
+        "median": 1980.0,
+        "max": 1980
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 295640,
+        "median": 295640.0,
+        "max": 397738
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "0": 16,
+        "4": 10
+      },
+      "samples": 26
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 1978.7939999999999,
+      "route_init_us": 1.664,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.664,
+      "route_init_extension_us": 1.664,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 13.152,
+      "route_sort_start_us": 1.44,
+      "route_sort_end_us": 14.592,
+      "route_sort_extension_us": 12.928,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 835.237,
+      "fc1_start_us": 14.112,
+      "fc1_end_us": 849.285,
+      "fc1_extension_us": 834.789,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 839.94,
+      "fc2_start_us": 840.26,
+      "fc2_end_us": 1679.336,
+      "fc2_extension_us": 831.333,
+      "fc2_gap_us": 0.0,
+      "combine_us": 326.338,
+      "combine_start_us": 1649.0,
+      "combine_end_us": 1978.794,
+      "combine_extension_us": 299.713,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 831.333
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1432,
+        "median": 1432.0,
+        "max": 1432
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 397738,
+        "median": 397738.0,
+        "max": 397738
+      },
+      "temperature_c": {
+        "min": 41,
+        "median": 41.0,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "4": 26
+      },
+      "samples": 26
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 1698.474,
+      "route_init_us": 1.344,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.344,
+      "route_init_extension_us": 1.344,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 11.296,
+      "route_sort_start_us": 1.12,
+      "route_sort_end_us": 12.384,
+      "route_sort_extension_us": 11.104,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 686.595,
+      "fc1_start_us": 11.968,
+      "fc1_end_us": 698.468,
+      "fc1_extension_us": 686.148,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 723.204,
+      "fc2_start_us": 690.884,
+      "fc2_end_us": 1413.992,
+      "fc2_extension_us": 715.78,
+      "fc2_gap_us": 0.0,
+      "combine_us": 311.586,
+      "combine_start_us": 1389.256,
+      "combine_end_us": 1698.474,
+      "combine_extension_us": 284.226,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 715.78
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251830,
+        "median": 298132,
+        "max": 298132
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 40,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 23
+      },
+      "samples": 23
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 1950.283,
+      "route_init_us": 1.664,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.664,
+      "route_init_extension_us": 1.664,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 12.864,
+      "route_sort_start_us": 1.408,
+      "route_sort_end_us": 14.303,
+      "route_sort_extension_us": 12.64,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 817.573,
+      "fc1_start_us": 13.823,
+      "fc1_end_us": 830.853,
+      "fc1_extension_us": 817.093,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 822.661,
+      "fc2_start_us": 821.893,
+      "fc2_end_us": 1651.561,
+      "fc2_extension_us": 813.636,
+      "fc2_gap_us": 0.0,
+      "combine_us": 321.09,
+      "combine_start_us": 1614.697,
+      "combine_end_us": 1950.283,
+      "combine_extension_us": 297.858,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 813.636
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 298132,
+        "median": 298132,
+        "max": 298132
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 40,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 25
+      },
+      "samples": 25
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 1989.259,
+      "route_init_us": 1.696,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.696,
+      "route_init_extension_us": 1.696,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 13.185,
+      "route_sort_start_us": 1.44,
+      "route_sort_end_us": 14.656,
+      "route_sort_extension_us": 12.96,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 845.349,
+      "fc1_start_us": 14.176,
+      "fc1_end_us": 860.134,
+      "fc1_extension_us": 844.869,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 837.221,
+      "fc2_start_us": 851.269,
+      "fc2_end_us": 1688.905,
+      "fc2_extension_us": 827.908,
+      "fc2_gap_us": 0.0,
+      "combine_us": 324.866,
+      "combine_start_us": 1666.505,
+      "combine_end_us": 1989.259,
+      "combine_extension_us": 300.001,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 827.908
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1312,
+        "median": 1312,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 298132,
+        "median": 395914,
+        "max": 395914
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 41,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "0": 14,
+        "4": 13
+      },
+      "samples": 27
+    }
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "tokens": 16384,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 1969.867,
+      "route_init_us": 1.664,
+      "route_init_start_us": 0.0,
+      "route_init_end_us": 1.664,
+      "route_init_extension_us": 1.664,
+      "route_init_gap_us": 0.0,
+      "route_sort_us": 13.249,
+      "route_sort_start_us": 1.44,
+      "route_sort_end_us": 14.689,
+      "route_sort_extension_us": 13.024,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 834.085,
+      "fc1_start_us": 14.176,
+      "fc1_end_us": 848.261,
+      "fc1_extension_us": 833.636,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 830.501,
+      "fc2_start_us": 838.597,
+      "fc2_end_us": 1670.153,
+      "fc2_extension_us": 822.277,
+      "fc2_gap_us": 0.0,
+      "combine_us": 325.57,
+      "combine_start_us": 1643.818,
+      "combine_end_us": 1969.867,
+      "combine_extension_us": 299.49,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 822.2769999999999
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1312,
+        "median": 1312.0,
+        "max": 1312
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 395914,
+        "median": 395914.0,
+        "max": 395914
+      },
+      "temperature_c": {
+        "min": 41,
+        "median": 41.0,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "4": 26
+      },
+      "samples": 26
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 552.483,
+      "route_sort_us": 9.184,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.184,
+      "route_sort_extension_us": 9.184,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 298.305,
+      "fc1_start_us": 8.352,
+      "fc1_end_us": 306.913,
+      "fc1_extension_us": 297.473,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 197.697,
+      "fc2_start_us": 293.953,
+      "fc2_end_us": 491.49,
+      "fc2_extension_us": 184.833,
+      "fc2_gap_us": 0.0,
+      "combine_us": 69.952,
+      "combine_start_us": 482.498,
+      "combine_end_us": 552.483,
+      "combine_extension_us": 60.736,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 184.83300000000003
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 238984,
+        "median": 256810.0,
+        "max": 256810
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 548.77,
+      "route_sort_us": 9.28,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.28,
+      "route_sort_extension_us": 9.28,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 296.321,
+      "fc1_start_us": 8.448,
+      "fc1_end_us": 304.864,
+      "fc1_extension_us": 295.553,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 195.744,
+      "fc2_start_us": 292.45,
+      "fc2_end_us": 487.906,
+      "fc2_extension_us": 183.361,
+      "fc2_gap_us": 0.0,
+      "combine_us": 68.961,
+      "combine_start_us": 479.681,
+      "combine_end_us": 548.77,
+      "combine_extension_us": 61.12,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 183.36100000000005
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 256810,
+        "median": 256810,
+        "max": 256810
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 560.515,
+      "route_sort_us": 9.6,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.6,
+      "route_sort_extension_us": 9.6,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 304.737,
+      "fc1_start_us": 8.768,
+      "fc1_end_us": 313.409,
+      "fc1_extension_us": 303.873,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 198.848,
+      "fc2_start_us": 300.864,
+      "fc2_end_us": 498.626,
+      "fc2_extension_us": 186.816,
+      "fc2_gap_us": 0.0,
+      "combine_us": 70.56,
+      "combine_start_us": 490.85,
+      "combine_end_us": 560.515,
+      "combine_extension_us": 61.76,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 186.81600000000003
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 256810,
+        "median": 256810.0,
+        "max": 256810
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 586.3380000000001,
+      "route_sort_us": 10.56,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 10.56,
+      "route_sort_extension_us": 10.56,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 317.537,
+      "fc1_start_us": 9.568,
+      "fc1_end_us": 327.105,
+      "fc1_extension_us": 316.545,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 209.569,
+      "fc2_start_us": 313.953,
+      "fc2_end_us": 523.81,
+      "fc2_extension_us": 196.576,
+      "fc2_gap_us": 0.0,
+      "combine_us": 71.937,
+      "combine_start_us": 514.434,
+      "combine_end_us": 586.338,
+      "combine_extension_us": 62.976,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 196.57600000000002
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 256810,
+        "median": 256810,
+        "max": 256810
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 552.1610000000001,
+      "route_sort_us": 9.151,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.151,
+      "route_sort_extension_us": 9.151,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 298.497,
+      "fc1_start_us": 8.32,
+      "fc1_end_us": 306.785,
+      "fc1_extension_us": 297.697,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 197.12,
+      "fc2_start_us": 294.465,
+      "fc2_end_us": 491.394,
+      "fc2_extension_us": 184.352,
+      "fc2_gap_us": 0.0,
+      "combine_us": 70.785,
+      "combine_start_us": 481.153,
+      "combine_end_us": 552.161,
+      "combine_extension_us": 60.928,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 184.35199999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 238673,
+        "median": 238673.0,
+        "max": 238673
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 551.49,
+      "route_sort_us": 9.28,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.28,
+      "route_sort_extension_us": 9.28,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 297.473,
+      "fc1_start_us": 8.448,
+      "fc1_end_us": 306.017,
+      "fc1_extension_us": 296.642,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 197.249,
+      "fc2_start_us": 293.344,
+      "fc2_end_us": 490.466,
+      "fc2_extension_us": 184.704,
+      "fc2_gap_us": 0.0,
+      "combine_us": 70.72,
+      "combine_start_us": 480.513,
+      "combine_end_us": 551.49,
+      "combine_extension_us": 61.184,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 184.704
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 238673,
+        "median": 238673.0,
+        "max": 238673
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 569.666,
+      "route_sort_us": 9.856,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.856,
+      "route_sort_extension_us": 9.856,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 309.569,
+      "fc1_start_us": 8.896,
+      "fc1_end_us": 318.529,
+      "fc1_extension_us": 308.641,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 200.673,
+      "fc2_start_us": 305.921,
+      "fc2_end_us": 506.657,
+      "fc2_extension_us": 188.033,
+      "fc2_gap_us": 0.0,
+      "combine_us": 70.336,
+      "combine_start_us": 498.977,
+      "combine_end_us": 569.666,
+      "combine_extension_us": 61.889,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 188.03300000000002
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 238673,
+        "median": 272936,
+        "max": 272936
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 591.491,
+      "route_sort_us": 10.816,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 10.816,
+      "route_sort_extension_us": 10.816,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 319.969,
+      "fc1_start_us": 9.76,
+      "fc1_end_us": 329.697,
+      "fc1_extension_us": 318.977,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 212.193,
+      "fc2_start_us": 316.386,
+      "fc2_end_us": 528.29,
+      "fc2_extension_us": 198.88,
+      "fc2_gap_us": 0.0,
+      "combine_us": 71.904,
+      "combine_start_us": 519.713,
+      "combine_end_us": 591.491,
+      "combine_extension_us": 63.328,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 198.88
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 272936,
+        "median": 272936,
+        "max": 272936
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 553.1859999999999,
+      "route_sort_us": 9.088,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.088,
+      "route_sort_extension_us": 9.088,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 298.497,
+      "fc1_start_us": 8.287,
+      "fc1_end_us": 306.721,
+      "fc1_extension_us": 297.697,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 197.728,
+      "fc2_start_us": 293.792,
+      "fc2_end_us": 492.002,
+      "fc2_extension_us": 184.929,
+      "fc2_gap_us": 0.0,
+      "combine_us": 70.08,
+      "combine_start_us": 482.498,
+      "combine_end_us": 553.186,
+      "combine_extension_us": 61.248,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 184.92900000000003
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 238953,
+        "median": 238953.0,
+        "max": 238953
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 553.41,
+      "route_sort_us": 9.216,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.216,
+      "route_sort_extension_us": 9.216,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 298.913,
+      "fc1_start_us": 8.416,
+      "fc1_end_us": 307.201,
+      "fc1_extension_us": 298.113,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 198.081,
+      "fc2_start_us": 294.625,
+      "fc2_end_us": 492.226,
+      "fc2_extension_us": 185.217,
+      "fc2_gap_us": 0.0,
+      "combine_us": 69.92,
+      "combine_start_us": 483.65,
+      "combine_end_us": 553.41,
+      "combine_extension_us": 60.928,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 185.21700000000004
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 238953,
+        "median": 238953,
+        "max": 238953
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 582.914,
+      "route_sort_us": 10.432,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 10.432,
+      "route_sort_extension_us": 10.432,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 315.201,
+      "fc1_start_us": 9.472,
+      "fc1_end_us": 324.578,
+      "fc1_extension_us": 314.209,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 208.128,
+      "fc2_start_us": 312.289,
+      "fc2_end_us": 520.13,
+      "fc2_extension_us": 195.553,
+      "fc2_gap_us": 0.0,
+      "combine_us": 71.937,
+      "combine_start_us": 510.914,
+      "combine_end_us": 582.914,
+      "combine_extension_us": 62.56,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 195.553
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1732,
+        "median": 1882.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 238953,
+        "median": 238953.0,
+        "max": 273595
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 576.418,
+      "route_sort_us": 10.304,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 10.304,
+      "route_sort_extension_us": 10.304,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 312.257,
+      "fc1_start_us": 9.344,
+      "fc1_end_us": 321.505,
+      "fc1_extension_us": 311.233,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 204.993,
+      "fc2_start_us": 309.025,
+      "fc2_end_us": 513.954,
+      "fc2_extension_us": 192.353,
+      "fc2_gap_us": 0.0,
+      "combine_us": 71.072,
+      "combine_start_us": 505.218,
+      "combine_end_us": 576.418,
+      "combine_extension_us": 62.496,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 192.35299999999995
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1732,
+        "median": 1732,
+        "max": 1732
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 273595,
+        "median": 273595,
+        "max": 273595
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 552.802,
+      "route_sort_us": 9.152,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.152,
+      "route_sort_extension_us": 9.152,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 298.817,
+      "fc1_start_us": 8.32,
+      "fc1_end_us": 307.073,
+      "fc1_extension_us": 297.954,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 196.705,
+      "fc2_start_us": 294.369,
+      "fc2_end_us": 491.106,
+      "fc2_extension_us": 184.257,
+      "fc2_gap_us": 0.0,
+      "combine_us": 71.584,
+      "combine_start_us": 480.994,
+      "combine_end_us": 552.802,
+      "combine_extension_us": 61.216,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 184.257
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 242167,
+        "median": 242167.0,
+        "max": 242167
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 552.899,
+      "route_sort_us": 9.28,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 9.28,
+      "route_sort_extension_us": 9.28,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 299.202,
+      "fc1_start_us": 8.448,
+      "fc1_end_us": 307.745,
+      "fc1_extension_us": 298.37,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 196.769,
+      "fc2_start_us": 295.041,
+      "fc2_end_us": 491.874,
+      "fc2_extension_us": 184.097,
+      "fc2_gap_us": 0.0,
+      "combine_us": 71.552,
+      "combine_start_us": 481.538,
+      "combine_end_us": 552.899,
+      "combine_extension_us": 61.088,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 184.09699999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 242167,
+        "median": 242167.0,
+        "max": 242167
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 583.427,
+      "route_sort_us": 10.432,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 10.432,
+      "route_sort_extension_us": 10.432,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 317.57,
+      "fc1_start_us": 9.536,
+      "fc1_end_us": 327.17,
+      "fc1_extension_us": 316.513,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 205.889,
+      "fc2_start_us": 313.505,
+      "fc2_end_us": 521.187,
+      "fc2_extension_us": 194.017,
+      "fc2_gap_us": 0.0,
+      "combine_us": 72.129,
+      "combine_start_us": 511.619,
+      "combine_end_us": 583.427,
+      "combine_extension_us": 62.593,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 194.017
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 242167,
+        "median": 242167,
+        "max": 242167
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 589.955,
+      "route_sort_us": 10.56,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 10.56,
+      "route_sort_extension_us": 10.56,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 318.466,
+      "fc1_start_us": 9.536,
+      "fc1_end_us": 328.161,
+      "fc1_extension_us": 317.474,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 212.48,
+      "fc2_start_us": 314.401,
+      "fc2_end_us": 526.946,
+      "fc2_extension_us": 198.785,
+      "fc2_gap_us": 0.0,
+      "combine_us": 74.945,
+      "combine_start_us": 514.755,
+      "combine_end_us": 589.955,
+      "combine_extension_us": 63.008,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 198.78500000000003
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1672,
+        "median": 1672,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 242167,
+        "median": 303662,
+        "max": 303662
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 33,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  }
+]

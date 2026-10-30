@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "recommendation": "retain with explicit prefill tradeoff; parent integration pending",
+  "candidate_kernel_sha256": "cbef9186731e78806884f7fa2ba5aad18f5ece379664cf8d3181d5cd54548c10",
+  "primary_cells": 39,
+  "retention_cells": 33,
+  "primary_samples": 15600,
+  "repeat_cells": 2,
+  "repeat_samples": 800,
+  "pooling_or_replacement": false,
+  "further_timing": false,
+  "canonical_modified": false,
+  "bindings": {
+    "experiments/w4-tail-cutoff/RESULTS.md": "e3157226edd147a9d26a5db6a3801c3b746d0e1fc5f0d492884aebcb71c26c89",
+    "experiments/w4-tail-cutoff/RESULTS.primary.md": "a96e2c94af34ff286a0040a56650fc9a72f3098914608a440e2cd02d717a5215",
+    "experiments/w4-tail-cutoff/README.md": "57645e4a791d66ac320c6c136a53f5993e35902d40cd7d6633424cbfc7f42b6c",
+    "experiments/w4-tail-cutoff/source-proof.json": "be55097fbbf4e1bba5f52526097f1383e1c746eb79696b09fb52141fbdbb2fe5",
+    "experiments/w4-tail-cutoff/candidate.patch": "db3bc1e547ef265185434ed83f167180712322f4f780cd5bba2412c8cec5f2d1",
+    "experiments/w4-tail-cutoff/qualification-summary.json": "a95f6c6af37f5d00996afe912ca95bc2bbe1d19257796ae125a428f420f4bc60",
+    "experiments/w4-tail-cutoff/primary-result-receipt.json": "cbd745e8f8d2b8be623ee48913bfba9eea39eb1dbf945aafb9b2f9c5a6e8ef3b",
+    "experiments/w4-tail-cutoff/reverse-prefill/result-receipt.json": "598c950927c2b1f76db9e8b81a1258f0c2c4f92a68aa0a090ef824d01e474063",
+    "audits/w4-tail-cutoff-data-peer.json": "8db889212b3fb066b21c976c26867822632a72085c6e2ac1dc2203fcb8fe8078",
+    "audits/w4-tail-cutoff-acca-peer.json": "79d0f838fa1e20a3aca552e068d6f302da6587d68a252cb3eae48a476a93ca5a"
+  }
+}
