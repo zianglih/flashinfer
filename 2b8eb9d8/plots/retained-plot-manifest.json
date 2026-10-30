@@ -1,0 +1,30 @@
+{
+  "script_sha256": "ea8e70886afcd6a07d5e8457f9304760ad863ed6a2d58780fd8b27263ffb468c",
+  "label": "2b8eb9d8 \u00b7 26 fresh / 442 reused cells",
+  "plots": [
+    {
+      "topology": "ep",
+      "rows": 44,
+      "columns": 5,
+      "measured": 209,
+      "negative": 94,
+      "outputs": {
+        "retained-speedup-ep.png": "a2043c64365677adf3bc5c6f1b0e2df218c38640bac7f8ecc826be06aedd9c40",
+        "retained-speedup-ep.svg": "3aeba53d318663a16a4de061e2ff1ba1e42be156902bba4be4e590fc6193241a"
+      },
+      "source_sha256": "80a348144cb3925d4541ed6f2dbe87d23a3d62817e2bbb414a0c85e564cd4098"
+    },
+    {
+      "topology": "tp",
+      "rows": 44,
+      "columns": 5,
+      "measured": 187,
+      "negative": 71,
+      "outputs": {
+        "retained-speedup-tp.png": "20c32634c056000cf889aeacdbd3515aba7d656a78c395c1e9fc2b5f24053935",
+        "retained-speedup-tp.svg": "618092c972b819bcf4b7907d49a209b0ebde1f9d6adb73ede8d2943dca2e0cef"
+      },
+      "source_sha256": "80a348144cb3925d4541ed6f2dbe87d23a3d62817e2bbb414a0c85e564cd4098"
+    }
+  ]
+}

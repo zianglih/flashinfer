@@ -1,0 +1,93 @@
+{
+  "passed": true,
+  "candidate_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "native_summary_sha256": "cdd9a9939747ae8fe0655af29073d3088a4fce7be4f311c3caed973772215309",
+  "receipt_sha256": "f4e71d0cbf8867a4e3670f4af054fffe272a57a4833bac884f6d39683c7f8f31",
+  "archive_sha256": "adacaddd4b81f8e0b6fc476ea59581e2e00bef823ad9eb4875178bdcbe0d2088",
+  "files_verified": 66,
+  "native_pairs": 6,
+  "rows": [
+    {
+      "tokens": 16,
+      "stage": "fc1",
+      "resources": {
+        "initial_regs": 96,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "non_nop_delta": -24,
+      "raw_cubin_equal": false
+    },
+    {
+      "tokens": 16,
+      "stage": "fc2",
+      "resources": {
+        "initial_regs": 128,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "non_nop_delta": 0,
+      "raw_cubin_equal": true
+    },
+    {
+      "tokens": 16,
+      "stage": "combine",
+      "resources": {
+        "initial_regs": 48,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "non_nop_delta": 0,
+      "raw_cubin_equal": true
+    },
+    {
+      "tokens": 32,
+      "stage": "fc1",
+      "resources": {
+        "initial_regs": 96,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "non_nop_delta": -48,
+      "raw_cubin_equal": false
+    },
+    {
+      "tokens": 32,
+      "stage": "fc2",
+      "resources": {
+        "initial_regs": 128,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "non_nop_delta": 0,
+      "raw_cubin_equal": true
+    },
+    {
+      "tokens": 32,
+      "stage": "combine",
+      "resources": {
+        "initial_regs": 48,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "non_nop_delta": 0,
+      "raw_cubin_equal": true
+    }
+  ],
+  "acca_config_sha256": "76ef652ce6fb208ff7f68521e10516a94fc7549a183de4a48e1361c0cec4888e",
+  "same_sources_cache_helpers_tactics_routes": true,
+  "boundary": "Source/resource/codegen proof only. FC1 scalar-to-packed arithmetic changes local epilogue scheduling; four FC2/finalizer pairs are raw-identical. No claim that unchanged counts imply identical instruction order, or that routing-span variation explains kernel performance. ACCA data remains separate from original CAAC.",
+  "peer_script_sha256": "e73c81c620ccd1967871260d7d48a1d6b306b41d7911219914502ce4599335ec"
+}

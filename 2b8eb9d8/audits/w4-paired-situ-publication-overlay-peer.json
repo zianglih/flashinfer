@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "retained_head": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "fresh_cells": 26,
+  "reused_full_dictionaries": 442,
+  "shown_cells": 396,
+  "all_negative_displayed_cells_preserved": 165,
+  "external_changed": {
+    "ep": 13,
+    "tp": 13
+  },
+  "historical_baseline_fields_unchanged": true,
+  "both_candidate_phase_raw_values_verified_for_all468": true,
+  "primary_only_no_acca_substitution": true,
+  "stdout_files_preserved": 142,
+  "clock_quartiles": 3744,
+  "missing_clock_quartiles": 1,
+  "clock_exception_quartiles": 89,
+  "previous_publication_unchanged": true,
+  "manifest_sha256": "1462466d88aaf8ac921e5ff517e292d780a5853fefc0565979a0d5e4c6860fa4",
+  "report_sha256": "80a348144cb3925d4541ed6f2dbe87d23a3d62817e2bbb414a0c85e564cd4098",
+  "summary_sha256": "9509345241541ac9840befd6e5690563ec7b833977c69342288bc2420f137d5e",
+  "row_provenance_sha256": "5d1222de77c10a45caaec32e127d537e6ba221cf0ea0197cbb8eee3bd486e110",
+  "source_reuse_sha256": "5bdd88f85937d83918571c89883e508a81fa7a4a7c1944209b82a442a537e2de",
+  "retained_source_peer_sha256": "22091c9734c9fb047eaf4786d1015ed832769fb4903a64e9748e8015e7777c11",
+  "boundary": "Independent structured overlay/raw median/provenance/source/resource-clock selection audit. Root full26 and separateACCA raw audits are reused, not replaced. Native printed tables, plot appearance and archive membership have separate forthcoming gates. No new GPU execution or claim of fresh paired468 evidence."
+}

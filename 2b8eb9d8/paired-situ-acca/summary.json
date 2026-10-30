@@ -1,0 +1,146 @@
+{
+  "passed": true,
+  "complete_campaign": true,
+  "measured_cells": 6,
+  "retention_cells": 6,
+  "raw_samples": 2400,
+  "loaded_kernels": 48,
+  "jobs": [
+    "ep-kimi-k3-w4a16",
+    "tp-kimi-k3-w4a16"
+  ],
+  "pending_jobs": [],
+  "groups": {
+    "band/decode": {
+      "cells": 2,
+      "speedup_percent": 0.05174212092797781,
+      "negative": 0,
+      "max_control_spread": 0.12014334056686948,
+      "max_candidate_spread": 0.13304838803562813
+    },
+    "band/middle": {
+      "cells": 1,
+      "speedup_percent": -0.10122127989028451,
+      "negative": 1,
+      "max_control_spread": 0.03134399137310062,
+      "max_candidate_spread": 0.036504877051579676
+    },
+    "band/prefill": {
+      "cells": 3,
+      "speedup_percent": 1.0349106812336029,
+      "negative": 0,
+      "max_control_spread": 3.0681920168213583,
+      "max_candidate_spread": 2.9722589430053237
+    },
+    "band/all": {
+      "cells": 6,
+      "speedup_percent": 0.51648945973366,
+      "negative": 1,
+      "max_control_spread": 3.0681920168213583,
+      "max_candidate_spread": 2.9722589430053237
+    },
+    "mode/CuteDSL W4A16": {
+      "cells": 6,
+      "speedup_percent": 0.51648945973366,
+      "negative": 1,
+      "max_control_spread": 3.0681920168213583,
+      "max_candidate_spread": 2.9722589430053237
+    },
+    "model_topology/kimi-k3/ep": {
+      "cells": 4,
+      "speedup_percent": 0.581952374071526,
+      "negative": 1,
+      "max_control_spread": 3.0681920168213583,
+      "max_candidate_spread": 0.13304838803562813
+    },
+    "model_topology/kimi-k3/tp": {
+      "cells": 2,
+      "speedup_percent": 0.38569142128321854,
+      "negative": 0,
+      "max_control_spread": 1.9009694300666347,
+      "max_candidate_spread": 2.9722589430053237
+    },
+    "model_topology_mode/kimi-k3/ep/CuteDSL W4A16": {
+      "cells": 4,
+      "speedup_percent": 0.581952374071526,
+      "negative": 1,
+      "max_control_spread": 3.0681920168213583,
+      "max_candidate_spread": 0.13304838803562813
+    },
+    "model_topology_mode/kimi-k3/tp/CuteDSL W4A16": {
+      "cells": 2,
+      "speedup_percent": 0.38569142128321854,
+      "negative": 0,
+      "max_control_spread": 1.9009694300666347,
+      "max_candidate_spread": 2.9722589430053237
+    },
+    "implementation/w4a16": {
+      "cells": 6,
+      "speedup_percent": 0.51648945973366,
+      "negative": 1,
+      "max_control_spread": 3.0681920168213583,
+      "max_candidate_spread": 2.9722589430053237
+    }
+  },
+  "clock_quartiles": 96,
+  "missing_clock_quartiles": 0,
+  "default_stage_resource_joins": 0,
+  "clock_exception_quartiles": 4,
+  "config_sha256": "76ef652ce6fb208ff7f68521e10516a94fc7549a183de4a48e1361c0cec4888e",
+  "source_label": "w4-paired-situ-5e61-49c-acca-diagnostic",
+  "control_head": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "all_rows_retained": true,
+  "cross_groups": {
+    "CuteDSL W4A16/kimi-k3/ep/decode": {
+      "cells": 2,
+      "speedup_percent": 0.05174212092797781,
+      "negative": 0
+    },
+    "CuteDSL W4A16/kimi-k3/ep/middle": {
+      "cells": 1,
+      "speedup_percent": -0.10122127989028451,
+      "negative": 1
+    },
+    "CuteDSL W4A16/kimi-k3/ep/prefill": {
+      "cells": 1,
+      "speedup_percent": 2.3459723427111223,
+      "negative": 0
+    },
+    "CuteDSL W4A16/kimi-k3/tp/prefill": {
+      "cells": 2,
+      "speedup_percent": 0.38569142128321854,
+      "negative": 0
+    }
+  },
+  "audit_helper_sha256": "3d3a5f2b11094120f263bd10458741ecccb5ba5b7851d7e0bdc0aa959e009fc2",
+  "timeline_helper_sha256": "937fb03398de552678886f18b7c171b196e78d940fe31d3365ac738ef2443c5c",
+  "tight_negative_cells": [
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "ep": 8,
+      "tp": 1,
+      "backend": "CuteDSL W4A16",
+      "tokens": 128,
+      "retention": true,
+      "c1_us": 307.87399999999997,
+      "a1_us": 308.178,
+      "a2_us": 308.2905,
+      "c2_us": 307.9705,
+      "control_us": 307.92224621972343,
+      "candidate_us": 308.23424486743846,
+      "speedup_percent": -0.10122127989028451,
+      "arithmetic_speedup_percent": -0.10122171692471538,
+      "control_spread_percent": 0.03134399137310062,
+      "candidate_spread_percent": 0.036504877051579676,
+      "clock_mhz": "2032",
+      "clock_reasons": "0",
+      "source_label": "w4-paired-situ-5e61-49c-acca-diagnostic",
+      "receipt_sha256": "2fa79165bdd03250a2e704ecc2c37f7b22f52ea692f5b565766f28eb7340dac6"
+    }
+  ],
+  "tight_definition": "Both phase-median repeat spreads <=0.5%; descriptive only, not statistical confidence. All other losses remain in the full table.",
+  "estimator": "geometric mean of two phase medians; preserve all four raw phase medians and arithmetic diagnostic",
+  "boundary": "Only complete CAAC jobs; tokens 1/2 retained in raw rows but excluded from summaries. Clock/repeat anomalies retained. Components are per-phase medians; use extension/gap rather than adding overlapping kernel durations."
+}

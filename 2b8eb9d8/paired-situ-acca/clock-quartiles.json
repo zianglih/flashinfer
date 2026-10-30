@@ -1,0 +1,5572 @@
+[
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 120.00099999999999,
+      "route_sort_us": 12.896,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 12.896,
+      "route_sort_extension_us": 12.896,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 71.841,
+      "fc1_start_us": 12.768,
+      "fc1_end_us": 84.672,
+      "fc1_extension_us": 71.681,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 38.72,
+      "fc2_start_us": 77.889,
+      "fc2_end_us": 116.513,
+      "fc2_extension_us": 32.0,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.873,
+      "combine_start_us": 108.097,
+      "combine_end_us": 120.001,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.0
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 247989,
+        "median": 247989,
+        "max": 247989
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 120.897,
+      "route_sort_us": 13.216,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 13.216,
+      "route_sort_extension_us": 13.216,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 71.713,
+      "fc1_start_us": 13.089,
+      "fc1_end_us": 84.865,
+      "fc1_extension_us": 71.585,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 39.744,
+      "fc2_start_us": 77.729,
+      "fc2_end_us": 117.378,
+      "fc2_extension_us": 32.161,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.192,
+      "combine_start_us": 108.289,
+      "combine_end_us": 120.897,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.161
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 247989,
+        "median": 247989,
+        "max": 247989
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 120.673,
+      "route_sort_us": 13.216,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 13.216,
+      "route_sort_extension_us": 13.216,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 72.16,
+      "fc1_start_us": 13.056,
+      "fc1_end_us": 85.12,
+      "fc1_extension_us": 72.032,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 39.552,
+      "fc2_start_us": 77.92,
+      "fc2_end_us": 117.249,
+      "fc2_extension_us": 32.128,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.872,
+      "combine_start_us": 108.865,
+      "combine_end_us": 120.673,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.128
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 247989,
+        "median": 247989,
+        "max": 255334
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 120.06500000000001,
+      "route_sort_us": 12.832,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 12.832,
+      "route_sort_extension_us": 12.832,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 72.416,
+      "fc1_start_us": 12.705,
+      "fc1_end_us": 85.152,
+      "fc1_extension_us": 72.256,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 38.976,
+      "fc2_start_us": 77.952,
+      "fc2_end_us": 116.672,
+      "fc2_extension_us": 31.808,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.968,
+      "combine_start_us": 108.577,
+      "combine_end_us": 120.065,
+      "combine_extension_us": 3.424,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 31.808000000000007
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 255334,
+        "median": 255334.0,
+        "max": 255334
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 2
+      },
+      "samples": 2
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 182.401,
+      "route_sort_us": 7.136,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.136,
+      "route_sort_extension_us": 7.136,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.425,
+      "fc1_start_us": 6.976,
+      "fc1_end_us": 122.464,
+      "fc1_extension_us": 115.265,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 62.913,
+      "fc2_start_us": 116.065,
+      "fc2_end_us": 179.201,
+      "fc2_extension_us": 56.544,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.968,
+      "combine_start_us": 170.53,
+      "combine_end_us": 182.401,
+      "combine_extension_us": 3.296,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.54400000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249201,
+        "median": 249201.0,
+        "max": 249201
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 4
+      },
+      "samples": 4
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 182.401,
+      "route_sort_us": 7.04,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.04,
+      "route_sort_extension_us": 7.04,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.713,
+      "fc1_start_us": 6.88,
+      "fc1_end_us": 122.496,
+      "fc1_extension_us": 115.585,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.329,
+      "fc2_start_us": 115.905,
+      "fc2_end_us": 179.138,
+      "fc2_extension_us": 56.608,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.128,
+      "combine_start_us": 170.209,
+      "combine_end_us": 182.401,
+      "combine_extension_us": 3.296,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.608000000000004
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249201,
+        "median": 249201,
+        "max": 249201
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 182.43400000000003,
+      "route_sort_us": 7.04,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.04,
+      "route_sort_extension_us": 7.04,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.361,
+      "fc1_start_us": 6.88,
+      "fc1_end_us": 122.113,
+      "fc1_extension_us": 115.169,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 62.881,
+      "fc2_start_us": 116.001,
+      "fc2_end_us": 179.106,
+      "fc2_extension_us": 56.705,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.16,
+      "combine_start_us": 170.113,
+      "combine_end_us": 182.434,
+      "combine_extension_us": 3.296,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.705
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249201,
+        "median": 249201.0,
+        "max": 249201
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 4
+      },
+      "samples": 4
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 182.625,
+      "route_sort_us": 7.168,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.168,
+      "route_sort_extension_us": 7.168,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.393,
+      "fc1_start_us": 7.008,
+      "fc1_end_us": 122.561,
+      "fc1_extension_us": 115.201,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.2,
+      "fc2_start_us": 116.097,
+      "fc2_end_us": 179.169,
+      "fc2_extension_us": 56.608,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.968,
+      "combine_start_us": 170.561,
+      "combine_end_us": 182.625,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.608000000000004
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249201,
+        "median": 249201,
+        "max": 249201
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 308.09799999999996,
+      "route_sort_us": 7.872,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.872,
+      "route_sort_extension_us": 7.872,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.689,
+      "fc1_start_us": 7.712,
+      "fc1_end_us": 210.337,
+      "fc1_extension_us": 202.529,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.225,
+      "fc2_start_us": 204.002,
+      "fc2_end_us": 304.546,
+      "fc2_extension_us": 94.017,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.097,
+      "combine_start_us": 295.97,
+      "combine_end_us": 308.098,
+      "combine_extension_us": 3.584,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.01700000000002
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248744,
+        "median": 248744,
+        "max": 248744
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 308.45099999999996,
+      "route_sort_us": 8.0,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 8.0,
+      "route_sort_extension_us": 8.0,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.753,
+      "fc1_start_us": 7.84,
+      "fc1_end_us": 210.625,
+      "fc1_extension_us": 202.593,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.577,
+      "fc2_start_us": 204.193,
+      "fc2_end_us": 304.803,
+      "fc2_extension_us": 94.145,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.192,
+      "combine_start_us": 296.194,
+      "combine_end_us": 308.451,
+      "combine_extension_us": 3.584,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.14500000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248744,
+        "median": 248744,
+        "max": 248744
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 308.06600000000003,
+      "route_sort_us": 8.0,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 8.0,
+      "route_sort_extension_us": 8.0,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.626,
+      "fc1_start_us": 7.84,
+      "fc1_end_us": 210.562,
+      "fc1_extension_us": 202.466,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.481,
+      "fc2_start_us": 204.193,
+      "fc2_end_us": 304.546,
+      "fc2_extension_us": 94.304,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.0,
+      "combine_start_us": 296.323,
+      "combine_end_us": 308.066,
+      "combine_extension_us": 3.552,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.30399999999997
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248744,
+        "median": 248744,
+        "max": 248744
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 308.194,
+      "route_sort_us": 7.872,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.872,
+      "route_sort_extension_us": 7.872,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.753,
+      "fc1_start_us": 7.712,
+      "fc1_end_us": 210.497,
+      "fc1_extension_us": 202.593,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.641,
+      "fc2_start_us": 203.97,
+      "fc2_end_us": 304.706,
+      "fc2_extension_us": 94.177,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.0,
+      "combine_start_us": 295.874,
+      "combine_end_us": 308.194,
+      "combine_extension_us": 3.552,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.17700000000002
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248744,
+        "median": 248744,
+        "max": 248744
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 541.156,
+      "route_sort_us": 15.169,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 15.169,
+      "route_sort_extension_us": 15.169,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 345.731,
+      "fc1_start_us": 14.913,
+      "fc1_end_us": 360.451,
+      "fc1_extension_us": 345.475,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 162.369,
+      "fc2_start_us": 359.683,
+      "fc2_end_us": 521.988,
+      "fc2_extension_us": 161.473,
+      "fc2_gap_us": 0.0,
+      "combine_us": 37.665,
+      "combine_start_us": 503.652,
+      "combine_end_us": 541.156,
+      "combine_extension_us": 19.169,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 161.47300000000007
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248609,
+        "median": 248609.0,
+        "max": 273449
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 541.828,
+      "route_sort_us": 14.912,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 14.912,
+      "route_sort_extension_us": 14.912,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 346.371,
+      "fc1_start_us": 14.656,
+      "fc1_end_us": 360.931,
+      "fc1_extension_us": 346.115,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 162.465,
+      "fc2_start_us": 360.355,
+      "fc2_end_us": 522.82,
+      "fc2_extension_us": 161.634,
+      "fc2_gap_us": 0.0,
+      "combine_us": 37.504,
+      "combine_start_us": 504.036,
+      "combine_end_us": 541.828,
+      "combine_extension_us": 18.944,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 161.63399999999996
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 273449,
+        "median": 273449.0,
+        "max": 273449
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 537.412,
+      "route_sort_us": 14.912,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 14.912,
+      "route_sort_extension_us": 14.912,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 344.45,
+      "fc1_start_us": 14.624,
+      "fc1_end_us": 358.979,
+      "fc1_extension_us": 344.162,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 159.681,
+      "fc2_start_us": 358.243,
+      "fc2_end_us": 518.18,
+      "fc2_extension_us": 158.785,
+      "fc2_gap_us": 0.0,
+      "combine_us": 36.736,
+      "combine_start_us": 500.74,
+      "combine_end_us": 537.412,
+      "combine_extension_us": 19.2,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 158.78499999999997
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 273449,
+        "median": 273449.0,
+        "max": 273449
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 600.101,
+      "route_sort_us": 17.472,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 17.472,
+      "route_sort_extension_us": 17.472,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 374.467,
+      "fc1_start_us": 17.152,
+      "fc1_end_us": 391.394,
+      "fc1_extension_us": 374.147,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 188.577,
+      "fc2_start_us": 390.434,
+      "fc2_end_us": 579.172,
+      "fc2_extension_us": 187.585,
+      "fc2_gap_us": 0.0,
+      "combine_us": 40.577,
+      "combine_start_us": 559.62,
+      "combine_end_us": 600.101,
+      "combine_extension_us": 20.832,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 187.58499999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 273449,
+        "median": 273449,
+        "max": 273449
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 120.06500000000001,
+      "route_sort_us": 12.8,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 12.8,
+      "route_sort_extension_us": 12.8,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 71.808,
+      "fc1_start_us": 12.64,
+      "fc1_end_us": 84.672,
+      "fc1_extension_us": 71.68,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 38.976,
+      "fc2_start_us": 77.505,
+      "fc2_end_us": 116.61,
+      "fc2_extension_us": 31.776,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.616,
+      "combine_start_us": 108.256,
+      "combine_end_us": 120.065,
+      "combine_extension_us": 3.425,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 31.775999999999996
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248417,
+        "median": 248417.0,
+        "max": 248417
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 2
+      },
+      "samples": 2
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 120.38600000000001,
+      "route_sort_us": 13.184,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 13.184,
+      "route_sort_extension_us": 13.184,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 71.936,
+      "fc1_start_us": 13.056,
+      "fc1_end_us": 85.024,
+      "fc1_extension_us": 71.776,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 39.137,
+      "fc2_start_us": 77.888,
+      "fc2_end_us": 116.961,
+      "fc2_extension_us": 32.097,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.936,
+      "combine_start_us": 108.801,
+      "combine_end_us": 120.386,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.09700000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 250579,
+        "median": 250579,
+        "max": 250579
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 120.226,
+      "route_sort_us": 13.152,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 13.152,
+      "route_sort_extension_us": 13.152,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 72.225,
+      "fc1_start_us": 12.992,
+      "fc1_end_us": 85.121,
+      "fc1_extension_us": 72.065,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 38.624,
+      "fc2_start_us": 78.145,
+      "fc2_end_us": 116.833,
+      "fc2_extension_us": 31.488,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.488,
+      "combine_start_us": 108.321,
+      "combine_end_us": 120.226,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 31.488
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 250579,
+        "median": 250579,
+        "max": 250579
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 120.161,
+      "route_sort_us": 13.056,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 13.056,
+      "route_sort_extension_us": 13.056,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 72.321,
+      "fc1_start_us": 12.928,
+      "fc1_end_us": 84.801,
+      "fc1_extension_us": 72.193,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 38.593,
+      "fc2_start_us": 78.209,
+      "fc2_end_us": 116.833,
+      "fc2_extension_us": 31.712,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.744,
+      "combine_start_us": 108.385,
+      "combine_end_us": 120.161,
+      "combine_extension_us": 3.424,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 31.712000000000003
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 250579,
+        "median": 250579.0,
+        "max": 250579
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 2
+      },
+      "samples": 2
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 182.529,
+      "route_sort_us": 7.264,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.264,
+      "route_sort_extension_us": 7.264,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.552,
+      "fc1_start_us": 7.104,
+      "fc1_end_us": 122.657,
+      "fc1_extension_us": 115.424,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.137,
+      "fc2_start_us": 116.353,
+      "fc2_end_us": 179.265,
+      "fc2_extension_us": 56.672,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.128,
+      "combine_start_us": 170.337,
+      "combine_end_us": 182.529,
+      "combine_extension_us": 3.265,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.672
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 255611,
+        "median": 255611.0,
+        "max": 255611
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 4
+      },
+      "samples": 4
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 182.817,
+      "route_sort_us": 7.104,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.104,
+      "route_sort_extension_us": 7.104,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.457,
+      "fc1_start_us": 6.945,
+      "fc1_end_us": 122.497,
+      "fc1_extension_us": 115.329,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.521,
+      "fc2_start_us": 116.065,
+      "fc2_end_us": 179.617,
+      "fc2_extension_us": 56.737,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.129,
+      "combine_start_us": 170.497,
+      "combine_end_us": 182.817,
+      "combine_extension_us": 3.296,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.736999999999995
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 255611,
+        "median": 255611,
+        "max": 255611
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 182.46499999999997,
+      "route_sort_us": 7.104,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.104,
+      "route_sort_extension_us": 7.104,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.521,
+      "fc1_start_us": 6.944,
+      "fc1_end_us": 122.337,
+      "fc1_extension_us": 115.361,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.136,
+      "fc2_start_us": 116.193,
+      "fc2_end_us": 179.138,
+      "fc2_extension_us": 56.449,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.032,
+      "combine_start_us": 170.466,
+      "combine_end_us": 182.465,
+      "combine_extension_us": 3.328,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.448999999999984
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 255611,
+        "median": 255611.0,
+        "max": 255611
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 4
+      },
+      "samples": 4
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 182.594,
+      "route_sort_us": 7.232,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.232,
+      "route_sort_extension_us": 7.232,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.681,
+      "fc1_start_us": 7.072,
+      "fc1_end_us": 122.689,
+      "fc1_extension_us": 115.521,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.105,
+      "fc2_start_us": 116.161,
+      "fc2_end_us": 179.329,
+      "fc2_extension_us": 56.705,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.16,
+      "combine_start_us": 170.337,
+      "combine_end_us": 182.594,
+      "combine_extension_us": 3.36,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.705
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 255611,
+        "median": 255611,
+        "max": 255611
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 307.778,
+      "route_sort_us": 7.616,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.616,
+      "route_sort_extension_us": 7.616,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.785,
+      "fc1_start_us": 7.425,
+      "fc1_end_us": 210.242,
+      "fc1_extension_us": 202.593,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.352,
+      "fc2_start_us": 204.001,
+      "fc2_end_us": 304.163,
+      "fc2_extension_us": 93.953,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.808,
+      "combine_start_us": 295.938,
+      "combine_end_us": 307.778,
+      "combine_extension_us": 3.488,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 93.953
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249354,
+        "median": 249354,
+        "max": 249354
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 307.779,
+      "route_sort_us": 7.425,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.425,
+      "route_sort_extension_us": 7.425,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 203.073,
+      "fc1_start_us": 7.264,
+      "fc1_end_us": 210.242,
+      "fc1_extension_us": 202.881,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.833,
+      "fc2_start_us": 203.553,
+      "fc2_end_us": 304.194,
+      "fc2_extension_us": 94.144,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.352,
+      "combine_start_us": 295.778,
+      "combine_end_us": 307.779,
+      "combine_extension_us": 3.488,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.144
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249354,
+        "median": 249354,
+        "max": 249354
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 308.002,
+      "route_sort_us": 7.487,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.487,
+      "route_sort_extension_us": 7.487,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.753,
+      "fc1_start_us": 7.296,
+      "fc1_end_us": 210.018,
+      "fc1_extension_us": 202.561,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.736,
+      "fc2_start_us": 203.521,
+      "fc2_end_us": 304.386,
+      "fc2_extension_us": 94.433,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.224,
+      "combine_start_us": 295.746,
+      "combine_end_us": 308.002,
+      "combine_extension_us": 3.585,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.43300000000002
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249354,
+        "median": 249354,
+        "max": 249354
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 308.06600000000003,
+      "route_sort_us": 7.712,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.712,
+      "route_sort_extension_us": 7.712,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.561,
+      "fc1_start_us": 7.521,
+      "fc1_end_us": 210.113,
+      "fc1_extension_us": 202.369,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.576,
+      "fc2_start_us": 203.842,
+      "fc2_end_us": 304.386,
+      "fc2_extension_us": 94.145,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.904,
+      "combine_start_us": 295.746,
+      "combine_end_us": 308.066,
+      "combine_extension_us": 3.615,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.14500000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249354,
+        "median": 249354,
+        "max": 249354
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 544.26,
+      "route_sort_us": 15.616,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 15.616,
+      "route_sort_extension_us": 15.616,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 347.618,
+      "fc1_start_us": 15.36,
+      "fc1_end_us": 363.108,
+      "fc1_extension_us": 347.363,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 162.849,
+      "fc2_start_us": 362.467,
+      "fc2_end_us": 525.22,
+      "fc2_extension_us": 162.017,
+      "fc2_gap_us": 0.0,
+      "combine_us": 38.016,
+      "combine_start_us": 506.404,
+      "combine_end_us": 544.26,
+      "combine_extension_us": 19.103,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 162.017
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251521,
+        "median": 251521.0,
+        "max": 251521
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 40.0,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 541.092,
+      "route_sort_us": 15.52,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 15.52,
+      "route_sort_extension_us": 15.52,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 347.043,
+      "fc1_start_us": 15.264,
+      "fc1_end_us": 362.243,
+      "fc1_extension_us": 346.787,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 160.13,
+      "fc2_start_us": 361.283,
+      "fc2_end_us": 521.476,
+      "fc2_extension_us": 159.329,
+      "fc2_gap_us": 0.0,
+      "combine_us": 36.736,
+      "combine_start_us": 504.068,
+      "combine_end_us": 541.092,
+      "combine_extension_us": 19.232,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 159.329
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251521,
+        "median": 251521.0,
+        "max": 251521
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 40.0,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 591.75,
+      "route_sort_us": 16.896,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 16.896,
+      "route_sort_extension_us": 16.896,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 369.667,
+      "fc1_start_us": 16.608,
+      "fc1_end_us": 386.147,
+      "fc1_extension_us": 369.379,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 185.794,
+      "fc2_start_us": 385.347,
+      "fc2_end_us": 571.653,
+      "fc2_extension_us": 184.962,
+      "fc2_gap_us": 0.0,
+      "combine_us": 42.432,
+      "combine_start_us": 547.941,
+      "combine_end_us": 591.75,
+      "combine_extension_us": 20.0,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 184.96200000000005
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251521,
+        "median": 251521.0,
+        "max": 251521
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 40.0,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 607.6850000000001,
+      "route_sort_us": 18.208,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 18.208,
+      "route_sort_extension_us": 18.208,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 382.051,
+      "fc1_start_us": 17.888,
+      "fc1_end_us": 399.587,
+      "fc1_extension_us": 381.731,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 188.77,
+      "fc2_start_us": 398.467,
+      "fc2_end_us": 587.301,
+      "fc2_extension_us": 188.001,
+      "fc2_gap_us": 0.0,
+      "combine_us": 40.352,
+      "combine_start_us": 567.493,
+      "combine_end_us": 607.685,
+      "combine_extension_us": 20.672,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 188.00100000000003
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251521,
+        "median": 251521,
+        "max": 251521
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 40,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 120.35300000000001,
+      "route_sort_us": 12.991,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 12.991,
+      "route_sort_extension_us": 12.991,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 71.968,
+      "fc1_start_us": 12.831,
+      "fc1_end_us": 84.641,
+      "fc1_extension_us": 71.808,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 38.945,
+      "fc2_start_us": 77.793,
+      "fc2_end_us": 116.833,
+      "fc2_extension_us": 32.224,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.968,
+      "combine_start_us": 108.162,
+      "combine_end_us": 120.353,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.224000000000004
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248496,
+        "median": 248496,
+        "max": 248496
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 120.417,
+      "route_sort_us": 13.024,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 13.024,
+      "route_sort_extension_us": 13.024,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 72.033,
+      "fc1_start_us": 12.864,
+      "fc1_end_us": 84.929,
+      "fc1_extension_us": 71.905,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 39.361,
+      "fc2_start_us": 77.729,
+      "fc2_end_us": 117.057,
+      "fc2_extension_us": 32.128,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.0,
+      "combine_start_us": 108.449,
+      "combine_end_us": 120.417,
+      "combine_extension_us": 3.424,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.128
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248496,
+        "median": 248496,
+        "max": 248496
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 120.70500000000001,
+      "route_sort_us": 13.311,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 13.311,
+      "route_sort_extension_us": 13.311,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 71.616,
+      "fc1_start_us": 13.151,
+      "fc1_end_us": 84.641,
+      "fc1_extension_us": 71.488,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 39.105,
+      "fc2_start_us": 78.049,
+      "fc2_end_us": 117.185,
+      "fc2_extension_us": 32.096,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.096,
+      "combine_start_us": 108.385,
+      "combine_end_us": 120.705,
+      "combine_extension_us": 3.488,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.096000000000004
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248496,
+        "median": 248496.0,
+        "max": 248496
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 2
+      },
+      "samples": 2
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 120.417,
+      "route_sort_us": 12.929,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 12.929,
+      "route_sort_extension_us": 12.929,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 71.968,
+      "fc1_start_us": 12.8,
+      "fc1_end_us": 84.929,
+      "fc1_extension_us": 71.84,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 39.328,
+      "fc2_start_us": 77.665,
+      "fc2_end_us": 116.897,
+      "fc2_extension_us": 32.129,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.064,
+      "combine_start_us": 108.641,
+      "combine_end_us": 120.417,
+      "combine_extension_us": 3.424,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.129000000000005
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248496,
+        "median": 248496,
+        "max": 248496
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 182.561,
+      "route_sort_us": 7.232,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.232,
+      "route_sort_extension_us": 7.232,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.585,
+      "fc1_start_us": 7.072,
+      "fc1_end_us": 122.689,
+      "fc1_extension_us": 115.425,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.105,
+      "fc2_start_us": 116.193,
+      "fc2_end_us": 179.33,
+      "fc2_extension_us": 56.672,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.128,
+      "combine_start_us": 170.401,
+      "combine_end_us": 182.561,
+      "combine_extension_us": 3.328,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.67200000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 256653,
+        "median": 256653.0,
+        "max": 256653
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 4
+      },
+      "samples": 4
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 182.46599999999998,
+      "route_sort_us": 7.105,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.105,
+      "route_sort_extension_us": 7.105,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.392,
+      "fc1_start_us": 6.945,
+      "fc1_end_us": 122.401,
+      "fc1_extension_us": 115.201,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.04,
+      "fc2_start_us": 116.065,
+      "fc2_end_us": 179.042,
+      "fc2_extension_us": 56.512,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.064,
+      "combine_start_us": 170.178,
+      "combine_end_us": 182.466,
+      "combine_extension_us": 3.36,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.512
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251047,
+        "median": 251047,
+        "max": 256653
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 182.626,
+      "route_sort_us": 7.072,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.072,
+      "route_sort_extension_us": 7.072,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.425,
+      "fc1_start_us": 6.912,
+      "fc1_end_us": 122.274,
+      "fc1_extension_us": 115.233,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.264,
+      "fc2_start_us": 116.001,
+      "fc2_end_us": 179.169,
+      "fc2_extension_us": 56.609,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.288,
+      "combine_start_us": 170.178,
+      "combine_end_us": 182.626,
+      "combine_extension_us": 3.36,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.608999999999995
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251047,
+        "median": 251047.0,
+        "max": 251047
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 4
+      },
+      "samples": 4
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 182.43400000000003,
+      "route_sort_us": 7.232,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.232,
+      "route_sort_extension_us": 7.232,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.456,
+      "fc1_start_us": 7.104,
+      "fc1_end_us": 122.529,
+      "fc1_extension_us": 115.329,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.04,
+      "fc2_start_us": 116.065,
+      "fc2_end_us": 179.041,
+      "fc2_extension_us": 56.481,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.968,
+      "combine_start_us": 170.497,
+      "combine_end_us": 182.434,
+      "combine_extension_us": 3.328,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.480999999999995
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251047,
+        "median": 251047,
+        "max": 251047
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 308.162,
+      "route_sort_us": 7.488,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.488,
+      "route_sort_extension_us": 7.488,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.753,
+      "fc1_start_us": 7.296,
+      "fc1_end_us": 210.209,
+      "fc1_extension_us": 202.625,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.896,
+      "fc2_start_us": 203.649,
+      "fc2_end_us": 304.578,
+      "fc2_extension_us": 94.4,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.416,
+      "combine_start_us": 295.746,
+      "combine_end_us": 308.162,
+      "combine_extension_us": 3.552,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.4
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249895,
+        "median": 249895,
+        "max": 249895
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 307.618,
+      "route_sort_us": 7.648,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.648,
+      "route_sort_extension_us": 7.648,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.69,
+      "fc1_start_us": 7.488,
+      "fc1_end_us": 210.05,
+      "fc1_extension_us": 202.53,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.417,
+      "fc2_start_us": 203.874,
+      "fc2_end_us": 304.13,
+      "fc2_extension_us": 94.241,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.711,
+      "combine_start_us": 295.906,
+      "combine_end_us": 307.618,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.24100000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249895,
+        "median": 249895,
+        "max": 249895
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 308.13,
+      "route_sort_us": 7.648,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.648,
+      "route_sort_extension_us": 7.648,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.85,
+      "fc1_start_us": 7.521,
+      "fc1_end_us": 210.274,
+      "fc1_extension_us": 202.69,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.737,
+      "fc2_start_us": 204.001,
+      "fc2_end_us": 304.642,
+      "fc2_extension_us": 94.145,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.192,
+      "combine_start_us": 295.906,
+      "combine_end_us": 308.13,
+      "combine_extension_us": 3.616,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.14499999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249895,
+        "median": 249895,
+        "max": 249895
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 307.97,
+      "route_sort_us": 7.552,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.552,
+      "route_sort_extension_us": 7.552,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.721,
+      "fc1_start_us": 7.392,
+      "fc1_end_us": 210.145,
+      "fc1_extension_us": 202.561,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.289,
+      "fc2_start_us": 203.905,
+      "fc2_end_us": 304.162,
+      "fc2_extension_us": 94.049,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.128,
+      "combine_start_us": 295.97,
+      "combine_end_us": 307.97,
+      "combine_extension_us": 3.616,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.049
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249895,
+        "median": 249895,
+        "max": 249895
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 544.036,
+      "route_sort_us": 15.616,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 15.616,
+      "route_sort_extension_us": 15.616,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 347.907,
+      "fc1_start_us": 15.327,
+      "fc1_end_us": 363.042,
+      "fc1_extension_us": 347.619,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 162.881,
+      "fc2_start_us": 362.116,
+      "fc2_end_us": 524.932,
+      "fc2_extension_us": 161.985,
+      "fc2_gap_us": 0.0,
+      "combine_us": 37.472,
+      "combine_start_us": 506.212,
+      "combine_end_us": 544.036,
+      "combine_extension_us": 19.008,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 161.98499999999996
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251197,
+        "median": 251197.0,
+        "max": 251197
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 568.805,
+      "route_sort_us": 15.744,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 15.744,
+      "route_sort_extension_us": 15.744,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 359.331,
+      "fc1_start_us": 15.456,
+      "fc1_end_us": 374.916,
+      "fc1_extension_us": 359.043,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 174.754,
+      "fc2_start_us": 374.115,
+      "fc2_end_us": 549.509,
+      "fc2_extension_us": 173.986,
+      "fc2_gap_us": 0.0,
+      "combine_us": 38.592,
+      "combine_start_us": 529.701,
+      "combine_end_us": 568.805,
+      "combine_extension_us": 19.265,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 173.986
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251197,
+        "median": 251197.0,
+        "max": 251197
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 563.044,
+      "route_sort_us": 16.0,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 16.0,
+      "route_sort_extension_us": 16.0,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 356.387,
+      "fc1_start_us": 15.744,
+      "fc1_end_us": 372.195,
+      "fc1_extension_us": 356.131,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 172.737,
+      "fc2_start_us": 371.523,
+      "fc2_end_us": 543.748,
+      "fc2_extension_us": 172.033,
+      "fc2_gap_us": 0.0,
+      "combine_us": 38.529,
+      "combine_start_us": 524.836,
+      "combine_end_us": 563.044,
+      "combine_extension_us": 19.425,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 172.03300000000007
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251197,
+        "median": 251197.0,
+        "max": 251197
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 601.3810000000001,
+      "route_sort_us": 17.92,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 17.92,
+      "route_sort_extension_us": 17.92,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 376.546,
+      "fc1_start_us": 17.632,
+      "fc1_end_us": 394.179,
+      "fc1_extension_us": 376.226,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 187.361,
+      "fc2_start_us": 393.155,
+      "fc2_end_us": 580.484,
+      "fc2_extension_us": 186.561,
+      "fc2_gap_us": 0.0,
+      "combine_us": 40.0,
+      "combine_start_us": 561.157,
+      "combine_end_us": 601.381,
+      "combine_extension_us": 20.48,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 186.56100000000004
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251197,
+        "median": 251197,
+        "max": 251197
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 119.87299999999999,
+      "route_sort_us": 12.864,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 12.864,
+      "route_sort_extension_us": 12.864,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 71.776,
+      "fc1_start_us": 12.736,
+      "fc1_end_us": 84.481,
+      "fc1_extension_us": 71.649,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 38.752,
+      "fc2_start_us": 77.76,
+      "fc2_end_us": 116.449,
+      "fc2_extension_us": 31.873,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.84,
+      "combine_start_us": 108.065,
+      "combine_end_us": 119.873,
+      "combine_extension_us": 3.455,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 31.873000000000005
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249296,
+        "median": 249296.0,
+        "max": 249296
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 2
+      },
+      "samples": 2
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 121.217,
+      "route_sort_us": 13.184,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 13.184,
+      "route_sort_extension_us": 13.184,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 71.841,
+      "fc1_start_us": 13.056,
+      "fc1_end_us": 84.832,
+      "fc1_extension_us": 71.681,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 39.584,
+      "fc2_start_us": 77.728,
+      "fc2_end_us": 117.761,
+      "fc2_extension_us": 32.096,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.873,
+      "combine_start_us": 108.481,
+      "combine_end_us": 121.217,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.096000000000004
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249296,
+        "median": 249296,
+        "max": 249296
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 120.642,
+      "route_sort_us": 13.184,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 13.184,
+      "route_sort_extension_us": 13.184,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 72.065,
+      "fc1_start_us": 13.025,
+      "fc1_end_us": 84.929,
+      "fc1_extension_us": 71.936,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 39.136,
+      "fc2_start_us": 78.4,
+      "fc2_end_us": 117.249,
+      "fc2_extension_us": 32.193,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.128,
+      "combine_start_us": 108.48,
+      "combine_end_us": 120.642,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 32.193
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249296,
+        "median": 249296,
+        "max": 249296
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 16,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 120.449,
+      "route_sort_us": 12.96,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 12.96,
+      "route_sort_extension_us": 12.96,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 72.161,
+      "fc1_start_us": 12.8,
+      "fc1_end_us": 84.896,
+      "fc1_extension_us": 72.032,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 39.424,
+      "fc2_start_us": 77.568,
+      "fc2_end_us": 117.121,
+      "fc2_extension_us": 31.905,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.776,
+      "combine_start_us": 108.449,
+      "combine_end_us": 120.449,
+      "combine_extension_us": 3.456,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 31.905
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 249296,
+        "median": 249296,
+        "max": 249296
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 182.04999999999998,
+      "route_sort_us": 7.168,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.168,
+      "route_sort_extension_us": 7.168,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.136,
+      "fc1_start_us": 7.04,
+      "fc1_end_us": 122.081,
+      "fc1_extension_us": 114.976,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 62.784,
+      "fc2_start_us": 115.873,
+      "fc2_end_us": 178.69,
+      "fc2_extension_us": 56.449,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.0,
+      "combine_start_us": 169.922,
+      "combine_end_us": 182.05,
+      "combine_extension_us": 3.328,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.449
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248474,
+        "median": 248474,
+        "max": 248474
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 182.786,
+      "route_sort_us": 7.104,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.104,
+      "route_sort_extension_us": 7.104,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.681,
+      "fc1_start_us": 6.944,
+      "fc1_end_us": 122.464,
+      "fc1_extension_us": 115.521,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.488,
+      "fc2_start_us": 115.905,
+      "fc2_end_us": 179.522,
+      "fc2_extension_us": 56.865,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.288,
+      "combine_start_us": 170.305,
+      "combine_end_us": 182.786,
+      "combine_extension_us": 3.296,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.86500000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248474,
+        "median": 248474.0,
+        "max": 248474
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 4
+      },
+      "samples": 4
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 182.337,
+      "route_sort_us": 7.04,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.04,
+      "route_sort_extension_us": 7.04,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.426,
+      "fc1_start_us": 6.912,
+      "fc1_end_us": 122.368,
+      "fc1_extension_us": 115.266,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.425,
+      "fc2_start_us": 115.808,
+      "fc2_end_us": 179.074,
+      "fc2_extension_us": 56.736,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.16,
+      "combine_start_us": 170.369,
+      "combine_end_us": 182.337,
+      "combine_extension_us": 3.328,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.736000000000004
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248474,
+        "median": 248474,
+        "max": 248474
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 3
+      },
+      "samples": 3
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 32,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 182.242,
+      "route_sort_us": 7.168,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.168,
+      "route_sort_extension_us": 7.168,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 115.265,
+      "fc1_start_us": 7.008,
+      "fc1_end_us": 122.242,
+      "fc1_extension_us": 115.073,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 63.073,
+      "fc2_start_us": 115.905,
+      "fc2_end_us": 179.009,
+      "fc2_extension_us": 56.672,
+      "fc2_gap_us": 0.0,
+      "combine_us": 11.872,
+      "combine_start_us": 169.986,
+      "combine_end_us": 182.242,
+      "combine_extension_us": 3.265,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 56.672
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248474,
+        "median": 248474.0,
+        "max": 248474
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 4
+      },
+      "samples": 4
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 308.32300000000004,
+      "route_sort_us": 7.84,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.84,
+      "route_sort_extension_us": 7.84,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.978,
+      "fc1_start_us": 7.711,
+      "fc1_end_us": 210.53,
+      "fc1_extension_us": 202.818,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.705,
+      "fc2_start_us": 203.97,
+      "fc2_end_us": 304.77,
+      "fc2_extension_us": 94.24,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.257,
+      "combine_start_us": 295.939,
+      "combine_end_us": 308.323,
+      "combine_extension_us": 3.52,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.23999999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248995,
+        "median": 248995,
+        "max": 248995
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 308.45,
+      "route_sort_us": 8.063,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 8.063,
+      "route_sort_extension_us": 8.063,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.881,
+      "fc1_start_us": 7.872,
+      "fc1_end_us": 210.753,
+      "fc1_extension_us": 202.721,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.481,
+      "fc2_start_us": 204.226,
+      "fc2_end_us": 304.771,
+      "fc2_extension_us": 94.145,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.288,
+      "combine_start_us": 296.226,
+      "combine_end_us": 308.45,
+      "combine_extension_us": 3.584,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.14499999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248995,
+        "median": 248995,
+        "max": 248995
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 308.355,
+      "route_sort_us": 8.064,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 8.064,
+      "route_sort_extension_us": 8.064,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.658,
+      "fc1_start_us": 7.904,
+      "fc1_end_us": 210.434,
+      "fc1_extension_us": 202.466,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.513,
+      "fc2_start_us": 204.226,
+      "fc2_end_us": 304.931,
+      "fc2_extension_us": 93.985,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.16,
+      "combine_start_us": 296.387,
+      "combine_end_us": 308.355,
+      "combine_extension_us": 3.552,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 93.98500000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248995,
+        "median": 257659,
+        "max": 257659
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 128,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 308.00300000000004,
+      "route_sort_us": 7.872,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 7.872,
+      "route_sort_extension_us": 7.872,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 202.818,
+      "fc1_start_us": 7.68,
+      "fc1_end_us": 210.498,
+      "fc1_extension_us": 202.658,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 100.704,
+      "fc2_start_us": 203.938,
+      "fc2_end_us": 304.451,
+      "fc2_extension_us": 94.208,
+      "fc2_gap_us": 0.0,
+      "combine_us": 12.032,
+      "combine_start_us": 295.939,
+      "combine_end_us": 308.003,
+      "combine_extension_us": 3.552,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 94.20800000000003
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 257659,
+        "median": 257659,
+        "max": 257659
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 5
+      },
+      "samples": 5
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 542.2439999999999,
+      "route_sort_us": 15.232,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 15.232,
+      "route_sort_extension_us": 15.232,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 345.987,
+      "fc1_start_us": 14.945,
+      "fc1_end_us": 360.994,
+      "fc1_extension_us": 345.73,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 162.913,
+      "fc2_start_us": 360.099,
+      "fc2_end_us": 522.884,
+      "fc2_extension_us": 162.049,
+      "fc2_gap_us": 0.0,
+      "combine_us": 38.112,
+      "combine_start_us": 504.068,
+      "combine_end_us": 542.244,
+      "combine_extension_us": 19.136,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 162.04899999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 250088,
+        "median": 250088.0,
+        "max": 250088
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 541.8929999999999,
+      "route_sort_us": 15.009,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 15.009,
+      "route_sort_extension_us": 15.009,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 346.051,
+      "fc1_start_us": 14.752,
+      "fc1_end_us": 360.739,
+      "fc1_extension_us": 345.795,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 162.914,
+      "fc2_start_us": 359.971,
+      "fc2_end_us": 522.884,
+      "fc2_extension_us": 162.273,
+      "fc2_gap_us": 0.0,
+      "combine_us": 38.144,
+      "combine_start_us": 504.004,
+      "combine_end_us": 541.893,
+      "combine_extension_us": 18.976,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 162.27299999999997
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 250088,
+        "median": 250088.0,
+        "max": 250088
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 39
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 536.644,
+      "route_sort_us": 14.976,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 14.976,
+      "route_sort_extension_us": 14.976,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 343.043,
+      "fc1_start_us": 14.689,
+      "fc1_end_us": 357.763,
+      "fc1_extension_us": 342.754,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 160.577,
+      "fc2_start_us": 356.995,
+      "fc2_end_us": 517.701,
+      "fc2_extension_us": 159.841,
+      "fc2_gap_us": 0.0,
+      "combine_us": 37.632,
+      "combine_start_us": 499.012,
+      "combine_end_us": 536.644,
+      "combine_extension_us": 19.136,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 159.84099999999995
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 250088,
+        "median": 250088.0,
+        "max": 295775
+      },
+      "temperature_c": {
+        "min": 39,
+        "median": 39.0,
+        "max": 44
+      },
+      "available": true,
+      "reasons": {
+        "0": 8
+      },
+      "samples": 8
+    }
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 597.9879999999999,
+      "route_sort_us": 17.407,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 17.407,
+      "route_sort_extension_us": 17.407,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 374.627,
+      "fc1_start_us": 17.12,
+      "fc1_end_us": 391.523,
+      "fc1_extension_us": 374.307,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 187.106,
+      "fc2_start_us": 390.435,
+      "fc2_end_us": 577.476,
+      "fc2_extension_us": 186.082,
+      "fc2_gap_us": 0.0,
+      "combine_us": 40.544,
+      "combine_start_us": 558.789,
+      "combine_end_us": 597.988,
+      "combine_extension_us": 20.928,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 186.08200000000005
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 295775,
+        "median": 295775,
+        "max": 295775
+      },
+      "temperature_c": {
+        "min": 44,
+        "median": 44,
+        "max": 44
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 677.1239999999999,
+      "route_sort_us": 18.303,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 18.303,
+      "route_sort_extension_us": 18.303,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 321.025,
+      "fc1_start_us": 17.12,
+      "fc1_end_us": 338.338,
+      "fc1_extension_us": 319.905,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 252.162,
+      "fc2_start_us": 325.986,
+      "fc2_end_us": 578.628,
+      "fc2_extension_us": 239.681,
+      "fc2_gap_us": 0.0,
+      "combine_us": 110.817,
+      "combine_start_us": 566.115,
+      "combine_end_us": 677.124,
+      "combine_extension_us": 98.688,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 239.68099999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 254804,
+        "median": 254804.0,
+        "max": 254804
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 677.9549999999999,
+      "route_sort_us": 18.24,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 18.24,
+      "route_sort_extension_us": 18.24,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 322.466,
+      "fc1_start_us": 17.024,
+      "fc1_end_us": 339.522,
+      "fc1_extension_us": 321.282,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 252.289,
+      "fc2_start_us": 327.105,
+      "fc2_end_us": 579.459,
+      "fc2_extension_us": 239.682,
+      "fc2_gap_us": 0.0,
+      "combine_us": 110.88,
+      "combine_start_us": 567.522,
+      "combine_end_us": 677.955,
+      "combine_extension_us": 98.784,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 239.68200000000002
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 254804,
+        "median": 254804.0,
+        "max": 254804
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 711.236,
+      "route_sort_us": 20.288,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 20.288,
+      "route_sort_extension_us": 20.288,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 337.057,
+      "fc1_start_us": 18.816,
+      "fc1_end_us": 355.777,
+      "fc1_extension_us": 335.713,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 267.041,
+      "fc2_start_us": 343.522,
+      "fc2_end_us": 610.275,
+      "fc2_extension_us": 255.105,
+      "fc2_gap_us": 0.0,
+      "combine_us": 118.177,
+      "combine_start_us": 593.315,
+      "combine_end_us": 711.236,
+      "combine_extension_us": 101.088,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 255.10499999999996
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 254804,
+        "median": 254804.0,
+        "max": 254804
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 713.508,
+      "route_sort_us": 20.544,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 20.544,
+      "route_sort_extension_us": 20.544,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 338.466,
+      "fc1_start_us": 19.072,
+      "fc1_end_us": 357.346,
+      "fc1_extension_us": 337.026,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 268.673,
+      "fc2_start_us": 345.377,
+      "fc2_end_us": 612.547,
+      "fc2_extension_us": 255.425,
+      "fc2_gap_us": 0.0,
+      "combine_us": 120.769,
+      "combine_start_us": 594.755,
+      "combine_end_us": 713.508,
+      "combine_extension_us": 101.633,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 255.425
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 254804,
+        "median": 254804.0,
+        "max": 254804
+      },
+      "temperature_c": {
+        "min": 31,
+        "median": 31.0,
+        "max": 31
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 1198.4060000000002,
+      "route_sort_us": 26.816,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 26.816,
+      "route_sort_extension_us": 26.816,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 552.227,
+      "fc1_start_us": 25.536,
+      "fc1_end_us": 577.955,
+      "fc1_extension_us": 550.947,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 454.018,
+      "fc2_start_us": 554.723,
+      "fc2_end_us": 1009.126,
+      "fc2_extension_us": 430.946,
+      "fc2_gap_us": 0.0,
+      "combine_us": 219.361,
+      "combine_start_us": 979.013,
+      "combine_end_us": 1198.406,
+      "combine_extension_us": 189.281,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 430.9459999999999
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 270519,
+        "median": 270519.0,
+        "max": 270519
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 16
+      },
+      "samples": 16
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 1253.831,
+      "route_sort_us": 29.728,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 29.728,
+      "route_sort_extension_us": 29.728,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 569.986,
+      "fc1_start_us": 28.256,
+      "fc1_end_us": 598.21,
+      "fc1_extension_us": 568.355,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 483.619,
+      "fc2_start_us": 574.755,
+      "fc2_end_us": 1060.102,
+      "fc2_extension_us": 461.667,
+      "fc2_gap_us": 0.0,
+      "combine_us": 227.617,
+      "combine_start_us": 1026.021,
+      "combine_end_us": 1253.831,
+      "combine_extension_us": 193.537,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 461.6669999999999
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 270519,
+        "median": 270519,
+        "max": 270519
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 17
+      },
+      "samples": 17
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 1352.423,
+      "route_sort_us": 31.904,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 31.904,
+      "route_sort_extension_us": 31.904,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 613.763,
+      "fc1_start_us": 30.208,
+      "fc1_end_us": 644.996,
+      "fc1_extension_us": 612.259,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 532.675,
+      "fc2_start_us": 622.339,
+      "fc2_end_us": 1155.75,
+      "fc2_extension_us": 507.586,
+      "fc2_gap_us": 0.0,
+      "combine_us": 235.361,
+      "combine_start_us": 1113.478,
+      "combine_end_us": 1352.423,
+      "combine_extension_us": 196.481,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 507.586
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1732,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 270519,
+        "median": 270519.0,
+        "max": 347245
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 18
+      },
+      "samples": 18
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "0-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 1333.511,
+      "route_sort_us": 32.001,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 32.001,
+      "route_sort_extension_us": 32.001,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 607.236,
+      "fc1_start_us": 30.304,
+      "fc1_end_us": 637.603,
+      "fc1_extension_us": 605.475,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 525.347,
+      "fc2_start_us": 612.676,
+      "fc2_end_us": 1137.638,
+      "fc2_extension_us": 500.642,
+      "fc2_gap_us": 0.0,
+      "combine_us": 234.049,
+      "combine_start_us": 1099.814,
+      "combine_end_us": 1333.511,
+      "combine_extension_us": 196.001,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 500.64199999999994
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1732,
+        "median": 1732.0,
+        "max": 1732
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 347245,
+        "median": 347245.0,
+        "max": 347245
+      },
+      "temperature_c": {
+        "min": 33,
+        "median": 33.0,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 18
+      },
+      "samples": 18
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 679.779,
+      "route_sort_us": 18.24,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 18.24,
+      "route_sort_extension_us": 18.24,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 324.193,
+      "fc1_start_us": 17.088,
+      "fc1_end_us": 341.218,
+      "fc1_extension_us": 323.009,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 252.577,
+      "fc2_start_us": 328.225,
+      "fc2_end_us": 580.963,
+      "fc2_extension_us": 239.617,
+      "fc2_gap_us": 0.0,
+      "combine_us": 110.88,
+      "combine_start_us": 568.45,
+      "combine_end_us": 679.779,
+      "combine_extension_us": 98.721,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 239.61700000000002
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248238,
+        "median": 262664,
+        "max": 262664
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 33,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 680.963,
+      "route_sort_us": 18.272,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 18.272,
+      "route_sort_extension_us": 18.272,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 325.186,
+      "fc1_start_us": 17.12,
+      "fc1_end_us": 342.306,
+      "fc1_extension_us": 324.034,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 253.313,
+      "fc2_start_us": 329.569,
+      "fc2_end_us": 582.53,
+      "fc2_extension_us": 240.193,
+      "fc2_gap_us": 0.0,
+      "combine_us": 111.776,
+      "combine_start_us": 569.571,
+      "combine_end_us": 680.963,
+      "combine_extension_us": 98.816,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 240.19299999999993
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 262664,
+        "median": 262664,
+        "max": 262664
+      },
+      "temperature_c": {
+        "min": 33,
+        "median": 33,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 715.46,
+      "route_sort_us": 20.224,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 20.224,
+      "route_sort_extension_us": 20.224,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 341.185,
+      "fc1_start_us": 18.784,
+      "fc1_end_us": 360.034,
+      "fc1_extension_us": 339.713,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 268.257,
+      "fc2_start_us": 346.562,
+      "fc2_end_us": 614.243,
+      "fc2_extension_us": 255.233,
+      "fc2_gap_us": 0.0,
+      "combine_us": 119.264,
+      "combine_start_us": 597.027,
+      "combine_end_us": 715.46,
+      "combine_extension_us": 101.088,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 255.233
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 262664,
+        "median": 262664,
+        "max": 262664
+      },
+      "temperature_c": {
+        "min": 33,
+        "median": 33,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 11
+      },
+      "samples": 11
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 737.347,
+      "route_sort_us": 21.536,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 21.536,
+      "route_sort_extension_us": 21.536,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 345.345,
+      "fc1_start_us": 20.0,
+      "fc1_end_us": 365.185,
+      "fc1_extension_us": 343.873,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 282.785,
+      "fc2_start_us": 352.834,
+      "fc2_end_us": 635.235,
+      "fc2_extension_us": 270.337,
+      "fc2_gap_us": 0.0,
+      "combine_us": 121.344,
+      "combine_start_us": 616.514,
+      "combine_end_us": 737.347,
+      "combine_extension_us": 102.208,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 270.337
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 262664,
+        "median": 262664.0,
+        "max": 262664
+      },
+      "temperature_c": {
+        "min": 33,
+        "median": 33.0,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 1201.478,
+      "route_sort_us": 26.849,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 26.849,
+      "route_sort_extension_us": 26.849,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 555.555,
+      "fc1_start_us": 25.664,
+      "fc1_end_us": 581.539,
+      "fc1_extension_us": 554.275,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 452.994,
+      "fc2_start_us": 559.619,
+      "fc2_end_us": 1012.837,
+      "fc2_extension_us": 430.722,
+      "fc2_gap_us": 0.0,
+      "combine_us": 219.009,
+      "combine_start_us": 982.117,
+      "combine_end_us": 1201.478,
+      "combine_extension_us": 189.345,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 430.722
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251343,
+        "median": 251343.0,
+        "max": 251343
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 16
+      },
+      "samples": 16
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 1283.399,
+      "route_sort_us": 30.24,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 30.24,
+      "route_sort_extension_us": 30.24,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 585.475,
+      "fc1_start_us": 28.64,
+      "fc1_end_us": 614.243,
+      "fc1_extension_us": 583.779,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 496.771,
+      "fc2_start_us": 589.347,
+      "fc2_end_us": 1088.742,
+      "fc2_extension_us": 473.09,
+      "fc2_gap_us": 0.0,
+      "combine_us": 227.905,
+      "combine_start_us": 1052.581,
+      "combine_end_us": 1283.399,
+      "combine_extension_us": 193.921,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 473.09000000000003
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 251343,
+        "median": 251343,
+        "max": 312793
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 17
+      },
+      "samples": 17
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 1297.607,
+      "route_sort_us": 30.88,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 30.88,
+      "route_sort_extension_us": 30.88,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 591.043,
+      "fc1_start_us": 29.536,
+      "fc1_end_us": 621.027,
+      "fc1_extension_us": 589.603,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 507.043,
+      "fc2_start_us": 594.884,
+      "fc2_end_us": 1103.014,
+      "fc2_extension_us": 481.763,
+      "fc2_gap_us": 0.0,
+      "combine_us": 235.009,
+      "combine_start_us": 1060.358,
+      "combine_end_us": 1297.607,
+      "combine_extension_us": 195.201,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 481.7629999999999
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 312793,
+        "median": 312793,
+        "max": 312793
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 40,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 17
+      },
+      "samples": 17
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "1-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 1362.4080000000001,
+      "route_sort_us": 32.224,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 32.224,
+      "route_sort_extension_us": 32.224,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 623.299,
+      "fc1_start_us": 30.528,
+      "fc1_end_us": 654.339,
+      "fc1_extension_us": 621.507,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 535.747,
+      "fc2_start_us": 628.676,
+      "fc2_end_us": 1165.799,
+      "fc2_extension_us": 510.755,
+      "fc2_gap_us": 0.0,
+      "combine_us": 236.994,
+      "combine_start_us": 1124.583,
+      "combine_end_us": 1362.408,
+      "combine_extension_us": 196.481,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 510.7550000000001
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 312793,
+        "median": 312793,
+        "max": 312793
+      },
+      "temperature_c": {
+        "min": 40,
+        "median": 40,
+        "max": 40
+      },
+      "available": true,
+      "reasons": {
+        "0": 19
+      },
+      "samples": 19
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 679.844,
+      "route_sort_us": 18.304,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 18.304,
+      "route_sort_extension_us": 18.304,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 324.738,
+      "fc1_start_us": 17.088,
+      "fc1_end_us": 341.826,
+      "fc1_extension_us": 323.49,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 252.257,
+      "fc2_start_us": 328.866,
+      "fc2_end_us": 581.22,
+      "fc2_extension_us": 239.329,
+      "fc2_gap_us": 0.0,
+      "combine_us": 110.433,
+      "combine_start_us": 569.828,
+      "combine_end_us": 679.844,
+      "combine_extension_us": 98.72,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 239.32900000000006
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248688,
+        "median": 248688.0,
+        "max": 248688
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 676.132,
+      "route_sort_us": 18.208,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 18.208,
+      "route_sort_extension_us": 18.208,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 321.153,
+      "fc1_start_us": 17.056,
+      "fc1_end_us": 338.402,
+      "fc1_extension_us": 320.002,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 252.098,
+      "fc2_start_us": 325.73,
+      "fc2_end_us": 577.603,
+      "fc2_extension_us": 238.786,
+      "fc2_gap_us": 0.0,
+      "combine_us": 110.496,
+      "combine_start_us": 565.187,
+      "combine_end_us": 676.132,
+      "combine_extension_us": 98.657,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 238.78600000000006
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248688,
+        "median": 248688,
+        "max": 248688
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 9
+      },
+      "samples": 9
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 717.764,
+      "route_sort_us": 20.512,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 20.512,
+      "route_sort_extension_us": 20.512,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 341.218,
+      "fc1_start_us": 19.041,
+      "fc1_end_us": 360.514,
+      "fc1_extension_us": 339.906,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 268.578,
+      "fc2_start_us": 347.458,
+      "fc2_end_us": 616.516,
+      "fc2_extension_us": 256.13,
+      "fc2_gap_us": 0.0,
+      "combine_us": 115.777,
+      "combine_start_us": 601.828,
+      "combine_end_us": 717.764,
+      "combine_extension_us": 101.248,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 256.13
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248688,
+        "median": 248688,
+        "max": 248688
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 11
+      },
+      "samples": 11
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 719.653,
+      "route_sort_us": 20.8,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 20.8,
+      "route_sort_extension_us": 20.8,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 341.955,
+      "fc1_start_us": 19.456,
+      "fc1_end_us": 361.571,
+      "fc1_extension_us": 340.515,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 269.281,
+      "fc2_start_us": 348.993,
+      "fc2_end_us": 618.18,
+      "fc2_extension_us": 256.738,
+      "fc2_gap_us": 0.0,
+      "combine_us": 116.416,
+      "combine_start_us": 602.916,
+      "combine_end_us": 719.653,
+      "combine_extension_us": 101.504,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 256.738
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248688,
+        "median": 315300.0,
+        "max": 315300
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 1200.9669999999999,
+      "route_sort_us": 26.816,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 26.816,
+      "route_sort_extension_us": 26.816,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 556.227,
+      "fc1_start_us": 25.568,
+      "fc1_end_us": 581.763,
+      "fc1_extension_us": 554.946,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 453.026,
+      "fc2_start_us": 559.651,
+      "fc2_end_us": 1011.942,
+      "fc2_extension_us": 430.019,
+      "fc2_gap_us": 0.0,
+      "combine_us": 218.882,
+      "combine_start_us": 982.598,
+      "combine_end_us": 1200.967,
+      "combine_extension_us": 189.217,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 430.019
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 260364,
+        "median": 260364.0,
+        "max": 260364
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 16
+      },
+      "samples": 16
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 1277.095,
+      "route_sort_us": 30.08,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 30.08,
+      "route_sort_extension_us": 30.08,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 585.123,
+      "fc1_start_us": 28.512,
+      "fc1_end_us": 613.859,
+      "fc1_extension_us": 583.555,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 492.323,
+      "fc2_start_us": 588.739,
+      "fc2_end_us": 1082.662,
+      "fc2_extension_us": 469.73,
+      "fc2_gap_us": 0.0,
+      "combine_us": 228.834,
+      "combine_start_us": 1048.806,
+      "combine_end_us": 1277.095,
+      "combine_extension_us": 193.889,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 469.73
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 260364,
+        "median": 260364.0,
+        "max": 260364
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 38
+      },
+      "available": true,
+      "reasons": {
+        "0": 18
+      },
+      "samples": 18
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 1357.7030000000002,
+      "route_sort_us": 32.064,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 32.064,
+      "route_sort_extension_us": 32.064,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 622.436,
+      "fc1_start_us": 30.271,
+      "fc1_end_us": 652.836,
+      "fc1_extension_us": 620.644,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 531.875,
+      "fc2_start_us": 625.604,
+      "fc2_end_us": 1160.902,
+      "fc2_extension_us": 508.931,
+      "fc2_gap_us": 0.0,
+      "combine_us": 235.394,
+      "combine_start_us": 1120.966,
+      "combine_end_us": 1357.703,
+      "combine_extension_us": 196.321,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 508.9309999999999
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1725,
+        "median": 1725.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 260364,
+        "median": 260364.0,
+        "max": 348576
+      },
+      "temperature_c": {
+        "min": 38,
+        "median": 38.0,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "0": 11,
+        "4": 7
+      },
+      "samples": 18
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "2-control",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 1343.368,
+      "route_sort_us": 32.096,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 32.096,
+      "route_sort_extension_us": 32.096,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 614.851,
+      "fc1_start_us": 30.464,
+      "fc1_end_us": 645.22,
+      "fc1_extension_us": 613.187,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 527.971,
+      "fc2_start_us": 619.715,
+      "fc2_end_us": 1147.622,
+      "fc2_extension_us": 502.275,
+      "fc2_gap_us": 0.0,
+      "combine_us": 235.074,
+      "combine_start_us": 1108.742,
+      "combine_end_us": 1343.368,
+      "combine_extension_us": 195.937,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 502.275
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1725,
+        "median": 1725.0,
+        "max": 1725
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 348576,
+        "median": 348576.0,
+        "max": 348576
+      },
+      "temperature_c": {
+        "min": 41,
+        "median": 41.0,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "4": 18
+      },
+      "samples": 18
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 677.4440000000001,
+      "route_sort_us": 18.272,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 18.272,
+      "route_sort_extension_us": 18.272,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 321.954,
+      "fc1_start_us": 17.057,
+      "fc1_end_us": 339.074,
+      "fc1_extension_us": 320.738,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 252.802,
+      "fc2_start_us": 326.017,
+      "fc2_end_us": 578.947,
+      "fc2_extension_us": 239.585,
+      "fc2_gap_us": 0.0,
+      "combine_us": 110.657,
+      "combine_start_us": 567.139,
+      "combine_end_us": 677.444,
+      "combine_extension_us": 98.657,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 239.58499999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 247989,
+        "median": 247989.0,
+        "max": 247989
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 32
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 678.4989999999999,
+      "route_sort_us": 18.016,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 18.016,
+      "route_sort_extension_us": 18.016,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 322.465,
+      "fc1_start_us": 16.832,
+      "fc1_end_us": 339.201,
+      "fc1_extension_us": 321.313,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 253.218,
+      "fc2_start_us": 326.497,
+      "fc2_end_us": 579.811,
+      "fc2_extension_us": 240.225,
+      "fc2_gap_us": 0.0,
+      "combine_us": 111.008,
+      "combine_start_us": 567.459,
+      "combine_end_us": 678.499,
+      "combine_extension_us": 98.592,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 240.22499999999997
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 247989,
+        "median": 247989.0,
+        "max": 287030
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 32.0,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 707.4599999999999,
+      "route_sort_us": 20.064,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 20.064,
+      "route_sort_extension_us": 20.064,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 337.026,
+      "fc1_start_us": 18.624,
+      "fc1_end_us": 355.81,
+      "fc1_extension_us": 335.746,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 262.753,
+      "fc2_start_us": 343.874,
+      "fc2_end_us": 606.34,
+      "fc2_extension_us": 250.049,
+      "fc2_gap_us": 0.0,
+      "combine_us": 114.177,
+      "combine_start_us": 593.283,
+      "combine_end_us": 707.46,
+      "combine_extension_us": 100.64,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 250.04899999999998
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 287030,
+        "median": 287030.0,
+        "max": 287030
+      },
+      "temperature_c": {
+        "min": 33,
+        "median": 33.0,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 10
+      },
+      "samples": 10
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 4096,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 758.404,
+      "route_sort_us": 22.24,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 22.24,
+      "route_sort_extension_us": 22.24,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 352.994,
+      "fc1_start_us": 20.576,
+      "fc1_end_us": 373.762,
+      "fc1_extension_us": 351.362,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 295.041,
+      "fc2_start_us": 360.61,
+      "fc2_end_us": 655.428,
+      "fc2_extension_us": 281.666,
+      "fc2_gap_us": 0.0,
+      "combine_us": 120.769,
+      "combine_start_us": 637.827,
+      "combine_end_us": 758.404,
+      "combine_extension_us": 102.689,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 281.666
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 287030,
+        "median": 287030,
+        "max": 287030
+      },
+      "temperature_c": {
+        "min": 33,
+        "median": 33,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 11
+      },
+      "samples": 11
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 0,
+    "medians": {
+      "e2e_us": 1200.2630000000001,
+      "route_sort_us": 26.944,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 26.944,
+      "route_sort_extension_us": 26.944,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 554.244,
+      "fc1_start_us": 25.664,
+      "fc1_end_us": 579.844,
+      "fc1_extension_us": 552.964,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 453.123,
+      "fc2_start_us": 557.507,
+      "fc2_end_us": 1010.854,
+      "fc2_extension_us": 430.851,
+      "fc2_gap_us": 0.0,
+      "combine_us": 219.522,
+      "combine_start_us": 980.869,
+      "combine_end_us": 1200.263,
+      "combine_extension_us": 189.313,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 430.851
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 248253,
+        "median": 279890.0,
+        "max": 279890
+      },
+      "temperature_c": {
+        "min": 32,
+        "median": 33.0,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 16
+      },
+      "samples": 16
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 1,
+    "medians": {
+      "e2e_us": 1235.2399999999998,
+      "route_sort_us": 28.576,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 28.576,
+      "route_sort_extension_us": 28.576,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 563.78,
+      "fc1_start_us": 27.168,
+      "fc1_end_us": 590.82,
+      "fc1_extension_us": 562.436,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 473.251,
+      "fc2_start_us": 569.603,
+      "fc2_end_us": 1042.406,
+      "fc2_extension_us": 451.619,
+      "fc2_gap_us": 0.0,
+      "combine_us": 226.369,
+      "combine_start_us": 1008.966,
+      "combine_end_us": 1235.24,
+      "combine_extension_us": 192.546,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 451.6189999999999
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 279890,
+        "median": 279890,
+        "max": 279890
+      },
+      "temperature_c": {
+        "min": 33,
+        "median": 33,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 17
+      },
+      "samples": 17
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 2,
+    "medians": {
+      "e2e_us": 1301.9279999999999,
+      "route_sort_us": 31.2,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 31.2,
+      "route_sort_extension_us": 31.2,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 592.355,
+      "fc1_start_us": 29.568,
+      "fc1_end_us": 621.636,
+      "fc1_extension_us": 590.819,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 509.379,
+      "fc2_start_us": 598.851,
+      "fc2_end_us": 1107.079,
+      "fc2_extension_us": 486.723,
+      "fc2_gap_us": 0.0,
+      "combine_us": 235.105,
+      "combine_start_us": 1070.759,
+      "combine_end_us": 1301.928,
+      "combine_extension_us": 195.521,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 486.72299999999996
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 2032,
+        "median": 2032.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 279890,
+        "median": 279890.0,
+        "max": 279890
+      },
+      "temperature_c": {
+        "min": 33,
+        "median": 33.0,
+        "max": 33
+      },
+      "available": true,
+      "reasons": {
+        "0": 18
+      },
+      "samples": 18
+    }
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "tokens": 8192,
+    "backend": "CuteDSL W4A16",
+    "phase": "3-candidate",
+    "quartile": 3,
+    "medians": {
+      "e2e_us": 1355.8159999999998,
+      "route_sort_us": 32.384,
+      "route_sort_start_us": 0.0,
+      "route_sort_end_us": 32.384,
+      "route_sort_extension_us": 32.384,
+      "route_sort_gap_us": 0.0,
+      "fc1_us": 619.108,
+      "fc1_start_us": 30.625,
+      "fc1_end_us": 650.34,
+      "fc1_extension_us": 617.604,
+      "fc1_gap_us": 0.0,
+      "fc2_us": 534.626,
+      "fc2_start_us": 622.916,
+      "fc2_end_us": 1158.887,
+      "fc2_extension_us": 508.867,
+      "fc2_gap_us": 0.0,
+      "combine_us": 236.929,
+      "combine_start_us": 1118.759,
+      "combine_end_us": 1355.816,
+      "combine_extension_us": 196.417,
+      "combine_gap_us": 0.0,
+      "fc2_after_fc1_us": 508.86699999999996
+    },
+    "clock": {
+      "sm_mhz": {
+        "min": 1672,
+        "median": 1672.0,
+        "max": 2032
+      },
+      "memory_mhz": {
+        "min": 3996,
+        "median": 3996.0,
+        "max": 3996
+      },
+      "power_mw": {
+        "min": 279890,
+        "median": 376771.0,
+        "max": 376771
+      },
+      "temperature_c": {
+        "min": 33,
+        "median": 41.0,
+        "max": 41
+      },
+      "available": true,
+      "reasons": {
+        "0": 6,
+        "4": 12
+      },
+      "samples": 18
+    }
+  }
+]

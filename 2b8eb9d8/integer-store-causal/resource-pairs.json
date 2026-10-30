@@ -1,0 +1,4655 @@
+{
+  "passed": true,
+  "rows": [
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 2,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 3,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 4,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 5,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 6,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 7,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 8,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 9,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 10,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 11,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 12,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 13,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 88,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 88,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 2,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 3,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 88,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 88,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 4,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 64,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 5,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 64,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 88,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 88,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 6,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 7,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 126,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 126,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 2,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 64,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 3,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 64,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 4,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 5,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 108,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 108,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 6,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 7,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 2,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 3,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 4,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 5,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 70,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 70,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 6,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 7,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 8,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 9,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 10,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 11,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 12,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 13,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 84,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 84,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 2,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 92,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 92,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 3,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 4,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 140,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 140,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 5,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 136,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 136,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 2,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 3,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 4,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 122,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 122,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 5,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 256,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 2,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 3,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 4,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 5,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 6,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 7,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 8,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 9,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 10,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 11,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 12,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 13,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 14,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 15,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 16,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 17,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 18,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 19,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 20,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 21,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 22,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 23,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 24,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 25,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 26,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 84,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 84,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 2,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 3,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 86,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 86,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 4,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 88,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 88,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 5,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 6,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 7,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 86,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 86,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 8,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 9,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 126,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 126,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 2,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 3,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 4,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 5,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 6,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 7,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 70,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 70,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 8,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 9,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 64,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 10,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 64,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 11,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 64,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 12,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 64,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 13,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 14,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 82,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 82,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 2,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 3,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 4,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 5,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 6,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 7,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 8,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 9,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 164,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 164,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 10,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 11,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 12,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 70,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 70,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 13,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 14,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 68,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 15,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 16,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 17,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 164,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 164,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 18,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 19,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 20,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 21,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float8E4M3FN"
+      },
+      "control": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 22,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 1,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "configuration": {
+        "index": 23,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 128,
+        "activation_dtype": "Float8E4M3FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 98,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 96,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 96,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 2,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 94,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 94,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 3,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 4,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 92,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 92,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 5,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 6,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 92,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 92,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 7,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 8,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 92,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 92,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 9,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "configuration": {
+        "index": 10,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 126,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 126,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 0,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 1,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 2,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 3,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 72,
+        "max_threads": 896,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 4,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 5,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 76,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 6,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 2,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 7,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 16,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 82,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 82,
+        "max_threads": 640,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 8,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 1,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 9,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 32,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 74,
+        "max_threads": 768,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 10,
+        "gather_input": true,
+        "launch_threads": 384,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 1,
+        "tile_k": 512,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "configuration": {
+        "index": 11,
+        "gather_input": false,
+        "launch_threads": 256,
+        "compile_options": "",
+        "route_tile": 128,
+        "cta_group_size": 2,
+        "tile_k": 256,
+        "activation_dtype": "Float4E2M1FN",
+        "weight_dtype": "Float4E2M1FN"
+      },
+      "control": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate": {
+        "initial_regs": 106,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "resources_unchanged": true,
+      "register_delta": 0
+    }
+  ]
+}

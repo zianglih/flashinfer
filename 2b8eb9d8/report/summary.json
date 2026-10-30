@@ -1,0 +1,136 @@
+{
+  "passed": true,
+  "source_label": "2b8eb9d8 \u00b7 26 fresh / 442 reused cells",
+  "retained_head": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "fresh_measurement_base": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "reused_measurement_bases": [
+    "82254e20",
+    "02de7785",
+    "bf072d26"
+  ],
+  "fresh_cells": 26,
+  "reused_cells": 442,
+  "total_cells": 468,
+  "displayed_cells": 396,
+  "candidate_samples": 93600,
+  "fresh_candidate_samples": 5200,
+  "reused_candidate_samples": 88400,
+  "fresh_causal_samples": 10400,
+  "candidate_loaded_functions": 1156,
+  "clock_quartiles": 3744,
+  "missing_clock_quartiles": 1,
+  "clock_exception_quartiles": 89,
+  "all_negative_rows_retained": true,
+  "groups": {
+    "all": {
+      "cells": 396,
+      "speedup_percent": 0.2783279569567032,
+      "negative": 165
+    },
+    "swap_ab": {
+      "cells": 308,
+      "speedup_percent": 0.24502503249010932,
+      "negative": 137
+    },
+    "w4a16": {
+      "cells": 88,
+      "speedup_percent": 0.39497534365695586,
+      "negative": 28
+    },
+    "decode": {
+      "cells": 180,
+      "speedup_percent": 0.23666459899236436,
+      "negative": 71
+    },
+    "middle": {
+      "cells": 108,
+      "speedup_percent": 0.25098588976588676,
+      "negative": 43
+    },
+    "prefill": {
+      "cells": 108,
+      "speedup_percent": 0.3751738468592336,
+      "negative": 51
+    }
+  },
+  "causal_26": {
+    "retention_cells": 22,
+    "retention_geomean_percent": 0.2749127172675614,
+    "passed": true,
+    "config_sha256": "cdb2acb6842c3c1223b27438d71d7aff076cc37120a5fded80491ea6ef8cf584",
+    "archive_sha256": "f79de8057a2c9cf507b8ff7165f689ff9cbdb7074b9d3b2350b8442452ad5b30",
+    "source_manifests": {
+      "candidate": "7484a7bd8df49644f992e8fbc09efc5d4181fa8a1f5998f605da240107dcfc2e",
+      "control": "9283df1c1be64026e7c83f83ede284d2e4bcc3c885fca3f3558c362ffe65c316"
+    },
+    "jobs": 2,
+    "cells": 26,
+    "phase_medians": 104,
+    "samples": 10400,
+    "loaded_resource_records": 120,
+    "clock_quartiles": 416,
+    "missing_clock_quartiles": 1,
+    "clock_exception_quartiles": 37,
+    "negative_cells": 10,
+    "geomean_percent": 0.2406548079171733,
+    "default_cells": [
+      [
+        "ep-kimi-k3-w4a16",
+        16384,
+        "CuteDSL W4A16"
+      ],
+      [
+        "tp-kimi-k3-w4a16",
+        16384,
+        "CuteDSL W4A16"
+      ]
+    ],
+    "default_stage_joins": 16,
+    "all_report_cells_preserved": true,
+    "boundary": "Independent raw CUPTI correlation/span, median/CAAC, route/tactic/cache/source/resource and raw NVML quartile replay. Includes recorded-default to actual native geometry/library/resource joins. No new GPU execution; all negative and clock-exception cells preserved. No source or timing-helper changes."
+  },
+  "separate_acca_diagnostic": {
+    "retention_cells": 6,
+    "retention_geomean_percent": 0.51648945973366,
+    "passed": true,
+    "config_sha256": "76ef652ce6fb208ff7f68521e10516a94fc7549a183de4a48e1361c0cec4888e",
+    "archive_sha256": "ba999aa380fc45a20390a6ef75fe967f2f8348abe72833918e5cd4d478e9ecea",
+    "source_manifests": {
+      "candidate": "7484a7bd8df49644f992e8fbc09efc5d4181fa8a1f5998f605da240107dcfc2e",
+      "control": "9283df1c1be64026e7c83f83ede284d2e4bcc3c885fca3f3558c362ffe65c316"
+    },
+    "jobs": 2,
+    "cells": 6,
+    "phase_medians": 24,
+    "samples": 2400,
+    "loaded_resource_records": 48,
+    "clock_quartiles": 96,
+    "missing_clock_quartiles": 0,
+    "clock_exception_quartiles": 4,
+    "negative_cells": 1,
+    "geomean_percent": 0.51648945973366,
+    "default_cells": [],
+    "default_stage_joins": 0,
+    "all_report_cells_preserved": true,
+    "boundary": "Independent raw CUPTI correlation/span, median/CAAC, route/tactic/cache/source/resource and raw NVML quartile replay. Includes recorded-default to actual native geometry/library/resource joins. No new GPU execution; all negative and clock-exception cells preserved. No source or timing-helper changes."
+  },
+  "external": {
+    "ep": {
+      "changed_current_cells": 13,
+      "baseline_fields_unchanged": true,
+      "original_sha256": "9880a17bccc4eb8efb1625e3d6258ceb3d5a7f1e1bcee4301940794879692107"
+    },
+    "tp": {
+      "changed_current_cells": 13,
+      "baseline_fields_unchanged": true,
+      "original_sha256": "cf4e83fd7beb26e228527273a1932343af3668070660c16c6cdc3edc23347363"
+    }
+  },
+  "recovery_runtime": {
+    "readiness_sha256": "d3b6f1ca40d3ce9e42295b24da917a9e9ee9e94d5137cc147c54feb6f8465c82",
+    "cache_ready_sha256": "6fc628e9204cd3e2b1625da3a69dcadd53c586ee674f8c2a60f185ee4524db93",
+    "node": "fi-gather-pipeline-recovery-1030",
+    "boundary": "Fresh26 use the source-qualified recovery native-library cohort.442 reused cells retain their original runtime/provenance; no claim of identical old and recovery native ELF bytes."
+  },
+  "boundary": "26 fresh K3 W4 cells plus442 source-qualified reused cells. Historical measured326c4a79/production-equivalent822 and TRTLLM/non-swap baselines unchanged. Not a fresh paired468-cell comparison. Measured49 plus5e61 overlay is exactly retained2b8eb9d8. Separate six-cell ACCA is diagnostic only; no primary rows replaced."
+}

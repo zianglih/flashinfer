@@ -1,0 +1,36 @@
+{
+  "retention_cells": 22,
+  "retention_geomean_percent": 0.2749127172675614,
+  "passed": true,
+  "config_sha256": "cdb2acb6842c3c1223b27438d71d7aff076cc37120a5fded80491ea6ef8cf584",
+  "archive_sha256": "f79de8057a2c9cf507b8ff7165f689ff9cbdb7074b9d3b2350b8442452ad5b30",
+  "source_manifests": {
+    "candidate": "7484a7bd8df49644f992e8fbc09efc5d4181fa8a1f5998f605da240107dcfc2e",
+    "control": "9283df1c1be64026e7c83f83ede284d2e4bcc3c885fca3f3558c362ffe65c316"
+  },
+  "jobs": 2,
+  "cells": 26,
+  "phase_medians": 104,
+  "samples": 10400,
+  "loaded_resource_records": 120,
+  "clock_quartiles": 416,
+  "missing_clock_quartiles": 1,
+  "clock_exception_quartiles": 37,
+  "negative_cells": 10,
+  "geomean_percent": 0.2406548079171733,
+  "default_cells": [
+    [
+      "ep-kimi-k3-w4a16",
+      16384,
+      "CuteDSL W4A16"
+    ],
+    [
+      "tp-kimi-k3-w4a16",
+      16384,
+      "CuteDSL W4A16"
+    ]
+  ],
+  "default_stage_joins": 16,
+  "all_report_cells_preserved": true,
+  "boundary": "Independent raw CUPTI correlation/span, median/CAAC, route/tactic/cache/source/resource and raw NVML quartile replay. Includes recorded-default to actual native geometry/library/resource joins. No new GPU execution; all negative and clock-exception cells preserved. No source or timing-helper changes."
+}

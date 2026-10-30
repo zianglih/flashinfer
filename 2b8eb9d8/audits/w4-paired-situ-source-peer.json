@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "source_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "base": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "source_audit_sha256": "6103e4c16b853924c48dc9b662216e28d9f3543ae48a9859e3f2bde4f712eefb",
+  "replayed_symbolic_lane_graphs": 4118,
+  "whole_module_inverse_ast_equal": true,
+  "checks": [
+    "Both calls remain under the original SiTU compile-time guards; the gate and optional linear branches are not broadened.",
+    "Each packed lane preserves the scalar sequence of RN multiplications, EX2 approximate, RN add, RCP approximate, RN multiplication/subtraction/multiplication. No FMA or algebraic cancellation introduced.",
+    "Float32(1.0 / beta) remains a Python reciprocal rounded once, rather than a reciprocal of rounded Float32(beta). Constant C038AA3B is reproduced exactly.",
+    "The original pair ownership and order are preserved; no store, synchronization, transform, pipeline or register-allocation source code changes.",
+    "Only helper and two paired call sites change plus removal of now-unused T import; no new behavior knob or special-case branch."
+  ],
+  "boundary": "Source/math-contract peer only. Replayed author symbolic graphs with write calls disabled. Actual installed CuTe4.8 lowering must still establish explicit RN packed operations without fusion/FTZ changes, scalar EX2/RCP behavior, bit-exact output, register/local costs and instruction benefit. The bundled older CuTe source is not treated as proof of the installed compiler; no GPU execution by peer."
+}

@@ -1,0 +1,4205 @@
+{
+  "passed": true,
+  "base_head": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "candidate_kernel_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "source_diff_only": "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+  "source_audit_sha256": "6c62d1238fc3527259942cb49dc9c2fa2a46be2e3ef9a0de41679589de972407",
+  "qualified_existing_callsite_guards": [
+    {
+      "line": 2400,
+      "compile_time_guards": [
+        "cutlass.const_expr(self.activation_type == ActivationType.Swiglu.value and self.situ_beta is not None)",
+        "cutlass.const_expr(self.gated)",
+        "warp_idx < self.mma_warp_id",
+        "warp_idx >= self.transform_warp_id[0] and warp_idx <= self.transform_warp_id[-1]",
+        "warp_idx >= self.mma_warp_id and warp_idx < self.transform_warp_id[0]"
+      ]
+    },
+    {
+      "line": 2424,
+      "compile_time_guards": [
+        "cutlass.const_expr(self.situ_linear_beta is not None)",
+        "cutlass.const_expr(self.activation_type == ActivationType.Swiglu.value and self.situ_beta is not None)",
+        "cutlass.const_expr(self.gated)",
+        "warp_idx < self.mma_warp_id",
+        "warp_idx >= self.transform_warp_id[0] and warp_idx <= self.transform_warp_id[-1]",
+        "warp_idx >= self.mma_warp_id and warp_idx < self.transform_warp_id[0]"
+      ]
+    }
+  ],
+  "model_activation_configs": {
+    "v3": {
+      "activation": "swiglu",
+      "situ_beta": null,
+      "situ_linear_beta": null
+    },
+    "v41-flash": {
+      "activation": "swiglu",
+      "situ_beta": null,
+      "situ_linear_beta": null
+    },
+    "kimi-k3": {
+      "activation": "situ",
+      "situ_beta": 4.0,
+      "situ_linear_beta": 25.0
+    },
+    "nemo3-ultra": {
+      "activation": "relu2",
+      "situ_beta": null,
+      "situ_linear_beta": null
+    }
+  },
+  "benchmark_source_sha256": "84855eed2a84d4147488144db3b08830fa696e3ce4306ec4fa8b3cbd0724585e",
+  "previous_report_sha256": "3c9dabcd622569c18189c9f4faef93d8cdda40842300835d111c2fe603633aa9",
+  "previous_reuse_proof_sha256": "50ec7c5032f5bbc603bfa64a44705def8a9b4c8fdb94468ab2565e1b0902634f",
+  "fresh_report_sha256": "5f1aa59f98ad69cf7ce9bfcf619df85108adb5fa2acbc41a982807fba8bd8861",
+  "affected_cells": [
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      1
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      2
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      4
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      8
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      16
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      32
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      64
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      128
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      256
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      512
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      4096
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      8192
+    ],
+    [
+      "kimi-k3",
+      "ep",
+      "CuteDSL W4A16",
+      16384
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      1
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      2
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      4
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      8
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      16
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      32
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      64
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      128
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      256
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      512
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      4096
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      8192
+    ],
+    [
+      "kimi-k3",
+      "tp",
+      "CuteDSL W4A16",
+      16384
+    ]
+  ],
+  "affected_count": 26,
+  "reusable_count": 442,
+  "reusable_swap_count": 364,
+  "reusable_non_situ_w4_count": 78,
+  "reusable_rows": [
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        1
+      ],
+      "full_existing_row_sha256": "0a3515bf1a3c30a8c5ab6d14d00c3c0bb0ccab5b96ad72dfa1dfd36de214b112"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        2
+      ],
+      "full_existing_row_sha256": "5cd217bdf4d0f48ed9ff354b4b0921388fa9551a5a68b4d8d4faaa850ba6b555"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        4
+      ],
+      "full_existing_row_sha256": "a996927ba48f8bc533b2fa04e1ffdea3f4549c666c96623649d45b74646c25ee"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        8
+      ],
+      "full_existing_row_sha256": "1e5574649546eadeb1370e0101028b375c3a0b912cee762c952c7bbf7c303b77"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        16
+      ],
+      "full_existing_row_sha256": "be11005935f385d53422e622baa5e3a25b5465f9987a76e00300b89cbb7ae8bf"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        32
+      ],
+      "full_existing_row_sha256": "278de29d072a37947b6f442e5f8a4c7fad5d5e349c6e0f64821f895368e07c5d"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        64
+      ],
+      "full_existing_row_sha256": "5628f077a0956079a95b3d1123389e67005158ae23256292482bcf4a6c8a58e0"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        128
+      ],
+      "full_existing_row_sha256": "cdb12176e52ccfc4ef928c2c31730def5596041f4d915026718daae7c0071883"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        256
+      ],
+      "full_existing_row_sha256": "548f6136f68c883f2350f82670b66c9bf5c86defa70de177f2b45b60a7bb2a9a"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        512
+      ],
+      "full_existing_row_sha256": "1d022a6988be79040f4e0f542df645af35f74d5b2df3c9752a7bd8697909d25c"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        4096
+      ],
+      "full_existing_row_sha256": "9b4c01ad788d06e843cc6f931e7f76e3a5ff6b86af634d1062effaddf8025f47"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        8192
+      ],
+      "full_existing_row_sha256": "ed12da246ff684c5f9157286743b11380c049769c78a67295fb245ace3457713"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A4",
+        16384
+      ],
+      "full_existing_row_sha256": "827ae0f80aa30aaf86b152ddff52d10220b1663abd50325efac79fb5f315fbcb"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        1
+      ],
+      "full_existing_row_sha256": "38b8b10b57ec85b33098235c53a70c7b375498c2d17de5b36818b42fa8485d64"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        2
+      ],
+      "full_existing_row_sha256": "384069924fd9e206038bb43c1365a17aff91357adffc2e0894a13de1f2569ceb"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        4
+      ],
+      "full_existing_row_sha256": "d1d50f7d11320db7f9ff48b3647c193c326aec371b5d743ef00af8d34c05e9a9"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        8
+      ],
+      "full_existing_row_sha256": "c857f7835f7817aedd2c40324bf4f3ff51b9a0fe0b800a91218043303cb42756"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        16
+      ],
+      "full_existing_row_sha256": "ebc5865a7af6728bc81e8e343254529d676215c5458d314b2b9d508f2add252a"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        32
+      ],
+      "full_existing_row_sha256": "5b5f982ce4929e0cc7dbe79a0a57238fa7172b6263fa85ed3abe9a683120b8e8"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        64
+      ],
+      "full_existing_row_sha256": "d880b928361b327b7a3cfeb8a361df2b6b1fb6644dfb7901c4bc9d4c78b0ecc3"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        128
+      ],
+      "full_existing_row_sha256": "00bfc0947716016f251434fe33b3ffc43037d183eb03663b3d4baadbdecc24aa"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        256
+      ],
+      "full_existing_row_sha256": "c6e31a95e224d8e74bede5d48d9ba61b02199f3860b665e77d65e04aac2b5300"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        512
+      ],
+      "full_existing_row_sha256": "14afe33afcdaa98bdc5e240595f62d40ef84d6024c8dd316788b01c4dfc9a145"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        4096
+      ],
+      "full_existing_row_sha256": "7083837fcda2827338372409484c2fd72821cc9ddd65cf05ddfec6b3475672e5"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        8192
+      ],
+      "full_existing_row_sha256": "82d58658b9657d2eb442ad98b390f9afe73c9e74e79ffbc47e8450a4bd1ab039"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        16384
+      ],
+      "full_existing_row_sha256": "26dae81605c55cf46e6fe724aa0a1d218695109e6f13bf187dcba21207b86168"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        1
+      ],
+      "full_existing_row_sha256": "ae7dc3cb98b08d401023b8accdda9697655f15246068e6ca44613ac31c34b79e"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        2
+      ],
+      "full_existing_row_sha256": "d0b4259ab18d3e51aef686e2c013039e05ac14fbb4e2f377bfee28b6e239508a"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        4
+      ],
+      "full_existing_row_sha256": "50ee92ec5553237b3138328ca146d098b21ce0b8ab6dba00995eae24074f2e71"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        8
+      ],
+      "full_existing_row_sha256": "734082eb9ea7d1860e467900ef6faaa59469dcfde99ce66021606f5a50068117"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        16
+      ],
+      "full_existing_row_sha256": "ab31de93d1db0f2b6cf65c6348ea1d57c7a42286d8fc0f5a84dc02b7a1cf0076"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        32
+      ],
+      "full_existing_row_sha256": "52da35882df127fdfc2dd08ecef0b5861381f7c467a4d054a1cc764ffd902d5b"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        64
+      ],
+      "full_existing_row_sha256": "bb0932c4a98d6710115ad2d54dca1d24a0f28b5404f9984cb856598f67662a71"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        128
+      ],
+      "full_existing_row_sha256": "337798bce630b273df070ca640ead8fe52b2800bfb512dc74a16006cc6c03336"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        256
+      ],
+      "full_existing_row_sha256": "0974051101ab227b1eeae58199f6b5535c2b8bebf9cb108d14c1ecc744cf4775"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        512
+      ],
+      "full_existing_row_sha256": "e4dd139ce447df981d101fb7dad40e52919041edaf378770c5010877aa2a7573"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        4096
+      ],
+      "full_existing_row_sha256": "cd8db1f808e107bae4c618018e5a09e3c5c1a5a98b9a5f0153d8ef051c993a04"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        8192
+      ],
+      "full_existing_row_sha256": "ed3f696a71aa34544491bd0eefda2c5dd73bcee3e541670b51657b557c2430ea"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL W4A16",
+        16384
+      ],
+      "full_existing_row_sha256": "7d59583bf477e8c604ded0faa334eefb740b6f82e25d2e5038db565b57eeeb23"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        1
+      ],
+      "full_existing_row_sha256": "0660c9ba9fd754159134a30da45aad7d4cc6d62b5ace5a08bb5d9485327c83af"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        2
+      ],
+      "full_existing_row_sha256": "7d54cc40a4fd0368d69152f44e80f70e7082528fce181219197eef23135890ab"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        4
+      ],
+      "full_existing_row_sha256": "fb249898fb827b76547ab20885fdf5d1249cc5a815fb07ce7bf16a29c5baa9b5"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        8
+      ],
+      "full_existing_row_sha256": "6f66527dbc43d41ca5a9fa4aa938f9cd9a11a0ab3c0b3719889864925a74f9e9"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        16
+      ],
+      "full_existing_row_sha256": "08a59bbad42e9a6539ef6fb4f9615aa07d58083b20f3ebefa77273c592061d52"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        32
+      ],
+      "full_existing_row_sha256": "d5b596cc5af0e656594823cf4b148984681a02463171f695a8f89cbe166ff89e"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        64
+      ],
+      "full_existing_row_sha256": "6edf11e28e68da694a78a5538c9803983c8035fa7c17114d4b61309ce1176107"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        128
+      ],
+      "full_existing_row_sha256": "2a0877bebacf0ec40e06f48cdd751412e4686a4d515ec3f261f9faf7f12df14e"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        256
+      ],
+      "full_existing_row_sha256": "1f0517789fa1d9877269ca2a92ff1fd8d262abecdefd9d20fd00be44bf60b3de"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        512
+      ],
+      "full_existing_row_sha256": "898cfcde32a42f9f69005113d109e2264afd0e078f4c319081bd32557a5a9ab0"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        4096
+      ],
+      "full_existing_row_sha256": "dbe42ee5cd7fd2625e275e1c1a686101bdc29d359279384b30423c531d316057"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        8192
+      ],
+      "full_existing_row_sha256": "c89322b2f13d6b9d57c686a9f444fe69fb663e4dd34afc32bfcdc29ad406229a"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        16384
+      ],
+      "full_existing_row_sha256": "a07fbfeacecd8ba072ece78acc04f4479042c8cf16070cd25c15a86d524a476b"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        1
+      ],
+      "full_existing_row_sha256": "9bcaddf31dac6b8a0cb124f477d6a30f05cf0971cc3882940c2a3fa5f1a3ed65"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        2
+      ],
+      "full_existing_row_sha256": "956abaf36787750e032b964d800e2ce5b00c99aa8ec37fc8090823df71228e3c"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        4
+      ],
+      "full_existing_row_sha256": "30801f93e68df30da86af41192b3fa9944ee187af7895b1b4a5a80ad8ab9b82d"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        8
+      ],
+      "full_existing_row_sha256": "ebe3109f9cb3fd505c0f8172762bbe12d6c20993a0e990b457092e9727f6c73c"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        16
+      ],
+      "full_existing_row_sha256": "6e676ec4d2246a0e946e1ea27763f555be2e8c157221f647023fe4ad3c644d74"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        32
+      ],
+      "full_existing_row_sha256": "313fe5ea4354f42760a0288484ba05dbee6e94bd72ae54e121b6b1ae09929f59"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        64
+      ],
+      "full_existing_row_sha256": "217db5f8fde51761acab338033c9098284925b6db9fc7620652cf0ee8397d22b"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        128
+      ],
+      "full_existing_row_sha256": "dbae97d47af33242d0038764c2e14f1deb490a2e6ed5a353d09d9cc151389cf6"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        256
+      ],
+      "full_existing_row_sha256": "cae2a95bf66f5c7bfa747e039c91f7ddf501a725bae864e49b1b819f3fe69bb0"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        512
+      ],
+      "full_existing_row_sha256": "114c91b7cd25a9cf2dc02b796526521bfaeae44389e62b1a7f44ccef5aa98e71"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        4096
+      ],
+      "full_existing_row_sha256": "ab5bb4ef6576e4602b9599830a25b491645b8e3127fffbc7559bb66060dd36d3"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        8192
+      ],
+      "full_existing_row_sha256": "625a7b25d24c7de951974cf2a7db37edaf3a991aac49a856789048fd3247d476"
+    },
+    {
+      "identity": [
+        "v3",
+        "ep",
+        "CuteDSL MXFP8",
+        16384
+      ],
+      "full_existing_row_sha256": "be0c50e03d05491232fe15648a25ef2fe37a824f94301ee40864badd127db101"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        1
+      ],
+      "full_existing_row_sha256": "7a1d3fdd3b771662f84cdcfb7e4b43f4a4338cc5675f0fd2c21d1682a75587be"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        2
+      ],
+      "full_existing_row_sha256": "9bb86465ed986ed70340ff6f0ea09557c9dc7004daac27179c010d47952b9785"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        4
+      ],
+      "full_existing_row_sha256": "86cee81724ca69f5374358e15641969d288fa208f732904e15e4dd467f176845"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        8
+      ],
+      "full_existing_row_sha256": "04d4e661c928227fa233353f21a4b672ba4c396745791bc3a56dfc2c1c73446c"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        16
+      ],
+      "full_existing_row_sha256": "68c570f6e75b69a6108ada4430d15f221e0055085d2d0d65e9410b3fe0e7f3f6"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        32
+      ],
+      "full_existing_row_sha256": "2d566a508d5376f8e59eb0a75ddf0b771cf648dac430f9b9552e8dfa6aba110c"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        64
+      ],
+      "full_existing_row_sha256": "08f9e3ce479f2b3a50912793041f6cebd3790dfe4fef3f4044f50714b13029d1"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        128
+      ],
+      "full_existing_row_sha256": "019021a273554d984e0e5fd3fbd54af75c55553f059268b57b8ea1bc13020b83"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        256
+      ],
+      "full_existing_row_sha256": "4d2a6eab194eddf477f548e6beeef1c475c2ef0993c8fa90638fc13434b5af7a"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        512
+      ],
+      "full_existing_row_sha256": "3991d9c6e8f12e8ea697f5496f618ca944f3ffa7f57e133cc37ca568bfd82a9a"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        4096
+      ],
+      "full_existing_row_sha256": "afba622f955385d8048d231a90c21f3aa3e908fa03f23a2948abd1e96cfc9ec7"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        8192
+      ],
+      "full_existing_row_sha256": "360a49e6e8a615c31b7c29094f48bfd2734b721e1220e062cea9d157ff57452b"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A4",
+        16384
+      ],
+      "full_existing_row_sha256": "a2c99462314b8cca9b7debc7b0c352aadf3e34ee56604ddb8942f6cd05c55484"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        1
+      ],
+      "full_existing_row_sha256": "e9ec52b6faafbb8de4f8070f94a7b055cccb48409b1ac0583011556c6359cb2e"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        2
+      ],
+      "full_existing_row_sha256": "9283b42577bb7abb5e21ce53143a9ce5880597e9bd6e84b942835e9b1ad8ef81"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        4
+      ],
+      "full_existing_row_sha256": "7ccc3174d28bf7eaf51e2ec53e5fef8c358e08217ab34d92a62ac4a2fa3892d3"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        8
+      ],
+      "full_existing_row_sha256": "1ef140a457e7ae9f7adf5d13ad6c882934aa8c710b47d2ec414a04774a064ce2"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        16
+      ],
+      "full_existing_row_sha256": "d6f87478be928ac822333acf8f39d1f91cc0e63595a2097d6914480d81e54b1a"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        32
+      ],
+      "full_existing_row_sha256": "9647aedbe4116c69613fa9afc762c38155a1ff12d5e69975a9a7a84d5d3c63b9"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        64
+      ],
+      "full_existing_row_sha256": "69da532fd65d7e0c35800504b3c9a7bc0aea0d06c8ef478c0689bb14ac6efb26"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        128
+      ],
+      "full_existing_row_sha256": "9a3ef89fa4620ecf9ce622b38e633dc59a44d53c271157b7ba1e373b7585e7b2"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        256
+      ],
+      "full_existing_row_sha256": "2dc036dddc9bd32733e0e43d2c241fd5cbec19f65f99c585e82d5347fa72945d"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        512
+      ],
+      "full_existing_row_sha256": "e6d614c950f18764585439b877a5ddb35b82fc12e190b6cfb9f6b274bc74cd9b"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        4096
+      ],
+      "full_existing_row_sha256": "adab94c17d843e90ba5ec9536ddd809e904e9f6d2623517d2d34420363296d75"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        8192
+      ],
+      "full_existing_row_sha256": "043b031de265f70d2b626574a7cd52f6665376363dba26de7513acf42c1e99b3"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        16384
+      ],
+      "full_existing_row_sha256": "20127b44eb734512e72810f1f7077ba3aa970170da5326d0dfe4f7db6f07131b"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        1
+      ],
+      "full_existing_row_sha256": "8740b664088dc8eb2fa81da0b4e6f7f5f71c5ffa6b7381258f353b52c12c8a22"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        2
+      ],
+      "full_existing_row_sha256": "91449b9846fbad6b024d1f03203509b3beae9761c27e04a3653c4aac7d5ae815"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        4
+      ],
+      "full_existing_row_sha256": "581c894263522bc53ebc13995b0adff36b5fb5b54c4e6aca0a3558a2e4a9c0e7"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        8
+      ],
+      "full_existing_row_sha256": "76bee3a5c1f631aba639992c3e93bce255dbde82adbb7fcb266da0dcdfc6456a"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        16
+      ],
+      "full_existing_row_sha256": "fdfa405c79bb6ab9bbaa3f97faa48c4c8eb5f4cfcf58f2fc534a16b32a34413e"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        32
+      ],
+      "full_existing_row_sha256": "fe2f57806eaa58f1fdabfdd63efabe0f3687bf132d8219dcf68d6d10b74c2e10"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        64
+      ],
+      "full_existing_row_sha256": "a5e8cd8bc81a7ab596643ca938d159de52e4f379cbb769f83d3df36b2fa4b1eb"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        128
+      ],
+      "full_existing_row_sha256": "cf76a301d9d4bed553707f1edb940a2412caffca4659b6a518c3d974d3082e81"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        256
+      ],
+      "full_existing_row_sha256": "5c12d5f3d7381cbe64ab6253f3ba84f8bb4fb11c5f329e28fa678b7ecc317995"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        512
+      ],
+      "full_existing_row_sha256": "f9853ecb6c0dcc6562d8afb0880a9bf16126ad07c2b2b5d844f3250ca293f98e"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        4096
+      ],
+      "full_existing_row_sha256": "cd1041a1a7b7a728bdde648a606803eb4935302c01f4b9a82f20b17650c14deb"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        8192
+      ],
+      "full_existing_row_sha256": "95de7640ba67970edf2c44811bbfdad59cedead2ef19913f701b90bd1df91903"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL W4A16",
+        16384
+      ],
+      "full_existing_row_sha256": "b1f5972360a13ab9fbd4f10088c0c0ed87aa6cfc8ee8b975187c3780af7f1ea1"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        1
+      ],
+      "full_existing_row_sha256": "b15018ccfa92311f4c63253a79dbbedfc3b649150ad2989fed57f4643005d16c"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        2
+      ],
+      "full_existing_row_sha256": "13cf9763a16eda29633b0a63493ca382d4574501570dccf9b90f717c6061ed7c"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        4
+      ],
+      "full_existing_row_sha256": "b82dc4c4f540b5172232930e7df092d4084ff100a41966860586f41490b01f25"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        8
+      ],
+      "full_existing_row_sha256": "5e1b5e2e5b3c514074aa35545d0058f61be4ba21660ddf206546f20a328d014d"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        16
+      ],
+      "full_existing_row_sha256": "3120aabc3a0c03eed31343a7a2733acd8ed48737804e373bb48edcee651780e4"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        32
+      ],
+      "full_existing_row_sha256": "1f99b5ec13b09b4c4c8d67d813c60068c623323b5636148457e44337ae63c280"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        64
+      ],
+      "full_existing_row_sha256": "1a47c5f87e2eb4a3ddb7e0333b77909e728add6d012423c7edb9aa8a9fb09aec"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        128
+      ],
+      "full_existing_row_sha256": "bd196ce246489b502ab245ac25d77bdb2a80794cb62232afa270479a8de694d9"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        256
+      ],
+      "full_existing_row_sha256": "c6618d3b879f7ce1f9c97dbec2091a26958181aa3ff2c0c132c853bda582d62c"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        512
+      ],
+      "full_existing_row_sha256": "3e798bda8d430b8334532c9a5e433420aed24cf719a61ef5f06c07a6452ea9a2"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        4096
+      ],
+      "full_existing_row_sha256": "a8a2d1bb12a8d4494e9c02f7c610962c8c4c3baba7aa0fe67b27ac2d351ad488"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        8192
+      ],
+      "full_existing_row_sha256": "0075e12840c0a883249b3a0a895dfbe9fd7615abda510633e371c29602abebc6"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        16384
+      ],
+      "full_existing_row_sha256": "171686492c0f9e7deafa7e96efcbe38bff64b43087f06941c137060fffe9adf8"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        1
+      ],
+      "full_existing_row_sha256": "ec00af38ed91192047d663f7ba6c2248e7bf60edc7788e8327b0354371175155"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        2
+      ],
+      "full_existing_row_sha256": "ea479d06f4502fd418d60ab04d8a51e39061e97e9e7ae001fa19f607001d99d9"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        4
+      ],
+      "full_existing_row_sha256": "66c0a5dbf304d1ba1d27769aed37586e67153618a9de9ad5c99d8bd9bf675731"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        8
+      ],
+      "full_existing_row_sha256": "633336397a9bb9987ef71487c927e13ccbb755a901f493d74ca256b76c17e749"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        16
+      ],
+      "full_existing_row_sha256": "5e28d20e38511c031f12fd2143fb3f58ae16a30e54d564d7fd9671c9f2097e78"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        32
+      ],
+      "full_existing_row_sha256": "5858a0806019d68179f5da10c0d4aeaf1145069bc75a73ba5e9a50e88eab1a09"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        64
+      ],
+      "full_existing_row_sha256": "0978bb7c9cc6b47138b1775255b6efd19613555465c4b4eed85ffda13864b5e2"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        128
+      ],
+      "full_existing_row_sha256": "a38dea5fd810de1bdaafbcc7090098627729e908e51f855cb4c2b106ac44ce90"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        256
+      ],
+      "full_existing_row_sha256": "bebdd64454397ddfbfa2aacbecbf23e186e39f4efb8434abffcc27784ff81564"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        512
+      ],
+      "full_existing_row_sha256": "57c9acd30ea5b30774f34f6cf1fe5d574571cc215ef32b24a4224173d1663895"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        4096
+      ],
+      "full_existing_row_sha256": "a62801408d58f6b3ccb556fdee511a6a830d9fae5acbd0d9f28404ad43e182ff"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        8192
+      ],
+      "full_existing_row_sha256": "c4ce7a621bb32c102e41a0abf702754de6b7a5961a3de6ef822d51253129ac6d"
+    },
+    {
+      "identity": [
+        "v3",
+        "tp",
+        "CuteDSL MXFP8",
+        16384
+      ],
+      "full_existing_row_sha256": "62e3fef1bbbf35fc003d30bab85d2d7fc7428ad8bd9034ccbfb4cec26c6d6d4c"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        1
+      ],
+      "full_existing_row_sha256": "34b22395db44c09e6953269b3a19c461efdf365caf7224bc107aa99952d32bea"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        2
+      ],
+      "full_existing_row_sha256": "911a4e703d764e7b0fec30d013736cf9d50b740c3802ede7790af9fe0c465c4e"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        4
+      ],
+      "full_existing_row_sha256": "aa6c234c2a64683fbb24054b8de45847facebe6b424b413fe3e74c41f14b4423"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        8
+      ],
+      "full_existing_row_sha256": "5e4f265a9f3895b2e7c7586f84226ca2dda9b1184636e75200e3c598456886c0"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        16
+      ],
+      "full_existing_row_sha256": "f72e15e281b340460a0135effed6e31a272a043d184d11a187dc720a1755ab45"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        32
+      ],
+      "full_existing_row_sha256": "df875a9232683d6851094a8442b76b79466e6bb257cbaa87c048f078438495d2"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        64
+      ],
+      "full_existing_row_sha256": "6a462be322a6499c4e8dfcbe3ab4e063a491710b5b6f713856b97f539f3f1937"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        128
+      ],
+      "full_existing_row_sha256": "96edce55d897a8e8b954317eb5fb6372d7cfc6edc8675b3a28b397e8adcf77d8"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        256
+      ],
+      "full_existing_row_sha256": "9ab8ece576eaa5464276a5d0c5097b935d390f93da3365babf7b372e2ed94ee6"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        512
+      ],
+      "full_existing_row_sha256": "ce5f29d997484c04bfef325b6c1fd9725db47212ca46015b751d04d2f758fbd5"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        4096
+      ],
+      "full_existing_row_sha256": "dd13510faede6fac29907528490313e47c3ef932ecbbd7cbc73dfbe210af32c3"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        8192
+      ],
+      "full_existing_row_sha256": "d76e0fac24b5f178f6d9acd23fbcf2bf8264a3d84ea3aa706f2dca6f21892afd"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A4",
+        16384
+      ],
+      "full_existing_row_sha256": "5122533d445fe044538276f6792940bb9c95fe5ad1e178a094cc3593accc1f6d"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        1
+      ],
+      "full_existing_row_sha256": "ef3a8196a4b08ad12c890f7c8715cb3d0d2d3d37aa49f7248f14b3c0e126976a"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        2
+      ],
+      "full_existing_row_sha256": "b6fd01565ddc172927d0a85a0775af577b1e3c4ab6a61493eb255f7d0820f128"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        4
+      ],
+      "full_existing_row_sha256": "cc886ff4d9f8dbcc273a881426228931e53595517e45ee304db63d440b23b22a"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        8
+      ],
+      "full_existing_row_sha256": "17e6fc09f20280613d9db5f0c61b1a78629be807fd82ab8112fc616f5873f9f0"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        16
+      ],
+      "full_existing_row_sha256": "e88a748ab7a725ff292ae26a171e5d1d122e9276e68f082feadab35441c6ead6"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        32
+      ],
+      "full_existing_row_sha256": "fbb67d01f00369016a18e26f17a46d91f6066c86ea544d6832ade8e7a1d14a08"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        64
+      ],
+      "full_existing_row_sha256": "4b124461ee317f0ce8db3afaa6f4bbfe9c56b38af36b66a6436b609ef960762d"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        128
+      ],
+      "full_existing_row_sha256": "d94e3dd318bcca719dd8c8cb12eaf5f87d05ff0c6e7ce0f32e67430791981d4a"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        256
+      ],
+      "full_existing_row_sha256": "3a9d4c58c3b224ba08d6793f4992d0cb00d2f5804cb3bba6d42f6896a98a0b49"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        512
+      ],
+      "full_existing_row_sha256": "08fd7664f4c466f142416df07d475f5915ac56af46c3f99885c561665b327691"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        4096
+      ],
+      "full_existing_row_sha256": "6d5461d6a11d1924f54a74dbc048c3d8a77c134068eee813ac3100cf4ab5f92f"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        8192
+      ],
+      "full_existing_row_sha256": "48ab7a549825051235f5d393ef13d3de45bb284e38017622b6fd72ae9999b418"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        16384
+      ],
+      "full_existing_row_sha256": "fe4552ae99f35e68817275b7f8fa12fbbe1750b95ef47abd1092f9c9587600a3"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        1
+      ],
+      "full_existing_row_sha256": "2059d8dbeae9f676a8f3468f61f1b8e4f29c9e8d514f383595a088e610f65af7"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        2
+      ],
+      "full_existing_row_sha256": "7d5db6a3bd964eab9c2e4300f5681bdf7191bab15ea7b386d4a307c24e5f8f45"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        4
+      ],
+      "full_existing_row_sha256": "0fb2c509dcd10042aeea3830a0dfd4de8f867b098e02cfce24e1007d8b694bbb"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        8
+      ],
+      "full_existing_row_sha256": "0620471bbdf1a21a4c925f27f0c180a3368d446519906a5eef0e3c1864befc62"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        16
+      ],
+      "full_existing_row_sha256": "1ffedef2a9acaac99ea1b34d85ff5d578213765d41d2e11664185ee2b9581053"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        32
+      ],
+      "full_existing_row_sha256": "b0e0bae3a423884a39dd1e91fdc396ad3815ad8702f88ba931d6d7ad02351c35"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        64
+      ],
+      "full_existing_row_sha256": "16b8426cd9352f82c12a70a785ddec29f2351ccada6859633ee301b13d311654"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        128
+      ],
+      "full_existing_row_sha256": "d2f4efc32e4ab1e4ea1a3887db5cff35f29170dae7e89d43afb916b7429fd8f5"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        256
+      ],
+      "full_existing_row_sha256": "68b7de518d4a151a91af892625d2cfbd642898d306caf5b790615166b8e105df"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        512
+      ],
+      "full_existing_row_sha256": "dbf9fdb2c969321e2d86f5b7e83b1072f93845b1e157a7d29243fd3855ac6650"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        4096
+      ],
+      "full_existing_row_sha256": "7dfec6e28649ec7698ee80e61660e0e88ac283e2ebaa55dd30e0c6a0f4d85b3e"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        8192
+      ],
+      "full_existing_row_sha256": "362b58b4f119fbe451a577946e3b1e66d91c8fe887821fe2cf8e9c34d2404471"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL W4A16",
+        16384
+      ],
+      "full_existing_row_sha256": "460b3003d0f8116f7a2cd364c8545243262e7cf61a6ac289d55a16c29eb9dafc"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        1
+      ],
+      "full_existing_row_sha256": "4b8ef554650d01c71aa774374a7052dee2c1e724a71381a639640e9eb63dc2dd"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        2
+      ],
+      "full_existing_row_sha256": "c0a5993be9d9d5fb05be02f483519dc07e1b845282ec493ba8c39c624e5d7fa2"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        4
+      ],
+      "full_existing_row_sha256": "b83aebb82493ec10a657c81f169d96dfe997fe6358eacdbd0e97a4847ece9186"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        8
+      ],
+      "full_existing_row_sha256": "70659fe4f579a4fc349d7e10b7c398143c9732b0b6d2d49fd5ebaa52d5e277bc"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        16
+      ],
+      "full_existing_row_sha256": "84dfbd23a34648f65ba100040b5104b1f4542634fc951948b011e5b76769417d"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        32
+      ],
+      "full_existing_row_sha256": "9096f75e3b4f38ec38fc5821c5fc08b4716010ca53d145a3fa373abad34c0ee4"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        64
+      ],
+      "full_existing_row_sha256": "0b396d8446efd46d9d8cc4298af09144b02d0ba98e096e9864cc96966af3dbb4"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        128
+      ],
+      "full_existing_row_sha256": "ec6549a0d4a8623621ddf785517cd9f74e1507c78c572456beeb3feb44c665bf"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        256
+      ],
+      "full_existing_row_sha256": "46a006c495e2ca7570ba106262bdf50c530edcba91135ece87208922787ac3b1"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        512
+      ],
+      "full_existing_row_sha256": "0b33c718c8df369738538de95606e7703546fc6015d48fd84bc2fdcaf0a8f1c2"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        4096
+      ],
+      "full_existing_row_sha256": "4db4b2461acab5ec2ec3cc88f1f4937ae9fd87df680afa6d0921e8997320db6b"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        8192
+      ],
+      "full_existing_row_sha256": "2929881cede81ca5ee8050ea770ecf80d635aafe026c13ce56fb45e3901aa77b"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP4x8",
+        16384
+      ],
+      "full_existing_row_sha256": "3a90b9e2c79f3773cf48c02987d430a699ade864f622a36125a4f143e85dddd7"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        1
+      ],
+      "full_existing_row_sha256": "fc871450a76a4be7dfe0f1984fdcd8fdcfc53641cb953618e2c353a2ba103a50"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        2
+      ],
+      "full_existing_row_sha256": "dfd68233eae1e4dd2a69331cd86f2f1332319ea1622e1481e8e185fc71eb131e"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        4
+      ],
+      "full_existing_row_sha256": "a75322d750dabde6f95de0345b406df655ecf862dcba24b4e91eb2b8d1b215d7"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        8
+      ],
+      "full_existing_row_sha256": "16f8322fe47b76c53ce34e5709a93d55ce884463d2e8892a8b938c2ea0af31d1"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        16
+      ],
+      "full_existing_row_sha256": "41f4e200bf6e609c791eea71138299932a9625b061ced182984fe3c8393d59ee"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        32
+      ],
+      "full_existing_row_sha256": "6031ef32ed22b2471ad7d140abf9eff558b0cd0848ae7494a957895b166461aa"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        64
+      ],
+      "full_existing_row_sha256": "51a944b44ed4145271c0bd0e8d02e9166650dc9f0bc1831014db0081b7516d6f"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        128
+      ],
+      "full_existing_row_sha256": "183a6d789286542d3600c3e7da0f2238b2a4c3ae288d476b3988bc4058fa3248"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        256
+      ],
+      "full_existing_row_sha256": "618898872691b2b0fd0e3fd64964afed1b1d62f261a9a983d487f831ff62dfe9"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        512
+      ],
+      "full_existing_row_sha256": "78e708efd26b2d744e51e5ef04577955c86fd4e9ea8afbbb10421c7fb082dad6"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        4096
+      ],
+      "full_existing_row_sha256": "e731c647ce6ae9a1f1a157fc004533f1af3de1773fcb07c3976d30d60fcebab2"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        8192
+      ],
+      "full_existing_row_sha256": "5bdcdaa6b0fe268d6a30347d6d712aa030863ebc610f1b25fe9e0722c978fb46"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "ep",
+        "CuteDSL MXFP8",
+        16384
+      ],
+      "full_existing_row_sha256": "84fa23dbdaa95926fa6086d9db645eeec04765ac8adf88cb8cfc93c7339e7b3c"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        1
+      ],
+      "full_existing_row_sha256": "6c6001a6a41e218fa6eaef35fd19d99a199c9f40753b5e93cefd29d6d5b99d63"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        2
+      ],
+      "full_existing_row_sha256": "e969a936ba1be650727f0df46a94303107c4aefd39561945b2c0ce92cdb0a951"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        4
+      ],
+      "full_existing_row_sha256": "2155f35909b657fccc78de92641455b4a584111de47e5fb6afa303c3a37529c8"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        8
+      ],
+      "full_existing_row_sha256": "388a15a974cf4b49566c76de9681a89b7562ecae22c06a91e4f617f5c0f329d0"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        16
+      ],
+      "full_existing_row_sha256": "82087139990ad6559d45925c48d51473402d63d98c423ea21c4c5ff9d64f7ddf"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        32
+      ],
+      "full_existing_row_sha256": "d571d2b83468ee94e9a0167acaf35cb43e49301861031d9090786027f7a31238"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        64
+      ],
+      "full_existing_row_sha256": "4f16fa88686f3e02397a997549fc3409dc9d1327605300f8a51767ca3704328c"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        128
+      ],
+      "full_existing_row_sha256": "9c7f1a77074bf238d34bdef7d91b1b27fcf71c42c405207194128ee540a54df8"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        256
+      ],
+      "full_existing_row_sha256": "ec73e3f14a4e6e36ab53aae156a8ea8a1331c483f6301bf489d114c2ac8df654"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        512
+      ],
+      "full_existing_row_sha256": "b3037dcfcac7ff2ba3cd562134bbbe6b919dfd38d1eb03d24486478807edf2df"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        4096
+      ],
+      "full_existing_row_sha256": "eb7b1f0a11c9a830bb0b957f1aa5810e7ef9282d8ebb70dd7455fe6bde2a5023"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        8192
+      ],
+      "full_existing_row_sha256": "82fe0257119a77d6464bcefa86e91779e31b78b12a91f6a51dc212958c072f5d"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A4",
+        16384
+      ],
+      "full_existing_row_sha256": "0aff26a37c2e783218f8d8cf7b29f2c63550be7b0720ec4111a9710fbc9e17b7"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        1
+      ],
+      "full_existing_row_sha256": "c5e837f340d657e938da870ef73925f3250209761199e36c5bf32f82e865fc2a"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        2
+      ],
+      "full_existing_row_sha256": "05998a0f19bd6a2d992d9396ed1f015b871be634d376ef3ae49fd786163e86a2"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        4
+      ],
+      "full_existing_row_sha256": "d5902d3f30d0a60b5e2e768c778e872d8abb251bc8c488c5d6cf27613fbf2d07"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        8
+      ],
+      "full_existing_row_sha256": "76041fd697d5d164d25b5ebc2f2a85f9a2c74383e97d60f51816425ebcb04308"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        16
+      ],
+      "full_existing_row_sha256": "b4decb5f2f41a28533fcf64f967de83fe9e5c68a54e3186a787628160a42e3e2"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        32
+      ],
+      "full_existing_row_sha256": "ab8c96a7976146bd189f0c14b441cd3363ad8fe8176762d454bd588d47075387"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        64
+      ],
+      "full_existing_row_sha256": "766e348c0eb257e92e6fb6593140f7a568a1ed04301ab113a4148b102e827d3d"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        128
+      ],
+      "full_existing_row_sha256": "87f8a59f27b62394b08f263e70821f48a64b6a9b4c19e5b081488ae30b2e220f"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        256
+      ],
+      "full_existing_row_sha256": "bccf08328c9a1c6921c0cb5f34f12fb5dc92094bb1677ae65cd5ad39ce1daad1"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        512
+      ],
+      "full_existing_row_sha256": "305efae1254ffac94b607488608cc3ac439e8aec0382df001779603cf106e741"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        4096
+      ],
+      "full_existing_row_sha256": "f68bccb50358c9c814deddcf7750be4786a57582ed11df2b21c10df76410d842"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        8192
+      ],
+      "full_existing_row_sha256": "af30ce5d5b42eb72969d52cc1a45e1252251df7e5be74392e4a34197dc0f4666"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        16384
+      ],
+      "full_existing_row_sha256": "55a38fa35d11734c4e9779a83e6bc550ac19a6f996981fd2c191677a3e3f029e"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        1
+      ],
+      "full_existing_row_sha256": "d71dd3baa858b3d8884c2c9ed7c56a727e289d4b41ea6370f375fb57f2251ff5"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        2
+      ],
+      "full_existing_row_sha256": "25aa19824a2960d9b618e3b58381c42ffaa0236c49d6fa5835019f996846cf86"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        4
+      ],
+      "full_existing_row_sha256": "232062777edde1e6a6135ccf27de2d58e2e04c5ce36b5c67e7b0a5b431f539a3"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        8
+      ],
+      "full_existing_row_sha256": "02275c29eef3a99e5128f44a312a4b18aecd2c4fedc0166e2c6381832851b5e6"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        16
+      ],
+      "full_existing_row_sha256": "830b31181b3f394d817f372a1e65346d86699e57855b7d37c1c9f7eb4baa176d"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        32
+      ],
+      "full_existing_row_sha256": "edf7019f3897afb484a781b91764d2021a812c35f1922e68500176a2077f5245"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        64
+      ],
+      "full_existing_row_sha256": "b48fa2e7195997603587615fbaa11c685cf582469dd7b755186236c71dabfd34"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        128
+      ],
+      "full_existing_row_sha256": "0917aa60ccd0540d341d417fcf03e0f13c0eab640183acda8c76523695c505c0"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        256
+      ],
+      "full_existing_row_sha256": "6211da01f61a95971856560e6ad88a42fb2adf2a990e21655e1b0d597906c3b3"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        512
+      ],
+      "full_existing_row_sha256": "fac7b219e565b41d0e6855e6d788b7240b778627601551cb858c96081091abe2"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        4096
+      ],
+      "full_existing_row_sha256": "6c2eb7470daa1729e6f1c2b97dd6c6481c7bfd73c7a98ecccb40ecee94524991"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        8192
+      ],
+      "full_existing_row_sha256": "453611fdb5182b8bba5c60b2da137afa1976361d82a4cf93029bb3ba7e573425"
+    },
+    {
+      "identity": [
+        "v41-flash",
+        "tp",
+        "CuteDSL W4A16",
+        16384
+      ],
+      "full_existing_row_sha256": "164e6d33bdec24b04572156131fffccf50ddb24ef55ded86543632dc35e5359b"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        1
+      ],
+      "full_existing_row_sha256": "f40d777c98ea44d5f80a94aa753ddfc3fc713523a57a67669dc99ce59c86bee9"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        2
+      ],
+      "full_existing_row_sha256": "decc9da26e0f28d1a365388a5233da94bb0c2864e04640f24386ffa2546a884a"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        4
+      ],
+      "full_existing_row_sha256": "9ed5533369d1322f0fa9566bb38e372ff5143c3792e0e9df2533ccf121d80562"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        8
+      ],
+      "full_existing_row_sha256": "c3b8a8c6c6a829e4483fb066d298862d2849207f1e0ebc65f273f54d905789d2"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        16
+      ],
+      "full_existing_row_sha256": "635be60ca03194137fb08bb55b09e67425557dbe345e88b637c552f2c15faa61"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        32
+      ],
+      "full_existing_row_sha256": "5137947e7ce563d568f3d671f7c51852b9c3d2b698636089e532332deffdd27a"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        64
+      ],
+      "full_existing_row_sha256": "f2153bff111c9c059a702fdef07b71bff5fb6adfd76bb9158aa93e1ca044288a"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        128
+      ],
+      "full_existing_row_sha256": "65a60a3824abab41b9bdbafa233fd84927477fbb77838b75af627fc53dc8e835"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        256
+      ],
+      "full_existing_row_sha256": "718c210c1ddbf31a86a6a65f81e21becde01a8e4ee1156f1a113d0a1d0855379"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        512
+      ],
+      "full_existing_row_sha256": "d6ab61a520bc54596d4d40b2ec6e11490140a836de3ca140bf93a6392c4959cf"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        4096
+      ],
+      "full_existing_row_sha256": "b6ed256272089e74bde7b3486238301dc11327051566e8287a19de1a087c5f6b"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        8192
+      ],
+      "full_existing_row_sha256": "8fc5aae8f9a2e52ccec1d6a26bef6c5a4866ec9b8f193e5ece8879774142dcf6"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL W4A4",
+        16384
+      ],
+      "full_existing_row_sha256": "0af35cb4647d8113ed4f254a6665bea1a7882d964da94ca1af27547f88bab9e9"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        1
+      ],
+      "full_existing_row_sha256": "945e5371335821530eef99ea6290a74251722055801010285a8436ffd4f594cd"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        2
+      ],
+      "full_existing_row_sha256": "35a4a20b53395cede71349be4c267890f9f1a476f0f06becee92730fe0601eee"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        4
+      ],
+      "full_existing_row_sha256": "c8abae116e1d62df03695f1b2fbd13e8be3216f289795ad4c248759c44e6b3b4"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        8
+      ],
+      "full_existing_row_sha256": "0ad7007aaabe950c100760cda793320a3c2c550809903956ddf52f25f15d27c1"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        16
+      ],
+      "full_existing_row_sha256": "dd91c59a75ce15b6bdb56dca78554e8a5687039c320e22f699fc5bdd6cf36950"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        32
+      ],
+      "full_existing_row_sha256": "104864ea98ddcd9c46cbf74a40a5502a227e815cdddb9042370d96d860b81ee8"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        64
+      ],
+      "full_existing_row_sha256": "524ca7dcb79a59d4af5446b5a9994cc1e864d3a1f63290a44ba5548cfd2f7dd3"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        128
+      ],
+      "full_existing_row_sha256": "0e6e24645c2cd9511006833765afead09283ed2e33968d775236cd15a47c7435"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        256
+      ],
+      "full_existing_row_sha256": "500627e0a466684f12edc48a288dacfcf68a1e021947d102d18dd9730256da3e"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        512
+      ],
+      "full_existing_row_sha256": "84b3fcf8955436dc7cdb28b6b503f5d7f9d974292635674e65b95e66073bff56"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        4096
+      ],
+      "full_existing_row_sha256": "a5043c6923f07a5d563435d7a5fd897a1f7ceb12180916958808f444fff1e2c8"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        8192
+      ],
+      "full_existing_row_sha256": "97036d23386ff2da508b615d995bc34135cb2504d16fdaaa34078f5f45365d19"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        16384
+      ],
+      "full_existing_row_sha256": "d36525bdcce4d93ee878f34991833bc74d5dea1ff5a44089c38e677f0ce4d35c"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        1
+      ],
+      "full_existing_row_sha256": "568f5c54079947cf00534bf2e4150fc49665d5e77eacf22d8a9a6c28f256078d"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        2
+      ],
+      "full_existing_row_sha256": "1baf8feeb4d8b77177b6d87d3b0b4a3019d89d2c5ab24287c59e8814915a023d"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        4
+      ],
+      "full_existing_row_sha256": "f305874dd582a3881542c1c74e2854d5d19a30310f712de12f4b082fe7d8c050"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        8
+      ],
+      "full_existing_row_sha256": "ef8e7fe54771be1cfef7202b65d904e999b9352d79ddaff95af22ca172d74d67"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        16
+      ],
+      "full_existing_row_sha256": "7b13d6bea9d782fef45fb9e179797bd8b8a378087f867d6ca7c9ee2a3a570e09"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        32
+      ],
+      "full_existing_row_sha256": "ec7adb3f7c7cd9dd3c2479acc2f049c3349410cea535693c49e4484532d6ed33"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        64
+      ],
+      "full_existing_row_sha256": "e88087b771f13459695e87aab322d6468484a3b9aea0272926469ecff04c8c22"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        128
+      ],
+      "full_existing_row_sha256": "44b57f02527291b1e24c881fc699c4f5d1371b2a1cf905e9aeb4f23a5db2c0fc"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        256
+      ],
+      "full_existing_row_sha256": "7cab535106f2d38424c329c7e484bbfce93db3cf54f177fec6ca6b6c01170274"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        512
+      ],
+      "full_existing_row_sha256": "5fa348a931aec1f1a0d7455639698ce8a5f16e24a8bc2effe74e63052e430344"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        4096
+      ],
+      "full_existing_row_sha256": "86aa8c09fc4c080f2a14665dc7d0bb4c266497b6313c20d43bd0861fac8c4606"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        8192
+      ],
+      "full_existing_row_sha256": "25c70606c4a5e408d445dc68a0e852de5a0ac483f6c16c8aade6af28d18da31c"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "ep",
+        "CuteDSL MXFP4x8",
+        16384
+      ],
+      "full_existing_row_sha256": "fb933911d0099af80f39785dab783b4f078093c74d40145b89164a3380d9cb5c"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        1
+      ],
+      "full_existing_row_sha256": "4d836153b4fc1d8263833c82202d895795f997a0f30cb495c9c962dfa8cfd6d0"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        2
+      ],
+      "full_existing_row_sha256": "5e3d181dcee3d51f25ee9ae38d3b5e122630e0451fe078fd3d33a171688a00d0"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        4
+      ],
+      "full_existing_row_sha256": "722fb43cb14c6b5e9938beb03354cbb3c8ef42401e67007ac475edd8af11bdcc"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        8
+      ],
+      "full_existing_row_sha256": "88842e3885ecbabc874e4fbfe7a4665555d8bdc36f1b08d934db86ffa2fabff4"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        16
+      ],
+      "full_existing_row_sha256": "d086fbf4376288ee5816be3e1c55212d117938a171112432f3df3eeca8af9aea"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        32
+      ],
+      "full_existing_row_sha256": "23dd6e9725c84b156227bbbd4fae05991bb242ac0786bd9f8e151626e6a3725a"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        64
+      ],
+      "full_existing_row_sha256": "aad5f93cf7648d6cecf2cb52c8911c1a676dbb3401e2325cbe791d14b3079315"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        128
+      ],
+      "full_existing_row_sha256": "c3ab0b7003b160669d54dae14eaef9e314250f7e64e352dde8bc199c2720b230"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        256
+      ],
+      "full_existing_row_sha256": "835f104a876f03dc6a1502dbd25f781ce12cd424a4fd4c674460d375c65eefd2"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        512
+      ],
+      "full_existing_row_sha256": "7de2b49f9b2296f54e1f6b2cd89de76c6ab9dc16558b42f9983defbb88e8764e"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        4096
+      ],
+      "full_existing_row_sha256": "06e199a07fb71de26a2f746d3f4ea68b9ad6c95e07fe40fa01641dc889728dcf"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        8192
+      ],
+      "full_existing_row_sha256": "986fb66ca8d2d894c3a41401f960c9b4eb66851c99c235ab72123f66c4acbf7b"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL W4A4",
+        16384
+      ],
+      "full_existing_row_sha256": "6ec3f616335ab69d16b670f8d880171345fd28c8500915a680748e640b0d089b"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        1
+      ],
+      "full_existing_row_sha256": "be0b6c4bfb8e307906e52e43e879c45e4ea0bd0b4f25a6fdec7dea06ce1b98c7"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        2
+      ],
+      "full_existing_row_sha256": "c64b51179f7550eaf306c353f5cf6f7f7792a968341e4f4ff6f867a97e76c87d"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        4
+      ],
+      "full_existing_row_sha256": "e2b37212d5cfef87e11dd24907f4f7d380e76729d11fbd602cb6ddc65ae1997a"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        8
+      ],
+      "full_existing_row_sha256": "ccf32c8eeb15e08ce160a720dde2ad57d4b5070774c624dc16636dd80a5926c1"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        16
+      ],
+      "full_existing_row_sha256": "fada1d66efbacf5510600ec04e1c1a18b8f30da013d369c4dc254012f131465e"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        32
+      ],
+      "full_existing_row_sha256": "59b545327fefee1e4bfe9118af4ab5e2fe92b5ab28f14787725337b2c0cdc8ce"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        64
+      ],
+      "full_existing_row_sha256": "9b0044e88a29047a0cc6081fa787aa9504a9684774037cecc137314ee222acf3"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        128
+      ],
+      "full_existing_row_sha256": "e12b99d16be2b92a42dc0e2c33c2a95e619d6c4ea23f7961b7ee2dfb7d91376d"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        256
+      ],
+      "full_existing_row_sha256": "a7bcde339cbf934fc6a05f6c4a4c90abfc3ecda8880387122a515e74420f9f5e"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        512
+      ],
+      "full_existing_row_sha256": "8d4789886ceeb85d9253015df4352ab886ee01fd83b2169c5ebc9af99a4284e0"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        4096
+      ],
+      "full_existing_row_sha256": "9df9df9b8462db0a4c95edef775860a1311065ca1369d12bd042c570f1776b1c"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        8192
+      ],
+      "full_existing_row_sha256": "87b83b8e4c7416a73b98f2c7f6acbad460863d4c7bb8e708fbe2da848031d51e"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        16384
+      ],
+      "full_existing_row_sha256": "d558d956285b458a9f627fc3bd9ecc01bdb3d26e07412cb00c31eb2da68d55c5"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        1
+      ],
+      "full_existing_row_sha256": "dc20dba704acf0c550d076de302217dc43a727b8ee74955094bba12a03f70916"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        2
+      ],
+      "full_existing_row_sha256": "eef0aef472894d9c2caa8642c90043577b47c51af7e0bc4debf68e081d03c57b"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        4
+      ],
+      "full_existing_row_sha256": "9ba2fd6a38edd589ca679c767a20557fa64cac1629bdd8ffb835f539568a3037"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        8
+      ],
+      "full_existing_row_sha256": "d84d5a4d5ee992634ab594f4bb4fbbdace517cd11153bf37791897a2a068bb65"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        16
+      ],
+      "full_existing_row_sha256": "f83bda985c79bdc775a565eadc441918eff414ca852dae60088fb38fff9ab946"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        32
+      ],
+      "full_existing_row_sha256": "4356131b2c7b7664015202cc287401ffc4e75d9005fe241e992445eb8f159db3"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        64
+      ],
+      "full_existing_row_sha256": "655c796617f41732f7587b25a1b1eaf49c3a47d926a5c4221149d3a9102a6572"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        128
+      ],
+      "full_existing_row_sha256": "4cf2241949f074abeffe04eb78ca0c154d574498b15e001dc3e27bf6bf7adc25"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        256
+      ],
+      "full_existing_row_sha256": "ac19711c03ec9c4bbdb53fcbb3a85f313294f6362e73f79198db600362ab2f23"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        512
+      ],
+      "full_existing_row_sha256": "d883dab3cd3a0768fd3d1004d8fe3b6f074cf6ba8725f5c1fab986cb642402b3"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        4096
+      ],
+      "full_existing_row_sha256": "2aca8811756aebea8aa79679ae9e96dc630c6af7e53d3211ba6ffb410b09c542"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        8192
+      ],
+      "full_existing_row_sha256": "3cba40fbcbc762f16a060e8b4d1ecd1023e84cdf38a150a8237751ecdbf1ffcd"
+    },
+    {
+      "identity": [
+        "kimi-k3",
+        "tp",
+        "CuteDSL MXFP4x8",
+        16384
+      ],
+      "full_existing_row_sha256": "a86edca9b4040bac9ce825d8dc26d508d4ac1d1e69fedcdf9b2b75e59e2a015e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        1
+      ],
+      "full_existing_row_sha256": "b5e1ccbf8951d0e9a0b9a6df13131dc38901e13b1d22a82ad972c262f6cc06c3"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        2
+      ],
+      "full_existing_row_sha256": "e3b7444f7279b2dc9eb1d428fe35989bdb279119b2316ffc51047d363bdfcafe"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        4
+      ],
+      "full_existing_row_sha256": "50ab52196aceb925630d1155d024d280ab1487543b76476faeb24ca040ae704d"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        8
+      ],
+      "full_existing_row_sha256": "11a21546f430189eadfe3deea6e64d05d9a3ef49b71657f12bea3da0f36e56ff"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        16
+      ],
+      "full_existing_row_sha256": "cda7c8abbff0a9b201dc424c3f8457cf389db4b53122cb6adbf240c2e4dc4a17"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        32
+      ],
+      "full_existing_row_sha256": "0f22100229644e0f6a65867ccc2087d57ab989c3528f2da92d3e04cd28d3c22d"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        64
+      ],
+      "full_existing_row_sha256": "b618510e2ca4a9084698e6ec7b3b2f70b4edcfb21eaef7ffcae4f66bc079a376"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        128
+      ],
+      "full_existing_row_sha256": "f576275fbcd01460bd8b49d076c233510b1f497b92344d2fd20b8d4fbf45f3d7"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        256
+      ],
+      "full_existing_row_sha256": "dbdbc75955bde278270448f3db7740fd80a6ee2d0f65673829277425944a9aba"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        512
+      ],
+      "full_existing_row_sha256": "312eef2d1835e1d083502fd72bac0e75038ffa996e78826ff5f8e683924c14bf"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        4096
+      ],
+      "full_existing_row_sha256": "9b4765c9d1de766fca9aaffd882e3bead6f410ea7eec6c4f54dad19e77a20e2c"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        8192
+      ],
+      "full_existing_row_sha256": "735694eab5547f8ab13ba21c435b2567033257b899f979fa03b1939633773654"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A4",
+        16384
+      ],
+      "full_existing_row_sha256": "ac9c92482022ea2a6476341b105bf6165ce126f454023ee1b444b4d30ee71815"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        1
+      ],
+      "full_existing_row_sha256": "28bbca9fa3bf8d63e3613a9a6c0f1b4cdbadb1d78d14bbdba506352905cbb25a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        2
+      ],
+      "full_existing_row_sha256": "4d6dac56159bfc6646c3e24d28d42c7bc24f03de4985b5c7f41afabdd51ec699"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        4
+      ],
+      "full_existing_row_sha256": "1d8bea5be87d30104a7222c8acee1e1fee24bdb9a15d59b0860542656e5d0a85"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        8
+      ],
+      "full_existing_row_sha256": "c5f8575fe6e99d48ac2bbedb5c3ca2695c90de8a0c5fdc4403ccd5b36fc582d0"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        16
+      ],
+      "full_existing_row_sha256": "208d54a81376360a67822c8473167589fe1381782a5f5638ccbacc482bf87c1e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        32
+      ],
+      "full_existing_row_sha256": "456df4251a37e5cabf7252f6655552f6699cc74c9f526bee83aa2dfdfb009081"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        64
+      ],
+      "full_existing_row_sha256": "5b4c141963253613744537fea2836e0221e63df817ec8957e8344f7c44a28c42"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        128
+      ],
+      "full_existing_row_sha256": "4266724f4aed45f299af1a144d52ae4b6ff22f703646a8b9d0c95e15d1fddacf"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        256
+      ],
+      "full_existing_row_sha256": "b77a464ddbf95acf5155e14393ef1d7b2b8831ac2fbf76d9aa3a92cecfbd92fd"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        512
+      ],
+      "full_existing_row_sha256": "387d292cff8474947707d7594606f01473cd152dc0d5ab282d39e77775767382"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        4096
+      ],
+      "full_existing_row_sha256": "edc9280c336ed3fb0396b68b74d1c3c2df21c8012e8b169ef4f79142cd414740"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        8192
+      ],
+      "full_existing_row_sha256": "b3052ed7e91dd741d8d43e3cdeb5c82df667d394ea93e710e28123f208c22d36"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL PER-TOKEN",
+        16384
+      ],
+      "full_existing_row_sha256": "838094867a9c4c32fd1327a2a6ed4db3d7eb591bb283c6f1ce3adc9c94b6e9c0"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        1
+      ],
+      "full_existing_row_sha256": "ede77acb78d8856dfe14c505f2b129aca98ad23041f0221744ace703f5d8687e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        2
+      ],
+      "full_existing_row_sha256": "1e8be0feadb3335089359d6b2ac4ff71ed04e080af4de6007c0be456f2e73083"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        4
+      ],
+      "full_existing_row_sha256": "d2f74dc33fd46e3673f91fc80b85639607855ce2627fe2274438d132cc855ac0"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        8
+      ],
+      "full_existing_row_sha256": "e9d935c608a064b30ffa5f07e036c604b4419b03a5b2c9537d2455b22e4bd77e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        16
+      ],
+      "full_existing_row_sha256": "0dc35e7d0a66d277bc747988c9ecc54bb4fad02c4afdd917df092101c965d26a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        32
+      ],
+      "full_existing_row_sha256": "22c7302e8002a623cc570cc96e79319f4cf3921c7614803f2b1907a588b3ab9f"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        64
+      ],
+      "full_existing_row_sha256": "873b501cfcbdd5096a6958034adc2f3165a92e0e7d78e33ae3e2e1ecd25761f5"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        128
+      ],
+      "full_existing_row_sha256": "f2583559badb99040210d11579c6e1ae80aa622c65d2241498c6850ff1c036fb"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        256
+      ],
+      "full_existing_row_sha256": "42a7f0c010d3ef4480cc29c8eb566b2ddaf8e97e296d3d26ba3982a151e0375e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        512
+      ],
+      "full_existing_row_sha256": "13eb87c052d5db67cc6f1919d742b77de43a2d691f2b7d362925f3e88d292095"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        4096
+      ],
+      "full_existing_row_sha256": "4091c1b1264f3d10cd4a997f116be8ebd19f814b671b1ce7e5405e784215ee7d"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        8192
+      ],
+      "full_existing_row_sha256": "b47c5b182e5c705a82b26f2a9a4119041826735810f29d1e2cf3f93a8aa2188c"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL W4A16",
+        16384
+      ],
+      "full_existing_row_sha256": "bfe5f17d1785140c4194487d1923fa313b39b935908da5365135bb414d15fa27"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        1
+      ],
+      "full_existing_row_sha256": "c907edb20856911247d04a7db09a67093d8d3915a0210ec5f6d33059236c2981"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        2
+      ],
+      "full_existing_row_sha256": "86b4818b4622b74712a8ea57088481a4a4a081ea18b7637bdb3666632d6dbb3b"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        4
+      ],
+      "full_existing_row_sha256": "bca8676b52e28cd6399327ae57aae08fba36b713a8a5403ce31d60abff44071a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        8
+      ],
+      "full_existing_row_sha256": "b123c502822212029039456e3aca9dc234f45c2ca9bbb11965f1fc0519c27736"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        16
+      ],
+      "full_existing_row_sha256": "8ed1f62dd4240fb63e7a3a399971a0c891516d4e9ef24761a392bd1bc99aa803"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        32
+      ],
+      "full_existing_row_sha256": "08f678f914785e2243020248f51fde3fb7ccfc921f4ce04161e7ca836bfabfbf"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        64
+      ],
+      "full_existing_row_sha256": "a7d2f23d9c46b8d91e1d8a36bb5ebed453df71fad725d317678b5a9d9cd0f06a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        128
+      ],
+      "full_existing_row_sha256": "cd4646b8abc26c2821aad4c6f26bfc0a5aac347db7ebd3b01a8ba77d789f1745"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        256
+      ],
+      "full_existing_row_sha256": "715bb7167614a7a785099eb8a2e5d9b6bfeac070a9ce03e99dc7b0da5656cc1e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        512
+      ],
+      "full_existing_row_sha256": "0774e1f9663c19ca8c0e5d99bb88b5b82b533be347317a28ee2261b4194cc14c"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        4096
+      ],
+      "full_existing_row_sha256": "5dde79ad776e9020c8c1f65144880a4bc6305e088e69712a0d9e73893b23ae9c"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        8192
+      ],
+      "full_existing_row_sha256": "197de3e2527b0b45b8ecd653e46b31e9f3d25393b1c4b55b7db77f00b886f0ec"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP4x8",
+        16384
+      ],
+      "full_existing_row_sha256": "f4f44f765061343e994fab587b68695df5c547833fded332d19d5db11dea5ee7"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        1
+      ],
+      "full_existing_row_sha256": "637db39cf70497294fc4cdc7fd7d93c3f46b4cfdd1512ba4322cf224a875c5f2"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        2
+      ],
+      "full_existing_row_sha256": "9bdee43e8e21a567338799f72335baf57fb9976eb4a92b6bec430b0697823602"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        4
+      ],
+      "full_existing_row_sha256": "db2e982d03c6c016416624ca1620d6743deaee3232bfb60b942449b2845ecaba"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        8
+      ],
+      "full_existing_row_sha256": "e30c0e58ca33b49c8ec5e6f33f93fe916588f649f6272c8fe2845fbe88b6ab3c"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        16
+      ],
+      "full_existing_row_sha256": "3c5b6e12965934deeb0a6a826378a62745a2f26c9cff74c70ed6d05b72305bc6"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        32
+      ],
+      "full_existing_row_sha256": "53797c4364faa284ba700e770349a730fb686c4f34c8da30d31ce2c2fdffda31"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        64
+      ],
+      "full_existing_row_sha256": "e926a9d9a157c4f07a4c28defd65a94e3bf0a5c2e9e31e6e7a7f6d6505ab898b"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        128
+      ],
+      "full_existing_row_sha256": "aee661dfe4634999e4ca05fcc174e3c458ec4b20eca009c93fd1a052380e5a23"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        256
+      ],
+      "full_existing_row_sha256": "2a3cbba25e100e975d6d620803c84d006671e8c0814acb6f62514c4c7b394928"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        512
+      ],
+      "full_existing_row_sha256": "ab7dfcf88a18230502b4c79603c6d19ba141c4a82b030ba84a695adbda2f3da3"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        4096
+      ],
+      "full_existing_row_sha256": "ed31766f93f06eeef16709fea8fc9b4327935c89831839c47181674d37f36cdc"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        8192
+      ],
+      "full_existing_row_sha256": "f14694d8095261184ef806c4b3a079e79615bf9899acba6110d3d24882cb2773"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "ep",
+        "CuteDSL MXFP8",
+        16384
+      ],
+      "full_existing_row_sha256": "601720d25e8cb4444f14399b0226587fda7eb8b4198558c501c07f6860d04e1c"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        1
+      ],
+      "full_existing_row_sha256": "2b329b0caf241c29115999f2688c3abb326c61705d5fbd00402ad243de27d260"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        2
+      ],
+      "full_existing_row_sha256": "3121cfd16e7d2b24ac199d8c21053c0a4a6e74859e6998c26bd0b26e22df2e1e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        4
+      ],
+      "full_existing_row_sha256": "a04f2ad9a0e3f041e71a1806d1c4f42cf35023a16971346012499484a772cc7f"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        8
+      ],
+      "full_existing_row_sha256": "080c2d029ed269ea336524ca570d21eb4a85906a173099ee48aee64d95bc3926"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        16
+      ],
+      "full_existing_row_sha256": "4095c616da2183e3e1ef2edb70589b7a182ceadb9d2af49305f01830592b2e29"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        32
+      ],
+      "full_existing_row_sha256": "b087c8f4529eef643a3bef6f4f0d16f7ef5f5407ea84c9cf53ac53e52c562da4"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        64
+      ],
+      "full_existing_row_sha256": "a3cb5eca14be46f500352e8d7e1c87ff6127f2755d367041e4ff06f93d229434"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        128
+      ],
+      "full_existing_row_sha256": "d4bc3ae89a4d28883d81cd1ef628c81316092b619341db9fa761b79208c9b56e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        256
+      ],
+      "full_existing_row_sha256": "81503410e564ed186dd10b617ceb82150482df55bb9dcc2a1179f5fc03e8962d"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        512
+      ],
+      "full_existing_row_sha256": "4a4f022109fc8b02f49d0becf4670d6748654db9656094bf7f1f33f6c88f60da"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        4096
+      ],
+      "full_existing_row_sha256": "f2ed8c0bd251b42547358492ffe721b9dc5c536ff33a4d879a478c2f0c00f42e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        8192
+      ],
+      "full_existing_row_sha256": "28dd88d3960d3b9a83074d7a3616e77227e831f2682ae4e0467ff0d1253c5e14"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A4",
+        16384
+      ],
+      "full_existing_row_sha256": "b081be9e800df08419306e3ec3daa8d5aac4e65d6c51a1efa743cc1fa437e765"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        1
+      ],
+      "full_existing_row_sha256": "8bd2c2c9c1ddc16eece365f98a940d32039da4fcfcfacd4b641ffeed8943be5d"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        2
+      ],
+      "full_existing_row_sha256": "fcdbe990e7b1d3cb6e779b4a21037d3b1b31518fbc596ade507c7a0cf585b71e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        4
+      ],
+      "full_existing_row_sha256": "e4056e624c6dce859a2023cc6350b565671be5dc8a31cb373fc0dfdbc0683b6a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        8
+      ],
+      "full_existing_row_sha256": "53d6286f899e3b076afc70d426a07a6679f40e085bc8451706e77af0898160b2"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        16
+      ],
+      "full_existing_row_sha256": "5a7733c3c375607ce3593b89d56c18151124cf33a2fba162b1422ab2cbf1382a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        32
+      ],
+      "full_existing_row_sha256": "0bcd7d77bbd131108707821cc7ba2977b6307c507b1f55a12f4a7f85c461aa16"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        64
+      ],
+      "full_existing_row_sha256": "73ef86d8df981e3a3c3eefff2b84e7912ad17281208cd111bf29c3a9f44164a9"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        128
+      ],
+      "full_existing_row_sha256": "bab99c90e3f35f490df9f1284ea06ec4bbd400d30ef0303f1f4a4e457db02d36"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        256
+      ],
+      "full_existing_row_sha256": "8b8bd357eb1fe863e2aebdb3ce9c94ac4ac84657c55e08e92f6a3f6379d0c977"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        512
+      ],
+      "full_existing_row_sha256": "8e6925b3dae7be8dfd8e151c4b7e89d96859ae8d01ea23990eca9d0d548e92a4"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        4096
+      ],
+      "full_existing_row_sha256": "1e82a0be01acacb3f24612dbcf4dbbf34e511c6aa311c2001ca972fd179b37b9"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        8192
+      ],
+      "full_existing_row_sha256": "0717e4a5c19f3cd9c08e862cb9ea4676807d1ce2f74cbd63066fa95667d5580e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL PER-TOKEN",
+        16384
+      ],
+      "full_existing_row_sha256": "bd74a6da2f55a569b61621eba158f139132a7d58f257d69f3ba9c65efc606bb7"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        1
+      ],
+      "full_existing_row_sha256": "1a922513a8f6577e34ef5cafbb686717ef9b4947f0489bcc9542b8955bcaa531"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        2
+      ],
+      "full_existing_row_sha256": "dd1bc035801fde73c280dff58740457abcdb0eddb92b16af04580d39dd2afaa9"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        4
+      ],
+      "full_existing_row_sha256": "fd62f049b0c7da7e14f3a52667a38de7c84c3b53baf00def43a4023d648cfa6a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        8
+      ],
+      "full_existing_row_sha256": "24082cb5523ca7eb11194f4649c4dd07d1790412a9b7ecd4c4a5b8197d74e33a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        16
+      ],
+      "full_existing_row_sha256": "e134345596f625cbbb86ba4f09864f94d03ac2858b0c769b71594c8a7655aa3b"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        32
+      ],
+      "full_existing_row_sha256": "0c49c84182c0a22585c38aa58a5d1ac8000e0381c3b8e49eee956cbfc2e06c44"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        64
+      ],
+      "full_existing_row_sha256": "f8ac17055f19a416a375bf42490ca2648fd768275d651819a3fab8d953e5073f"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        128
+      ],
+      "full_existing_row_sha256": "50d2470f55530163b842ac6c762dd1f19c5705acfc7fd263dd8f43a5d4c18fba"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        256
+      ],
+      "full_existing_row_sha256": "316822538aff8b70716a0749513fde8037378994bb2d308312cedebd843905e5"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        512
+      ],
+      "full_existing_row_sha256": "f50a526621edc27540f2375701db1749c5257a927e8d7cb863c10ac7550bdc65"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        4096
+      ],
+      "full_existing_row_sha256": "9dac7a6a38334d27ecdfd3a84b3cfbf4d7fa2b32de363ad11273dcec7251463a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        8192
+      ],
+      "full_existing_row_sha256": "332af2db68e77c9b41a3752e0e9fc5591595911b89e217ec9a0e9ee7b349307e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL W4A16",
+        16384
+      ],
+      "full_existing_row_sha256": "cfc937a8c09d1b07409f669a83bb0237fafa3bfeb7b388cfb8ea7901dd86a544"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        1
+      ],
+      "full_existing_row_sha256": "88b9e9d3939f0432da59a6c2653a055734606505acdf24fcc8a95f8749f7b36e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        2
+      ],
+      "full_existing_row_sha256": "3ff9e3cdbba6a1c4555c4954915029de4143b07bfff53d35c702418134e210c7"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        4
+      ],
+      "full_existing_row_sha256": "81989426e0ba612478656d7401eab973f9b3aaf8a4e5934f63a02809b0364769"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        8
+      ],
+      "full_existing_row_sha256": "9a41319516bffe75f8ab78373872bdad53eb3424d38fa9680c7346ad3f801c75"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        16
+      ],
+      "full_existing_row_sha256": "ee9a8fdfc09376d72cac1a0a6e2251c88dc035780a96555957ee42fe4724d00e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        32
+      ],
+      "full_existing_row_sha256": "9200678d47d3fa060a8366a26261e5b475dd7b02bda7818e0f9a42061652e759"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        64
+      ],
+      "full_existing_row_sha256": "60fd8260a727e97f65abb6d52161ec0493b7a1349cb1dba5e5a1953aee22ca88"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        128
+      ],
+      "full_existing_row_sha256": "872aedda8a0fd3305fe8080a998c322720f4d641189092e0a020e7774abbfe68"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        256
+      ],
+      "full_existing_row_sha256": "2aae58e967702c76f65868cb11d0c24184d5759e6818ba2070ccc5ceaac17d02"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        512
+      ],
+      "full_existing_row_sha256": "207b7e2116abaec822527c11c6531b176704106819fa9212113b5e0f8f69793e"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        4096
+      ],
+      "full_existing_row_sha256": "0913ea4c169b3f759318343d6135191df474a823961f4746419d8e8c320119e0"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        8192
+      ],
+      "full_existing_row_sha256": "4e7acd5f2abd170e7ea095fa64e1305855e72884f1002abe7ba0d83837ec0521"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP4x8",
+        16384
+      ],
+      "full_existing_row_sha256": "c87d43b3bbc4ae345660181f4ee39171d6548e595a09ea95b0b7ab8eb7b1d31f"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        1
+      ],
+      "full_existing_row_sha256": "de0c38894c3007c36e42a2672e840a16ec0830729a53534348f6f5f985a795a7"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        2
+      ],
+      "full_existing_row_sha256": "9809da47d9f6ffce2cad1592be50207bb94e95e3f5ad644ca1c26f0aae519dde"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        4
+      ],
+      "full_existing_row_sha256": "b52bea22aebbc84eda5a1bbcafed09ad797a13925b9394932ab0f01463464224"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        8
+      ],
+      "full_existing_row_sha256": "375f49bad69cb94a6c66dfa2167bfec5ee837e93bf80fb8633f664f7072044eb"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        16
+      ],
+      "full_existing_row_sha256": "94a93618b51b1b6148ac8a9014f22a7a64db552ac4544247ce660f6a108d9509"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        32
+      ],
+      "full_existing_row_sha256": "e80da0c6d7563a0c61d5c0ee58ff51bc736e14436c41201fbfd753f6c28e2cac"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        64
+      ],
+      "full_existing_row_sha256": "36d682dfd5a05d6e0c163e36bde9f07b3f9cac7b3bf5c7f576ff523c9872a55a"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        128
+      ],
+      "full_existing_row_sha256": "856ea5b42e1e3359f810a958f444c468a112a5d1b3038c3adc1ef0a5db3f3394"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        256
+      ],
+      "full_existing_row_sha256": "a31c65335db45b821ac50d2a989eedc694a60bc9b824079c5a5a7c5444f7acc6"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        512
+      ],
+      "full_existing_row_sha256": "668ffa8aac2bddd0aa27a90a95f6da0db1881791b02e62f02f68614dc8e1f301"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        4096
+      ],
+      "full_existing_row_sha256": "7b6096c1df4fb14cc9454c1670b5921e822dfd7fe2a0ea9d1caab125ab82a9f2"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        8192
+      ],
+      "full_existing_row_sha256": "bb979d32dcfc7338273fb4b57aa7f11145b2f7c58791419c3cc9f95016130d41"
+    },
+    {
+      "identity": [
+        "nemo3-ultra",
+        "tp",
+        "CuteDSL MXFP8",
+        16384
+      ],
+      "full_existing_row_sha256": "9041a8c071acd659f30d55f0fbd45a65d5aa3cb6932310e60392b1ae4cfdba33"
+    }
+  ],
+  "qualified_unaffected_native_images": {
+    "representative_swiglu_fc1_fc2_finalizer_pairs": 14,
+    "exact_negative_tactic_fc2_finalizer_pairs": 4,
+    "qualification_summary_sha256": "c8c59cb709ef5ecc71cfe3353618bbeef1749d86f29284c5ec42c5d453152841",
+    "negative_native_summary_sha256": "cdd9a9939747ae8fe0655af29073d3088a4fce7be4f311c3caed973772215309"
+  },
+  "boundary": "Preparation only: no publication overlay written. Preserve complete existing dictionaries for442 reusable rows, including historical baseline and source/evidence labels.26 fresh cells use the original full CAAC candidate phase medians; the six-cell ACCA diagnostic must not replace them. Swap source is byte-unchanged; non-SiTU W4 selects unchanged compile-time graphs. Native identity evidence is representative, not an exhaustive recompilation of442 signatures."
+}

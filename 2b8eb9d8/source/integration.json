@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "integrated_commit": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "parent": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "source_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "patch_sha256": "4e1014a6757ac1894a09b9f18c01159b7ead7ae78ca87bc8e999dd9bbade333e",
+  "source_identical_to_qualified_review": true,
+  "primary_clean": true,
+  "source_only_changed_path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+  "retention_sha256": "00deb8bf738c4febbcd2ec6d758dd0539e17152c116ac85ebaedd172081e7798",
+  "reuse_sha256": "2c7c43c975b428ff48cf988574702fc942b98fe01d9c589525fa1aab6afbbf21",
+  "review_status": "M flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+  "review_common_git_dir": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/flashinfer/.git",
+  "review_retirement_authorized_by_parent": true,
+  "time": 1793381369.5398378
+}

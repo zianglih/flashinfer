@@ -1,0 +1,25 @@
+{
+  "passed": true,
+  "retained_head": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "native_original_suffixes_reproduced": 51,
+  "native_tables": 15,
+  "native_groups": 16,
+  "records": {
+    "fresh": 26,
+    "reused_cute": 442,
+    "reused_trt": 390,
+    "bf16": 52
+  },
+  "original_stdout_files": 142,
+  "comments": 4,
+  "all_original_structured_records_preserved": true,
+  "all_route_histogram_model_topology_joins_verified": true,
+  "same_unchanged_native_formatter_replays_ratios_and_winners": true,
+  "external_plotted_cells": 792,
+  "retained_plot_negative_cells": 165,
+  "causal_plot_rows": 22,
+  "causal_plot_negative_cells": 9,
+  "manifest_sha256": "b7d46798147fe74bd25988e8b2eb304fe6df878f68a1ccaaeacecc0e85118016",
+  "formatter_source_sha256": "84855eed2a84d4147488144db3b08830fa696e3ce4306ec4fa8b3cbd0724585e",
+  "boundary": "CPU replay from original structured records, not parsing/reformatting printed cells. All51 existing stdout suffixes are byte-identical. Final table rows use final candidate pass; plots retain two-pass aggregates and separate primary causal26. Plot values/hash bindings verified; visual inspection and archive transport remain separate gates."
+}

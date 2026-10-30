@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "retained_head": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "direct_parent": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "changed_paths": [
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py"
+  ],
+  "qualified_source_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "qualified_source_byte_identical": true,
+  "diff_numstat": "23\t36\tflashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+  "source_peer_sha256": "32b1a63af3ea6a23aeff6c736666ebe08bc368705a4eddf52fb60ead2136ca15",
+  "qualification_summary_sha256": "c8c59cb709ef5ecc71cfe3353618bbeef1749d86f29284c5ec42c5d453152841",
+  "swap_benchmark_wrapper_finalizer_oracle_unchanged": true,
+  "boundary": "Read-only commit-to-qualified-source proof. Full26 causal data and separate ACCA have independent root peers. No new tests; reusable442 table rows still require per-row publication mapping/source-scope checks, not inferred remeasurement."
+}

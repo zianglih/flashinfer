@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "retired": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/flashinfer-w4-paired-situ-review",
+  "source_and_patch_preserved": true,
+  "source_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "integration_sha256": "fdd7ed3b308166f03e65001cfee425af1cbcc71c6890628b572d74a2a8eee536",
+  "time": 1793381370.547405
+}

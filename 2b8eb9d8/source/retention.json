@@ -1,0 +1,48 @@
+{
+  "decision": "retain_as_instruction_and_source_simplification",
+  "committed": false,
+  "pushed": false,
+  "base_head": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "source_path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+  "candidate_kernel_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "control_kernel_sha256": "25aa126d6e8e7bec5a42467349496b10a5aa1ef1b2a66b92bbe312c58889e34e",
+  "patch_sha256": "4e1014a6757ac1894a09b9f18c01159b7ead7ae78ca87bc8e999dd9bbade333e",
+  "diff": {
+    "added": 23,
+    "removed": 36,
+    "net": -13
+  },
+  "reason": "Removes actual scalar arithmetic instructions and simplifies the private helper without new state, policy, public knob, oracle change or resource growth. Tight EP16/32 primary losses do not persist in the separate repeat. No dependable prefill speedup claim.",
+  "primary": {
+    "cells": 26,
+    "retention_cells": 22,
+    "raw_samples": 10400,
+    "geomean_percent": 0.2749127172675614,
+    "retention_negative_cells": 9,
+    "clock_exception_quartiles": 37,
+    "missing_clock_quartiles": 1,
+    "summary_sha256": "0c4629e6b9baf751c7c6ae9556baaede89cb90addf99d64fefdd4e1e04c9072c",
+    "peer_sha256": "1bec5a7946f31cda08a71df7b770afd79471d58aeeb6668ec740c57323aafaf0"
+  },
+  "repeat": {
+    "cells": 6,
+    "raw_samples": 2400,
+    "phase_order": "ACCA",
+    "separate_diagnostic": true,
+    "not_used_for_publication_latency_replacement": true,
+    "peer_sha256": "0bdde2a0ce5dde41e3a44bec52dfa19c41e8cde2930c5dbdb2864e1097cc6f8b",
+    "comparison_sha256": "cf8d4526806e7aab965b482e2d5c65cde500157938d31100b207ce1cd01aa458"
+  },
+  "exact_gate_sha256": "c8c59cb709ef5ecc71cfe3353618bbeef1749d86f29284c5ec42c5d453152841",
+  "native_gate_sha256": "cdd9a9939747ae8fe0655af29073d3088a4fce7be4f311c3caed973772215309",
+  "source_reuse_sha256": "2c7c43c975b428ff48cf988574702fc942b98fe01d9c589525fa1aab6afbbf21",
+  "unaffected_reuse": 442,
+  "affected_refresh": 26,
+  "limitations": [
+    "Primary contains all nine retention losses; none discarded.",
+    "Prefill gains have repeat/clock variation and are not presented as reliable.",
+    "Actual packed lowering changes local epilogue schedule, not only instruction counts.",
+    "No direct exceptional NaN payload helper run; existing finite-output exact tests and explicit rounding/SFU native proof passed.",
+    "Reuse is source-specialization-qualified with representative raw native identities, not all442 signatures recompiled."
+  ]
+}

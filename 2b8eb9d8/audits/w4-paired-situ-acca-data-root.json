@@ -1,0 +1,25 @@
+{
+  "retention_cells": 6,
+  "retention_geomean_percent": 0.51648945973366,
+  "passed": true,
+  "config_sha256": "76ef652ce6fb208ff7f68521e10516a94fc7549a183de4a48e1361c0cec4888e",
+  "archive_sha256": "ba999aa380fc45a20390a6ef75fe967f2f8348abe72833918e5cd4d478e9ecea",
+  "source_manifests": {
+    "candidate": "7484a7bd8df49644f992e8fbc09efc5d4181fa8a1f5998f605da240107dcfc2e",
+    "control": "9283df1c1be64026e7c83f83ede284d2e4bcc3c885fca3f3558c362ffe65c316"
+  },
+  "jobs": 2,
+  "cells": 6,
+  "phase_medians": 24,
+  "samples": 2400,
+  "loaded_resource_records": 48,
+  "clock_quartiles": 96,
+  "missing_clock_quartiles": 0,
+  "clock_exception_quartiles": 4,
+  "negative_cells": 1,
+  "geomean_percent": 0.51648945973366,
+  "default_cells": [],
+  "default_stage_joins": 0,
+  "all_report_cells_preserved": true,
+  "boundary": "Independent raw CUPTI correlation/span, median/CAAC, route/tactic/cache/source/resource and raw NVML quartile replay. Includes recorded-default to actual native geometry/library/resource joins. No new GPU execution; all negative and clock-exception cells preserved. No source or timing-helper changes."
+}

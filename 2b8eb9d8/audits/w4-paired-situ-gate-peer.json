@@ -1,0 +1,182 @@
+{
+  "passed": true,
+  "candidate_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "fetch_sha256": "75c849a2c6a19f0b271d23085dab1a2417dbe80237cdb12fcc49bd366cab87b7",
+  "summary_sha256": "c8c59cb709ef5ecc71cfe3353618bbeef1749d86f29284c5ec42c5d453152841",
+  "files": 224,
+  "source_files_per_arm": 13245,
+  "exact_calls": 12,
+  "native_pairs": 18,
+  "affected_fc1": 4,
+  "unaffected_identical_pairs": 14,
+  "all_resources_unchanged": true,
+  "all_local_zero": true,
+  "independent_native_rn_2rcp_minus1_chains": 36,
+  "symbolic_lane_graphs": 4118,
+  "rows": [
+    {
+      "case": 0,
+      "stage": 0,
+      "affected": true,
+      "raw_equal": false,
+      "registers": 96,
+      "local_bytes": 0,
+      "non_nop_delta": -24
+    },
+    {
+      "case": 0,
+      "stage": 1,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 128,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 0,
+      "stage": 2,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 26,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 1,
+      "stage": 0,
+      "affected": true,
+      "raw_equal": false,
+      "registers": 96,
+      "local_bytes": 0,
+      "non_nop_delta": -96
+    },
+    {
+      "case": 1,
+      "stage": 1,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 128,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 1,
+      "stage": 2,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 26,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 2,
+      "stage": 0,
+      "affected": true,
+      "raw_equal": false,
+      "registers": 96,
+      "local_bytes": 0,
+      "non_nop_delta": -48
+    },
+    {
+      "case": 2,
+      "stage": 1,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 128,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 2,
+      "stage": 2,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 26,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 3,
+      "stage": 0,
+      "affected": true,
+      "raw_equal": false,
+      "registers": 96,
+      "local_bytes": 0,
+      "non_nop_delta": -48
+    },
+    {
+      "case": 3,
+      "stage": 1,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 128,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 3,
+      "stage": 2,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 26,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 4,
+      "stage": 0,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 96,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 4,
+      "stage": 1,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 128,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 4,
+      "stage": 2,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 26,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 5,
+      "stage": 0,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 96,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 5,
+      "stage": 1,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 128,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    },
+    {
+      "case": 5,
+      "stage": 2,
+      "affected": false,
+      "raw_equal": true,
+      "registers": 26,
+      "local_bytes": 0,
+      "non_nop_delta": 0
+    }
+  ],
+  "peer_script_sha256": "46635c95bb1b9612810c346eaadde8e8bf635b64231572cd2ddeeb43a86d47b9",
+  "boundary": "Existing finite-output exact oracle plus actual native/source rounding audit. No direct exceptional-input helper execution is present in this evidence; no NaN payload or exhaustive device-input claim. Source/codegen qualification does not establish performance."
+}

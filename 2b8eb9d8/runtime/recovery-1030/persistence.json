@@ -1,0 +1,664 @@
+{
+  "started": 1793378301.307959,
+  "hostname": "hu-pdx-59",
+  "sources": {
+    "candidate": {
+      "files": 13245,
+      "manifest_sha256": "e29b7f409520a7674900d29ebe7d4c075c1ad5221a45e55d433dadfccbb1ef0d",
+      "links": {
+        "flashinfer/data/include": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/test-consolidation/source/include",
+        "flashinfer/data/csrc": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/test-consolidation/source/csrc",
+        "flashinfer/data/cutlass": "/data/home/ziangli/flashinfer-k3-w4a16-megamoe-opt/flashinfer-n32-glm5/3rdparty/cutlass",
+        "flashinfer/data/cccl": "/data/home/ziangli/flashinfer-k3-w4a16-megamoe-opt/flashinfer-n32-glm5/3rdparty/cccl",
+        "flashinfer/data/spdlog": "/data/home/ziangli/flashinfer-k3-w4a16-megamoe-opt/flashinfer-n32-glm5/3rdparty/spdlog"
+      }
+    },
+    "control": {
+      "files": 13245,
+      "manifest_sha256": "ef63cf86e040063bb059efebbe6880e1a30f0cc6ac3a5ddc1ffe1d31261c952b",
+      "links": {
+        "flashinfer/data/include": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/test-consolidation/source/include",
+        "flashinfer/data/csrc": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/test-consolidation/source/csrc",
+        "flashinfer/data/cutlass": "/data/home/ziangli/flashinfer-k3-w4a16-megamoe-opt/flashinfer-n32-glm5/3rdparty/cutlass",
+        "flashinfer/data/cccl": "/data/home/ziangli/flashinfer-k3-w4a16-megamoe-opt/flashinfer-n32-glm5/3rdparty/cccl",
+        "flashinfer/data/spdlog": "/data/home/ziangli/flashinfer-k3-w4a16-megamoe-opt/flashinfer-n32-glm5/3rdparty/spdlog"
+      }
+    }
+  },
+  "native_modules": [
+    {
+      "name": "dsv3_fused_routing",
+      "library": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/dsv3_fused_routing.so",
+      "library_sha256": "1fe29da8e935835eb9d64459172d823cc08bf2c2c9ad4372adb85c398bf3a26f",
+      "ninja_sha256": "f972a604a823766b480d6ae3f805a984e32954af5e387c32070d8b3ce8a45227"
+    },
+    {
+      "name": "fp4_quantization_103",
+      "library": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/fp4_quantization_103/fp4_quantization_103.so",
+      "library_sha256": "1a776cf99de07323c37d5422cd55ea06161247cba02907b47962d02ca91313c2",
+      "ninja_sha256": "da89a4223fc4a7c8b31053531ee623bdfd9af20a684af84d15287fb90758aacf"
+    },
+    {
+      "name": "moe_utils",
+      "library": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/moe_utils/moe_utils.so",
+      "library_sha256": "36903970eb7ccac39711ecfb9e1c5e9f61f20043532bc8c36cbea11a34f4fc24",
+      "ninja_sha256": "b476d069f734cd7b42fc2700fe615630060cf99829c5adfa9d96fb86a09a48b8"
+    },
+    {
+      "name": "mxfp8_quantization_sm100",
+      "library": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/mxfp8_quantization_sm100/mxfp8_quantization_sm100.so",
+      "library_sha256": "70a529f693431f1eafaf0aff3fd3697c8993b8843fad857a539b532d546666e8",
+      "ninja_sha256": "3b5f413ca9dc2c2c1712aec0a0a8176bc22bfb31b8ea458595bb586eb9f0a866"
+    }
+  ],
+  "jobs": {
+    "ep-kimi-k3-mxfp": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "4e6c74a841dda4d223a25f82e1dfa96f9c6e3beeceb8b88792776a35866dd85d",
+      "analysis": true
+    },
+    "ep-kimi-k3-per-token": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "a335412ecce1871fe0014a081f4d9ac6af5dc0457d4549061b4e902f4723ebcb",
+      "analysis": true
+    },
+    "ep-kimi-k3-w4a4": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "3be7be950f12643d5b893d2d7a8740a40e2b7d34d862e32f95034ffe20cd816d",
+      "analysis": true
+    },
+    "ep-nemo3-ultra-mxfp": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "7b68634bb127c6cd8e0198edf5dc0dde48164339e9f62217058c7179d6c76812",
+      "analysis": true
+    },
+    "ep-nemo3-ultra-per-token": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "3f6be7abd01b17b350383d799b14480b0cdabed255a5c353ea09e3f4d254cead",
+      "analysis": true
+    },
+    "ep-nemo3-ultra-w4a4": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "7b48747766dd06f8a68874cf9b077b14f928c7ab12e882bf32243e111a848d0f",
+      "analysis": true
+    },
+    "ep-v3-mxfp": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "d832dbda73d23e943782b1b137ac279f1a77918f5c4374b0671ff609cdeb931d",
+      "analysis": true
+    },
+    "ep-v3-per-token": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "94522f71f12e398b0a26a0795997bf875d0761449b3cd098d373afb4bcf79b9d",
+      "analysis": true
+    },
+    "ep-v3-w4a4": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "941dcc39b0490c6259a9ff14182f21b35362638fceacdb9a0e7c4f1b45ce5be0",
+      "analysis": true
+    },
+    "ep-v41-flash-mxfp": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "9213b98e30d41a2a791905172c79afff8200c68b5116286fb8fda52ccb0509e1",
+      "analysis": true
+    },
+    "ep-v41-flash-per-token": {
+      "complete": true,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 3,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        }
+      ],
+      "receipt_sha256": "acf348929ccc2113a11305a0c6024d8fb6e513be4f7477a53a0b45a8964ff9ce",
+      "analysis": true
+    },
+    "ep-v41-flash-w4a4": {
+      "complete": false,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 1,
+          "role": "candidate",
+          "returncode": 0,
+          "verified": true
+        },
+        {
+          "index": 2,
+          "role": "candidate",
+          "returncode": null,
+          "verified": null
+        }
+      ],
+      "receipt_sha256": "559c90695e4bc13ba01c1436cfd2fd642d0fe16ed785c65574e0abb1f439bbdc",
+      "analysis": false
+    },
+    "tp-kimi-k3-mxfp": {
+      "complete": false,
+      "phases": [
+        {
+          "index": 0,
+          "role": "control",
+          "returncode": null,
+          "verified": null
+        }
+      ],
+      "receipt_sha256": "a30e6ac5a6e71e18627ae6a3ce68c35c06c033d97ba5e273759b7859d0b50b21",
+      "analysis": false
+    }
+  },
+  "read_only": true,
+  "campaign": {
+    "complete": false,
+    "started": 1793377472.5938265,
+    "control_head": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+    "label": "mma-readiness-e908-49c",
+    "config_sha256": "89e7fa42e477ed930be844a19dfd655f7005b08e53188d3bba48c87e9ffc5624",
+    "lanes": {
+      "4": [
+        {
+          "job": "ep-kimi-k3-mxfp",
+          "gpu": 4,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-kimi-k3-mxfp",
+            "--gpu",
+            "4"
+          ],
+          "started": 1793377498.4852617,
+          "returncode": 0,
+          "finished": 1793377569.4276197
+        },
+        {
+          "job": "ep-kimi-k3-w4a4",
+          "gpu": 4,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-kimi-k3-w4a4",
+            "--gpu",
+            "4"
+          ],
+          "started": 1793377569.933646,
+          "returncode": 0,
+          "finished": 1793377649.0090885
+        },
+        {
+          "job": "ep-nemo3-ultra-per-token",
+          "gpu": 4,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-nemo3-ultra-per-token",
+            "--gpu",
+            "4"
+          ],
+          "started": 1793377649.5554085,
+          "returncode": 0,
+          "finished": 1793377728.109337
+        },
+        {
+          "job": "ep-v3-mxfp",
+          "gpu": 4,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-v3-mxfp",
+            "--gpu",
+            "4"
+          ],
+          "started": 1793377728.6581054,
+          "returncode": 0,
+          "finished": 1793377822.2422636
+        },
+        {
+          "job": "ep-v3-w4a4",
+          "gpu": 4,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-v3-w4a4",
+            "--gpu",
+            "4"
+          ],
+          "started": 1793377823.0341122,
+          "returncode": 0,
+          "finished": 1793377906.496403
+        },
+        {
+          "job": "ep-v41-flash-per-token",
+          "gpu": 4,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-v41-flash-per-token",
+            "--gpu",
+            "4"
+          ],
+          "started": 1793377907.0822127,
+          "returncode": 0,
+          "finished": 1793377986.428443
+        }
+      ],
+      "6": [
+        {
+          "job": "ep-kimi-k3-per-token",
+          "gpu": 6,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-kimi-k3-per-token",
+            "--gpu",
+            "6"
+          ],
+          "started": 1793377498.485838,
+          "returncode": 0,
+          "finished": 1793377578.5925279
+        },
+        {
+          "job": "ep-nemo3-ultra-mxfp",
+          "gpu": 6,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-nemo3-ultra-mxfp",
+            "--gpu",
+            "6"
+          ],
+          "started": 1793377579.158137,
+          "returncode": 0,
+          "finished": 1793377674.241091
+        },
+        {
+          "job": "ep-nemo3-ultra-w4a4",
+          "gpu": 6,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-nemo3-ultra-w4a4",
+            "--gpu",
+            "6"
+          ],
+          "started": 1793377675.0386791,
+          "returncode": 0,
+          "finished": 1793377766.9669526
+        },
+        {
+          "job": "ep-v3-per-token",
+          "gpu": 6,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-v3-per-token",
+            "--gpu",
+            "6"
+          ],
+          "started": 1793377767.5751524,
+          "returncode": 0,
+          "finished": 1793377852.9590342
+        },
+        {
+          "job": "ep-v41-flash-mxfp",
+          "gpu": 6,
+          "command": [
+            "/usr/bin/python3",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/mma-readiness/performance/harness/run_perf.py",
+            "--config",
+            "/data/ziangli/flashinfer-moe-gather-pipeline/runs/mma-readiness-screen/perf-config.json",
+            "--job",
+            "ep-v41-flash-mxfp",
+            "--gpu",
+            "6"
+          ],
+          "started": 1793377853.5922885,
+          "returncode": 0,
+          "finished": 1793377939.9731078
+        }
+      ]
+    },
+    "full_source_before": {
+      "candidate": {
+        "files": 13245,
+        "manifest_sha256": "e29b7f409520a7674900d29ebe7d4c075c1ad5221a45e55d433dadfccbb1ef0d",
+        "verified": 1793377485.384468
+      },
+      "control": {
+        "files": 13245,
+        "manifest_sha256": "ef63cf86e040063bb059efebbe6880e1a30f0cc6ac3a5ddc1ffe1d31261c952b",
+        "verified": 1793377498.4800649
+      }
+    }
+  },
+  "passed": true,
+  "finished": 1793378333.866024,
+  "complete_jobs": [
+    "ep-kimi-k3-mxfp",
+    "ep-kimi-k3-per-token",
+    "ep-kimi-k3-w4a4",
+    "ep-nemo3-ultra-mxfp",
+    "ep-nemo3-ultra-per-token",
+    "ep-nemo3-ultra-w4a4",
+    "ep-v3-mxfp",
+    "ep-v3-per-token",
+    "ep-v3-w4a4",
+    "ep-v41-flash-mxfp",
+    "ep-v41-flash-per-token"
+  ],
+  "boundary": "Full source inventories and original four native ELF/build identities survived. Per-job completeness is only an inventory observation, not the final raw CAAC audit. No remote writes, imports of project modules, builds or GPU launches."
+}

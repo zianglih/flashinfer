@@ -1,0 +1,61 @@
+
+DeepSeek-V3 MoE Performance Benchmark
+GPU: NVIDIA B300 SXM6 AC
+CuteDSL API: Functional
+Initial activation quantization: True
+Expert parallelism simulation: EP=8
+Routing input mode: logits
+CuteDSL modes: W4A4 / PER-TOKEN / W4A16; TRTLLM: NVFP4 / PER-TOKEN / BF16
+Tensor parallelism simulation: TP=1
+CUDA profiler capture: False
+CuteDSL finalize: deterministic two-stage
+TRTLLM NVFP4 / PER-TOKEN / BF16 finalize: native (unaffected by --no-fused-finalize).
+CuTe DSL swap_ab: True
+2026-10-30 12:16:08,549 - INFO - autotune_cache.py:630 - flashinfer.jit: [Autotuner]: Preloaded 13/13 managed cache entries into memory
+2026-10-30 12:16:08,550 - INFO - autotuner.py:2347 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Swiglu::SwapAB (runner=CuteDslFusedMoEW4A16Runner, source=managed cache)
+[2026-10-30 12:16:24.750] [info] TRT-LLM fused MoE cooperative launch SM allocation: 140 SMs used for MoE, 8 SMs reserved for overlapping kernels (total SMs: 148)
+backend,tokens,latency_ms,tflops
+CuteDSL W4A16,1,0.030481,2.889729
+CuteDSL W4A16,2,0.035424,4.972921
+CuteDSL W4A16,4,0.050368,6.994878
+CuteDSL W4A16,8,0.068944,10.220439
+CuteDSL W4A16,16,0.073280,19.231394
+CuteDSL W4A16,32,0.106608,26.438532
+CuteDSL W4A16,64,0.140145,40.223658
+CuteDSL W4A16,128,0.143408,78.616877
+CuteDSL W4A16,256,0.150593,149.731915
+CuteDSL W4A16,512,0.155361,290.274276
+CuteDSL W4A16,4096,0.287377,1255.414500
+CuteDSL W4A16,8192,0.596850,1208.936753
+CuteDSL W4A16,16384,1.077301,1339.559707
+
+=====================================================================================================================================================================================================================================
+DeepSeek-V3 MoE Benchmark: CuteDSL W4A4 / PER-TOKEN / W4A16 vs TRTLLM NVFP4 / PER-TOKEN / BF16 (EP=8, TP=1)
+=====================================================================================================================================================================================================================================
+Model: hidden=7168, intermediate=2048, experts=256, top_k=8
+EP Config: 32 local experts (simulating 8-way parallelism)
+TP Config: intermediate size 2048 (simulating 1-way parallelism)
+CUDA Graph: enabled, CUPTI: enabled
+Routing bias scale: 0.01 (larger values tend to create expert imbalance)
+Timed initial activation quantization for FP4-activation backends: included; W4A16 and TRTLLM BF16 consume BF16 directly
+CuteDSL finalize: deterministic two-stage
+TRTLLM NVFP4 / PER-TOKEN / BF16 finalize: native (unaffected by --no-fused-finalize).
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Tokens |  CuteDSL W4A4   | CuteDSL PER-TOKEN |  CuteDSL W4A16  |  TRTLLM NVFP4   | TRTLLM PER-TOKEN |   TRTLLM BF16   |                    Speedup vs TRTLLM NVFP4                    |      Winner       | Active  |      Stats     
+       |      ms  TFLOPS |        ms  TFLOPS |      ms  TFLOPS |      ms  TFLOPS |       ms  TFLOPS |      ms  TFLOPS | CuteDSL W4A4 CuteDSL W4A16 CuteDSL PER-TOKEN TRTLLM PER-TOKEN |                   | experts | min/max/median 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     1 |             N/A |               N/A |   0.030     2.9 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |       2 |   0/  1/   0.00
+     2 |             N/A |               N/A |   0.035     5.0 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |       4 |   0/  1/   0.00
+     4 |             N/A |               N/A |   0.050     7.0 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |       7 |   0/  1/   0.00
+     8 |             N/A |               N/A |   0.069    10.2 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      10 |   0/  2/   0.00
+    16 |             N/A |               N/A |   0.073    19.2 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      13 |   0/  2/   0.00
+    32 |             N/A |               N/A |   0.107    26.4 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      21 |   0/  3/   1.00
+    64 |             N/A |               N/A |   0.140    40.2 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      29 |   0/  5/   2.00
+   128 |             N/A |               N/A |   0.143    78.6 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      30 |   0/  8/   3.00
+   256 |             N/A |               N/A |   0.151   149.7 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      32 |   1/ 11/   7.00
+   512 |             N/A |               N/A |   0.155   290.3 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      32 |   7/ 23/  14.00
+  4096 |             N/A |               N/A |   0.287  1255.4 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      32 |  81/147/ 117.00
+  8192 |             N/A |               N/A |   0.597  1208.9 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      32 | 174/347/ 251.50
+ 16384 |             N/A |               N/A |   1.077  1339.6 |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A |   CuteDSL W4A16   |      32 | 388/733/ 496.50
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Speedup > 1.0 means the named comparison arm is faster than its TRTLLM baseline.

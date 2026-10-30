@@ -1,0 +1,64 @@
+
+DeepSeek-V4.1-Flash MoE Performance Benchmark
+GPU: NVIDIA B300 SXM6 AC
+CuteDSL API: Functional
+PER-TOKEN activation recipe (initial and FC2): 4over6, MSE, E4M3 max=256, 4over6 error fast math enabled; base FP4 quantization fast math disabled. Weights retain standard NVFP4 quantization.
+Initial activation quantization: True
+Expert parallelism simulation: EP=1
+Routing: model sqrtsoftplus routes precomputed and shared by all backends; routing excluded from timing, TRTLLM uses routed APIs.
+CuteDSL modes: W4A4 / PER-TOKEN / W4A16; TRTLLM: NVFP4 / PER-TOKEN / BF16
+Tensor parallelism simulation: TP=4
+CUDA profiler capture: False
+CuteDSL finalize: deterministic two-stage
+TRTLLM NVFP4 / PER-TOKEN / BF16 finalize: native (unaffected by --no-fused-finalize).
+CuTe DSL swap_ab: True
+2026-10-30 12:31:56,662 - INFO - autotune_cache.py:630 - flashinfer.jit: [Autotuner]: Preloaded 66/66 managed cache entries into memory
+2026-10-30 12:31:57,442 - INFO - autotuner.py:2347 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a4::Swiglu::SwapAB (runner=CuteDslFusedMoERunner, source=managed cache)
+[2026-10-30 12:32:20.551] [info] TRT-LLM fused MoE cooperative launch SM allocation: 140 SMs used for MoE, 8 SMs reserved for overlapping kernels (total SMs: 148)
+backend,tokens,latency_ms,tflops
+CuteDSL PER-TOKEN,1,0.023584,4.501710
+CuteDSL PER-TOKEN,2,0.029152,7.283651
+CuteDSL PER-TOKEN,4,0.040352,10.524219
+CuteDSL PER-TOKEN,8,0.057392,14.798912
+CuteDSL PER-TOKEN,16,0.094033,18.064765
+CuteDSL PER-TOKEN,32,0.145442,23.359125
+CuteDSL PER-TOKEN,64,0.210242,32.318739
+CuteDSL PER-TOKEN,128,0.277299,49.006830
+CuteDSL PER-TOKEN,256,0.318660,85.291815
+CuteDSL PER-TOKEN,512,0.330580,164.432754
+CuteDSL PER-TOKEN,4096,0.535861,811.525812
+CuteDSL PER-TOKEN,8192,0.769736,1129.908017
+CuteDSL PER-TOKEN,16384,1.281518,1357.344770
+
+=====================================================================================================================================================================================================================================
+DeepSeek-V4.1-Flash MoE Benchmark: CuteDSL W4A4 / PER-TOKEN / W4A16 vs TRTLLM NVFP4 / PER-TOKEN / BF16 (EP=1, TP=4)
+=====================================================================================================================================================================================================================================
+Model: hidden=5120, intermediate=576, experts=384, top_k=6
+EP Config: 384 local experts (simulating 1-way parallelism)
+TP Config: intermediate size 576 (simulating 4-way parallelism)
+CUDA Graph: enabled, CUPTI: enabled
+Routing bias scale: 0.01 (larger values tend to create expert imbalance)
+Routing: shared precomputed sqrt(softplus(logits)), bias selects only, top-6 normalized then scaled by 1.5; routing excluded from every backend's timing.
+Activation: SwiGLU, gate clamped above 10, up clamped to [-10, 10].
+Timed initial activation quantization for FP4-activation backends: included; W4A16 and TRTLLM BF16 consume BF16 directly
+CuteDSL finalize: deterministic two-stage
+TRTLLM NVFP4 / PER-TOKEN / BF16 finalize: native (unaffected by --no-fused-finalize).
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Tokens |  CuteDSL W4A4   | CuteDSL PER-TOKEN |  CuteDSL W4A16  |  TRTLLM NVFP4   | TRTLLM PER-TOKEN |   TRTLLM BF16   |                    Speedup vs TRTLLM NVFP4                    |      Winner       | Active  |      Stats     
+       |      ms  TFLOPS |        ms  TFLOPS |      ms  TFLOPS |      ms  TFLOPS |       ms  TFLOPS |      ms  TFLOPS | CuteDSL W4A4 CuteDSL W4A16 CuteDSL PER-TOKEN TRTLLM PER-TOKEN |                   | experts | min/max/median 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     1 |             N/A |     0.024     4.5 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |       6 |   0/  1/   0.00
+     2 |             N/A |     0.029     7.3 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |      12 |   0/  1/   0.00
+     4 |             N/A |     0.040    10.5 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |      24 |   0/  1/   0.00
+     8 |             N/A |     0.057    14.8 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |      47 |   0/  2/   0.00
+    16 |             N/A |     0.094    18.1 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |      89 |   0/  2/   0.00
+    32 |             N/A |     0.145    23.4 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |     151 |   0/  4/   0.00
+    64 |             N/A |     0.210    32.3 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |     239 |   0/  5/   1.00
+   128 |             N/A |     0.277    49.0 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |     330 |   0/  7/   2.00
+   256 |             N/A |     0.319    85.3 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |     380 |   0/ 11/   4.00
+   512 |             N/A |     0.331   164.4 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |     384 |   1/ 17/   8.00
+  4096 |             N/A |     0.536   811.5 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |     384 |  38/ 89/  63.00
+  8192 |             N/A |     0.770  1129.9 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |     384 |  86/167/ 128.00
+ 16384 |             N/A |     1.282  1357.3 |             N/A |             N/A |              N/A |             N/A |          N/A           N/A               N/A              N/A | CuteDSL PER-TOKEN |     384 | 196/341/ 254.00
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Speedup > 1.0 means the named comparison arm is faster than its TRTLLM baseline.

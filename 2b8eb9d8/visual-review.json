@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "report_sha256": "80a348144cb3925d4541ed6f2dbe87d23a3d62817e2bbb414a0c85e564cd4098",
+  "plots": {
+    "plots/paired-situ-vs-retained.png": "fcfe18f9ffb073f6940ef6028735f978dd86efad8b9802afede09014b75d37ea",
+    "plots/retained-speedup-ep.png": "a2043c64365677adf3bc5c6f1b0e2df218c38640bac7f8ecc826be06aedd9c40",
+    "plots/retained-speedup-tp.png": "20c32634c056000cf889aeacdbd3515aba7d656a78c395c1e9fc2b5f24053935",
+    "plots/swap-ab-speedup-table-ep.png": "f0e057448851cdae9964177c51baff641bc658c949ba3c35cf0d5a0ca192d139",
+    "plots/swap-ab-speedup-table-tp.png": "8cb542c6d15a23da76a989e0ca954dc145a60c840efbbda4e8e83fbb7a99a61d"
+  },
+  "review": "All five rendered PNGs inspected by root. No clipped text or overlapping labels; compact model names, red-green signs, unsupported N/A and 1/2 exclusion preserved.",
+  "numeric_checks": {
+    "rows": 468,
+    "fresh": 26,
+    "reused_exact": 442,
+    "historical_baselines_unchanged": true,
+    "all_ratios_recalculated": true
+  }
+}

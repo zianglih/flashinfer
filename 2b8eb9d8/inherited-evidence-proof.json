@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "prior_retained_head": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "prior_xz_sha256": "f7fe794388222dcd6120e7439dd6009b1a31da235cb09026134fa8d1ea652be6",
+  "prior_manifest_sha256": "3715d24b58b1f9212d3bdff2a05153daef5e06264a39ff37cae09593266df793",
+  "inherited_original_members": 1496,
+  "all_members_byte_identical": true,
+  "prefix": "previous-integer-publication/",
+  "boundary": "Prior integer-store XZ members are preserved verbatim under a historical prefix; no nested archive or new gzip transport is used."
+}

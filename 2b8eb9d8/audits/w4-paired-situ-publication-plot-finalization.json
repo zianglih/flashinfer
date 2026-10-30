@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "retained_head": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "presentation_peer_sha256": "32e5e05d8ce128e2ede805ff3453399fc3af73288f6800257a850f48fda861ae",
+  "plot_manifest_sha256": {
+    "paired-situ-causal-manifest.json": "6dcf79b9e38303a8e315ce2dd3a442a595c18918f86ce5dba26743b4b6de45f5",
+    "plot-manifest-tp.json": "79dab85afc97b241b7957fbacafa679549180a008a0f88d81d6b6c00a053d3af",
+    "plot-manifest-ep.json": "61c9d6eadd0936a5f703835a11bd149c48130fb0461372e6764ee93fb3e00ead",
+    "retained-plot-manifest.json": "9ffd99b2a6aed76699f620b0b519f50af1fa99440754d200bd1dc2b4a3726eef"
+  },
+  "causal_plot_outputs": {
+    "paired-situ-vs-retained.png": "fcfe18f9ffb073f6940ef6028735f978dd86efad8b9802afede09014b75d37ea",
+    "paired-situ-vs-retained.svg": "a21eaebc0ddc8d70269d3f93ca64926e53adb259719292e987f9329e2efbc9da"
+  },
+  "scope": "Replayed unchanged native tables and all plot data/hash bindings after the causal title top-alignment layout fix. All22 plotted causal row dictionaries and9 negative rows still exactly match the primary report; no numerical change. Root owns visual approval."
+}

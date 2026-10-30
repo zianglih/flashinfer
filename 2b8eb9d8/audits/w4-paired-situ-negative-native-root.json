@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "native_summary_sha256": "cdd9a9939747ae8fe0655af29073d3088a4fce7be4f311c3caed973772215309",
+  "native_pairs": 6,
+  "unaffected_byte_identical": 4,
+  "arithmetic_only_opcode_count_deltas": true,
+  "epilogue_instruction_reordering_preserved_as_caveat": true,
+  "resources_unchanged": true,
+  "all_local_zero": true,
+  "archive_sha256": "adacaddd4b81f8e0b6fc476ea59581e2e00bef823ad9eb4875178bdcbe0d2088",
+  "boundary": "Root independently checked extracted archive bytes, actual image hashes and native opcode accounting against captured EP16/32 configurations. This is native qualification, not a performance inference."
+}

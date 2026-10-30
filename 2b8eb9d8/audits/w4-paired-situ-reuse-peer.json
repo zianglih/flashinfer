@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "reuse_proof_sha256": "2c7c43c975b428ff48cf988574702fc942b98fe01d9c589525fa1aab6afbbf21",
+  "retained_head": "2b8eb9d8f72ceda3952fbb05054fee97173fc9c7",
+  "measured_base": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "candidate_kernel_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "fresh_original_caac_cells": 26,
+  "reuse_exact_full_row_hashes": 442,
+  "reuse_swap_source_identical": 364,
+  "reuse_non_situ_w4_constexpr_graphs": 78,
+  "existing_situ_callsite_count": 2,
+  "old_report_sha256": "3c9dabcd622569c18189c9f4faef93d8cdda40842300835d111c2fe603633aa9",
+  "fresh_report_sha256": "5f1aa59f98ad69cf7ce9bfcf619df85108adb5fa2acbc41a982807fba8bd8861",
+  "boundary": "Independent scope and row-hash audit. ACCA remains a separate diagnostic and does not replace primary CAAC values. Native identities are representative; not all442 cases recompiled. Raw replay was independently completed by root and remains separately bound."
+}

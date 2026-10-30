@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "base_commit": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "candidate_sha256": "5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d",
+  "control_sha256": "25aa126d6e8e7bec5a42467349496b10a5aa1ef1b2a66b92bbe312c58889e34e",
+  "tested_python_betas": 2059,
+  "symbolic_scalar_lane_graph_comparisons": 4118,
+  "expected_ptx_operations_per_lane": [
+    "mul.rn.f32",
+    "mul.rn.f32",
+    "ex2.approx.ftz.f32",
+    "add.rn.f32",
+    "rcp.approx.ftz.f32",
+    "mul.rn.f32",
+    "sub.rn.f32",
+    "mul.rn.f32"
+  ],
+  "outside_helper_and_paired_call_rewrite_ast_identical": true,
+  "only_changed_file": "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+  "all_changes_unstaged": true,
+  "preserved_reciprocal_examples": [
+    {
+      "python_beta": 1e+38,
+      "preserved_direct_bits_le": "eee36c00",
+      "different_swap_recipe_bits_le": "efe36c00"
+    },
+    {
+      "python_beta": 2.0645256593976905e-37,
+      "preserved_direct_bits_le": "8d37697c",
+      "different_swap_recipe_bits_le": "8e37697c"
+    },
+    {
+      "python_beta": 2.5529199424978714e-27,
+      "preserved_direct_bits_le": "bb01a26b",
+      "different_swap_recipe_bits_le": "bc01a26b"
+    },
+    {
+      "python_beta": 1.2369020256509026e+32,
+      "preserved_direct_bits_le": "b7e9270a",
+      "different_swap_recipe_bits_le": "b8e9270a"
+    },
+    {
+      "python_beta": 3825284734633.1836,
+      "preserved_direct_bits_le": "5e2a932a",
+      "different_swap_recipe_bits_le": "5f2a932a"
+    }
+  ],
+  "constant_neg_two_log2e_bits": "C038AA3B",
+  "native_boundary": "CPU symbolic proof assumes packed RN wrappers and scalar fastmath exp2/rcp lower to their documented operations; it does not prove actual PTX, exceptional payload bits, resource cost or speedup."
+}
