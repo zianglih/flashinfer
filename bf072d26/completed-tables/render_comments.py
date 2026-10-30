@@ -168,7 +168,7 @@ def main():
                 groups.append(dict(topology=topology, model=model, family=family, table=filename,
                                    table_sha256=sha(text.encode()), rows=rows))
     assert counts == {"candidate": 468, "fresh_candidate": 39, "reused_candidate": 429, "reused_trtllm": 390}
-    archive = "https://github.com/zianglih/flashinfer/raw/refs/heads/codex/moe-gather-pipeline-assets/bf072d26/moe-gather-pipeline-results.tar.gz"
+    archive = "https://github.com/zianglih/flashinfer/raw/refs/heads/codex/moe-gather-pipeline-assets/bf072d26/moe-gather-pipeline-results.tar.xz"
     comments = []
     for part, (topology, model_slice) in enumerate((("ep", MODELS[:2]), ("ep", MODELS[2:]),
                                                    ("tp", MODELS[:2]), ("tp", MODELS[2:])), 1):

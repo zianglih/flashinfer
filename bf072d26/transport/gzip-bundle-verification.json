@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "archive_sha256": "7ba1e389a517896057f790493d2007ad3fa2919d53fac349899f35060ccbd2a1",
+  "archive_bytes": 27765551,
+  "member_count": 545,
+  "bundle_manifest_sha256": "fd82ca7bf4b414454cb5a119c7203ffcdd593182a1d3ce7376041bd784f98d78",
+  "peer_sha256": "d6e1572ca873f0c0bf5ab13c1282b08186f04c3a329c4c70aa23b92ee478d38f",
+  "root_visual_sha256": "856b49d0c251e0b0c7eeae7d1a9e9d0bd607662c990d6def234c24636f4a9b3f",
+  "body_draft_excluded": true,
+  "w4_tail_causal_table_included": true,
+  "glm5_table_included": true
+}

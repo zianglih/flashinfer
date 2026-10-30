@@ -1,0 +1,59 @@
+{
+  "added_members": {
+    "archive-transport-proof.json": "publication-w4-tail/archive-transport-proof.json",
+    "bundle-allowlist.json": "publication-w4-tail/bundle-allowlist.json",
+    "transport/gzip-bundle-manifest.json": "experiments/w4-tail-dequant/publication-transport/gzip-seal/bundle-manifest.json",
+    "transport/gzip-bundle-peer.json": "experiments/w4-tail-dequant/publication-transport/gzip-seal/w4-tail-bundle-peer.json",
+    "transport/gzip-bundle-verification.json": "experiments/w4-tail-dequant/publication-transport/gzip-seal/bundle-verification.json"
+  },
+  "all_original_payload_members_retained": true,
+  "boundaries": "Compression/transport-only refresh; no measurement, plot, source, baseline, native printer or record changes.",
+  "changed_original_members": {
+    "build_bundle.py": {
+      "new": "7789efee26b45336236c67fe16275f860dc8a3ee699c76b0cea4b8299c3f817f",
+      "old": "eda32d16c1956064e427a4e2b6514da0c98207a952f8f06e9aa346db34bb24f1"
+    },
+    "completed-tables/manifest.json": {
+      "new": "45d608a1a25ee7538a3b579005ca00e65f03ddc742708bae5a7c2b77025822dd",
+      "old": "a2ed9312c2386ae921b56028fa3208fe0c1ee8241435a2c3984b7a9e8ad832f6"
+    },
+    "completed-tables/part-1.md": {
+      "new": "d34124f59cf61b07a934c693b76797c746b93fabdc5dc08c4cf7677ded4e71be",
+      "old": "3f98ef433fad08438ec91576b95aa9657a9b9176df6cc5cd54ceb4380f0bd422"
+    },
+    "completed-tables/part-2.md": {
+      "new": "f8c3794a2d7c75299ed0008a6e370c939afce92a34d336daaa6191203191985c",
+      "old": "1ff57930e0724de57bb059529f4bb2160ee58216b1a5987a0ba6992e48d58fdd"
+    },
+    "completed-tables/part-3.md": {
+      "new": "b61594516c1de3d8b063d4d6c4c99928d47df3df39e1b44bb7b3d2e1c5a57652",
+      "old": "9b12d37fa8fdf1b193f9b0f9fd009e79cd15145c9751c4a8fd0619a09ccebb58"
+    },
+    "completed-tables/part-4.md": {
+      "new": "2b30c9252f4462d362ddaeb0e0c9d7dc9e2e3fad14c24cd455bddcc429e2189c",
+      "old": "ab12899efc262bf93d7ad53eb6e38f6eb15954f2bdf8f0974dc7c6c34578a510"
+    },
+    "completed-tables/render_comments.py": {
+      "new": "8c46765ec18ae27e4ae8ab4f38f99781c3d1cf14f1c398b285ee408d65042faa",
+      "old": "aea4053ca902dc70b7ef94f0233d753af8ad1d8b31f720eb8a6e5f7599e33f66"
+    }
+  },
+  "comment_change": "Exactly one archive URL extension .tar.gz to .tar.xz in each of four introductions; native table bytes unchanged.",
+  "excluded_categories": [
+    "preview or recursive archives",
+    "publish logs",
+    "asset publication receipts",
+    "provisional PR_BODY.md and write_pr_body.py"
+  ],
+  "manifest_change": "Only the four comment sha256 fields change.",
+  "native_tables_unchanged": true,
+  "old_payload_members": 544,
+  "original_archive_sha256": "7ba1e389a517896057f790493d2007ad3fa2919d53fac349899f35060ccbd2a1",
+  "original_gzip_manifest_sha256": "fd82ca7bf4b414454cb5a119c7203ffcdd593182a1d3ce7376041bd784f98d78",
+  "original_gzip_peer_sha256": "98e60e45b165d57c7def519b958a15c5aeba0c7ae94ce5a4503f89798e522d39",
+  "original_gzip_verification_sha256": "74bc7f47714227aa83443261b15fc18947b74addcd60541cda886be46d657fa0",
+  "original_raw_and_stdout_unchanged": true,
+  "passed": true,
+  "preservation_sha256": "67afe4b11d7daef9deeb199d9e5beb10df75d5d25f98ce356d248ef93ce687f4",
+  "unchanged_payload_members": 537
+}

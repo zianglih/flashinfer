@@ -1,0 +1,13 @@
+{
+  "passed": true,
+  "archive_sha256": "7ba1e389a517896057f790493d2007ad3fa2919d53fac349899f35060ccbd2a1",
+  "bytes": 27765551,
+  "members": 545,
+  "all_member_hashes_verified": true,
+  "body_draft_excluded": true,
+  "independent_peer_receipts_exact": true,
+  "native_tables_manifest_exact": true,
+  "fresh_raw_samples": 15600,
+  "fresh_cells": 39,
+  "reused_cells": 429
+}

@@ -116458,28 +116458,28 @@
       "label": "V3 EP8 / V41F EP4",
       "path": "part-1.md",
       "bytes": 19529,
-      "sha256": "3f98ef433fad08438ec91576b95aa9657a9b9176df6cc5cd54ceb4380f0bd422"
+      "sha256": "d34124f59cf61b07a934c693b76797c746b93fabdc5dc08c4cf7677ded4e71be"
     },
     {
       "part": 2,
       "label": "K3 EP8 / N3U EP8",
       "path": "part-2.md",
       "bytes": 20447,
-      "sha256": "1ff57930e0724de57bb059529f4bb2160ee58216b1a5987a0ba6992e48d58fdd"
+      "sha256": "f8c3794a2d7c75299ed0008a6e370c939afce92a34d336daaa6191203191985c"
     },
     {
       "part": 3,
       "label": "V3 TP8 / V41F TP4",
       "path": "part-3.md",
       "bytes": 15482,
-      "sha256": "9b12d37fa8fdf1b193f9b0f9fd009e79cd15145c9751c4a8fd0619a09ccebb58"
+      "sha256": "b61594516c1de3d8b063d4d6c4c99928d47df3df39e1b44bb7b3d2e1c5a57652"
     },
     {
       "part": 4,
       "label": "K3 TP8 / N3U TP8",
       "path": "part-4.md",
       "bytes": 20441,
-      "sha256": "ab12899efc262bf93d7ad53eb6e38f6eb15954f2bdf8f0974dc7c6c34578a510"
+      "sha256": "2b30c9252f4462d362ddaeb0e0c9d7dc9e2e3fad14c24cd455bddcc429e2189c"
     }
   ]
 }

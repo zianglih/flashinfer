@@ -1,7 +1,7 @@
 <!-- moe-gather-pipeline-completed-tables-bf072d26-part-4 -->
 ### Benchmark table output — K3 TP8 / N3U TP8 (4/4)
 
-Printed by the unchanged benchmark table functions from saved records: 39 newly measured and 429 reused CuTe DSL final-pass records source-equivalent to `bf072d26`, plus the original TRTLLM final-pass records. TRTLLM is reused, not rerun; these are separate-run comparisons. Original records retain their measured base `82254e20` or `02de7785` plus frozen patch identifiers. The heatmaps use two-pass aggregates. Missing or unsupported records remain N/A. [Original measurement logs](https://github.com/zianglih/flashinfer/raw/refs/heads/codex/moe-gather-pipeline-assets/bf072d26/moe-gather-pipeline-results.tar.gz).
+Printed by the unchanged benchmark table functions from saved records: 39 newly measured and 429 reused CuTe DSL final-pass records source-equivalent to `bf072d26`, plus the original TRTLLM final-pass records. TRTLLM is reused, not rerun; these are separate-run comparisons. Original records retain their measured base `82254e20` or `02de7785` plus frozen patch identifiers. The heatmaps use two-pass aggregates. Missing or unsupported records remain N/A. [Original measurement logs](https://github.com/zianglih/flashinfer/raw/refs/heads/codex/moe-gather-pipeline-assets/bf072d26/moe-gather-pipeline-results.tar.xz).
 
 **K3 TP8 · NVFP4**
 
