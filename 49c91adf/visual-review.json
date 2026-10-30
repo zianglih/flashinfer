@@ -1,0 +1,19 @@
+{
+  "passed": true,
+  "report_sha256": "3c9dabcd622569c18189c9f4faef93d8cdda40842300835d111c2fe603633aa9",
+  "plots": {
+    "plots/integer-store-vs-retained.png": "637becfee6e44fa15fda9bf432bd6418172016d26954b48d1739bf66e82b6a33",
+    "plots/retained-speedup-ep.png": "45bad77bacca9062d57473ab3e3793a22da212cbe2888efb113116d38a550419",
+    "plots/retained-speedup-tp.png": "7cc59becfc62ec7c8743c75b9b5963096431e8afb731b3fa046efe186c5e32b8",
+    "plots/swap-ab-speedup-table-ep.png": "892023df1cde8e659706becef76a52fc652e3ecbdaf79aedb8ad57f19f73c3cc",
+    "plots/swap-ab-speedup-table-tp.png": "4468bebdc88316b8cddc1272391439e3dd249a8f84ae9eae3170055220e78cd0"
+  },
+  "review": "All five rendered PNGs inspected by root. No clipped text or overlapping labels; compact model names, red-green signs, unsupported N/A and 1/2 exclusion preserved.",
+  "numeric_checks": {
+    "rows": 468,
+    "fresh": 104,
+    "reused_exact": 364,
+    "historical_baselines_unchanged": true,
+    "all_ratios_recalculated": true
+  }
+}

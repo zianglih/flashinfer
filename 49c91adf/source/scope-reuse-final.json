@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "affected_scope_sha256": "10fb5f64651e805246f4e09ad152c5b42fa33911773d9f2f71926fa9b0832724",
+  "reuse_proof": "experiments/fc1-integer-store-gated/reuse-proof.json",
+  "reuse_proof_sha256": "074860f166e523f5c0c492400d0b64af8bfd3fffc0edf7ff61c34a7e745515db",
+  "affected_cells": 104,
+  "reusable_cells": 364,
+  "unchanged_w4_cells": 104,
+  "gated_swap_cells": 260,
+  "boundary": "Actualbf072 performance sources; representative gatedFP4/FP8/BF16SiTU/SwiGLU native equality supports the source-specialization reuse proof. No claim of separately compiling all260gated cells."
+}

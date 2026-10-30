@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "prior_retained_head": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "prior_xz_sha256": "608ec2e7b0b698b78f57caf23b70aa9082440163c8eeb4d4e18c861367a08ce7",
+  "prior_manifest_sha256": "3b7415a92426abbe27e522a66b39bfa010ece277daa17071b4972b00f53af36c",
+  "inherited_original_members": 549,
+  "all_members_byte_identical": true,
+  "prefix": "previous-w4-publication/",
+  "boundary": "Prior XZ members are preserved verbatim under a historical prefix; no nested archive or new gzip transport is used."
+}

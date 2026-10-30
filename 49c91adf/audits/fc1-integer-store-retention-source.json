@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "source_sha256": "482b636a1714486e2ffb34c8ae005da3cef26f25f0ce034ba1eb59c6198d6276",
+  "base": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "diff_lines": {
+    "added": 43,
+    "removed": 19
+  },
+  "changed_methods": [
+    "_convert",
+    "_run_token_group",
+    "_store",
+    "_store_converted"
+  ],
+  "outside_epilogue_ast_identical": true,
+  "contracts": [
+    "Same16-element conversion and SF calculation/store arithmetic; only payload movement is joined.",
+    "Count and maximum256-bit copy width derive at compile time from fragment and output bit widths4/8/16/32.",
+    "Nongated32-channel guard is equivalent to both original16-channel guards under existing channel multiple128 and aligned-output contract. No API/alignment narrowing.",
+    "Gated paths retain16-element stores; ordinary BF16/FP16 FC2 remains separate. FP32 fused path explicitly recasts carrier and destination to output dtype before the original pair atomics.",
+    "No new API/tactic, dtype policy, runtime branch, shared memory, synchronization, or pipeline state."
+  ],
+  "evidence": {
+    "audits/fc1-integer-store-peer.json": "7d0edd1fab346e732335ae03d90d314324cfaac8fe38a0f66cb1ebaca5444157",
+    "experiments/fc1-integer-store-atomic-fix/qualification-summary.json": "19f6b1cc33b6d8f585ce9cb9a1391d7c5cbb728b8b0d2fa6a77daea6142fae18",
+    "experiments/fc1-integer-store-gated/reuse-proof.json": "074860f166e523f5c0c492400d0b64af8bfd3fffc0edf7ff61c34a7e745515db",
+    "audits/fc1-integer-store-combined104-peer.json": "866aa255e9cb99c10aad349552345a20f72da5b00462244cfdfc82a85f8e9447"
+  },
+  "scope_boundary": "Source review finds no missing previously supported path. Representative gated native pairs are identical; all104 affected performance cells are measured. FP32 fused compile/numerical boundary passed narrow exact fixtures, not a general fused bit-exact oracle; twoCTA fused registers122 to125 and LOCAL0 were reported. Performance native resources unchanged across155 paired compilation sequences. No new execution, edits, commits or pushes in this review."
+}

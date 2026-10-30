@@ -1,0 +1,76 @@
+
+DeepSeek-V3 MoE Performance Benchmark
+GPU: NVIDIA B300 SXM6 AC
+CuteDSL API: Functional
+Initial activation quantization: False
+Expert parallelism simulation: EP=1
+Routing input mode: logits
+CuteDSL modes: MXFP4x8 and MXFP8; baselines: matching TRTLLM modes and BF16
+Tensor parallelism simulation: TP=8
+CUDA profiler capture: False
+CuteDSL finalize: deterministic two-stage
+TRTLLM MXFP4x8 / MXFP8 / BF16 finalize: native (unaffected by --no-fused-finalize).
+CuTe DSL swap_ab: True
+2026-10-30 12:31:05,472 - INFO - autotune_cache.py:630 - flashinfer.jit: [Autotuner]: Preloaded 44/44 managed cache entries into memory
+2026-10-30 12:31:05,473 - INFO - autotuner.py:2347 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_mxfp8::Swiglu::SwapAB (runner=CuteDslFusedMoERunner, source=managed cache)
+2026-10-30 12:31:09,320 - INFO - autotuner.py:2347 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a8::Swiglu::SwapAB (runner=CuteDslFusedMoERunner, source=managed cache)
+[2026-10-30 12:31:37.794] [info] TRT-LLM fused MoE cooperative launch SM allocation: 140 SMs used for MoE, 8 SMs reserved for overlapping kernels (total SMs: 148)
+backend,tokens,latency_ms,tflops
+CuteDSL MXFP8,1,0.026880,3.276800
+CuteDSL MXFP4x8,1,0.024288,3.626498
+CuteDSL MXFP8,2,0.032129,5.482921
+CuteDSL MXFP4x8,2,0.027744,6.349394
+CuteDSL MXFP8,4,0.045184,7.797484
+CuteDSL MXFP4x8,4,0.036208,9.730489
+CuteDSL MXFP8,8,0.070976,9.927906
+CuteDSL MXFP4x8,8,0.050608,13.923551
+CuteDSL MXFP8,16,0.110145,12.794826
+CuteDSL MXFP4x8,16,0.069953,20.146186
+CuteDSL MXFP8,32,0.166929,16.884908
+CuteDSL MXFP4x8,32,0.102832,27.409353
+CuteDSL MXFP8,64,0.221889,25.405246
+CuteDSL MXFP4x8,64,0.135184,41.699791
+CuteDSL MXFP8,128,0.237954,47.380120
+CuteDSL MXFP4x8,128,0.143233,78.712930
+CuteDSL MXFP8,256,0.250097,90.159331
+CuteDSL MXFP4x8,256,0.153600,146.800640
+CuteDSL MXFP8,512,0.265698,169.731204
+CuteDSL MXFP4x8,512,0.184017,245.070600
+CuteDSL MXFP8,4096,0.455554,791.952771
+CuteDSL MXFP4x8,4096,0.385394,936.125764
+CuteDSL MXFP8,8192,0.735764,980.687429
+CuteDSL MXFP4x8,8192,0.685907,1051.971340
+CuteDSL MXFP8,16384,1.355654,1064.510914
+CuteDSL MXFP4x8,16384,1.251351,1153.241247
+
+================================================================================================================================================
+DeepSeek-V3 MoE Benchmark: CuteDSL MXFP4x8 / MXFP8 vs TRTLLM MXFP4x8 / MXFP8 / BF16 (EP=1, TP=8)
+================================================================================================================================================
+Model: hidden=7168, intermediate=256, experts=256, top_k=8
+EP Config: 256 local experts (simulating 1-way parallelism)
+TP Config: intermediate size 256 (simulating 8-way parallelism)
+CUDA Graph: enabled, CUPTI: enabled
+Routing bias scale: 0.01 (larger values tend to create expert imbalance)
+MXFP8 activations: native UE8M0 scale per 32 elements along K.
+Timed initial activation quantization: excluded; weight preparation and tuning excluded. TRTLLM BF16 consumes BF16 directly.
+CuteDSL finalize: deterministic two-stage
+TRTLLM MXFP4x8 / MXFP8 / BF16 finalize: native (unaffected by --no-fused-finalize).
+------------------------------------------------------------------------------------------------------------------------------------------------
+Tokens | CuteDSL MXFP4x8 |  CuteDSL MXFP8  | TRTLLM MXFP4x8  |  TRTLLM MXFP8   |   TRTLLM BF16   | Speedup vs TRTLLM | Active  |      Stats     
+       |      ms  TFLOPS |      ms  TFLOPS |      ms  TFLOPS |      ms  TFLOPS |      ms  TFLOPS |  MXFP4x8    MXFP8 | experts | min/max/median 
+------------------------------------------------------------------------------------------------------------------------------------------------
+     1 |   0.024     3.6 |   0.027     3.3 |             N/A |             N/A |             N/A |      N/A      N/A |       8 |   0/  1/   0.00
+     2 |   0.028     6.3 |   0.032     5.5 |             N/A |             N/A |             N/A |      N/A      N/A |      16 |   0/  1/   0.00
+     4 |   0.036     9.7 |   0.045     7.8 |             N/A |             N/A |             N/A |      N/A      N/A |      31 |   0/  2/   0.00
+     8 |   0.051    13.9 |   0.071     9.9 |             N/A |             N/A |             N/A |      N/A      N/A |      58 |   0/  3/   0.00
+    16 |   0.070    20.1 |   0.110    12.8 |             N/A |             N/A |             N/A |      N/A      N/A |     103 |   0/  4/   0.00
+    32 |   0.103    27.4 |   0.167    16.9 |             N/A |             N/A |             N/A |      N/A      N/A |     165 |   0/  5/   1.00
+    64 |   0.135    41.7 |   0.222    25.4 |             N/A |             N/A |             N/A |      N/A      N/A |     226 |   0/  6/   2.00
+   128 |   0.143    78.7 |   0.238    47.4 |             N/A |             N/A |             N/A |      N/A      N/A |     248 |   0/ 10/   4.00
+   256 |   0.154   146.8 |   0.250    90.2 |             N/A |             N/A |             N/A |      N/A      N/A |     256 |   1/ 17/   8.00
+   512 |   0.184   245.1 |   0.266   169.7 |             N/A |             N/A |             N/A |      N/A      N/A |     256 |   4/ 30/  16.00
+  4096 |   0.385   936.1 |   0.456   792.0 |             N/A |             N/A |             N/A |      N/A      N/A |     256 |  66/198/ 128.00
+  8192 |   0.686  1052.0 |   0.736   980.7 |             N/A |             N/A |             N/A |      N/A      N/A |     256 | 138/385/ 252.00
+ 16384 |   1.251  1153.2 |   1.356  1064.5 |             N/A |             N/A |             N/A |      N/A      N/A |     256 | 250/978/ 505.50
+------------------------------------------------------------------------------------------------------------------------------------------------
+Speedup > 1.0 means the named comparison arm is faster than its TRTLLM baseline.

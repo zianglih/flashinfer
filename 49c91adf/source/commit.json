@@ -1,0 +1,8 @@
+{
+  "retained_head": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "control_head": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "kernel": "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py",
+  "kernel_sha256": "482b636a1714486e2ffb34c8ae005da3cef26f25f0ce034ba1eb59c6198d6276",
+  "only_changed_path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py",
+  "commit_show": "commit 49c91adf47d30fc2049c76cbaf34d0ccf3291434\nAuthor:     Ziang Li <ziangli@umich.edu>\nAuthorDate: Fri Oct 30 07:53:37 2026 -0700\nCommit:     Ziang Li <ziangli@umich.edu>\nCommitDate: Fri Oct 30 07:53:37 2026 -0700\n\n    perf: widen nongated MoE activation stores\n    \n    Join converted FC1 halves in an integer carrier so packed FP4 and FP8 output stores use their full supported width without local-memory lowering. Preserve scale arithmetic and the existing fused atomic path.\n    \n    Validated 104 N3U EP/TP cells with paired CUPTI runs: quantized prefill improves 3.14% geometric mean; decode is neutral. Existing exact and native-resource checks pass.\n\n .../cute_dsl/blackwell/moe_swap_ab_kernel.py       | 62 +++++++++++++++-------\n 1 file changed, 43 insertions(+), 19 deletions(-)\n"
+}

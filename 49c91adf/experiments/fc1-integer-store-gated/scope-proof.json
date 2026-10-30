@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "source_sha256": "482b636a1714486e2ffb34c8ae005da3cef26f25f0ce034ba1eb59c6198d6276",
+  "retained_base": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "full_table_rows": 468,
+  "affected_nongated_swap_rows": 104,
+  "byte_unchanged_w4_rows": 104,
+  "gated_swap_reuse_rows": 260,
+  "total_reuse_rows": 364,
+  "module_outside_epilogue_ast_identical": true,
+  "conversion_arithmetic_ast_identical": true,
+  "gated_branch_call_expansion_ast_identical": true,
+  "helper_contract": "Original16-element self.output_dtype fragment gives count16. Target coalesce/recast preserves its existing element type, contiguous address and static copy width. No new gated arithmetic, synchronization or policy.",
+  "representative_native_proof": "Pending gated campaign completion; initial FP4 SwiGLU raw native identity already qualified. This receipt alone does not assert native equivalence of all260gated specializations.",
+  "boundary": "Affected scope derives from committed model activation contracts and source branch ownership. No claim that364individual table cells were recompiled or freshly measured. W4 production bytes exactly unchanged; gated source behavior plus representative native checks supports reuse."
+}

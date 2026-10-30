@@ -1,0 +1,126 @@
+{
+  "passed": true,
+  "source_label": "49c91adf \u00b7 104 fresh / 364 reused cells",
+  "retained_head": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "fresh_measurement_base": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "reused_measurement_bases": [
+    "82254e20",
+    "02de7785"
+  ],
+  "fresh_cells": 104,
+  "reused_cells": 364,
+  "total_cells": 468,
+  "displayed_cells": 396,
+  "candidate_samples": 93600,
+  "fresh_candidate_samples": 20800,
+  "reused_candidate_samples": 72800,
+  "fresh_causal_samples": 41600,
+  "candidate_loaded_functions": 1162,
+  "clock_quartiles": 3744,
+  "missing_clock_quartiles": 5,
+  "clock_exception_quartiles": 90,
+  "all_negative_rows_retained": true,
+  "groups": {
+    "all": {
+      "cells": 396,
+      "speedup_percent": 0.33476617343557447,
+      "negative": 161
+    },
+    "swap_ab": {
+      "cells": 308,
+      "speedup_percent": 0.24502503249010932,
+      "negative": 137
+    },
+    "w4a16": {
+      "cells": 88,
+      "speedup_percent": 0.6494932996499836,
+      "negative": 24
+    },
+    "decode": {
+      "cells": 180,
+      "speedup_percent": 0.2429070627240293,
+      "negative": 70
+    },
+    "middle": {
+      "cells": 108,
+      "speedup_percent": 0.257887731417461,
+      "negative": 42
+    },
+    "prefill": {
+      "cells": 108,
+      "speedup_percent": 0.5651067216568384,
+      "negative": 49
+    }
+  },
+  "causal_104": {
+    "passed": true,
+    "artifacts": {
+      "experiments/fc1-integer-store-performance/combined104/cells.csv": "763e88a2402aa66e1b5367c91d733ae7189accad6af006a92cbdd6acee4b85d2",
+      "experiments/fc1-integer-store-performance/combined104/summary.json": "e758f78a68e6c0da2c72f94691818b3013489b280342f5fe2f194a6194dc88d1",
+      "experiments/fc1-integer-store-performance/combined104/resource-pairs.json": "130291fc2c0335dcc8067ff10b5c7edb3c27d7321b94edecff9e7bd2a1aa4a95",
+      "experiments/fc1-integer-store-performance/combined104/table.md": "03d0de4b080ab0703361b730e1fefa7f681aab5bf8d2d1c5a14a928fca83bad7",
+      "experiments/fc1-integer-store-performance/combined104/matrix.md": "2d1da545184590c865d94de9bce0c79f0f81fc2d5b43ba6a64fe2b0d77ea4a44",
+      "audits/fc1-integer-store-data-peer.json": "0b3def9cf701de0d09a542c8ed66ffe678e3f692437ba4de9fe57df93d9d9fdb",
+      "audits/fc1-integer-store-components-peer.json": "bb299b582f6477a4ab141ba9ecd1f35451bf801ba4f9e637fd0e0f797ab7198c",
+      "audits/fc1-integer-store-remaining-data-peer.json": "1469a65f4f9acc29598109ab4e081aeb58af45b1651cf51f4b5f3a36311913ec",
+      "audits/fc1-integer-store-remaining-components-peer.json": "498d900800790ce03aba38fbf1dc738393dff80394b38e880848616bee651291"
+    },
+    "cells": 104,
+    "retention_cells": 88,
+    "samples": 41600,
+    "original32_dictionaries_unchanged": true,
+    "remaining72_dictionaries_unchanged": true,
+    "resource_pairs": 155,
+    "all_resources_unchanged": true,
+    "all_local_zero": true,
+    "clock_quartiles": 1664,
+    "clock_exceptions": 17,
+    "missing_clock_quartiles": 0,
+    "negative_retention_cells": 32,
+    "groups": {
+      "all": {
+        "cells": 88,
+        "speedup_percent": 0.6432583938926761,
+        "negative": 32,
+        "max_control_spread": 3.7782729558898165,
+        "max_candidate_spread": 3.749638377182496
+      },
+      "band/decode": {
+        "cells": 40,
+        "speedup_percent": 0.054065834611627395,
+        "negative": 15,
+        "max_control_spread": 1.898512778655248,
+        "max_candidate_spread": 0.7819754655197686
+      },
+      "band/middle": {
+        "cells": 24,
+        "speedup_percent": -0.0219640684705924,
+        "negative": 14,
+        "max_control_spread": 0.260511564077337,
+        "max_candidate_spread": 0.45724410405159066
+      },
+      "band/prefill": {
+        "cells": 24,
+        "speedup_percent": 2.309200155480995,
+        "negative": 3,
+        "max_control_spread": 3.7782729558898165,
+        "max_candidate_spread": 3.749638377182496
+      }
+    },
+    "band_definition": "decode4-64,middle128-512,prefill4096-16384;tokens1/2runbutexcluded",
+    "boundary": "Independent disjoint record union after full raw CUPTI/source/cache/route/tactic/resource/clock replay. All negatives preserved. Per-token is unchanged store width, not binary null. No new GPU executions or changes to source/records."
+  },
+  "external": {
+    "ep": {
+      "changed_current_cells": 104,
+      "baseline_fields_unchanged": true,
+      "original_sha256": "dd99ff25e52a8c8e48632e4cb7ae537114facfd5b4a62f10815e45bf6ec04d7c"
+    },
+    "tp": {
+      "changed_current_cells": 104,
+      "baseline_fields_unchanged": true,
+      "original_sha256": "27e2348bb49387975b5a9e5c0a8a9d7e3459123920f030a990b38d5c2de63cdb"
+    }
+  },
+  "boundary": "104fresh nongated N3U cells plus364source-equivalent reused cells. Historical full/external baselines unchanged. Not a fresh paired468-cell comparison. Measured bf072 plus482b source overlay is exactly retained49c91adf."
+}

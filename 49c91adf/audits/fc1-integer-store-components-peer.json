@@ -1,0 +1,1324 @@
+{
+  "passed": true,
+  "resource_pairs": 56,
+  "all_resources_equal": true,
+  "all_local_zero": true,
+  "component_phase_medians_recomputed": 768,
+  "source_and_raw_audit_sha256": "0b3def9cf701de0d09a542c8ed66ffe678e3f692437ba4de9fe57df93d9d9fdb",
+  "native_resource_report_sha256": "39e221160c7d66a541edc3731d3c9474214f3cb1292be4612e0169cbf0353830",
+  "components": [
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 4,
+      "backend": "CuteDSL MXFP4x8",
+      "e2e_speedup_percent": 5.720678761811371e-05,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 20.0325,
+        "fc1_extension_us": 17.94425,
+        "fc2_us": 20.552,
+        "fc2_extension_us": 12.8235,
+        "combine_us": 4.16,
+        "combine_extension_us": 2.976
+      },
+      "candidate": {
+        "fc1_us": 20.0165,
+        "fc1_extension_us": 17.936,
+        "fc2_us": 20.5765,
+        "fc2_extension_us": 12.84825,
+        "combine_us": 4.16,
+        "combine_extension_us": 2.976
+      },
+      "delta": {
+        "fc1_us": -0.015999999999998238,
+        "fc1_extension_us": -0.008250000000000313,
+        "fc2_us": 0.024499999999999744,
+        "fc2_extension_us": 0.024750000000000938,
+        "combine_us": 0.0,
+        "combine_extension_us": 0.0
+      },
+      "phase_us": {
+        "control": [
+          37.248000000000005,
+          37.1685
+        ],
+        "candidate": [
+          37.2645,
+          37.152
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 4,
+      "backend": "CuteDSL MXFP8",
+      "e2e_speedup_percent": 0.1512646199602008,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 25.112000000000002,
+        "fc1_extension_us": 23.008,
+        "fc2_us": 25.856,
+        "fc2_extension_us": 18.53625,
+        "combine_us": 4.07225,
+        "combine_extension_us": 2.9115
+      },
+      "candidate": {
+        "fc1_us": 25.096,
+        "fc1_extension_us": 22.991999999999997,
+        "fc2_us": 25.768,
+        "fc2_extension_us": 18.543999999999997,
+        "combine_us": 4.08025,
+        "combine_extension_us": 2.896
+      },
+      "delta": {
+        "fc1_us": -0.01600000000000179,
+        "fc1_extension_us": -0.01600000000000179,
+        "fc2_us": -0.08800000000000097,
+        "fc2_extension_us": 0.007749999999997925,
+        "combine_us": 0.008000000000000007,
+        "combine_extension_us": -0.015500000000000291
+      },
+      "phase_us": {
+        "control": [
+          48.0325,
+          47.9525
+        ],
+        "candidate": [
+          47.936,
+          47.904
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 128,
+      "backend": "CuteDSL MXFP4x8",
+      "e2e_speedup_percent": -0.061968913051946295,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 63.2405,
+        "fc1_extension_us": 63.0885,
+        "fc2_us": 60.16875,
+        "fc2_extension_us": 55.32025,
+        "combine_us": 4.96,
+        "combine_extension_us": 3.112
+      },
+      "candidate": {
+        "fc1_us": 63.2885,
+        "fc1_extension_us": 63.1365,
+        "fc2_us": 60.20824999999999,
+        "fc2_extension_us": 55.30425,
+        "combine_us": 4.992,
+        "combine_extension_us": 3.136
+      },
+      "delta": {
+        "fc1_us": 0.04800000000000182,
+        "fc1_extension_us": 0.047999999999994714,
+        "fc2_us": 0.039499999999989654,
+        "fc2_extension_us": -0.015999999999998238,
+        "combine_us": 0.03200000000000003,
+        "combine_extension_us": 0.02400000000000002
+      },
+      "phase_us": {
+        "control": [
+          129.31300000000002,
+          128.97699999999998
+        ],
+        "candidate": [
+          129.137,
+          129.31300000000002
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 128,
+      "backend": "CuteDSL MXFP8",
+      "e2e_speedup_percent": -0.06064710037788634,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 109.98475,
+        "fc1_extension_us": 109.83250000000001,
+        "fc2_us": 110.657,
+        "fc2_extension_us": 104.24075,
+        "combine_us": 4.448,
+        "combine_extension_us": 3.23175
+      },
+      "candidate": {
+        "fc1_us": 109.961,
+        "fc1_extension_us": 109.80099999999999,
+        "fc2_us": 110.78475,
+        "fc2_extension_us": 104.28075,
+        "combine_us": 4.43175,
+        "combine_extension_us": 3.216
+      },
+      "delta": {
+        "fc1_us": -0.02375000000000682,
+        "fc1_extension_us": -0.03150000000002251,
+        "fc2_us": 0.12775000000000603,
+        "fc2_extension_us": 0.03999999999999204,
+        "combine_us": -0.01625000000000032,
+        "combine_extension_us": -0.01574999999999971
+      },
+      "phase_us": {
+        "control": [
+          224.961,
+          224.9135
+        ],
+        "candidate": [
+          225.05800000000002,
+          225.0895
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 4096,
+      "backend": "CuteDSL MXFP4x8",
+      "e2e_speedup_percent": 3.61437076115787,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 121.88875,
+        "fc1_extension_us": 121.61675,
+        "fc2_us": 122.305,
+        "fc2_extension_us": 103.10499999999999,
+        "combine_us": 18.135749999999998,
+        "combine_extension_us": 13.927999999999999
+      },
+      "candidate": {
+        "fc1_us": 112.60875,
+        "fc1_extension_us": 112.34474999999999,
+        "fc2_us": 119.353,
+        "fc2_extension_us": 103.28049999999999,
+        "combine_us": 18.048,
+        "combine_extension_us": 13.92
+      },
+      "delta": {
+        "fc1_us": -9.280000000000001,
+        "fc1_extension_us": -9.272000000000006,
+        "fc2_us": -2.9520000000000124,
+        "fc2_extension_us": 0.17549999999999955,
+        "combine_us": -0.08774999999999977,
+        "combine_extension_us": -0.007999999999999119
+      },
+      "phase_us": {
+        "control": [
+          258.19399999999996,
+          257.858
+        ],
+        "candidate": [
+          249.041,
+          249.0095
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 4096,
+      "backend": "CuteDSL MXFP8",
+      "e2e_speedup_percent": 1.5850330150397385,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 146.00875,
+        "fc1_extension_us": 145.74475,
+        "fc2_us": 155.825,
+        "fc2_extension_us": 133.76875,
+        "combine_us": 17.632,
+        "combine_extension_us": 13.815999999999999
+      },
+      "candidate": {
+        "fc1_us": 140.993,
+        "fc1_extension_us": 140.71325,
+        "fc2_us": 151.33725,
+        "fc2_extension_us": 133.58499999999998,
+        "combine_us": 17.6,
+        "combine_extension_us": 13.79175
+      },
+      "delta": {
+        "fc1_us": -5.015749999999997,
+        "fc1_extension_us": -5.0315000000000225,
+        "fc2_us": -4.487749999999977,
+        "fc2_extension_us": -0.18375000000003183,
+        "combine_us": -0.03200000000000003,
+        "combine_extension_us": -0.02424999999999855
+      },
+      "phase_us": {
+        "control": [
+          312.53,
+          313.0105
+        ],
+        "candidate": [
+          307.87399999999997,
+          307.906
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 16384,
+      "backend": "CuteDSL MXFP4x8",
+      "e2e_speedup_percent": 3.659598656332763,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 394.86699999999996,
+        "fc1_extension_us": 394.36299999999994,
+        "fc2_us": 323.3225,
+        "fc2_extension_us": 300.922,
+        "combine_us": 58.28025,
+        "combine_extension_us": 54.29600000000001
+      },
+      "candidate": {
+        "fc1_us": 368.899,
+        "fc1_extension_us": 368.40274999999997,
+        "fc2_us": 316.3625,
+        "fc2_extension_us": 300.162,
+        "combine_us": 58.304500000000004,
+        "combine_extension_us": 54.3125
+      },
+      "delta": {
+        "fc1_us": -25.96799999999996,
+        "fc1_extension_us": -25.960249999999974,
+        "fc2_us": -6.9599999999999795,
+        "fc2_extension_us": -0.7600000000000477,
+        "combine_us": 0.024250000000002103,
+        "combine_extension_us": 0.01649999999999352
+      },
+      "phase_us": {
+        "control": [
+          775.2045,
+          746.9815
+        ],
+        "candidate": [
+          747.7335,
+          720.7094999999999
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 16384,
+      "backend": "CuteDSL MXFP8",
+      "e2e_speedup_percent": 1.9727845337542904,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 438.627,
+        "fc1_extension_us": 438.23525,
+        "fc2_us": 377.39425,
+        "fc2_extension_us": 350.9785,
+        "combine_us": 60.29625,
+        "combine_extension_us": 56.016
+      },
+      "candidate": {
+        "fc1_us": 419.81125,
+        "fc1_extension_us": 419.41925000000003,
+        "fc2_us": 369.77049999999997,
+        "fc2_extension_us": 350.29875,
+        "combine_us": 60.9525,
+        "combine_extension_us": 56.5285
+      },
+      "delta": {
+        "fc1_us": -18.815750000000037,
+        "fc1_extension_us": -18.815999999999974,
+        "fc2_us": -7.62375000000003,
+        "fc2_extension_us": -0.6797500000000127,
+        "combine_us": 0.65625,
+        "combine_extension_us": 0.5125000000000028
+      },
+      "phase_us": {
+        "control": [
+          868.1020000000001,
+          848.278
+        ],
+        "candidate": [
+          839.4459999999999,
+          843.6215
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "tokens": 4,
+      "backend": "CuteDSL PER-TOKEN",
+      "e2e_speedup_percent": 0.08014377736313971,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 17.072000000000003,
+        "fc1_extension_us": 15.00825,
+        "fc2_us": 15.8325,
+        "fc2_extension_us": 12.544,
+        "combine_us": 3.928,
+        "combine_extension_us": 2.608
+      },
+      "candidate": {
+        "fc1_us": 17.048000000000002,
+        "fc1_extension_us": 14.976500000000001,
+        "fc2_us": 15.872,
+        "fc2_extension_us": 12.576,
+        "combine_us": 3.94425,
+        "combine_extension_us": 2.60825
+      },
+      "delta": {
+        "fc1_us": -0.02400000000000091,
+        "fc1_extension_us": -0.031749999999998835,
+        "fc2_us": 0.03950000000000031,
+        "fc2_extension_us": 0.03200000000000003,
+        "combine_us": 0.016249999999999876,
+        "combine_extension_us": 0.00024999999999986144
+      },
+      "phase_us": {
+        "control": [
+          39.711999999999996,
+          39.711999999999996
+        ],
+        "candidate": [
+          39.744,
+          39.6165
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "tokens": 128,
+      "backend": "CuteDSL PER-TOKEN",
+      "e2e_speedup_percent": -0.06645208915767586,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 65.024,
+        "fc1_extension_us": 64.69650000000001,
+        "fc2_us": 64.60849999999999,
+        "fc2_extension_us": 57.336749999999995,
+        "combine_us": 4.75225,
+        "combine_extension_us": 3.28
+      },
+      "candidate": {
+        "fc1_us": 65.1045,
+        "fc1_extension_us": 64.76849999999999,
+        "fc2_us": 64.8165,
+        "fc2_extension_us": 57.497,
+        "combine_us": 4.768,
+        "combine_extension_us": 3.28
+      },
+      "delta": {
+        "fc1_us": 0.08050000000000068,
+        "fc1_extension_us": 0.0719999999999743,
+        "fc2_us": 0.20800000000001262,
+        "fc2_extension_us": 0.1602500000000049,
+        "combine_us": 0.01574999999999971,
+        "combine_extension_us": 0.0
+      },
+      "phase_us": {
+        "control": [
+          144.44899999999998,
+          144.321
+        ],
+        "candidate": [
+          144.513,
+          144.44899999999998
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "tokens": 4096,
+      "backend": "CuteDSL PER-TOKEN",
+      "e2e_speedup_percent": 0.3971014949877283,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 125.097,
+        "fc1_extension_us": 124.681,
+        "fc2_us": 114.14500000000001,
+        "fc2_extension_us": 89.1765,
+        "combine_us": 17.23175,
+        "combine_extension_us": 14.66425
+      },
+      "candidate": {
+        "fc1_us": 124.321,
+        "fc1_extension_us": 123.897,
+        "fc2_us": 113.98525,
+        "fc2_extension_us": 88.92875000000001,
+        "combine_us": 17.304000000000002,
+        "combine_extension_us": 14.736
+      },
+      "delta": {
+        "fc1_us": -0.7759999999999962,
+        "fc1_extension_us": -0.7839999999999918,
+        "fc2_us": -0.1597500000000167,
+        "fc2_extension_us": -0.24774999999999636,
+        "combine_us": 0.07225000000000037,
+        "combine_extension_us": 0.07175000000000153
+      },
+      "phase_us": {
+        "control": [
+          329.794,
+          329.47450000000003
+        ],
+        "candidate": [
+          328.57849999999996,
+          328.0825
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-per-token",
+      "tokens": 16384,
+      "backend": "CuteDSL PER-TOKEN",
+      "e2e_speedup_percent": -0.5442299970996323,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 418.01125,
+        "fc1_extension_us": 417.88374999999996,
+        "fc2_us": 233.52975,
+        "fc2_extension_us": 188.12175,
+        "combine_us": 56.91275,
+        "combine_extension_us": 53.8245
+      },
+      "candidate": {
+        "fc1_us": 423.62725,
+        "fc1_extension_us": 423.32325000000003,
+        "fc2_us": 233.06599999999997,
+        "fc2_extension_us": 188.154,
+        "combine_us": 56.98475,
+        "combine_extension_us": 53.8725
+      },
+      "delta": {
+        "fc1_us": 5.6159999999999854,
+        "fc1_extension_us": 5.439500000000066,
+        "fc2_us": -0.46375000000003297,
+        "fc2_extension_us": 0.032250000000004775,
+        "combine_us": 0.07199999999999562,
+        "combine_extension_us": 0.04800000000000182
+      },
+      "phase_us": {
+        "control": [
+          945.2395,
+          943.7995
+        ],
+        "candidate": [
+          949.4155000000001,
+          949.96
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "tokens": 4,
+      "backend": "CuteDSL W4A4",
+      "e2e_speedup_percent": 0.11512080893985033,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 18.272,
+        "fc1_extension_us": 16.143749999999997,
+        "fc2_us": 14.760000000000002,
+        "fc2_extension_us": 10.59975,
+        "combine_us": 3.952,
+        "combine_extension_us": 2.7359999999999998
+      },
+      "candidate": {
+        "fc1_us": 18.192,
+        "fc1_extension_us": 16.024250000000002,
+        "fc2_us": 14.800250000000002,
+        "fc2_extension_us": 10.600000000000001,
+        "combine_us": 3.968,
+        "combine_extension_us": 2.75175
+      },
+      "delta": {
+        "fc1_us": -0.0799999999999983,
+        "fc1_extension_us": -0.11949999999999505,
+        "fc2_us": 0.04025000000000034,
+        "fc2_extension_us": 0.0002500000000011937,
+        "combine_us": 0.016000000000000014,
+        "combine_extension_us": 0.015750000000000153
+      },
+      "phase_us": {
+        "control": [
+          34.32,
+          34.368
+        ],
+        "candidate": [
+          34.305,
+          34.304
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "tokens": 128,
+      "backend": "CuteDSL W4A4",
+      "e2e_speedup_percent": 0.047369230152582986,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 65.95275000000001,
+        "fc1_extension_us": 65.62475,
+        "fc2_us": 62.321,
+        "fc2_extension_us": 58.000499999999995,
+        "combine_us": 4.7517499999999995,
+        "combine_extension_us": 3.1685
+      },
+      "candidate": {
+        "fc1_us": 65.81625,
+        "fc1_extension_us": 65.4805,
+        "fc2_us": 62.448,
+        "fc2_extension_us": 57.920249999999996,
+        "combine_us": 4.624,
+        "combine_extension_us": 3.2
+      },
+      "delta": {
+        "fc1_us": -0.13650000000001228,
+        "fc1_extension_us": -0.14424999999999955,
+        "fc2_us": 0.12700000000000244,
+        "fc2_extension_us": -0.08024999999999949,
+        "combine_us": -0.1277499999999998,
+        "combine_extension_us": 0.031500000000000306
+      },
+      "phase_us": {
+        "control": [
+          136.2405,
+          136.22500000000002
+        ],
+        "candidate": [
+          136.192,
+          136.1445
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "tokens": 4096,
+      "backend": "CuteDSL W4A4",
+      "e2e_speedup_percent": 3.6643067297635,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 113.31225,
+        "fc1_extension_us": 112.8805,
+        "fc2_us": 88.464,
+        "fc2_extension_us": 72.06425,
+        "combine_us": 17.12825,
+        "combine_extension_us": 13.41625
+      },
+      "candidate": {
+        "fc1_us": 105.53625,
+        "fc1_extension_us": 105.11224999999999,
+        "fc2_us": 86.88875,
+        "fc2_extension_us": 72.1445,
+        "combine_us": 17.024,
+        "combine_extension_us": 13.43975
+      },
+      "delta": {
+        "fc1_us": -7.7760000000000105,
+        "fc1_extension_us": -7.768250000000009,
+        "fc2_us": -1.575249999999997,
+        "fc2_extension_us": 0.08024999999999238,
+        "combine_us": -0.1042500000000004,
+        "combine_extension_us": 0.0235000000000003
+      },
+      "phase_us": {
+        "control": [
+          223.0735,
+          223.2335
+        ],
+        "candidate": [
+          215.298,
+          215.233
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a4",
+      "tokens": 16384,
+      "backend": "CuteDSL W4A4",
+      "e2e_speedup_percent": 5.965317435353401,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 321.5375,
+        "fc1_extension_us": 321.29775,
+        "fc2_us": 230.89724999999999,
+        "fc2_extension_us": 188.809,
+        "combine_us": 56.60825,
+        "combine_extension_us": 53.872249999999994
+      },
+      "candidate": {
+        "fc1_us": 288.44975,
+        "fc1_extension_us": 287.9615,
+        "fc2_us": 225.5935,
+        "fc2_extension_us": 188.817,
+        "combine_us": 56.64,
+        "combine_extension_us": 53.912000000000006
+      },
+      "delta": {
+        "fc1_us": -33.08775000000003,
+        "fc1_extension_us": -33.33625000000001,
+        "fc2_us": -5.3037499999999795,
+        "fc2_extension_us": 0.008000000000009777,
+        "combine_us": 0.03175000000000239,
+        "combine_extension_us": 0.039750000000012164
+      },
+      "phase_us": {
+        "control": [
+          592.355,
+          592.547
+        ],
+        "candidate": [
+          558.8990000000001,
+          559.299
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "tokens": 4,
+      "backend": "CuteDSL MXFP4x8",
+      "e2e_speedup_percent": 0.23981380251991702,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 19.952,
+        "fc1_extension_us": 17.736000000000004,
+        "fc2_us": 19.25575,
+        "fc2_extension_us": 12.0805,
+        "combine_us": 8.064,
+        "combine_extension_us": 6.544
+      },
+      "candidate": {
+        "fc1_us": 19.86375,
+        "fc1_extension_us": 17.66375,
+        "fc2_us": 19.2,
+        "fc2_extension_us": 12.09625,
+        "combine_us": 8.08875,
+        "combine_extension_us": 6.56
+      },
+      "delta": {
+        "fc1_us": -0.08825000000000216,
+        "fc1_extension_us": -0.07225000000000392,
+        "fc2_us": -0.055749999999999744,
+        "fc2_extension_us": 0.01574999999999882,
+        "combine_us": 0.02474999999999916,
+        "combine_extension_us": 0.016000000000000014
+      },
+      "phase_us": {
+        "control": [
+          40.064,
+          39.967999999999996
+        ],
+        "candidate": [
+          39.888000000000005,
+          39.9525
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "tokens": 4,
+      "backend": "CuteDSL MXFP8",
+      "e2e_speedup_percent": 0.090066249875842,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 26.43225,
+        "fc1_extension_us": 24.216,
+        "fc2_us": 23.76025,
+        "fc2_extension_us": 18.223999999999997,
+        "combine_us": 9.031749999999999,
+        "combine_extension_us": 6.944
+      },
+      "candidate": {
+        "fc1_us": 26.37575,
+        "fc1_extension_us": 24.143749999999997,
+        "fc2_us": 23.792,
+        "fc2_extension_us": 18.216,
+        "combine_us": 9.032,
+        "combine_extension_us": 6.944
+      },
+      "delta": {
+        "fc1_us": -0.05649999999999977,
+        "fc1_extension_us": -0.07225000000000392,
+        "fc2_us": 0.03175000000000239,
+        "fc2_extension_us": -0.007999999999995566,
+        "combine_us": 0.0002500000000011937,
+        "combine_extension_us": 0.0
+      },
+      "phase_us": {
+        "control": [
+          53.088,
+          52.960499999999996
+        ],
+        "candidate": [
+          52.992,
+          52.961
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "tokens": 128,
+      "backend": "CuteDSL MXFP4x8",
+      "e2e_speedup_percent": -0.1566425285778883,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 63.79225,
+        "fc1_extension_us": 63.4885,
+        "fc2_us": 64.14450000000001,
+        "fc2_extension_us": 58.400000000000006,
+        "combine_us": 9.68,
+        "combine_extension_us": 7.632
+      },
+      "candidate": {
+        "fc1_us": 63.93675,
+        "fc1_extension_us": 63.625,
+        "fc2_us": 64.08850000000001,
+        "fc2_extension_us": 58.4005,
+        "combine_us": 9.68,
+        "combine_extension_us": 7.63225
+      },
+      "delta": {
+        "fc1_us": 0.14450000000000074,
+        "fc1_extension_us": 0.13649999999999807,
+        "fc2_us": -0.055999999999997385,
+        "fc2_extension_us": 0.000499999999995282,
+        "combine_us": 0.0,
+        "combine_extension_us": 0.00025000000000030553
+      },
+      "phase_us": {
+        "control": [
+          137.537,
+          137.5525
+        ],
+        "candidate": [
+          137.52100000000002,
+          138.0005
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "tokens": 128,
+      "backend": "CuteDSL MXFP8",
+      "e2e_speedup_percent": -0.09434094157199091,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 108.449,
+        "fc1_extension_us": 108.14500000000001,
+        "fc2_us": 108.6725,
+        "fc2_extension_us": 104.51249999999999,
+        "combine_us": 8.656,
+        "combine_extension_us": 7.5525
+      },
+      "candidate": {
+        "fc1_us": 108.4965,
+        "fc1_extension_us": 108.19274999999999,
+        "fc2_us": 108.8485,
+        "fc2_extension_us": 104.62450000000001,
+        "combine_us": 8.76775,
+        "combine_extension_us": 7.6
+      },
+      "delta": {
+        "fc1_us": 0.04749999999999943,
+        "fc1_extension_us": 0.04774999999997931,
+        "fc2_us": 0.17600000000000193,
+        "fc2_extension_us": 0.11200000000002319,
+        "combine_us": 0.1117499999999989,
+        "combine_extension_us": 0.04749999999999943
+      },
+      "phase_us": {
+        "control": [
+          228.161,
+          228.25799999999998
+        ],
+        "candidate": [
+          228.369,
+          228.481
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "tokens": 4096,
+      "backend": "CuteDSL MXFP4x8",
+      "e2e_speedup_percent": 3.377265554515141,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 139.48075,
+        "fc1_extension_us": 138.31275,
+        "fc2_us": 167.9685,
+        "fc2_extension_us": 147.47275,
+        "combine_us": 81.3845,
+        "combine_extension_us": 77.43275
+      },
+      "candidate": {
+        "fc1_us": 127.70524999999999,
+        "fc1_extension_us": 126.521,
+        "fc2_us": 164.33724999999998,
+        "fc2_extension_us": 146.69675,
+        "combine_us": 81.43225,
+        "combine_extension_us": 77.51225
+      },
+      "delta": {
+        "fc1_us": -11.775500000000008,
+        "fc1_extension_us": -11.791749999999993,
+        "fc2_us": -3.6312500000000227,
+        "fc2_extension_us": -0.775999999999982,
+        "combine_us": 0.04774999999999352,
+        "combine_extension_us": 0.07949999999999591
+      },
+      "phase_us": {
+        "control": [
+          384.498,
+          384.8825
+        ],
+        "candidate": [
+          372.4185,
+          371.827
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "tokens": 4096,
+      "backend": "CuteDSL MXFP8",
+      "e2e_speedup_percent": 2.3534921947304,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 156.53674999999998,
+        "fc1_extension_us": 155.32075,
+        "fc2_us": 205.18525,
+        "fc2_extension_us": 179.10525,
+        "combine_us": 80.72075,
+        "combine_extension_us": 76.90424999999999
+      },
+      "candidate": {
+        "fc1_us": 149.88074999999998,
+        "fc1_extension_us": 148.7045,
+        "fc2_us": 199.61725,
+        "fc2_extension_us": 176.089,
+        "combine_us": 80.769,
+        "combine_extension_us": 76.92875000000001
+      },
+      "delta": {
+        "fc1_us": -6.656000000000006,
+        "fc1_extension_us": -6.616250000000008,
+        "fc2_us": -5.567999999999984,
+        "fc2_extension_us": -3.0162500000000136,
+        "combine_us": 0.04825000000001012,
+        "combine_extension_us": 0.024500000000017508
+      },
+      "phase_us": {
+        "control": [
+          432.48199999999997,
+          433.155
+        ],
+        "candidate": [
+          422.802,
+          422.9305
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "tokens": 16384,
+      "backend": "CuteDSL MXFP4x8",
+      "e2e_speedup_percent": 1.4680592443168772,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 504.93899999999996,
+        "fc1_extension_us": 504.3705,
+        "fc2_us": 499.45875,
+        "fc2_extension_us": 463.71475,
+        "combine_us": 281.1055,
+        "combine_extension_us": 276.0895
+      },
+      "candidate": {
+        "fc1_us": 476.81075000000004,
+        "fc1_extension_us": 476.22675000000004,
+        "fc2_us": 499.48275,
+        "fc2_extension_us": 472.6745,
+        "combine_us": 280.9775,
+        "combine_extension_us": 276.00175
+      },
+      "delta": {
+        "fc1_us": -28.128249999999923,
+        "fc1_extension_us": -28.143749999999955,
+        "fc2_us": 0.02400000000000091,
+        "fc2_extension_us": 8.959750000000042,
+        "combine_us": -0.1279999999999859,
+        "combine_extension_us": -0.08774999999997135
+      },
+      "phase_us": {
+        "control": [
+          1268.503,
+          1247.847
+        ],
+        "candidate": [
+          1247.3029999999999,
+          1232.6
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-mxfp",
+      "tokens": 16384,
+      "backend": "CuteDSL MXFP8",
+      "e2e_speedup_percent": 4.715573242225868,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 530.939,
+        "fc1_extension_us": 530.49075,
+        "fc2_us": 524.46675,
+        "fc2_extension_us": 488.811,
+        "combine_us": 281.99375000000003,
+        "combine_extension_us": 277.11325
+      },
+      "candidate": {
+        "fc1_us": 488.89075,
+        "fc1_extension_us": 488.45875,
+        "fc2_us": 504.443,
+        "fc2_extension_us": 477.043,
+        "combine_us": 282.11375,
+        "combine_extension_us": 277.154
+      },
+      "delta": {
+        "fc1_us": -42.04824999999994,
+        "fc1_extension_us": -42.03200000000004,
+        "fc2_us": -20.023750000000064,
+        "fc2_extension_us": -11.767999999999972,
+        "combine_us": 0.1199999999999477,
+        "combine_extension_us": 0.04075000000000273
+      },
+      "phase_us": {
+        "control": [
+          1324.9355,
+          1293.2240000000002
+        ],
+        "candidate": [
+          1262.9195,
+          1237.2865
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "tokens": 4,
+      "backend": "CuteDSL PER-TOKEN",
+      "e2e_speedup_percent": 0.28726664005318536,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 17.824,
+        "fc1_extension_us": 15.536249999999999,
+        "fc2_us": 14.8405,
+        "fc2_extension_us": 12.28025,
+        "combine_us": 9.8885,
+        "combine_extension_us": 7.36
+      },
+      "candidate": {
+        "fc1_us": 17.776000000000003,
+        "fc1_extension_us": 15.472249999999999,
+        "fc2_us": 14.832,
+        "fc2_extension_us": 12.552,
+        "combine_us": 9.872,
+        "combine_extension_us": 7.360250000000001
+      },
+      "delta": {
+        "fc1_us": -0.047999999999998266,
+        "fc1_extension_us": -0.06400000000000006,
+        "fc2_us": -0.00849999999999973,
+        "fc2_extension_us": 0.27174999999999905,
+        "combine_us": -0.016500000000000625,
+        "combine_extension_us": 0.00025000000000030553
+      },
+      "phase_us": {
+        "control": [
+          44.8165,
+          44.8965
+        ],
+        "candidate": [
+          44.751999999999995,
+          44.704
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "tokens": 128,
+      "backend": "CuteDSL PER-TOKEN",
+      "e2e_speedup_percent": 0.14618300267346118,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 67.8085,
+        "fc1_extension_us": 67.34450000000001,
+        "fc2_us": 64.21674999999999,
+        "fc2_extension_us": 60.2885,
+        "combine_us": 10.912,
+        "combine_extension_us": 7.5845
+      },
+      "candidate": {
+        "fc1_us": 67.79275000000001,
+        "fc1_extension_us": 67.33675,
+        "fc2_us": 64.0405,
+        "fc2_extension_us": 60.19275,
+        "combine_us": 10.912,
+        "combine_extension_us": 7.57625
+      },
+      "delta": {
+        "fc1_us": -0.015749999999982833,
+        "fc1_extension_us": -0.007750000000015689,
+        "fc2_us": -0.17624999999999602,
+        "fc2_extension_us": -0.09575000000000244,
+        "combine_us": 0.0,
+        "combine_extension_us": -0.008250000000000313
+      },
+      "phase_us": {
+        "control": [
+          153.537,
+          153.34550000000002
+        ],
+        "candidate": [
+          153.265,
+          153.1695
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "tokens": 4096,
+      "backend": "CuteDSL PER-TOKEN",
+      "e2e_speedup_percent": 0.008800750091175757,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 153.033,
+        "fc1_extension_us": 151.70525,
+        "fc2_us": 204.52175,
+        "fc2_extension_us": 164.3855,
+        "combine_us": 79.065,
+        "combine_extension_us": 78.62475
+      },
+      "candidate": {
+        "fc1_us": 153.14525,
+        "fc1_extension_us": 151.84974999999997,
+        "fc2_us": 204.58525,
+        "fc2_extension_us": 164.34550000000002,
+        "combine_us": 79.088,
+        "combine_extension_us": 78.6565
+      },
+      "delta": {
+        "fc1_us": 0.11225000000001728,
+        "fc1_extension_us": 0.1444999999999652,
+        "fc2_us": 0.06350000000000477,
+        "fc2_extension_us": -0.03999999999999204,
+        "combine_us": 0.022999999999996135,
+        "combine_extension_us": 0.03174999999998818
+      },
+      "phase_us": {
+        "control": [
+          554.0364999999999,
+          553.7650000000001
+        ],
+        "candidate": [
+          553.748,
+          553.956
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-per-token",
+      "tokens": 16384,
+      "backend": "CuteDSL PER-TOKEN",
+      "e2e_speedup_percent": -0.011989253671740308,
+      "both_candidates_below_both_controls": false,
+      "control": {
+        "fc1_us": 546.8520000000001,
+        "fc1_extension_us": 546.6279999999999,
+        "fc2_us": 525.7080000000001,
+        "fc2_extension_us": 477.40324999999996,
+        "combine_us": 282.546,
+        "combine_extension_us": 281.47425
+      },
+      "candidate": {
+        "fc1_us": 546.6915,
+        "fc1_extension_us": 546.4839999999999,
+        "fc2_us": 525.5640000000001,
+        "fc2_extension_us": 477.499,
+        "combine_us": 282.554,
+        "combine_extension_us": 281.49825
+      },
+      "delta": {
+        "fc1_us": -0.16050000000007003,
+        "fc1_extension_us": -0.14400000000000546,
+        "fc2_us": -0.14400000000000546,
+        "fc2_extension_us": 0.0957500000000664,
+        "combine_us": 0.007999999999981355,
+        "combine_extension_us": 0.02400000000000091
+      },
+      "phase_us": {
+        "control": [
+          1801.518,
+          1801.2445
+        ],
+        "candidate": [
+          1801.7575,
+          1801.4370000000001
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "tokens": 4,
+      "backend": "CuteDSL W4A4",
+      "e2e_speedup_percent": 0.11901663462410284,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 17.93625,
+        "fc1_extension_us": 15.72825,
+        "fc2_us": 16.103749999999998,
+        "fc2_extension_us": 11.77575,
+        "combine_us": 9.5045,
+        "combine_extension_us": 7.456
+      },
+      "candidate": {
+        "fc1_us": 17.872,
+        "fc1_extension_us": 15.6485,
+        "fc2_us": 16.128,
+        "fc2_extension_us": 11.808,
+        "combine_us": 9.55225,
+        "combine_extension_us": 7.464
+      },
+      "delta": {
+        "fc1_us": -0.06425000000000125,
+        "fc1_extension_us": -0.07974999999999888,
+        "fc2_us": 0.024250000000002103,
+        "fc2_extension_us": 0.032249999999999446,
+        "combine_us": 0.047750000000000625,
+        "combine_extension_us": 0.008000000000000007
+      },
+      "phase_us": {
+        "control": [
+          40.192,
+          40.1125
+        ],
+        "candidate": [
+          40.111999999999995,
+          40.097
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "tokens": 128,
+      "backend": "CuteDSL W4A4",
+      "e2e_speedup_percent": 0.21109932774838747,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 67.9445,
+        "fc1_extension_us": 67.54475000000001,
+        "fc2_us": 69.06475,
+        "fc2_extension_us": 59.97625,
+        "combine_us": 9.79175,
+        "combine_extension_us": 7.504
+      },
+      "candidate": {
+        "fc1_us": 67.61625,
+        "fc1_extension_us": 67.25625,
+        "fc2_us": 68.6645,
+        "fc2_extension_us": 59.8965,
+        "combine_us": 9.8,
+        "combine_extension_us": 7.504
+      },
+      "delta": {
+        "fc1_us": -0.32825000000001125,
+        "fc1_extension_us": -0.2885000000000133,
+        "fc2_us": -0.4002499999999998,
+        "fc2_extension_us": -0.0797499999999971,
+        "combine_us": 0.008250000000000313,
+        "combine_extension_us": 0.0
+      },
+      "phase_us": {
+        "control": [
+          144.08100000000002,
+          144.449
+        ],
+        "candidate": [
+          144.033,
+          143.889
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "tokens": 4096,
+      "backend": "CuteDSL W4A4",
+      "e2e_speedup_percent": 2.302620075798445,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 134.12925,
+        "fc1_extension_us": 132.80075,
+        "fc2_us": 164.425,
+        "fc2_extension_us": 139.21699999999998,
+        "combine_us": 81.38475,
+        "combine_extension_us": 77.2245
+      },
+      "candidate": {
+        "fc1_us": 126.02475000000001,
+        "fc1_extension_us": 124.657,
+        "fc2_us": 161.63299999999998,
+        "fc2_extension_us": 139.10524999999998,
+        "combine_us": 81.51275000000001,
+        "combine_extension_us": 77.201
+      },
+      "delta": {
+        "fc1_us": -8.104500000000002,
+        "fc1_extension_us": -8.143749999999997,
+        "fc2_us": -2.79200000000003,
+        "fc2_extension_us": -0.11175000000000068,
+        "combine_us": 0.12800000000001432,
+        "combine_extension_us": -0.023500000000012733
+      },
+      "phase_us": {
+        "control": [
+          376.33900000000006,
+          375.731
+        ],
+        "candidate": [
+          367.89099999999996,
+          367.25149999999996
+        ]
+      }
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a4",
+      "tokens": 16384,
+      "backend": "CuteDSL W4A4",
+      "e2e_speedup_percent": 4.357649759903981,
+      "both_candidates_below_both_controls": true,
+      "control": {
+        "fc1_us": 474.51575,
+        "fc1_extension_us": 473.972,
+        "fc2_us": 451.25149999999996,
+        "fc2_extension_us": 408.38775,
+        "combine_us": 274.04224999999997,
+        "combine_extension_us": 269.826
+      },
+      "candidate": {
+        "fc1_us": 425.49125000000004,
+        "fc1_extension_us": 424.95525,
+        "fc2_us": 440.98775,
+        "fc2_extension_us": 408.2995,
+        "combine_us": 274.03425,
+        "combine_extension_us": 269.80225
+      },
+      "delta": {
+        "fc1_us": -49.02449999999999,
+        "fc1_extension_us": -49.01675,
+        "fc2_us": -10.263749999999959,
+        "fc2_extension_us": -0.08824999999995953,
+        "combine_us": -0.007999999999981355,
+        "combine_extension_us": -0.02375000000000682
+      },
+      "phase_us": {
+        "control": [
+          1181.546,
+          1181.13
+        ],
+        "candidate": [
+          1131.897,
+          1132.121
+        ]
+      }
+    }
+  ],
+  "boundary": "Native resources paired by guarded compilation sequence and frozen choice identity; no exact timed token-to-library/native-cubin claim. FC1/FC2 are successive GEMM activities on the dependent chain; component extensions account for overlap. Medians of separate components need not sum to E2E median. No new GPU measurements."
+}

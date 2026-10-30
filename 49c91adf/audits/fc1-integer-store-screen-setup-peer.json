@@ -1,0 +1,35 @@
+{
+  "all_choices_explicit": true,
+  "cells": 32,
+  "files": {
+    "experiments/fc1-integer-store-performance/committed-source-manifest.json": "be3896130136f870d4f48a77bf9c12f1933a67cdaa927584dfdc8dc8a140f512",
+    "experiments/fc1-integer-store-performance/control-production-equivalence.json": "75d235a5620fab49ea7ae93aa6ffb1ba3ef4009a9ad60a700bfc3bc49f37dd6c",
+    "experiments/fc1-integer-store-performance/final-gate.json": "3effaad90e911ef8b20313cbea9da0def9da69befef19a2ed7ccfdc94b5cf8d5",
+    "experiments/fc1-integer-store-performance/harness-proof.json": "18f5604e3a8a4dd23028d107868ffab0bc4cc5aa0b7c7c4239e438fb83236f84",
+    "experiments/fc1-integer-store-performance/launch.py": "b492497252ccabca5d7f1ebc15cc4c4c06ba5dc233fe488bcb0ee9a721b85d46",
+    "experiments/fc1-integer-store-performance/plan.json": "679c7c27c39e903da2f84dd4c28da17fe03dea482d778c813da0a39371807754",
+    "experiments/fc1-integer-store-performance/prepare.py": "c881199e7e3b197c55b15a01284b426729a439cbdd57b974cc7643da7d5e4a18",
+    "experiments/fc1-integer-store-performance/screen/perf-config.json": "4e7c77e555a69d1fd8f55c7c43ca03a51b698dc8c39d45b58e196302e24fda02",
+    "experiments/fc1-integer-store-performance/screen/preparation.json": "cc73f93e2445c4026624e5fa251253b73c4d9ab318a0d68882b31eebc5f1dd11",
+    "experiments/fc1-integer-store-performance/selected-winners.json": "2ed15840961a5672b7fbb9431914fc3ca74a85b2bbcc147219eee654d5314fdb"
+  },
+  "full_bf072_source_files": 13245,
+  "helpers_byte_identical_to_audited_harness": 12,
+  "manual_code_review": [
+    "Prepare unlinks the changed hardlinked kernel before writing; frozen source is not mutated.",
+    "Launch rechecks both immutable campaign receipts and all selected run/result/capture hashes, compiler options and LOCAL0.",
+    "Native release preflight requires equal generated Ninja descriptions, no debug flags, no-op builds and captures loaded library hashes before timing.",
+    "GPU0/1/2/3 idle and UUID checks precede campaign; campaign rechecks full tracked bytes before and after all jobs.",
+    "Unmodified public benchmark arguments retain initial NVFP4 quantization, unfused finalize, 10 warmups, 100 strict CUPTI samples, cold L2/CUDA graph and no retuning/event fallback.",
+    "All results retain raw four-phase medians, geometric arm estimate, arithmetic diagnostic, clocks and negative rows."
+  ],
+  "passed": true,
+  "planned_samples": 12800,
+  "preserved_campaign_failure": "KeyError('output_dtype') after 13 successful processes; select 12 unfused calls and 4 separately passed fused calls, retaining the redundant control and failed orchestration receipt.",
+  "qualification_resource_boundary": "Selected unfused resources match; the separate fused Float32 two-CTA case increases registers122 to125 with LOCAL0, recorded in owner's summary. The performance screen explicitly uses no fused finalize.",
+  "remaining_execution_boundary": "Actual release-cache/idle checks, campaign source postflight, native resource receipts and all 12,800 timing samples remain execution-time requirements. Setup pass does not claim these have already run.",
+  "scope": "Read-only CPU preparation/source/qualification binding review; no GPU launch, numerical rerun, or timing claim.",
+  "selected_capture_functions": 40,
+  "selected_exact_calls": 16,
+  "source_boundary": "Timing control is the exact bf072 production inventory; candidate changes only the 482b swap file. Historical02de qualification differs only in the two already-retained W4/Mega files, which these swap jobs do not execute."
+}

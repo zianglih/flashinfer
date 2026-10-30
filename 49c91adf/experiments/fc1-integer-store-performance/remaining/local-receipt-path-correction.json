@@ -1,0 +1,30 @@
+{
+  "passed": true,
+  "boundary": "Extension launcher initially targeted the original local JSON receipt directory. Both original and extension receipts restored exactly from their immutable launch stdout; remote receipts/configs and all source/timing processes were unaffected. Corrected launch_remaining.py only changes local output destination.",
+  "files": [
+    {
+      "path": "experiments/fc1-integer-store-performance/screen/launch.json",
+      "old_sha256": "5d114b4e3efcae61ce7475a1d796cdd9246850b25d324e439e9339c5ac7b7d29",
+      "new_sha256": "ab2377a4357fca09a492825c36e7393352fda46798a8ae113c6cc7490654e0ac",
+      "source_stdout_sha256": "81317f57a435defa1cafa36379ef0801fdfbbfb30c467ea375a7e4dc4c471411"
+    },
+    {
+      "path": "experiments/fc1-integer-store-performance/screen/launch-preflight.json",
+      "old_sha256": "54e13c0e5a2a80fcf41afb266408f70e24287eccd649830bc045d25058d57daa",
+      "new_sha256": "80d98877fc78feb6b0de8e742d45c99ac20da26b90d96cda2a05c49966755568",
+      "source_stdout_sha256": "81317f57a435defa1cafa36379ef0801fdfbbfb30c467ea375a7e4dc4c471411"
+    },
+    {
+      "path": "experiments/fc1-integer-store-performance/remaining/launch.json",
+      "old_sha256": null,
+      "new_sha256": "5d114b4e3efcae61ce7475a1d796cdd9246850b25d324e439e9339c5ac7b7d29",
+      "source_stdout_sha256": "26a1c48299dce3198c4fcc61f400098107779508887b6d1d595cc3dd4a1840c6"
+    },
+    {
+      "path": "experiments/fc1-integer-store-performance/remaining/launch-preflight.json",
+      "old_sha256": null,
+      "new_sha256": "54e13c0e5a2a80fcf41afb266408f70e24287eccd649830bc045d25058d57daa",
+      "source_stdout_sha256": "26a1c48299dce3198c4fcc61f400098107779508887b6d1d595cc3dd4a1840c6"
+    }
+  ]
+}

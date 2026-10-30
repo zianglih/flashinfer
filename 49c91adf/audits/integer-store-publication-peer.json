@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "retained_head": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "fresh_cells": 104,
+  "reused_cells": 364,
+  "displayed_cells": 396,
+  "all_negative_cells_preserved": 161,
+  "native_partial_suffixes_reproduced": 49,
+  "native_tables": 15,
+  "records": {
+    "fresh": 104,
+    "reused_cute": 364,
+    "reused_trt": 390,
+    "bf16": 52
+  },
+  "stdout_files_preserved": 134,
+  "old_publication_unchanged": true,
+  "tables_manifest_sha256": "85afbd7fc4bc7802334f21c8c6f1917fa6dcc7f7a0bb64146e9ddc2e4c555288",
+  "source_reuse_proof_sha256": "50ec7c5032f5bbc603bfa64a44705def8a9b4c8fdb94468ab2565e1b0902634f",
+  "boundary": "Independent structured-data overlay, raw-row latency, native formatter replay, source/hash and negative-cell audit. Existing raw41600sample peer audit is reused; no GPU rerun or new same-GPU/full468causal claim. Plots are source/hash checked; author owns visual inspection."
+}

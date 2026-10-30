@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "config_sha256": "4e7c77e555a69d1fd8f55c7c43ca03a51b698dc8c39d45b58e196302e24fda02",
+  "archive_sha256": "48005bfae521e8e1f3bc9ea6f1e7cb2cfb112204cb771a20dc5211079c8d2344",
+  "source_manifests": {
+    "candidate": "dd91c36b7595045cef1f5cf863ac95d8cf3294b74bf19156c8b12225afbebd52",
+    "control": "98368cfbfc4594e4f211423fcb98e83a4c8d956f9ac92e52ae4b81c2cb356ac1"
+  },
+  "jobs": 6,
+  "cells": 32,
+  "phase_medians": 128,
+  "samples": 12800,
+  "loaded_resource_records": 224,
+  "clock_quartiles": 512,
+  "missing_clock_quartiles": 0,
+  "clock_exception_quartiles": 17,
+  "negative_cells": 7,
+  "geomean_percent": 1.2329085439914955,
+  "all_report_cells_preserved": true,
+  "boundary": "Independent raw CUPTI correlation/span, median/CAAC, route/tactic/cache/source/resource and raw NVML quartile replay. No new GPU execution; all negative and clock-exception cells preserved. No source or timing-helper changes."
+}

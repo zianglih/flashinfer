@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "head": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "files": {
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py": "482b636a1714486e2ffb34c8ae005da3cef26f25f0ce034ba1eb59c6198d6276"
+  },
+  "patch_sha256": "a11ceab5a9a27b1df795b8f3e6b4d2dd010200113dc2a8965c68db81ef8b157b",
+  "status": " M flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py\n",
+  "source_unchanged_since_timing": true,
+  "commit_performed": false
+}

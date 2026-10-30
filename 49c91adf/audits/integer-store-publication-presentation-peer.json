@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "body_sha256": "28ca6a7f1c520927518d1878af00aab85331f3374b6cccce0a22569ef4c0421a",
+  "retained_head": "49c91adf47d30fc2049c76cbaf34d0ccf3291434",
+  "overlay_peer_sha256": "8dae3e69ac7928873703a3a31172a636445b021a0ebf9d6e1fffa0a416f70514",
+  "causal_plot_rows": 88,
+  "causal_plot_negatives": 32,
+  "full_plot_rows": 396,
+  "full_plot_negatives": 161,
+  "clock_quartiles": 3744,
+  "clock_exceptions": 90,
+  "missing_clock_quartiles": 5,
+  "clock_and_resource_lineage_exact": true,
+  "all_plot_source_and_output_hashes_match": true,
+  "boundary": "Data/source/hash/presentation wording audit only; author/root visual review is separate. Body asset placeholders intentionally unresolved. No prior publication files changed."
+}

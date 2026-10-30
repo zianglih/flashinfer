@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "source_sha256": "cdb2f9c50ad08d74f522c1c9773714c75517f0fe96cea440ee6cff22aa7da6d0",
+  "review_head": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "qualification_base": "02de7785c10847b3528340840bed40bd405d85b4",
+  "original_conversion_ast_identical": true,
+  "store_body_changes": "Recast to output_dtype, then replace fixed16 by static cute.size. Atomic and copy paths retain output dtype.",
+  "unchanged_epilogue_methods_except": [
+    "_store_converted",
+    "_run_token_group",
+    "_store renamed _convert"
+  ],
+  "native_probe": "experiments/fc1-integer-store-probe/r4-native-proof.json",
+  "boundary": "Full kernel gate remains pending. Existing original layout/guard proof remains valid; no new API restriction or synchronization change."
+}

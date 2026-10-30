@@ -1,0 +1,11 @@
+{
+  "head": "02de7785c10847b3528340840bed40bd405d85b4",
+  "repo": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/flashinfer-fc1-integer-store-review",
+  "changed": {
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py": "482b636a1714486e2ffb34c8ae005da3cef26f25f0ce034ba1eb59c6198d6276"
+  },
+  "git_dir": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/flashinfer/.git/worktrees/flashinfer-fc1-integer-store-review",
+  "common_dir": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/flashinfer/.git",
+  "review_head": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "boundary": "Remote qualification remains retained02de plus only swap source. Local worktree is forward-bumped by W4-only bf072d26."
+}

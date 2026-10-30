@@ -1,0 +1,18 @@
+{
+  "passed": true,
+  "retained_head": "02de7785c10847b3528340840bed40bd405d85b4",
+  "formatter_file_sha256": "84855eed2a84d4147488144db3b08830fa696e3ce4306ec4fa8b3cbd0724585e",
+  "historical_file_sha256": "0d1d6c8bc4aa4d6305c2576c9af6cfc41986479779bb5f9310c0fffbc82c2409",
+  "printer_AST_identical_to326": true,
+  "extracted_names": [
+    "BenchResult",
+    "DeepSeekConfig",
+    "MODEL_CONFIGS",
+    "_backend_skip_reason",
+    "_print_footer",
+    "_print_header",
+    "_print_row",
+    "_table_layout"
+  ],
+  "historical_baseline_index_sha256": "51ce4db4f9beac023ba3eb6c0755c585a294cddded3948875dcd8745d6db6284"
+}

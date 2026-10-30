@@ -1,0 +1,22 @@
+{
+  "source_review_passed": true,
+  "source_sha256": "482b636a1714486e2ffb34c8ae005da3cef26f25f0ce034ba1eb59c6198d6276",
+  "initial_source_sha256": "d2aaa0fadb82cae0f498f7c19c512323eca0c99f07223eeec4b4f6a54ce59333",
+  "initial_blocker": "FP32 fused nongated output passed Uint32 to the atomic helper, which rejects this type.",
+  "blocker_fixed": "Recast carrier and target to output_dtype within the existing fused-finalize branch.",
+  "exact_conversion_ast_preserved": true,
+  "geometry_alignment_checks": 33792,
+  "scalar_widths": [
+    4,
+    8,
+    16,
+    32
+  ],
+  "no_new_api_alignment_requirement": true,
+  "qualification_required": [
+    "Native complete-kernel exact/resource and actual wider stores",
+    "FP32 fused compile/numerical boundary after repaired casts",
+    "Unchanged gated and BF16/FP16 FC2 paths/codegen where applicable"
+  ],
+  "boundary": "Read-only static source and existing public shape contract. No new GPU launch or speedup/whole-kernel codegen claim."
+}

@@ -1,0 +1,1208 @@
+[
+  {
+    "job": "ep-kimi-k3-mxfp",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-kimi-k3-mxfp/0-candidate.log",
+    "path": "stdout/ep-kimi-k3-mxfp-0-candidate.log",
+    "sha256": "076351731d41447757bebc8c6c4350d0328324bdeae7127d81102ca6b43969f6",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-kimi-k3-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-kimi-k3-mxfp/1-candidate.log",
+    "path": "stdout/ep-kimi-k3-mxfp-1-candidate.log",
+    "sha256": "1c41d6baba613e2fd139b1424dc95790d18dd6fb3b0b1201acefa4985a795765",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-kimi-k3-per-token",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-kimi-k3-per-token/0-candidate.log",
+    "path": "stdout/ep-kimi-k3-per-token-0-candidate.log",
+    "sha256": "78397010c494287019b61256bd5f56bba25c6b2a856d0edddd8e029bf24e3933",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-kimi-k3-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-kimi-k3-per-token/1-candidate.log",
+    "path": "stdout/ep-kimi-k3-per-token-1-candidate.log",
+    "sha256": "be24d3332baa34aa5309de43d95f85b5e9431b58f055baa236b2bf3cacf7e0a2",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-kimi-k3-w4a4",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-kimi-k3-w4a4/0-candidate.log",
+    "path": "stdout/ep-kimi-k3-w4a4-0-candidate.log",
+    "sha256": "011ace3fa9fb063cccd8de009ef17ec866c79295dbdf5bfb59f052318658281d",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-kimi-k3-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-kimi-k3-w4a4/1-candidate.log",
+    "path": "stdout/ep-kimi-k3-w4a4-1-candidate.log",
+    "sha256": "266d2d52a52b323577524167bcd9a3c52b72326695bb3068b7e623733b0f2cd3",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-nemo3-ultra-mxfp/0-candidate.log",
+    "path": "stdout/ep-nemo3-ultra-mxfp-0-candidate.log",
+    "sha256": "80de2d19945da3d6bde090a9c1f8350e1b599a7723324d0cef05b0f772cdcd8b",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-nemo3-ultra-mxfp/1-candidate.log",
+    "path": "stdout/ep-nemo3-ultra-mxfp-1-candidate.log",
+    "sha256": "700d3449ef7669ec310f2ef2025a51ec35b69b52aa4f63ed1e061f36384b0548",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-nemo3-ultra-per-token/0-candidate.log",
+    "path": "stdout/ep-nemo3-ultra-per-token-0-candidate.log",
+    "sha256": "691345a850f685dac07723341d0958935848f48b445a21ead9effc243dd1fbda",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-nemo3-ultra-per-token/1-candidate.log",
+    "path": "stdout/ep-nemo3-ultra-per-token-1-candidate.log",
+    "sha256": "fb14834cc0aa3aca91d5e09226ca705fe7f4a168b8b9a5f70dc2858c25549c83",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-nemo3-ultra-w4a4/0-candidate.log",
+    "path": "stdout/ep-nemo3-ultra-w4a4-0-candidate.log",
+    "sha256": "d954bb15d07562bc5166902215826b53f96a853cdc8efb6ab7dc91f90e829135",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-nemo3-ultra-w4a4/1-candidate.log",
+    "path": "stdout/ep-nemo3-ultra-w4a4-1-candidate.log",
+    "sha256": "1f94788a70d270737430a5786592f76321cfb715fa0fda7a098ba58d686af6b4",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v3-mxfp",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v3-mxfp/0-candidate.log",
+    "path": "stdout/ep-v3-mxfp-0-candidate.log",
+    "sha256": "858ae6403d021f35c3ee9cb70df8f9031c0e57f3afb98fc13b47745690abff39",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v3-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v3-mxfp/1-candidate.log",
+    "path": "stdout/ep-v3-mxfp-1-candidate.log",
+    "sha256": "c11b8233d89bb629ceb7d81c3c362a73faac9240ffd8fb83e5b9d199179b96b1",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v3-per-token",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v3-per-token/0-candidate.log",
+    "path": "stdout/ep-v3-per-token-0-candidate.log",
+    "sha256": "574543c37eea2707e7aba30746cfebffde8c73eab591f099d6b886b3b9664dce",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v3-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v3-per-token/1-candidate.log",
+    "path": "stdout/ep-v3-per-token-1-candidate.log",
+    "sha256": "ae26c843a4cbe55f74cc3abf90508888552a86ff7ff5b05424f23ae16280879e",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v3-w4a4",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v3-w4a4/0-candidate.log",
+    "path": "stdout/ep-v3-w4a4-0-candidate.log",
+    "sha256": "a10da18f087105c22de6306acc57b90d81bdf924077bc7ab6bd16d026afdad92",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v3-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v3-w4a4/1-candidate.log",
+    "path": "stdout/ep-v3-w4a4-1-candidate.log",
+    "sha256": "b809e074308554298576a5226c607084588004eda5e390cab044a1de833fc8ba",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v41-flash-mxfp",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v41-flash-mxfp/0-candidate.log",
+    "path": "stdout/ep-v41-flash-mxfp-0-candidate.log",
+    "sha256": "4793971cc96bc9cdd3f251db58eb00b0a4ad6a8f4f4578235fcfbaa03004198e",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v41-flash-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v41-flash-mxfp/1-candidate.log",
+    "path": "stdout/ep-v41-flash-mxfp-1-candidate.log",
+    "sha256": "6e900d01f56c029a1901246003edc44b63ec5f75c0747ca8b08f80ee1c12e008",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v41-flash-per-token",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v41-flash-per-token/0-candidate.log",
+    "path": "stdout/ep-v41-flash-per-token-0-candidate.log",
+    "sha256": "deba8873ee8557ecae3b448b4e06a15781ec73322fd694d4535f4f120b9a3291",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v41-flash-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v41-flash-per-token/1-candidate.log",
+    "path": "stdout/ep-v41-flash-per-token-1-candidate.log",
+    "sha256": "9f376e9dbd1a61a032fea661a00974ce23f5c9d1f539f7ceeb6e103e05f48917",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v41-flash-w4a4",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v41-flash-w4a4/0-candidate.log",
+    "path": "stdout/ep-v41-flash-w4a4-0-candidate.log",
+    "sha256": "a8405d6f5f160ff6c7794c510f0de1ce2737f382555443accefc6f925a4dbee0",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v41-flash-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/ep-v41-flash-w4a4/1-candidate.log",
+    "path": "stdout/ep-v41-flash-w4a4-1-candidate.log",
+    "sha256": "47d83bca2452c847e054e95d64b13eeea406b481512104edc5b9b7547c2fd20f",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-kimi-k3-mxfp",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-kimi-k3-mxfp/0-candidate.log",
+    "path": "stdout/tp-kimi-k3-mxfp-0-candidate.log",
+    "sha256": "e5e49897767fe7b6c73b3956ddb10bec38cac6ef8d875f7118bf98936f315f9b",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-kimi-k3-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-kimi-k3-mxfp/1-candidate.log",
+    "path": "stdout/tp-kimi-k3-mxfp-1-candidate.log",
+    "sha256": "46a4cbb661e9a9e218c63ae0e13d6b82a55c1c9f8914d40217905b5297c9b28d",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-kimi-k3-per-token",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-kimi-k3-per-token/0-candidate.log",
+    "path": "stdout/tp-kimi-k3-per-token-0-candidate.log",
+    "sha256": "26e3fca07aac38dc74686c97afc998e0f841d0feed655dd3009878fefe4689d7",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-kimi-k3-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-kimi-k3-per-token/1-candidate.log",
+    "path": "stdout/tp-kimi-k3-per-token-1-candidate.log",
+    "sha256": "ebbc5d3ba41d2b5c6286c0f696877771dc66183ce5d798808216b5a95e17ae84",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-kimi-k3-w4a4",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-kimi-k3-w4a4/0-candidate.log",
+    "path": "stdout/tp-kimi-k3-w4a4-0-candidate.log",
+    "sha256": "39d1e5a0aee955fcbf06443ea0f9fff143eaf61da2b38866ca64a1b63b7c998e",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-kimi-k3-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-kimi-k3-w4a4/1-candidate.log",
+    "path": "stdout/tp-kimi-k3-w4a4-1-candidate.log",
+    "sha256": "0feb8353a3ae028b71f4fe61b4d3a207bc4bc9b77a67d8949d39511669c0e8a4",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-nemo3-ultra-mxfp/0-candidate.log",
+    "path": "stdout/tp-nemo3-ultra-mxfp-0-candidate.log",
+    "sha256": "c80a12586c02305f94b11b71c9fdb2e265d10fc9e90da26337cc59e1801df37f",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-nemo3-ultra-mxfp/1-candidate.log",
+    "path": "stdout/tp-nemo3-ultra-mxfp-1-candidate.log",
+    "sha256": "6c4804fac3056b1ab62c0ca7cf223a4decdf0b04f06a1f11e8b3417be2253c06",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-nemo3-ultra-per-token/0-candidate.log",
+    "path": "stdout/tp-nemo3-ultra-per-token-0-candidate.log",
+    "sha256": "cd4c561c575e06779276a6d83d3611704c300a8d3aede4e67a8fabce90df84c0",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-nemo3-ultra-per-token/1-candidate.log",
+    "path": "stdout/tp-nemo3-ultra-per-token-1-candidate.log",
+    "sha256": "4b968601a2627b5e47ba2b1ae13eaebf288ffa7b99a86c71cd544347ce39e021",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-nemo3-ultra-w4a4/0-candidate.log",
+    "path": "stdout/tp-nemo3-ultra-w4a4-0-candidate.log",
+    "sha256": "4172c6ff22f5e542a8424e23193cf4740628c1d8048c445d64f07917e4edeea2",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-nemo3-ultra-w4a4/1-candidate.log",
+    "path": "stdout/tp-nemo3-ultra-w4a4-1-candidate.log",
+    "sha256": "23c52c190180ebd18c0b18eb637ee46737cecf0c10bfb2a47757e21c86f2a2ed",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v3-mxfp",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v3-mxfp/0-candidate.log",
+    "path": "stdout/tp-v3-mxfp-0-candidate.log",
+    "sha256": "131fa3bf48c03c2c17030831a9d5943ae5ccbc65fcdc38b27ac23eb41957126d",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v3-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v3-mxfp/1-candidate.log",
+    "path": "stdout/tp-v3-mxfp-1-candidate.log",
+    "sha256": "454699a41be8af0cbd6ff036f922b6ae18ae4ca9c94d832a83ac40b651300490",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v3-per-token",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v3-per-token/0-candidate.log",
+    "path": "stdout/tp-v3-per-token-0-candidate.log",
+    "sha256": "d1a6b3a7ffde0fbf3e40dadf895d3bb9ef14e690c98748674e047d265ebc5c03",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v3-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v3-per-token/1-candidate.log",
+    "path": "stdout/tp-v3-per-token-1-candidate.log",
+    "sha256": "5e4324f342db71a45ac9fa051156c6bf149c65a567663320cc63820d000d19e4",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v3-w4a4",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v3-w4a4/0-candidate.log",
+    "path": "stdout/tp-v3-w4a4-0-candidate.log",
+    "sha256": "30b235647bce10d60c5321875ec20474cf42905f9d04d71ae2ce51cc1e21b62a",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v3-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v3-w4a4/1-candidate.log",
+    "path": "stdout/tp-v3-w4a4-1-candidate.log",
+    "sha256": "3e7fb215185de25e83cc0fc4b9c2c342692e62f86dfc63a7cf28360ae825ad35",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v41-flash-per-token",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v41-flash-per-token/0-candidate.log",
+    "path": "stdout/tp-v41-flash-per-token-0-candidate.log",
+    "sha256": "97764d7cd997b44bd09dbae98c627b50422e97c8b75c13c3e9f9ec6f005010e6",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v41-flash-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v41-flash-per-token/1-candidate.log",
+    "path": "stdout/tp-v41-flash-per-token-1-candidate.log",
+    "sha256": "de103a150e9b720895cd8e68c0d9217fdf38f9f2870a780a3c8e9a0bc5da760c",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v41-flash-w4a4",
+    "phase": "0-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v41-flash-w4a4/0-candidate.log",
+    "path": "stdout/tp-v41-flash-w4a4-0-candidate.log",
+    "sha256": "8abf64afa65c79656b48d4787df0a9a077eeadcaf007dcbc3ea5f53a5328fde0",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v41-flash-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/composed-swap-full/1793363709386584000/data/results/tp-v41-flash-w4a4/1-candidate.log",
+    "path": "stdout/tp-v41-flash-w4a4-1-candidate.log",
+    "sha256": "563c0e2aecbf19abdda2a1abf21c6a7053299adececfdb6ece4a2dbda4164046",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "phase": "0-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/ep-kimi-k3-w4a16/0-candidate.log",
+    "path": "stdout/ep-kimi-k3-w4a16-0-candidate.log",
+    "sha256": "e40fc621b152edd15805dd4ebddff1b35d247bb6a1bc53f85636e1ce9c1466cb",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/ep-kimi-k3-w4a16/1-candidate.log",
+    "path": "stdout/ep-kimi-k3-w4a16-1-candidate.log",
+    "sha256": "60c25df86ee4d34d0763fedb8eec5b4343352d6e481de6f0c5ff0027c6e75b7b",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a16",
+    "phase": "0-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/ep-nemo3-ultra-w4a16/0-candidate.log",
+    "path": "stdout/ep-nemo3-ultra-w4a16-0-candidate.log",
+    "sha256": "c8c2a507a4f649d5bbb20f97176c3539039be6f19473b25879aebca04f58f572",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/ep-nemo3-ultra-w4a16/1-candidate.log",
+    "path": "stdout/ep-nemo3-ultra-w4a16-1-candidate.log",
+    "sha256": "e6daebbc57f5f0b8d9d800b19dde271b6432413ebfe9836a0832b9559b3e43e1",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v3-w4a16",
+    "phase": "0-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/ep-v3-w4a16/0-candidate.log",
+    "path": "stdout/ep-v3-w4a16-0-candidate.log",
+    "sha256": "c0059f747c2d42e47dc93bccc0bf069d45ce1f1ebb8ae10c49bcffa4a4995ee3",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v3-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/ep-v3-w4a16/1-candidate.log",
+    "path": "stdout/ep-v3-w4a16-1-candidate.log",
+    "sha256": "b73b9e506f6ef2351b1263bf4369b1a87afbeaff4117925e2c94074517ea7aac",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v41-flash-w4a16",
+    "phase": "0-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/ep-v41-flash-w4a16/0-candidate.log",
+    "path": "stdout/ep-v41-flash-w4a16-0-candidate.log",
+    "sha256": "ec47e1f8872d7c1aada1c559b5ff4a459a7ab609cd3f72eb04fa146699f5f2f7",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "ep-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/ep-v41-flash-w4a16/1-candidate.log",
+    "path": "stdout/ep-v41-flash-w4a16-1-candidate.log",
+    "sha256": "9f4b54449a99d2a06a162ddbbc8d66c3d5b2edc48c2c9dcf12c2b2e28a56fbe4",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/tp-kimi-k3-w4a16/0-candidate.log",
+    "path": "stdout/tp-kimi-k3-w4a16-0-candidate.log",
+    "sha256": "70cf26f7455a5d0150fc63ba34b8a0812202d1c917f8025097227b5a56fe7793",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/tp-kimi-k3-w4a16/1-candidate.log",
+    "path": "stdout/tp-kimi-k3-w4a16-1-candidate.log",
+    "sha256": "5f34f6bf8e965a4219e7d8e1dab5489979a9118c5e788066787a0a6705cf7959",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/tp-nemo3-ultra-w4a16/0-candidate.log",
+    "path": "stdout/tp-nemo3-ultra-w4a16-0-candidate.log",
+    "sha256": "a6373ef61fd8890fcc5f785916730c73a11821f4d21f23c69788b8ecb67054d2",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/tp-nemo3-ultra-w4a16/1-candidate.log",
+    "path": "stdout/tp-nemo3-ultra-w4a16-1-candidate.log",
+    "sha256": "f683d0a4114668208b2d61040e8926ae032b0ea33ead3a1900c0fef3ea99668f",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v3-w4a16",
+    "phase": "0-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/tp-v3-w4a16/0-candidate.log",
+    "path": "stdout/tp-v3-w4a16-0-candidate.log",
+    "sha256": "422966f91c0b695aff66fb31285deff2f386663875152448b735d062f11e4724",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v3-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/tp-v3-w4a16/1-candidate.log",
+    "path": "stdout/tp-v3-w4a16-1-candidate.log",
+    "sha256": "205f5adbb28262d90622ae68976847dffe93a9fb3b09fb32db2d0e74a5cfaaf3",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/tp-v41-flash-w4a16/0-candidate.log",
+    "path": "stdout/tp-v41-flash-w4a16-0-candidate.log",
+    "sha256": "28e97efdb18c7d8cff269975b6a0e8710c0b1c8c0e3a65cc592e0f5772460573",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/r2-w4-full/1793362889737047000/data/results/tp-v41-flash-w4a16/1-candidate.log",
+    "path": "stdout/tp-v41-flash-w4a16-1-candidate.log",
+    "sha256": "a2b868c9c5795141c2bb236eceee37e6f54daa239e6da5d674798aa7819fd3a9",
+    "boundary": "Original native stdout, including original CSV and table columns/N/A. No parsing, row merging or reconstruction.",
+    "campaign": "published-02de"
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-kimi-k3-w4a16/0-control.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-kimi-k3-w4a16-0-control.log",
+    "sha256": "0b6693e8c51e616140255dd7259c4bcd6f6bdfd7f5024e9c78774c2f7d79ac3a",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-kimi-k3-w4a16/1-candidate.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-kimi-k3-w4a16-1-candidate.log",
+    "sha256": "e4243623db7f0d7b89e1cc39c00292f0e631aa61fd722d7450c7ce2d63dee5d0",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-kimi-k3-w4a16/2-candidate.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-kimi-k3-w4a16-2-candidate.log",
+    "sha256": "bb83209563989fc3010d0fa8a1d28b01b446a1e01be6fca17e111f293f2de20f",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-kimi-k3-w4a16/3-control.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-kimi-k3-w4a16-3-control.log",
+    "sha256": "6abd9ca168f97a00b7c702cff2bdb170642cdad14fa31e93876230d3dcba858e",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-nemo3-ultra-w4a16/0-control.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-nemo3-ultra-w4a16-0-control.log",
+    "sha256": "a6af0c0a8c44ebe80ed007cf6c39fc88b5b21caa38d74823e52af3d9156bd70c",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-nemo3-ultra-w4a16/1-candidate.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-nemo3-ultra-w4a16-1-candidate.log",
+    "sha256": "cefcd60fb71dfb2280a9221ce199d11c7d2e9ad2bc8bdb8fa52d41a01daaf63b",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-nemo3-ultra-w4a16/2-candidate.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-nemo3-ultra-w4a16-2-candidate.log",
+    "sha256": "883077c020c61675ce5c4fd9379b8f3b7b67d6e9e455a4d39d13c2df2011062c",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-nemo3-ultra-w4a16/3-control.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-nemo3-ultra-w4a16-3-control.log",
+    "sha256": "04a27624a746e8e9deda24536c16505b51f47c5d77456ba61c9de651d7f531d9",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-v41-flash-w4a16/0-control.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-v41-flash-w4a16-0-control.log",
+    "sha256": "5899e0c1319d90d25e08c367caf989907f4236beba033c34c184c7f5a263f7a6",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-v41-flash-w4a16/1-candidate.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-v41-flash-w4a16-1-candidate.log",
+    "sha256": "e67dd8ef0c32749f9538bef84c4e7192006e82e56f08f3fabb9c8186b342a2b6",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-v41-flash-w4a16/2-candidate.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-v41-flash-w4a16-2-candidate.log",
+    "sha256": "c7c72b086b477b17d457cf5b31ca61f3467befcf22c9a8baf184d17b6515aeeb",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "source": "evidence/w4-tail-dequant-screen/1793368574438182000/data/results/tp-v41-flash-w4a16/3-control.log",
+    "path": "stdout/w4-tail-dequant-screen/tp-v41-flash-w4a16-3-control.log",
+    "sha256": "10c16e90656030293320605c8d3c637686b32559cc3b6a2cf70273fccfd358ca",
+    "campaign": "w4-tail-dequant-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "0-control",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-kimi-k3-w4a16/0-control.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-kimi-k3-w4a16-0-control.log",
+    "sha256": "332d83877408ee16298f0e35a76f42fa84b67abf608d5f0f43c6d1848adcec57",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-kimi-k3-w4a16/1-candidate.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-kimi-k3-w4a16-1-candidate.log",
+    "sha256": "fae6abb8bc97fa51cebd033086f1be4bd0d20e3f7ffa661b501a5a4a6774835e",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "2-candidate",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-kimi-k3-w4a16/2-candidate.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-kimi-k3-w4a16-2-candidate.log",
+    "sha256": "6a00af3bc5a83c2d98c81a781c7a35c2abd3627274e530f8249bb5b99e35ff68",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-kimi-k3-w4a16",
+    "phase": "3-control",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-kimi-k3-w4a16/3-control.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-kimi-k3-w4a16-3-control.log",
+    "sha256": "52a2857fe61f2f4593e95758607e7c0a3d8078968479bbc58f6078f11d6a90fd",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "0-control",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-nemo3-ultra-w4a16/0-control.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-nemo3-ultra-w4a16-0-control.log",
+    "sha256": "83de406a2db2ceeb24a6c89ef9914eeb430072f0de0ce55e0ae2d265fdf1a9ad",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-nemo3-ultra-w4a16/1-candidate.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-nemo3-ultra-w4a16-1-candidate.log",
+    "sha256": "e85461cef307b00886e3041d2d1d3246502732116d87f0f09c98cfe9573519b4",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "2-candidate",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-nemo3-ultra-w4a16/2-candidate.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-nemo3-ultra-w4a16-2-candidate.log",
+    "sha256": "015c8f586d470ef19c75476abcaa260887b40eed10884326cf3ceaeddfdace08",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a16",
+    "phase": "3-control",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-nemo3-ultra-w4a16/3-control.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-nemo3-ultra-w4a16-3-control.log",
+    "sha256": "187b6c4524ed816cd2ae1cc1e8cc7e0fee9e97c1fbc221ddba461a33d83b77e3",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "0-control",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-v41-flash-w4a16/0-control.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-v41-flash-w4a16-0-control.log",
+    "sha256": "0e1360754e26d9a596f13d3ddb01af223fb2914bda952a21b1c8e10855d04787",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "1-candidate",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-v41-flash-w4a16/1-candidate.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-v41-flash-w4a16-1-candidate.log",
+    "sha256": "1e2e0ffa82ca83038b2a0b764feeb0d46052369b8adbb2a9c47059439364274d",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "2-candidate",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-v41-flash-w4a16/2-candidate.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-v41-flash-w4a16-2-candidate.log",
+    "sha256": "68a9684c1882ecfb2dd7288528b882eb8e1e04c3f78869eb8c3ed7e5571391c9",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-v41-flash-w4a16",
+    "phase": "3-control",
+    "source": "evidence/w4-tail-dequant-remaining/1793369332076642000/data/results/tp-v41-flash-w4a16/3-control.log",
+    "path": "stdout/w4-tail-dequant-remaining/tp-v41-flash-w4a16-3-control.log",
+    "sha256": "6a54f41669868e394c4423ad1e3d0541629cdffa6905bb9029425dcb45fd0e79",
+    "campaign": "w4-tail-dequant-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-mxfp/0-control.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-mxfp-0-control.log",
+    "sha256": "19cb1e6cb17c1bc75b978c5f7183d4b52787a978813cdbbc5a96d48cfcd43eb0",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-mxfp/1-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-mxfp-1-candidate.log",
+    "sha256": "71b3933977a21bd5f980c940bdfaeeed7a68a50d60e28a781aa6185279c4a646",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-mxfp/2-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-mxfp-2-candidate.log",
+    "sha256": "8b4d26526422a7a3a252677d962f94a742cb522ed4f0337da2a1797395066d74",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-mxfp/3-control.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-mxfp-3-control.log",
+    "sha256": "009c38d2a86e84441790e4d8cede1beb8bdf2853ce08cff60e5a8d2357106b4c",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-per-token/0-control.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-per-token-0-control.log",
+    "sha256": "24f748029ca196d40c1d63c63850a64fbff02e30500c9feba3c74f028dca656c",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-per-token/1-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-per-token-1-candidate.log",
+    "sha256": "c27699e804d0222883b15d5dc541a964c7b60d77c0f910b9e77b4694e2787fe1",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-per-token/2-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-per-token-2-candidate.log",
+    "sha256": "3a767a8a5d85b6368ab6d92c8d993ff4e88159e756183483b0b721f857e4abdc",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-per-token/3-control.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-per-token-3-control.log",
+    "sha256": "db6c98645823c2dc6253483c7be2d03b0a821547a816f9afcbcfd761ae6193c5",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-w4a4/0-control.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-w4a4-0-control.log",
+    "sha256": "24b5855e1a1ad4511340f0dddd15cdf8984e64bd885b171c3bdba1ad9596c282",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-w4a4/1-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-w4a4-1-candidate.log",
+    "sha256": "962c49fc5854b732759e32d006886bce57ffbd50f142853c8e5ade3fd35a3d52",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-w4a4/2-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-w4a4-2-candidate.log",
+    "sha256": "a52903cf78d7dcaf46112086e24380fdcce94d72320e00064b977bf80db09928",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/ep-nemo3-ultra-w4a4/3-control.log",
+    "path": "stdout/fc1-integer-store-screen/ep-nemo3-ultra-w4a4-3-control.log",
+    "sha256": "b69d9ae81668c26ea40e4abec8406c9a564d5c54c9b4ebfe0db44439d972162f",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-mxfp/0-control.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-mxfp-0-control.log",
+    "sha256": "d711ac3bbe80653191b86da0e879f67c8573c6a554929849591101b1bbaaa0a7",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-mxfp/1-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-mxfp-1-candidate.log",
+    "sha256": "0d070e39466f4751a632843549057b333a74bb6e1735bd0b5ae144863f6b722f",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-mxfp/2-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-mxfp-2-candidate.log",
+    "sha256": "571bfeb2aa3b2584924ea696bd4ee10623456a886a7f662c312e3e9e6da9fc25",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-mxfp/3-control.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-mxfp-3-control.log",
+    "sha256": "cb693aaa96edef28f990b5512cdf74be0a9cb8610c4152868f8c24128122d8a6",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-per-token/0-control.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-per-token-0-control.log",
+    "sha256": "da7b99da42d74ed5f90703fe80103fe247b91084c3c80b6ce11f53c87390abeb",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-per-token/1-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-per-token-1-candidate.log",
+    "sha256": "f4aa529c700e71e1c0a59089880f2ba217f3c68e5b8a6ef6f0da74246d1daaaa",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-per-token/2-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-per-token-2-candidate.log",
+    "sha256": "d20b4c2d5606392cf29f5eb2c4df696f2a0c84b3b3b8f401b16d4d910287591c",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-per-token/3-control.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-per-token-3-control.log",
+    "sha256": "350f6beb834114d7b23c9db82584f7e0cda56821524ea8565b1951124e0b6686",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-w4a4/0-control.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-w4a4-0-control.log",
+    "sha256": "2ddf183a486c98e1d1e0f4e0d353c7837f091248b845de7ae3147629d47dba27",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-w4a4/1-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-w4a4-1-candidate.log",
+    "sha256": "177d7dd08f4c5dee0b1bdee9f42aab0ae71d02ad66ea271095436b781741e5a5",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-w4a4/2-candidate.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-w4a4-2-candidate.log",
+    "sha256": "f1c5f55d40e9ae5ef3709b2de97f1292265c990563e635368e9357794bb01948",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-screen/1793370953565557000/data/results/tp-nemo3-ultra-w4a4/3-control.log",
+    "path": "stdout/fc1-integer-store-screen/tp-nemo3-ultra-w4a4-3-control.log",
+    "sha256": "814102e95266257e557de2e37795cd9ca92472550e747bd0d3f3feb42d0c3444",
+    "campaign": "fc1-integer-store-screen",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-mxfp/0-control.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-mxfp-0-control.log",
+    "sha256": "32aa4d360619e126aec1bec591016c89c96f6803bd763255f5b32b986bd55251",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-mxfp/1-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-mxfp-1-candidate.log",
+    "sha256": "0d5e78712f4462786c5fc65e664583f241e31c334c79f3d3d93be1fe91b01edc",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-mxfp/2-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-mxfp-2-candidate.log",
+    "sha256": "390a454974216293b5555e35f2c81bb4c621fcf684cad5d650c7bcba7ef94ec2",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-mxfp",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-mxfp/3-control.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-mxfp-3-control.log",
+    "sha256": "8517ad5bc6ef9cb3f0a10ef678f4258148f95427c2b3aa17e2288c33bddf33b5",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-per-token/0-control.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-per-token-0-control.log",
+    "sha256": "5d728035d215bdd3d14fb74d213fa2c634eac04340e9fed81bcc95de9986747e",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-per-token/1-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-per-token-1-candidate.log",
+    "sha256": "e96a1568f5feed9f44dc26d8daa03b7f154beb6f6bbad330dbc4b17a3c9147eb",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-per-token/2-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-per-token-2-candidate.log",
+    "sha256": "cd41a28a49392c29cf6fe7ba0c35025bbd88eedaa2166d9b75d5825d20cbb267",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-per-token",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-per-token/3-control.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-per-token-3-control.log",
+    "sha256": "06abb184fb83465139c1587b0cbec56a843b9b08a2ab1b208a6298f664801091",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-w4a4/0-control.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-w4a4-0-control.log",
+    "sha256": "86f11f198c44805f22b722f644d2d365e649887b9e6da5d9b8313751b3996765",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-w4a4/1-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-w4a4-1-candidate.log",
+    "sha256": "31109599e5f797f8f7f2a8e838863d1c074daa6c7f03bc05da3f7dac6d578aa7",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-w4a4/2-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-w4a4-2-candidate.log",
+    "sha256": "af19a544ac0cc5b3b1ca2c9bc1b5c6cd303d62ceb721162ef3484de56200c7c3",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "ep-nemo3-ultra-w4a4",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/ep-nemo3-ultra-w4a4/3-control.log",
+    "path": "stdout/fc1-integer-store-remaining/ep-nemo3-ultra-w4a4-3-control.log",
+    "sha256": "6b554405b9ae2bea15c783c512f621ae79e223e674380109de2db6bf2bbecc56",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-mxfp/0-control.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-mxfp-0-control.log",
+    "sha256": "acd23a459c8c2a2f86b9239689a4157b80179684a05fd06985b82ddf61dd3195",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-mxfp/1-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-mxfp-1-candidate.log",
+    "sha256": "9e53dcc8f2dc3292b661d284e70a2e257bb0c53b93f0d133d9f59b9cbe9e3320",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-mxfp/2-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-mxfp-2-candidate.log",
+    "sha256": "6554d7fbb547b7bdb2d94298dea88e6cfb7c7c5606c9c8d80c84afe2b21892f3",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-mxfp",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-mxfp/3-control.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-mxfp-3-control.log",
+    "sha256": "62f2ebc1a0aebaf91951c1637d67f676778abfa516720697a35935ba23c1174f",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-per-token/0-control.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-per-token-0-control.log",
+    "sha256": "452b03a4ec26c706f7d10fefd6c99ae1690e9452836bb9af7a0fae7b40fdcceb",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-per-token/1-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-per-token-1-candidate.log",
+    "sha256": "891fa0a21cffbda4f6140aa1ae483b20de4afb2c3d8afdaceb4d7cb782f93b31",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-per-token/2-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-per-token-2-candidate.log",
+    "sha256": "229ef8b0e90b00e117b1f54b5baa83e9e628fa28d255461f0c56abc792513bff",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-per-token",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-per-token/3-control.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-per-token-3-control.log",
+    "sha256": "687d94b892977dec17c49b21534a42afa6b5e5558f159edac118cf03760228cf",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "0-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-w4a4/0-control.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-w4a4-0-control.log",
+    "sha256": "173cc9514ef9c7ca31d624ed23384eb934a20aa489f9e30317ec637da7d920b3",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "1-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-w4a4/1-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-w4a4-1-candidate.log",
+    "sha256": "da6bf0150ce459e635e7f4b33764e3a4c06052bd814ea6dd7ab14c895e48597f",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "2-candidate",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-w4a4/2-candidate.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-w4a4-2-candidate.log",
+    "sha256": "2ab49d65be50c5d9f15d0193a16480868421ef121fda89d3de417e745b04cdc3",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  },
+  {
+    "job": "tp-nemo3-ultra-w4a4",
+    "phase": "3-control",
+    "source": "evidence/fc1-integer-store-remaining/1793371744150407000/data/results/tp-nemo3-ultra-w4a4/3-control.log",
+    "path": "stdout/fc1-integer-store-remaining/tp-nemo3-ultra-w4a4-3-control.log",
+    "sha256": "21ee991c163abdd65313bafcff87b738ac0986468851f8d059f66713059183f5",
+    "campaign": "fc1-integer-store-remaining",
+    "boundary": "Original stdout bytes; no table parsing or reconstruction."
+  }
+]

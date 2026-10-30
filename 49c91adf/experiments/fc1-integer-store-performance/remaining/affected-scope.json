@@ -1,0 +1,4724 @@
+{
+  "affected": 104,
+  "all_tokens": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    4096,
+    8192,
+    16384
+  ],
+  "base": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "boundary": "The104 affectedN3U swap cells are fully measured.104W4 cells use unchanged source.260gated swap cells are reusable under source path proof plus separate representative FP4/FP8/per-token/SiTU native identity; no claim that all260specializations were recompiled. No dtype-specific rescue for the per-tokenEP16K loss.",
+  "cells": [
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 8,
+      "job": "ep-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 8,
+      "job": "ep-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 8,
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 8,
+      "job": "ep-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 4,
+      "job": "ep-v41-flash-mxfp",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 4,
+      "job": "ep-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 4,
+      "job": "ep-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 1
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-kimi-k3-mxfp",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-kimi-k3-per-token",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-kimi-k3-w4a4",
+      "model": "kimi-k3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-mxfp",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-per-token",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": true,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-nemo3-ultra-w4a4",
+      "model": "nemo3-ultra",
+      "reason": "Nongated quantized or BF16 FC1 SIMT store path",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL MXFP4x8",
+      "ep": 1,
+      "job": "tp-v3-mxfp",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v3-per-token",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v3-w4a4",
+      "model": "v3",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 8
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL PER-TOKEN",
+      "ep": 1,
+      "job": "tp-v41-flash-per-token",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 1,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 2,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 32,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 64,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 128,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 256,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 512,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 4096,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 8192,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A16",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "reason": "Independent W4 implementation unchanged",
+      "tokens": 16384,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 1,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 2,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 32,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 64,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 128,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 256,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 512,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 4096,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 8192,
+      "tp": 4
+    },
+    {
+      "affected": false,
+      "backend": "CuteDSL W4A4",
+      "ep": 1,
+      "job": "tp-v41-flash-w4a4",
+      "model": "v41-flash",
+      "reason": "Gated FC1 source path; representative native equivalence qualification required",
+      "tokens": 16384,
+      "tp": 4
+    }
+  ],
+  "exclude_from_retention": [
+    1,
+    2
+  ],
+  "gated_swap": 260,
+  "new_cells": 72,
+  "passed": true,
+  "remaining_tokens": [
+    1,
+    2,
+    8,
+    16,
+    32,
+    64,
+    256,
+    512,
+    8192
+  ],
+  "reusable": 364,
+  "reused_screen": 32,
+  "source_sha256": "482b636a1714486e2ffb34c8ae005da3cef26f25f0ce034ba1eb59c6198d6276",
+  "untouched_w4": 104
+}

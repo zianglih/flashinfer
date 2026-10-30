@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "candidate_source_sha256": "482b636a1714486e2ffb34c8ae005da3cef26f25f0ce034ba1eb59c6198d6276",
+  "retained_base": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "affected_cells": 104,
+  "reusable_cells": 364,
+  "reused_w4_cells": 104,
+  "reused_gated_swap_cells": 260,
+  "source_scope_sha256": "fcfaf9acb8429d0ef9290c68bcce1fb2b77679d1a1642422861dc99a10883c6f",
+  "representative_native_summary_sha256": "f70aed6469f5c278870fb79ebd2af5910412a75718f5449b3ff25142e840e66a",
+  "gated_exact_calls": 8,
+  "gated_native_pairs": 12,
+  "representative_native_ptx_cubins_all_byte_identical": true,
+  "all_native_resources_equal": true,
+  "all_local_zero": true,
+  "representative_cases": [
+    "MXFP8 SwiGLU outputFP8/SF32",
+    "Per-token SiTU outputBF16",
+    "W4A4 SiTU outputFP4/SF16",
+    "W4A8 SiTU outputFP8/SF32"
+  ],
+  "situ_beta": 4.0,
+  "situ_linear_beta": 25.0,
+  "prior_fp4_swiglu_pair": "experiments/fc1-integer-store-atomic-fix/qualification-summary.json",
+  "full_source_pre_and_post_sha256": "624139ff865d4c5c78f9cc34d94f7732249b794048e59f334a47682a7ece64bf",
+  "boundary": "364cells reuse rests on exact W4 production bytes, gated arithmetic/helper specialization equivalence and representative raw native identities. It is not a claim that all364table signatures were individually recompiled or freshly timed. Nongated N3U104cells remain the performance-retention scope; no new compiler flags/API/tactics."
+}

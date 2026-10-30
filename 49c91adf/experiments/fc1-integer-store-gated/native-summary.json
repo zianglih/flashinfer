@@ -1,0 +1,650 @@
+{
+  "passed": true,
+  "exact_calls": 8,
+  "native_pairs": 12,
+  "source_files": {
+    "control": "ff318507b66d6fab8e6acc87b6dab9847191f7f970c6ae7c0439434981a221c5",
+    "candidate": "d09d4e6c563e678a1ccd6de06eff2a80dc3361d083749309d0855b09cad3a7f2"
+  },
+  "pairs": [
+    {
+      "case": "mxfp8-10-Swiglu",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "scatter_output": false,
+        "tile_k": 128,
+        "native_mma_k": 32,
+        "route_tile": 256,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "use_clc_scheduler": false,
+        "enable_pdl": true,
+        "sf_vec_size": 32,
+        "top_k": 2,
+        "overlap_acc": true,
+        "bulk_tokens": 0,
+        "bulk_stages": 0,
+        "output_dtype": "Float8E4M3FN",
+        "use_fused_finalize": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        3638,
+        3638
+      ],
+      "store_counts": [
+        {
+          "STG.E.U8": 8,
+          "STG.E.128": 8
+        },
+        {
+          "STG.E.U8": 8,
+          "STG.E.128": 8
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "711b5cf8d941ea53d5478a8e7e84b85083a627650b690a7519a28b85f8420034",
+        "b951b131159f8502c7840ebcbb8435ffef57ee80863b114bc486860f7e73e1d8"
+      ]
+    },
+    {
+      "case": "mxfp8-10-Swiglu",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "scatter_output": true,
+        "tile_k": 128,
+        "native_mma_k": 32,
+        "route_tile": 256,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "use_clc_scheduler": false,
+        "enable_pdl": true,
+        "sf_vec_size": 32,
+        "top_k": 2,
+        "overlap_acc": true,
+        "bulk_tokens": 64,
+        "bulk_stages": 2,
+        "output_dtype": "BFloat16",
+        "use_fused_finalize": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 118,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 118,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        2446,
+        2446
+      ],
+      "store_counts": [
+        {
+          "STG.E.ENL2.256": 16
+        },
+        {
+          "STG.E.ENL2.256": 16
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "711b5cf8d941ea53d5478a8e7e84b85083a627650b690a7519a28b85f8420034",
+        "b951b131159f8502c7840ebcbb8435ffef57ee80863b114bc486860f7e73e1d8"
+      ]
+    },
+    {
+      "case": "mxfp8-10-Swiglu",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 1024,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 24,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 24,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        82,
+        82
+      ],
+      "store_counts": [
+        {
+          "STG.E.128": 1
+        },
+        {
+          "STG.E.128": 1
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "711b5cf8d941ea53d5478a8e7e84b85083a627650b690a7519a28b85f8420034",
+        "b951b131159f8502c7840ebcbb8435ffef57ee80863b114bc486860f7e73e1d8"
+      ]
+    },
+    {
+      "case": "per-token-10-SiTU",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "scatter_output": false,
+        "tile_k": 256,
+        "native_mma_k": 96,
+        "route_tile": 256,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "use_clc_scheduler": false,
+        "enable_pdl": true,
+        "sf_vec_size": 16,
+        "top_k": 2,
+        "overlap_acc": true,
+        "bulk_tokens": 0,
+        "bulk_stages": 0,
+        "output_dtype": "BFloat16",
+        "use_fused_finalize": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        5241,
+        5241
+      ],
+      "store_counts": [
+        {
+          "STG.E.ENL2.256": 8
+        },
+        {
+          "STG.E.ENL2.256": 8
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "644b8693a0f4425628c81965d166193772854cea748d1ca691b8f820dbef78bc",
+        "9143f143e791d85fd94f782a751d93891191aba1854718e4d0d46f28822b7af6"
+      ]
+    },
+    {
+      "case": "per-token-10-SiTU",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "scatter_output": true,
+        "tile_k": 256,
+        "native_mma_k": 96,
+        "route_tile": 256,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "use_clc_scheduler": false,
+        "enable_pdl": true,
+        "sf_vec_size": 16,
+        "top_k": 2,
+        "overlap_acc": true,
+        "bulk_tokens": 64,
+        "bulk_stages": 2,
+        "output_dtype": "BFloat16",
+        "use_fused_finalize": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 144,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 144,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        2720,
+        2720
+      ],
+      "store_counts": [
+        {
+          "STG.E.ENL2.256": 16
+        },
+        {
+          "STG.E.ENL2.256": 16
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "644b8693a0f4425628c81965d166193772854cea748d1ca691b8f820dbef78bc",
+        "9143f143e791d85fd94f782a751d93891191aba1854718e4d0d46f28822b7af6"
+      ]
+    },
+    {
+      "case": "per-token-10-SiTU",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 1024,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 24,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 24,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        82,
+        82
+      ],
+      "store_counts": [
+        {
+          "STG.E.128": 1
+        },
+        {
+          "STG.E.128": 1
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "644b8693a0f4425628c81965d166193772854cea748d1ca691b8f820dbef78bc",
+        "9143f143e791d85fd94f782a751d93891191aba1854718e4d0d46f28822b7af6"
+      ]
+    },
+    {
+      "case": "w4a4-10-SiTU",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "scatter_output": false,
+        "tile_k": 256,
+        "native_mma_k": 96,
+        "route_tile": 256,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "use_clc_scheduler": false,
+        "enable_pdl": true,
+        "sf_vec_size": 16,
+        "top_k": 2,
+        "overlap_acc": true,
+        "bulk_tokens": 0,
+        "bulk_stages": 0,
+        "output_dtype": "Float4E2M1FN",
+        "use_fused_finalize": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        5088,
+        5088
+      ],
+      "store_counts": [
+        {
+          "STG.E.U8": 8,
+          "STG.E.64": 8
+        },
+        {
+          "STG.E.U8": 8,
+          "STG.E.64": 8
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "746758557f42718082cd5cdcb5eb5ce2b8f23eea9e465c4fc9f7bc7fc99991ae",
+        "edca7027be0312aa7b7b7cac2fc6e8718fab44b1e83e10a6d5b4ba6aa5c28f8d"
+      ]
+    },
+    {
+      "case": "w4a4-10-SiTU",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "scatter_output": true,
+        "tile_k": 256,
+        "native_mma_k": 96,
+        "route_tile": 256,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "use_clc_scheduler": false,
+        "enable_pdl": true,
+        "sf_vec_size": 16,
+        "top_k": 2,
+        "overlap_acc": true,
+        "bulk_tokens": 64,
+        "bulk_stages": 2,
+        "output_dtype": "BFloat16",
+        "use_fused_finalize": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 118,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 118,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        2288,
+        2288
+      ],
+      "store_counts": [
+        {
+          "STG.E.ENL2.256": 16
+        },
+        {
+          "STG.E.ENL2.256": 16
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "746758557f42718082cd5cdcb5eb5ce2b8f23eea9e465c4fc9f7bc7fc99991ae",
+        "edca7027be0312aa7b7b7cac2fc6e8718fab44b1e83e10a6d5b4ba6aa5c28f8d"
+      ]
+    },
+    {
+      "case": "w4a4-10-SiTU",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 1024,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 24,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 24,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        82,
+        82
+      ],
+      "store_counts": [
+        {
+          "STG.E.128": 1
+        },
+        {
+          "STG.E.128": 1
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "746758557f42718082cd5cdcb5eb5ce2b8f23eea9e465c4fc9f7bc7fc99991ae",
+        "edca7027be0312aa7b7b7cac2fc6e8718fab44b1e83e10a6d5b4ba6aa5c28f8d"
+      ]
+    },
+    {
+      "case": "w4a8-10-SiTU",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "scatter_output": false,
+        "tile_k": 128,
+        "native_mma_k": 32,
+        "route_tile": 256,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "use_clc_scheduler": false,
+        "enable_pdl": true,
+        "sf_vec_size": 32,
+        "top_k": 2,
+        "overlap_acc": true,
+        "bulk_tokens": 0,
+        "bulk_stages": 0,
+        "output_dtype": "Float8E4M3FN",
+        "use_fused_finalize": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 168,
+        "max_threads": 384,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        5448,
+        5448
+      ],
+      "store_counts": [
+        {
+          "STG.E.U8": 8,
+          "STG.E.128": 8
+        },
+        {
+          "STG.E.U8": 8,
+          "STG.E.128": 8
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "a61d8b097c177839c71ab12f8d318df4ee2a20eccddfb295dc015efb481d8894",
+        "b375c4c004129736caf729a4f483890ec00fa80474d1a7190cdc9b39e2e330f1"
+      ]
+    },
+    {
+      "case": "w4a8-10-SiTU",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "scatter_output": true,
+        "tile_k": 128,
+        "native_mma_k": 32,
+        "route_tile": 256,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "use_clc_scheduler": false,
+        "enable_pdl": true,
+        "sf_vec_size": 32,
+        "top_k": 2,
+        "overlap_acc": true,
+        "bulk_tokens": 64,
+        "bulk_stages": 2,
+        "output_dtype": "BFloat16",
+        "use_fused_finalize": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 118,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 118,
+        "max_threads": 512,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        2446,
+        2446
+      ],
+      "store_counts": [
+        {
+          "STG.E.ENL2.256": 16
+        },
+        {
+          "STG.E.ENL2.256": 16
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "a61d8b097c177839c71ab12f8d318df4ee2a20eccddfb295dc015efb481d8894",
+        "b375c4c004129736caf729a4f483890ec00fa80474d1a7190cdc9b39e2e330f1"
+      ]
+    },
+    {
+      "case": "w4a8-10-SiTU",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 1024,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "compile_options": "",
+      "control_resources": {
+        "registers": 24,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "candidate_resources": {
+        "registers": 24,
+        "max_threads": 1024,
+        "local_bytes": 0,
+        "static_shared_bytes": 0,
+        "binary_version": 103
+      },
+      "same_ptx": true,
+      "same_cubin": true,
+      "non_nop": [
+        82,
+        82
+      ],
+      "store_counts": [
+        {
+          "STG.E.128": 1
+        },
+        {
+          "STG.E.128": 1
+        }
+      ],
+      "opcode_delta": {},
+      "source_receipts": [
+        "a61d8b097c177839c71ab12f8d318df4ee2a20eccddfb295dc015efb481d8894",
+        "b375c4c004129736caf729a4f483890ec00fa80474d1a7190cdc9b39e2e330f1"
+      ]
+    }
+  ],
+  "boundary": "No timing or sanitizer. Zero local memory required. Raw cubin equality is only claimed per captured signature. FP32 fused cases use exact ones/half-routing analytic boundary, not general fused bit-exactness."
+}
