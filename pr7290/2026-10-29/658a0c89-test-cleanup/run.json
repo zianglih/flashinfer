@@ -1,0 +1,63 @@
+{
+  "command": [
+    "/usr/bin/python3",
+    "-m",
+    "pytest",
+    "-q",
+    "--full",
+    "tests/moe/test_cute_dsl_fused_moe.py::test_gather_gemm_k_tail",
+    "tests/moe/test_cute_dsl_fused_moe.py::TestCuteDslFusedMoeFunctional::test_deterministic_finalize_numerical_accuracy"
+  ],
+  "test_sha256_before": "5a8b73eb23da42036522aacfda774785672c50f463c2ee94dce9743453b80e01",
+  "production_commit": "4376662a9ddefb1f62f0f81f4453964dc1f5a307",
+  "started": "2026-10-30T04:58:49.323758+00:00",
+  "pytest_version": "8.4.2",
+  "cuda_visible_devices": "0",
+  "benchmark_complete_before_start": {
+    "finished": "2026-10-30T04:57:10.935323+00:00",
+    "phase_order": [
+      "tune-control",
+      "C1",
+      "A1",
+      "A2",
+      "C2"
+    ]
+  },
+  "exit_code": 0,
+  "finished": "2026-10-30T05:09:34.199477+00:00",
+  "test_sha256_after": "5a8b73eb23da42036522aacfda774785672c50f463c2ee94dce9743453b80e01",
+  "summary": "92 passed, 1132 warnings in 633.19s (0:10:33)",
+  "counts": {
+    "passed": 92
+  },
+  "committed_tested_source": "658a0c8942c7454050f990c0be3083aa61b6a89f",
+  "source_verification": "The tested production commit plus the exact test-file SHA256 equals this tests-only cleanup commit; no production file differs.",
+  "test_path": "tests/moe/test_cute_dsl_fused_moe.py",
+  "image": "nvcr.io/nvidia/pytorch:26.05-py3",
+  "hardware": "1 NVIDIA B300 SXM6 AC GPU",
+  "driver": "595.91.07",
+  "versions": {
+    "apache-tvm-ffi": "0.1.14.post1",
+    "cuda-bindings": "13.2.0",
+    "cuda-python": "13.2.0",
+    "cupti-python": "13.2.0",
+    "nvidia-cuda-cupti": "13.2.86",
+    "nvidia-cutlass-dsl": "4.8.0",
+    "nvidia-nvshmem-cu13": "3.6.5",
+    "nvshmem4py-cu13": "0.3.1",
+    "torch": "2.12.0a0+5aff3928d8.nv26.5.50603568"
+  },
+  "test_log": {
+    "file": "pytest.log",
+    "raw_sha256": "5099fa7823dc8ff8e958295717efc5b3e3b8aca2d82391b61bebd98d2bb1a493",
+    "published_sha256": "e08411d93944e8fc4313976e0acdc9b8454d0aa1100430fd452b121e20d1a809",
+    "raw_bytes": 27846,
+    "published_bytes": 24039,
+    "line_count": 234,
+    "sanitization": "Only absolute source-root and installed-package-root prefixes are replaced with <FLASHINFER_SOURCE> and <PYTHON_SITE_PACKAGES>; test output and warnings are otherwise unchanged.",
+    "replacement_counts": {
+      "<FLASHINFER_SOURCE>": 39,
+      "<PYTHON_SITE_PACKAGES>": 6
+    }
+  }
+}
