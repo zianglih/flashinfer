@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "retained_head": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "source_label": "bf072d26 \u00b7 39 fresh / 429 reused cells",
+  "source_hashes": {
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py": "25aa126d6e8e7bec5a42467349496b10a5aa1ef1b2a66b92bbe312c58889e34e",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py": "66ec9ae8caf4dbf66ad8f4293a75833e3713bbc279328b2ef43165cf19978c87"
+  },
+  "coverage_proof_sha256": "30a3bb24bd45c2d4515560a00b804e99c00893c18b4b706e5b428ae81c6bdf3c",
+  "previous_manifest_sha256": "cb861fbf3f38e902ab7f51a4958d61b463e3249b93d3d5e166704058eaa05c0b",
+  "peer_sha256": "6e74368d6ac64881d20bed4e83abd858291cb4e963655fb74c27ffd3ed3137a7",
+  "fresh": 39,
+  "reused": 429,
+  "exact_existing_fields_preserved_for_all_429": true,
+  "existing_baseline_fields_preserved": true
+}

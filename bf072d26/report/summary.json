@@ -1,0 +1,209 @@
+{
+  "passed": true,
+  "source_label": "bf072d26 \u00b7 39 fresh / 429 reused cells",
+  "retained_head": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "fresh_measurement_base": "02de7785c10847b3528340840bed40bd405d85b4",
+  "reused_measurement_base": "82254e206a44b95d9925e4594fac936731f80d21",
+  "fresh_cells": 39,
+  "reused_cells": 429,
+  "total_cells": 468,
+  "displayed_cells": 396,
+  "candidate_samples": 93600,
+  "fresh_candidate_samples": 7800,
+  "reused_candidate_samples": 85800,
+  "fresh_causal_samples": 15600,
+  "candidate_loaded_functions": 1114,
+  "clock_quartiles": 3744,
+  "missing_clock_quartiles": 5,
+  "clock_exception_quartiles": 94,
+  "all_negative_rows_retained": true,
+  "groups": {
+    "all": {
+      "cells": 396,
+      "speedup_percent": 0.17444610968793128,
+      "negative": 172
+    },
+    "swap_ab": {
+      "cells": 308,
+      "speedup_percent": 0.03913062571829773,
+      "negative": 148
+    },
+    "w4a16": {
+      "cells": 88,
+      "speedup_percent": 0.6494932996499836,
+      "negative": 24
+    },
+    "decode": {
+      "cells": 180,
+      "speedup_percent": 0.21387089973434747,
+      "negative": 72
+    },
+    "middle": {
+      "cells": 108,
+      "speedup_percent": 0.24313105004560853,
+      "negative": 43
+    },
+    "prefill": {
+      "cells": 108,
+      "speedup_percent": 0.04017970970624507,
+      "negative": 57
+    }
+  },
+  "causal_39": {
+    "passed": true,
+    "combined_summary_sha256": "c8794632ebd0bd75c04c54bb754946d785dbaddb29d589631dbafb9eceafaa13",
+    "combined_cells_sha256": "2ccd3568c5c315362c0661d9cb3043d77fa1bc8404e22f8d8276279763ee74c6",
+    "source_manifests": {
+      "control": "1da5d781dbea9e340e2bdc9b014701a6a987f8c91b239ac2298805fcddcfc8dc",
+      "candidate": "c19ee3c84aed21a39529a354809dc529b1b7f5142d9bb9543d3fcd047bfc9ee9"
+    },
+    "measured_cells": 39,
+    "retention_cells": 33,
+    "original_12_row_dicts_exactly_preserved": true,
+    "all_27_new_row_dicts_exactly_preserved": true,
+    "raw_samples": 15600,
+    "phase_medians": 156,
+    "loaded_resource_records": 196,
+    "all_78_cell_stage_resource_configs_equal": true,
+    "clock_quartiles": 624,
+    "clock_exception_quartiles": 49,
+    "missing_clock_quartiles": 1,
+    "retention_geomean_percent": 1.4706671210969358,
+    "negative_retention_cells": 6,
+    "all_24_decode_middle_cells_have_both_candidate_phases_below_both_controls": true,
+    "groups": {
+      "all": {
+        "cells": 33,
+        "speedup_percent": 1.4706671210969358,
+        "negative": 6,
+        "max_control_spread": 3.4891805997948167,
+        "max_candidate_spread": 4.977668393596368
+      },
+      "decode": {
+        "cells": 15,
+        "speedup_percent": 1.70058487603153,
+        "negative": 0,
+        "max_control_spread": 0.27110766847404655,
+        "max_candidate_spread": 0.46113306982873414
+      },
+      "middle": {
+        "cells": 9,
+        "speedup_percent": 2.1099459701072742,
+        "negative": 0,
+        "max_control_spread": 0.18775131456851835,
+        "max_candidate_spread": 0.17644720078706655
+      },
+      "prefill": {
+        "cells": 9,
+        "speedup_percent": 0.45574067854017297,
+        "negative": 6,
+        "max_control_spread": 3.4891805997948167,
+        "max_candidate_spread": 4.977668393596368
+      },
+      "tp-kimi-k3-w4a16": {
+        "cells": 11,
+        "speedup_percent": 2.250582078853003,
+        "negative": 2,
+        "max_control_spread": 3.1894570724549487,
+        "max_candidate_spread": 3.6058999901694255
+      },
+      "tp-nemo3-ultra-w4a16": {
+        "cells": 11,
+        "speedup_percent": 1.198803361293499,
+        "negative": 3,
+        "max_control_spread": 0.7180392651448209,
+        "max_candidate_spread": 1.0334618126501827
+      },
+      "tp-v41-flash-w4a16": {
+        "cells": 11,
+        "speedup_percent": 0.9672158498820638,
+        "negative": 1,
+        "max_control_spread": 3.4891805997948167,
+        "max_candidate_spread": 4.977668393596368
+      },
+      "tp-kimi-k3-w4a16/decode": {
+        "cells": 5,
+        "speedup_percent": 2.5669013626077763,
+        "negative": 0,
+        "max_control_spread": 0.09411159208505548,
+        "max_candidate_spread": 0.46113306982873414
+      },
+      "tp-kimi-k3-w4a16/middle": {
+        "cells": 3,
+        "speedup_percent": 3.1387430862330756,
+        "negative": 0,
+        "max_control_spread": 0.042998668507143734,
+        "max_candidate_spread": 0.04460998579325359
+      },
+      "tp-kimi-k3-w4a16/prefill": {
+        "cells": 3,
+        "speedup_percent": 0.8495581057266888,
+        "negative": 2,
+        "max_control_spread": 3.1894570724549487,
+        "max_candidate_spread": 3.6058999901694255
+      },
+      "tp-nemo3-ultra-w4a16/decode": {
+        "cells": 5,
+        "speedup_percent": 1.7270416635550623,
+        "negative": 0,
+        "max_control_spread": 0.1517769421011561,
+        "max_candidate_spread": 0.18195021254721055
+      },
+      "tp-nemo3-ultra-w4a16/middle": {
+        "cells": 3,
+        "speedup_percent": 2.01475656455401,
+        "negative": 0,
+        "max_control_spread": 0.18775131456851835,
+        "max_candidate_spread": 0.17644720078706655
+      },
+      "tp-nemo3-ultra-w4a16/prefill": {
+        "cells": 3,
+        "speedup_percent": -0.47793916428872096,
+        "negative": 3,
+        "max_control_spread": 0.7180392651448209,
+        "max_candidate_spread": 1.0334618126501827
+      },
+      "tp-v41-flash-w4a16/decode": {
+        "cells": 5,
+        "speedup_percent": 0.8153591048337905,
+        "negative": 0,
+        "max_control_spread": 0.27110766847404655,
+        "max_candidate_spread": 0.14593249887369097
+      },
+      "tp-v41-flash-w4a16/middle": {
+        "cells": 3,
+        "speedup_percent": 1.1857388239486566,
+        "negative": 0,
+        "max_control_spread": 0.15273143154950208,
+        "max_candidate_spread": 0.0939856514261539
+      },
+      "tp-v41-flash-w4a16/prefill": {
+        "cells": 3,
+        "speedup_percent": 1.0022201716531676,
+        "negative": 1,
+        "max_control_spread": 3.4891805997948167,
+        "max_candidate_spread": 4.977668393596368
+      }
+    },
+    "input_audits": {
+      "w4-tail-data-peer.json": "55a7e34e84f553a9427e049e43d3440fb7b4ee8460e4f12f738adbbd01539f20",
+      "w4-tail-components-peer.json": "a153af2bec069f3e1f13deb877825e02a291c505480d490067a16555760d052d",
+      "w4-tail-remaining-data-peer.json": "f2437f1c03ee6c262780606681d4cf861c345113eff14cbbd4e528a4e23ed5f0",
+      "w4-tail-remaining-components-peer.json": "0722564940f35be5d9221b0ea7d0eedad6bb76d4c05a5ab307b26437f9d924c4"
+    },
+    "boundary": "All negative cells retained; tokens 1/2 excluded only from retention groups. No row replacement, fresh timing, source changes, or statistical-confidence claim. Prefill aggregate includes two positive 8K cells with substantial phase/clock variation."
+  },
+  "external": {
+    "ep": {
+      "changed_current_cells": 0,
+      "baseline_fields_unchanged": true,
+      "original_sha256": "dd99ff25e52a8c8e48632e4cb7ae537114facfd5b4a62f10815e45bf6ec04d7c"
+    },
+    "tp": {
+      "changed_current_cells": 39,
+      "baseline_fields_unchanged": true,
+      "original_sha256": "5f8d5d4a4fedfb02dec1f6dbc2f56fbe285071640e17221e19e651283271c536"
+    }
+  },
+  "boundary": "39 fresh W4 cells plus 429 reused source-equivalent specializations/paths. Historical full and external baselines unchanged. Not a fresh paired 468-cell comparison; Qualified measured base02de plus patch is source-equivalent to retained bf072d26."
+}

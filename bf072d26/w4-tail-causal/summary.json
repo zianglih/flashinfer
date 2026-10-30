@@ -1,0 +1,154 @@
+{
+  "passed": true,
+  "measured_cells": 39,
+  "retention_cells": 33,
+  "raw_samples": 15600,
+  "initial12_rows_unchanged": true,
+  "disjoint_campaign_union": true,
+  "inputs": [
+    {
+      "data": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/evidence/w4-tail-dequant-screen/1793368574438182000/data",
+      "config_sha256": "bd2bd75eb5e00d9f5d83184ad468722b403b5c16e705438101742b5cc37344a6",
+      "cells_sha256": "55522b9e814966ebc19b1e791bf0dbad9b8f3250ff9e460b04c336ffeb9d62cf",
+      "summary_sha256": "bf83bf252720437d25088f35a03c6311de5cfe8b3440a2ef4ae16d282482536f",
+      "resource_sha256": "78f389b7eec4a7b77b4ca49b8f9ab7bb5d91338e62877ad6ff52b65575f984e3",
+      "measured_cells": 12
+    },
+    {
+      "data": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/evidence/w4-tail-dequant-remaining/1793369332076642000/data",
+      "config_sha256": "c6abdc855f81e3cd3ae9d31c41706b5ac4b3d078eae3603cdb3a5988a22dac6b",
+      "cells_sha256": "aabd1d4a89c397c253c59f491f6ddb11322135895800a7e43905322deca8f622",
+      "summary_sha256": "7980653821fa7ec1f42d316b3d2cee5638f62a2fccb55fff022006c4c9b522a8",
+      "resource_sha256": "39b9945d4652093a44fbb9c5e283d8e6aeb9157d1e15743ff31343f237349aac",
+      "measured_cells": 27
+    }
+  ],
+  "control_head": "02de7785c10847b3528340840bed40bd405d85b4",
+  "source_manifests": {
+    "control": "1da5d781dbea9e340e2bdc9b014701a6a987f8c91b239ac2298805fcddcfc8dc",
+    "candidate": "c19ee3c84aed21a39529a354809dc529b1b7f5142d9bb9543d3fcd047bfc9ee9"
+  },
+  "estimator": "geometric mean of two phase medians; preserve all four raw phase medians and arithmetic diagnostic",
+  "groups": {
+    "all": {
+      "cells": 33,
+      "speedup_percent": 1.4706671210969358,
+      "negative": 6,
+      "max_control_spread": 3.4891805997948167,
+      "max_candidate_spread": 4.977668393596368
+    },
+    "decode": {
+      "cells": 15,
+      "speedup_percent": 1.70058487603153,
+      "negative": 0,
+      "max_control_spread": 0.27110766847404655,
+      "max_candidate_spread": 0.46113306982873414
+    },
+    "middle": {
+      "cells": 9,
+      "speedup_percent": 2.1099459701072742,
+      "negative": 0,
+      "max_control_spread": 0.18775131456851835,
+      "max_candidate_spread": 0.17644720078706655
+    },
+    "prefill": {
+      "cells": 9,
+      "speedup_percent": 0.45574067854017297,
+      "negative": 6,
+      "max_control_spread": 3.4891805997948167,
+      "max_candidate_spread": 4.977668393596368
+    },
+    "tp-kimi-k3-w4a16": {
+      "cells": 11,
+      "speedup_percent": 2.250582078853003,
+      "negative": 2,
+      "max_control_spread": 3.1894570724549487,
+      "max_candidate_spread": 3.6058999901694255
+    },
+    "tp-nemo3-ultra-w4a16": {
+      "cells": 11,
+      "speedup_percent": 1.198803361293499,
+      "negative": 3,
+      "max_control_spread": 0.7180392651448209,
+      "max_candidate_spread": 1.0334618126501827
+    },
+    "tp-v41-flash-w4a16": {
+      "cells": 11,
+      "speedup_percent": 0.9672158498820638,
+      "negative": 1,
+      "max_control_spread": 3.4891805997948167,
+      "max_candidate_spread": 4.977668393596368
+    },
+    "tp-kimi-k3-w4a16/decode": {
+      "cells": 5,
+      "speedup_percent": 2.5669013626077763,
+      "negative": 0,
+      "max_control_spread": 0.09411159208505548,
+      "max_candidate_spread": 0.46113306982873414
+    },
+    "tp-kimi-k3-w4a16/middle": {
+      "cells": 3,
+      "speedup_percent": 3.1387430862330756,
+      "negative": 0,
+      "max_control_spread": 0.042998668507143734,
+      "max_candidate_spread": 0.04460998579325359
+    },
+    "tp-kimi-k3-w4a16/prefill": {
+      "cells": 3,
+      "speedup_percent": 0.8495581057266888,
+      "negative": 2,
+      "max_control_spread": 3.1894570724549487,
+      "max_candidate_spread": 3.6058999901694255
+    },
+    "tp-nemo3-ultra-w4a16/decode": {
+      "cells": 5,
+      "speedup_percent": 1.7270416635550623,
+      "negative": 0,
+      "max_control_spread": 0.1517769421011561,
+      "max_candidate_spread": 0.18195021254721055
+    },
+    "tp-nemo3-ultra-w4a16/middle": {
+      "cells": 3,
+      "speedup_percent": 2.01475656455401,
+      "negative": 0,
+      "max_control_spread": 0.18775131456851835,
+      "max_candidate_spread": 0.17644720078706655
+    },
+    "tp-nemo3-ultra-w4a16/prefill": {
+      "cells": 3,
+      "speedup_percent": -0.47793916428872096,
+      "negative": 3,
+      "max_control_spread": 0.7180392651448209,
+      "max_candidate_spread": 1.0334618126501827
+    },
+    "tp-v41-flash-w4a16/decode": {
+      "cells": 5,
+      "speedup_percent": 0.8153591048337905,
+      "negative": 0,
+      "max_control_spread": 0.27110766847404655,
+      "max_candidate_spread": 0.14593249887369097
+    },
+    "tp-v41-flash-w4a16/middle": {
+      "cells": 3,
+      "speedup_percent": 1.1857388239486566,
+      "negative": 0,
+      "max_control_spread": 0.15273143154950208,
+      "max_candidate_spread": 0.0939856514261539
+    },
+    "tp-v41-flash-w4a16/prefill": {
+      "cells": 3,
+      "speedup_percent": 1.0022201716531676,
+      "negative": 1,
+      "max_control_spread": 3.4891805997948167,
+      "max_candidate_spread": 4.977668393596368
+    }
+  },
+  "tight_negative_cells": [],
+  "resources_unchanged": true,
+  "loaded_kernels": 196,
+  "clock_quartiles": 624,
+  "missing_clock_quartiles": 1,
+  "clock_exception_quartiles": 49,
+  "default_stage_resource_joins": 40,
+  "boundary": "All 39 affected cells from two disjoint four-phase CAAC campaigns. Original 12 rows are unchanged. All samples/negative rows preserved; 1/2 tokens excluded from retention. Tight means both repeats <=0.5%, not statistical confidence. Unaffected cells are not remeasured or included in this gain."
+}

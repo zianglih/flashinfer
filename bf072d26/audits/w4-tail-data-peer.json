@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "config_sha256": "bd2bd75eb5e00d9f5d83184ad468722b403b5c16e705438101742b5cc37344a6",
+  "archive_sha256": "dd52bfe33e0707f87b60e19d60bf097b96fe784b3df5248a260c2007163740c0",
+  "source_manifests": {
+    "candidate": "c19ee3c84aed21a39529a354809dc529b1b7f5142d9bb9543d3fcd047bfc9ee9",
+    "control": "1da5d781dbea9e340e2bdc9b014701a6a987f8c91b239ac2298805fcddcfc8dc"
+  },
+  "jobs": 3,
+  "cells": 12,
+  "phase_medians": 48,
+  "samples": 4800,
+  "loaded_resource_records": 80,
+  "clock_quartiles": 192,
+  "missing_clock_quartiles": 1,
+  "clock_exception_quartiles": 37,
+  "negative_cells": 5,
+  "geomean_percent": 0.8146840096966868,
+  "default_cells": [
+    [
+      "tp-kimi-k3-w4a16",
+      16384,
+      "CuteDSL W4A16"
+    ],
+    [
+      "tp-nemo3-ultra-w4a16",
+      16384,
+      "CuteDSL W4A16"
+    ],
+    [
+      "tp-v41-flash-w4a16",
+      16384,
+      "CuteDSL W4A16"
+    ]
+  ],
+  "default_stage_joins": 24,
+  "all_report_cells_preserved": true,
+  "boundary": "Independent raw CUPTI correlation/span, median/CAAC, route/tactic/cache/source/resource and raw NVML quartile replay. Includes recorded-default to actual native geometry/library/resource joins. No new GPU execution; all negative and clock-exception cells preserved. No source or timing-helper changes."
+}

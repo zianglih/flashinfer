@@ -1,0 +1,9 @@
+{
+  "retained_head": "bf072d26b163e71458e7e4dfb12e615b19bd2c9a",
+  "measured_base": "02de7785c10847b3528340840bed40bd405d85b4",
+  "source_sha256": {
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py": "25aa126d6e8e7bec5a42467349496b10a5aa1ef1b2a66b92bbe312c58889e34e",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py": "66ec9ae8caf4dbf66ad8f4293a75833e3713bbc279328b2ef43165cf19978c87"
+  },
+  "boundary": "Only the two qualified files differ from02de; immutable raw measurements retain02de plus patch. Reused records retain their earlier actual measured source."
+}

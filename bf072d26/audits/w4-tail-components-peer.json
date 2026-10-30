@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "source_files_changed": [
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py"
+  ],
+  "qualification_sha256": "77b097ebf79e0f2a531be4127cb769f83ed2fa0630510af45624df4cf3df763b",
+  "config_sha256": "bd2bd75eb5e00d9f5d83184ad468722b403b5c16e705438101742b5cc37344a6",
+  "raw_audit_sha256": "55a7e34e84f553a9427e049e43d3440fb7b4ee8460e4f12f738adbbd01539f20",
+  "resource_report_sha256": "78f389b7eec4a7b77b4ca49b8f9ab7bb5d91338e62877ad6ff52b65575f984e3",
+  "component_report_sha256": "a59326fe0406a7ae3db7181cbbf389bfda19df771bb91e97c3182a96efbaa91b",
+  "all_24_cell_stage_resources_and_compile_configs_equal_in_four_phases": true,
+  "component_medians_replayed": 288,
+  "component_deltas_replayed": 72,
+  "boundary": "Resources are actual driver attributes plus source-bound native compile configuration, not exact timed native cubin identity. Timeline extensions account for overlapping kernels; separate component medians need not sum to the E2E median. No samples removed or new timings run."
+}

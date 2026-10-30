@@ -1,0 +1,144 @@
+{
+  "passed": true,
+  "combined_summary_sha256": "c8794632ebd0bd75c04c54bb754946d785dbaddb29d589631dbafb9eceafaa13",
+  "combined_cells_sha256": "2ccd3568c5c315362c0661d9cb3043d77fa1bc8404e22f8d8276279763ee74c6",
+  "source_manifests": {
+    "control": "1da5d781dbea9e340e2bdc9b014701a6a987f8c91b239ac2298805fcddcfc8dc",
+    "candidate": "c19ee3c84aed21a39529a354809dc529b1b7f5142d9bb9543d3fcd047bfc9ee9"
+  },
+  "measured_cells": 39,
+  "retention_cells": 33,
+  "original_12_row_dicts_exactly_preserved": true,
+  "all_27_new_row_dicts_exactly_preserved": true,
+  "raw_samples": 15600,
+  "phase_medians": 156,
+  "loaded_resource_records": 196,
+  "all_78_cell_stage_resource_configs_equal": true,
+  "clock_quartiles": 624,
+  "clock_exception_quartiles": 49,
+  "missing_clock_quartiles": 1,
+  "retention_geomean_percent": 1.4706671210969358,
+  "negative_retention_cells": 6,
+  "all_24_decode_middle_cells_have_both_candidate_phases_below_both_controls": true,
+  "groups": {
+    "all": {
+      "cells": 33,
+      "speedup_percent": 1.4706671210969358,
+      "negative": 6,
+      "max_control_spread": 3.4891805997948167,
+      "max_candidate_spread": 4.977668393596368
+    },
+    "decode": {
+      "cells": 15,
+      "speedup_percent": 1.70058487603153,
+      "negative": 0,
+      "max_control_spread": 0.27110766847404655,
+      "max_candidate_spread": 0.46113306982873414
+    },
+    "middle": {
+      "cells": 9,
+      "speedup_percent": 2.1099459701072742,
+      "negative": 0,
+      "max_control_spread": 0.18775131456851835,
+      "max_candidate_spread": 0.17644720078706655
+    },
+    "prefill": {
+      "cells": 9,
+      "speedup_percent": 0.45574067854017297,
+      "negative": 6,
+      "max_control_spread": 3.4891805997948167,
+      "max_candidate_spread": 4.977668393596368
+    },
+    "tp-kimi-k3-w4a16": {
+      "cells": 11,
+      "speedup_percent": 2.250582078853003,
+      "negative": 2,
+      "max_control_spread": 3.1894570724549487,
+      "max_candidate_spread": 3.6058999901694255
+    },
+    "tp-nemo3-ultra-w4a16": {
+      "cells": 11,
+      "speedup_percent": 1.198803361293499,
+      "negative": 3,
+      "max_control_spread": 0.7180392651448209,
+      "max_candidate_spread": 1.0334618126501827
+    },
+    "tp-v41-flash-w4a16": {
+      "cells": 11,
+      "speedup_percent": 0.9672158498820638,
+      "negative": 1,
+      "max_control_spread": 3.4891805997948167,
+      "max_candidate_spread": 4.977668393596368
+    },
+    "tp-kimi-k3-w4a16/decode": {
+      "cells": 5,
+      "speedup_percent": 2.5669013626077763,
+      "negative": 0,
+      "max_control_spread": 0.09411159208505548,
+      "max_candidate_spread": 0.46113306982873414
+    },
+    "tp-kimi-k3-w4a16/middle": {
+      "cells": 3,
+      "speedup_percent": 3.1387430862330756,
+      "negative": 0,
+      "max_control_spread": 0.042998668507143734,
+      "max_candidate_spread": 0.04460998579325359
+    },
+    "tp-kimi-k3-w4a16/prefill": {
+      "cells": 3,
+      "speedup_percent": 0.8495581057266888,
+      "negative": 2,
+      "max_control_spread": 3.1894570724549487,
+      "max_candidate_spread": 3.6058999901694255
+    },
+    "tp-nemo3-ultra-w4a16/decode": {
+      "cells": 5,
+      "speedup_percent": 1.7270416635550623,
+      "negative": 0,
+      "max_control_spread": 0.1517769421011561,
+      "max_candidate_spread": 0.18195021254721055
+    },
+    "tp-nemo3-ultra-w4a16/middle": {
+      "cells": 3,
+      "speedup_percent": 2.01475656455401,
+      "negative": 0,
+      "max_control_spread": 0.18775131456851835,
+      "max_candidate_spread": 0.17644720078706655
+    },
+    "tp-nemo3-ultra-w4a16/prefill": {
+      "cells": 3,
+      "speedup_percent": -0.47793916428872096,
+      "negative": 3,
+      "max_control_spread": 0.7180392651448209,
+      "max_candidate_spread": 1.0334618126501827
+    },
+    "tp-v41-flash-w4a16/decode": {
+      "cells": 5,
+      "speedup_percent": 0.8153591048337905,
+      "negative": 0,
+      "max_control_spread": 0.27110766847404655,
+      "max_candidate_spread": 0.14593249887369097
+    },
+    "tp-v41-flash-w4a16/middle": {
+      "cells": 3,
+      "speedup_percent": 1.1857388239486566,
+      "negative": 0,
+      "max_control_spread": 0.15273143154950208,
+      "max_candidate_spread": 0.0939856514261539
+    },
+    "tp-v41-flash-w4a16/prefill": {
+      "cells": 3,
+      "speedup_percent": 1.0022201716531676,
+      "negative": 1,
+      "max_control_spread": 3.4891805997948167,
+      "max_candidate_spread": 4.977668393596368
+    }
+  },
+  "input_audits": {
+    "w4-tail-data-peer.json": "55a7e34e84f553a9427e049e43d3440fb7b4ee8460e4f12f738adbbd01539f20",
+    "w4-tail-components-peer.json": "a153af2bec069f3e1f13deb877825e02a291c505480d490067a16555760d052d",
+    "w4-tail-remaining-data-peer.json": "f2437f1c03ee6c262780606681d4cf861c345113eff14cbbd4e528a4e23ed5f0",
+    "w4-tail-remaining-components-peer.json": "0722564940f35be5d9221b0ea7d0eedad6bb76d4c05a5ab307b26437f9d924c4"
+  },
+  "boundary": "All negative cells retained; tokens 1/2 excluded only from retention groups. No row replacement, fresh timing, source changes, or statistical-confidence claim. Prefill aggregate includes two positive 8K cells with substantial phase/clock variation."
+}

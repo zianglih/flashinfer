@@ -1,0 +1,985 @@
+{
+  "passed": true,
+  "split_exact_calls": 12,
+  "split_native_pairs": 18,
+  "mega_exact_calls": 4,
+  "mega_native_pairs": 2,
+  "all_resources_unchanged": true,
+  "all_zero_local": true,
+  "aligned_full_k_raw_ptx_cubin_sass_identical": true,
+  "all_live_partial_k448_fc2_raw_ptx_cubin_sass_identical": true,
+  "source_hashes": {
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py": "25aa126d6e8e7bec5a42467349496b10a5aa1ef1b2a66b92bbe312c58889e34e",
+    "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py": "66ec9ae8caf4dbf66ad8f4293a75833e3713bbc279328b2ef43165cf19978c87"
+  },
+  "source_manifests": {
+    "control": "1da5d781dbea9e340e2bdc9b014701a6a987f8c91b239ac2298805fcddcfc8dc",
+    "candidate": "c19ee3c84aed21a39529a354809dc529b1b7f5142d9bb9543d3fcd047bfc9ee9"
+  },
+  "source_snapshot": "/data/ziangli/flashinfer-moe-gather-pipeline/candidate-w4-tail-dequant",
+  "cases": [
+    {
+      "group": "main",
+      "case": {
+        "tokens": 129,
+        "h": 384,
+        "i": 640,
+        "n": 32,
+        "m": 256,
+        "clc": false,
+        "pdl": true,
+        "swap": true
+      },
+      "exact_calls": 2
+    },
+    {
+      "group": "main",
+      "case": {
+        "tokens": 129,
+        "h": 256,
+        "i": 256,
+        "n": 32,
+        "m": 256,
+        "clc": false,
+        "pdl": true,
+        "swap": true
+      },
+      "exact_calls": 2
+    },
+    {
+      "group": "main",
+      "case": {
+        "tokens": 129,
+        "h": 384,
+        "i": 640,
+        "n": 16,
+        "m": 128,
+        "clc": true,
+        "pdl": true,
+        "swap": false
+      },
+      "exact_calls": 2
+    },
+    {
+      "group": "main",
+      "case": {
+        "tokens": 129,
+        "h": 256,
+        "i": 256,
+        "n": 16,
+        "m": 128,
+        "clc": true,
+        "pdl": false,
+        "swap": false
+      },
+      "exact_calls": 2
+    },
+    {
+      "group": "edges",
+      "case": {
+        "tokens": 129,
+        "h": 128,
+        "i": 320,
+        "n": 16,
+        "m": 128,
+        "clc": true,
+        "pdl": true,
+        "swap": false
+      },
+      "exact_calls": 2
+    },
+    {
+      "group": "edges",
+      "case": {
+        "tokens": 129,
+        "h": 128,
+        "i": 448,
+        "n": 32,
+        "m": 256,
+        "clc": false,
+        "pdl": true,
+        "swap": true
+      },
+      "exact_calls": 2
+    }
+  ],
+  "rows": [
+    {
+      "group": "main",
+      "name": "w4a16-0-00",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "mma_tiler": [
+          256,
+          32,
+          256
+        ],
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": false,
+      "compiler_options": "--ptxas-options='-maxrregcount=96'",
+      "ptx_equal": false,
+      "sass_equal": false,
+      "sass_instruction_counts": {
+        "control": 1792,
+        "candidate": 1816
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": false,
+        "cubin": false,
+        "sass": false
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-0-01",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "mma_tiler": [
+          256,
+          32,
+          256
+        ],
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": false,
+      "compiler_options": "",
+      "ptx_equal": false,
+      "sass_equal": false,
+      "sass_instruction_counts": {
+        "control": 1760,
+        "candidate": 1792
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": false,
+        "cubin": false,
+        "sass": false
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-0-02",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 384,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "resources": {
+        "control": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 96,
+        "candidate": 96
+      },
+      "bulk_flush_sites": {
+        "control": 0,
+        "candidate": 0
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-1-00",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "mma_tiler": [
+          256,
+          32,
+          256
+        ],
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "--ptxas-options='-maxrregcount=96'",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 1696,
+        "candidate": 1696
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-1-01",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "mma_tiler": [
+          256,
+          32,
+          256
+        ],
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 1608,
+        "candidate": 1608
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-1-02",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 256,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "resources": {
+        "control": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 96,
+        "candidate": 96
+      },
+      "bulk_flush_sites": {
+        "control": 0,
+        "candidate": 0
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-2-00",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "mma_tiler": [
+          128,
+          16,
+          256
+        ],
+        "use_2cta_instrs": false,
+        "use_clc_scheduler": true,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": false,
+      "compiler_options": "--ptxas-options='-maxrregcount=96'",
+      "ptx_equal": false,
+      "sass_equal": false,
+      "sass_instruction_counts": {
+        "control": 1576,
+        "candidate": 1592
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": false,
+        "cubin": false,
+        "sass": false
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-2-01",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "mma_tiler": [
+          128,
+          16,
+          256
+        ],
+        "use_2cta_instrs": false,
+        "use_clc_scheduler": true,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": false,
+      "compiler_options": "",
+      "ptx_equal": false,
+      "sass_equal": false,
+      "sass_instruction_counts": {
+        "control": 1512,
+        "candidate": 1528
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": false,
+        "cubin": false,
+        "sass": false
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-2-02",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 384,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "resources": {
+        "control": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 96,
+        "candidate": 96
+      },
+      "bulk_flush_sites": {
+        "control": 0,
+        "candidate": 0
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-3-00",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "mma_tiler": [
+          128,
+          16,
+          256
+        ],
+        "use_2cta_instrs": false,
+        "use_clc_scheduler": true,
+        "enable_pdl": false
+      },
+      "resources": {
+        "control": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "--ptxas-options='-maxrregcount=96'",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 1464,
+        "candidate": 1464
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-3-01",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "mma_tiler": [
+          128,
+          16,
+          256
+        ],
+        "use_2cta_instrs": false,
+        "use_clc_scheduler": true,
+        "enable_pdl": false
+      },
+      "resources": {
+        "control": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 1400,
+        "candidate": 1400
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "main",
+      "name": "w4a16-3-02",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": false,
+        "hidden_size": 256,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "resources": {
+        "control": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 96,
+        "candidate": 96
+      },
+      "bulk_flush_sites": {
+        "control": 0,
+        "candidate": 0
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "edges",
+      "name": "w4a16-0-00",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "mma_tiler": [
+          128,
+          16,
+          256
+        ],
+        "use_2cta_instrs": false,
+        "use_clc_scheduler": true,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": false,
+      "compiler_options": "--ptxas-options='-maxrregcount=96'",
+      "ptx_equal": false,
+      "sass_equal": false,
+      "sass_instruction_counts": {
+        "control": 1456,
+        "candidate": 1464
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": false,
+        "cubin": false,
+        "sass": false
+      }
+    },
+    {
+      "group": "edges",
+      "name": "w4a16-0-01",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "mma_tiler": [
+          128,
+          16,
+          256
+        ],
+        "use_2cta_instrs": false,
+        "use_clc_scheduler": true,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": false,
+      "compiler_options": "",
+      "ptx_equal": false,
+      "sass_equal": false,
+      "sass_instruction_counts": {
+        "control": 1488,
+        "candidate": 1512
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": false,
+        "cubin": false,
+        "sass": false
+      }
+    },
+    {
+      "group": "edges",
+      "name": "w4a16-0-02",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 128,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "resources": {
+        "control": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 96,
+        "candidate": 96
+      },
+      "bulk_flush_sites": {
+        "control": 0,
+        "candidate": 0
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "edges",
+      "name": "w4a16-1-00",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": true,
+        "mma_tiler": [
+          256,
+          32,
+          256
+        ],
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": false,
+      "compiler_options": "--ptxas-options='-maxrregcount=96'",
+      "ptx_equal": false,
+      "sass_equal": false,
+      "sass_instruction_counts": {
+        "control": 1672,
+        "candidate": 1680
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": false,
+        "cubin": false,
+        "sass": false
+      }
+    },
+    {
+      "group": "edges",
+      "name": "w4a16-1-01",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "configuration": {
+        "gather_input": false,
+        "mma_tiler": [
+          256,
+          32,
+          256
+        ],
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false,
+        "enable_pdl": true
+      },
+      "resources": {
+        "control": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 1760,
+        "candidate": 1760
+      },
+      "bulk_flush_sites": {
+        "control": 1,
+        "candidate": 1
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    },
+    {
+      "group": "edges",
+      "name": "w4a16-1-02",
+      "kind": "_MoeFinalizeKernel",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 128,
+        "top_k": 2,
+        "threads": 128,
+        "vectors_per_thread": 1,
+        "input_is_expanded": false
+      },
+      "resources": {
+        "control": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        "candidate": {
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      },
+      "raw_cubin_equal": true,
+      "compiler_options": "",
+      "ptx_equal": true,
+      "sass_equal": true,
+      "sass_instruction_counts": {
+        "control": 96,
+        "candidate": 96
+      },
+      "bulk_flush_sites": {
+        "control": 0,
+        "candidate": 0
+      },
+      "raw_equal": {
+        "ptx": true,
+        "cubin": true,
+        "sass": true
+      }
+    }
+  ],
+  "receipts": {
+    "experiments/w4-tail-dequant/qualification/full-evidence/campaign-pilot.json": "cc877f89cfdb5d2d4f48c358f05656d58465e45618b4f2fdd4512df7a643aa8e",
+    "experiments/w4-tail-dequant/qualification/full-evidence/campaign-remaining.json": "5a1b81789b80e4b041ec210d0d84cdac5d2f86e2302bf5ddc370b6b7fe16986c",
+    "experiments/w4-tail-dequant/qualification/full-evidence/comparison/summary.json": "09989053331760ad1fd55ae9640a55926b89823c3ff6138d7af6c5f676fafeb7",
+    "experiments/w4-tail-dequant/qualification-edges/edges-evidence/campaign-edges.json": "016e2f52f618cfb0d9bf7df1c2ac3219b794705fcf432171b1b7f3f1d265ee0d",
+    "experiments/w4-tail-dequant/qualification-edges/edges-evidence/comparison/summary.json": "808690b5fac98b8b5ba1f2990021299cbf60ee5b6218b766a9099bf431af2df3",
+    "experiments/w4-tail-dequant/layout-proof-summary.json": "91cbd3997cce6725b757e43bf93a203585bfc863457affbb62ba9144230437e2",
+    "experiments/w4-tail-dequant/mega-qualification/summary.json": "b8ddcc7946f37266a4d2554e39e432b73740434be942ef7517d9186b4b2fff4c",
+    "experiments/w4-tail-dequant/qualification/pilot-codegen-proof.json": "4f5cf9199b72d84a4b3c33f8e8f4399ecf2f1a6d862969ae97947bb3abf24fb2",
+    "audits/w4-tail-dequant-peer.json": "d3ff88e5f745011101e51b6a226276fde231955787092f0094e4bfb4dfd71f27",
+    "audits/w4-tail-dequant-peer-static.json": "526abb94f67d70f7b1400cbb845e0ff8d60f9cd07837fdeb76183cac77870494"
+  },
+  "boundary": "Strict existing public split oracle, fixed correctness-only launch cap, and existing single-rank Mega exact oracle; no timing, distributed validation or sanitizer. Affected static code adds 8\u201332 instructions; dynamic wholly unused transform group skips SF/payload loads, conversion, TMEM stores, with common pipeline synchronization preserved. GPU1 release must be checked separately before timing."
+}

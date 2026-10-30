@@ -1,0 +1,4489 @@
+{
+  "passed": true,
+  "control_publication_manifest_sha256": "cb861fbf3f38e902ab7f51a4958d61b463e3249b93d3d5e166704058eaa05c0b",
+  "qualified_source_sha256": "77b097ebf79e0f2a531be4127cb769f83ed2fa0630510af45624df4cf3df763b",
+  "native_config_source": "evidence/r2-w4-full/1793362889737047000/data",
+  "native_source_config_sha256": "657506e7d34d8d7bcd84af89bf804bd9dc55d48e9f342e0eaf0664590e997e50",
+  "w4_cells": 104,
+  "affected": 39,
+  "reusable_specializations": 65,
+  "unaffected_swap_cells": 364,
+  "reusable_total": 429,
+  "transform_group_count_source": "moe_w4a16_kernel.py self.num_transform_warpgroups = 2 (retained and candidate unchanged)",
+  "predicate": "0 < consumed_k % stage_k <= stage_k - stage_k // 2",
+  "boundary": "Host native shape K and actual frozen tile K agree across both original AA passes. This is a source-specialization reuse proof with existing aligned codegen qualification, not a claim every timed binary was recaptured. The source file changes, so reusable W4 is not whole-file byte identity.",
+  "rows": [
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 1,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 2,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 4,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 8,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 16,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 32,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 64,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 128,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 256,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 512,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 4096,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 8192,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "ep",
+      "tokens": 16384,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 3072,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 1,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 2,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 4,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 8,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 16,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 32,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 64,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 128,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 256,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 512,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            64,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            64,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 4096,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 8192,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "ep",
+      "tokens": 16384,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 1,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 2,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 4,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 8,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 16,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 32,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 64,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 128,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 256,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 512,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 4096,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 8192,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "model": "v3",
+      "topology": "ep",
+      "tokens": 16384,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 1,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 2,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 4,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 8,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 16,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 32,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 64,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 128,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 256,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 512,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 4096,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 8192,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "ep",
+      "tokens": 16384,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 2304,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 1,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 2,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 4,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 8,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 16,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 32,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 64,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 128,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 256,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 512,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 4096,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 8192,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "model": "kimi-k3",
+      "topology": "tp",
+      "tokens": 16384,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 3584,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 384,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 1,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 2,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 4,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 8,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 16,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 32,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 64,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 128,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 256,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 512,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 4096,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 8192,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "model": "nemo3-ultra",
+      "topology": "tp",
+      "tokens": 16384,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 2048,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 640,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 128,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 1,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 2,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 4,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 8,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 16,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 32,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 64,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 128,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 256,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            1,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 512,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 4096,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            192,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 8192,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "model": "v3",
+      "topology": "tp",
+      "tokens": 16384,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 7168,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 256,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": false
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 1,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 2,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            32,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 4,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            128,
+            8,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 8,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 16,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 32,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 64,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 128,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 256,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 512,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            16,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 4096,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 8192,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "model": "v41-flash",
+      "topology": "tp",
+      "tokens": 16384,
+      "stages": [
+        {
+          "stage": "fc1",
+          "consumed_k": 5120,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 0,
+          "predicate_active": false,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        },
+        {
+          "stage": "fc2",
+          "consumed_k": 576,
+          "stage_k": 256,
+          "groups": 2,
+          "tail_k": 64,
+          "predicate_active": true,
+          "mma_tiler_mnk": [
+            256,
+            128,
+            256
+          ],
+          "cluster_shape_mn": [
+            2,
+            1
+          ]
+        }
+      ],
+      "affected": true
+    }
+  ]
+}
