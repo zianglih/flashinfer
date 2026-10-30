@@ -1,0 +1,33 @@
+Representative native GLM5 EP8, global tokens16384, M256 N128 K256, group_hint512, reuse_dispatch_warps.
+Contiguous excerpts: scale duplication through its first BF16 multiply.
+
+BEFORE
+/*131d0*/                   PRMT R11, R33, 0x7770, RZ ;
+/*131e0*/                   F2FP.BF16.E2M1.UNPACK_B R4, R16.reuse, 4.5736980577097704378e-41.H0 ;
+/*131f0*/                   F2FP.BF16.E2M1.UNPACK_B R5, R16.reuse.B1, 4.5736980577097704378e-41.H0 ;
+/*13200*/                   F2FP.BF16.E2M1.UNPACK_B R6, R16.reuse.B2, 4.5736980577097704378e-41.H0 ;
+/*13210*/                   F2FP.BF16.E2M1.UNPACK_B R7, R16.B3, 4.5736980577097704378e-41.H0 ;
+/*13220*/                   PRMT R11, R11, 0x6540, R11 ;
+/*13230*/                   SHF.R.U32.HI R16, RZ, 0x8, R33 ;
+/*13240*/                   F2FP.BF16.E2M1.UNPACK_B R8, R17.reuse, 4.5736980577097704378e-41.H0 ;
+/*13250*/                   F2FP.BF16.E2M1.UNPACK_B R9, R17.reuse.B1, 4.5736980577097704378e-41.H0 ;
+/*13260*/                   F2FP.BF16.E2M1.UNPACK_B R10, R17.B2, 4.5736980577097704378e-41.H0 ;
+/*13270*/                   F2FP.BF16.E4M3.UNPACK_B R11, R11, 4.5736980577097704378e-41.H0 ;
+/*13280*/                   PRMT R16, R16, 0x7770, RZ ;
+/*13290*/                   F2FP.BF16.E2M1.UNPACK_B R17, R17.B3, 4.5736980577097704378e-41.H0 ;
+/*132a0*/                   HMUL2.BF16_V2 R4, R4, R11.reuse ;
+
+AFTER
+/*131d0*/                   PRMT R11, R33, 0x4400, RZ ;
+/*131e0*/               @P2 LOP3.LUT R35, R34, 0x1, RZ, 0xc0, !PT ;
+/*131f0*/                   F2FP.BF16.E2M1.UNPACK_B R4, R16.reuse, 4.5736980577097704378e-41.H0 ;
+/*13200*/                   F2FP.BF16.E2M1.UNPACK_B R5, R16.reuse.B1, 4.5736980577097704378e-41.H0 ;
+/*13210*/                   F2FP.BF16.E2M1.UNPACK_B R6, R16.reuse.B2, 4.5736980577097704378e-41.H0 ;
+/*13220*/                   F2FP.BF16.E2M1.UNPACK_B R7, R16.B3, 4.5736980577097704378e-41.H0 ;
+/*13230*/                   F2FP.BF16.E2M1.UNPACK_B R8, R17.reuse, 4.5736980577097704378e-41.H0 ;
+/*13240*/                   F2FP.BF16.E2M1.UNPACK_B R9, R17.reuse.B1, 4.5736980577097704378e-41.H0 ;
+/*13250*/                   F2FP.BF16.E2M1.UNPACK_B R10, R17.B2, 4.5736980577097704378e-41.H0 ;
+/*13260*/                   F2FP.BF16.E4M3.UNPACK_B R11, R11, 4.5736980577097704378e-41.H0 ;
+/*13270*/                   F2FP.BF16.E2M1.UNPACK_B R17, R17.B3, 4.5736980577097704378e-41.H0 ;
+/*13280*/                   SHF.R.U32.HI R16, RZ, 0x8, R33 ;
+/*13290*/                   HMUL2.BF16_V2 R4, R4, R11 ;
