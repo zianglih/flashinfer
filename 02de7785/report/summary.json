@@ -1,0 +1,330 @@
+{
+  "passed": true,
+  "retained_head": "02de7785c10847b3528340840bed40bd405d85b4",
+  "actual_measurement_base": "82254e206a44b95d9925e4594fac936731f80d21",
+  "cells": 468,
+  "displayed": 396,
+  "samples": 93600,
+  "loaded_kernels": 1088,
+  "recorded_default_joins": 40,
+  "clock_quartiles": 3744,
+  "missing_clock_quartiles": 4,
+  "clock_exception_quartiles": 97,
+  "max_candidate_spread_percent": 9.079031765495449,
+  "displayed_variance_flags": 35,
+  "groups": {
+    "all": {
+      "cells": 396,
+      "speedup_percent": 0.05887004812863417,
+      "negative": 181
+    },
+    "decode": {
+      "cells": 180,
+      "speedup_percent": 0.07976579980750742,
+      "negative": 75
+    },
+    "middle": {
+      "cells": 108,
+      "speedup_percent": 0.06495388980665151,
+      "negative": 46
+    },
+    "prefill": {
+      "cells": 108,
+      "speedup_percent": 0.01797213511265383,
+      "negative": 60
+    },
+    "swap_ab": {
+      "cells": 308,
+      "speedup_percent": 0.03913062571829773,
+      "negative": 148
+    },
+    "w4a16": {
+      "cells": 88,
+      "speedup_percent": 0.12798870413410768,
+      "negative": 33
+    },
+    "CuteDSL W4A4": {
+      "cells": 88,
+      "speedup_percent": 0.06241006615430589,
+      "negative": 40
+    },
+    "CuteDSL PER-TOKEN": {
+      "cells": 88,
+      "speedup_percent": 0.06438047339774045,
+      "negative": 37
+    },
+    "CuteDSL W4A16": {
+      "cells": 88,
+      "speedup_percent": 0.12798870413410768,
+      "negative": 33
+    },
+    "CuteDSL MXFP4x8": {
+      "cells": 77,
+      "speedup_percent": 0.11191468259685866,
+      "negative": 41
+    },
+    "CuteDSL MXFP8": {
+      "cells": 55,
+      "speedup_percent": -0.14020649557912046,
+      "negative": 30
+    }
+  },
+  "all_negative_rows_retained": true,
+  "historical_baseline": {
+    "measured_head": "326c4a793085e79b64b9c7fd79e77320c220ccba",
+    "production_equivalent_head": "82254e206a44b95d9925e4594fac936731f80d21",
+    "changed_files": [
+      "benchmarks/bench_cute_dsl_moe_distributed.py",
+      "benchmarks/bench_moe_deepseek.py",
+      "scripts/sanitize_cute_dsl_moe_swap_ab.py"
+    ],
+    "fields_used": "Previous a1/a2 and candidate_evidence, not the older d35 c1/c2 columns.",
+    "csv_sha256": "178e80cdc4e3ede257589eb937623174e118d15a3d565b54ab5ec05704d1462b"
+  },
+  "sources": {
+    "swap_ab": {
+      "changed_from_control": {
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py": {
+          "control": "194b903854c74fc79a422ec67a0539d9f57414987c8cc0a3325e94226d642eb4",
+          "measured": "788b7f58267a773f049b25216d689ab6f60649ec168e1d278e0f3ef8ae6c8e17"
+        },
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_utils.py": {
+          "control": "d5105227bd29382a0182e5427f6d97ca04fc12c62f29dbdcc1737c7b178daf5d",
+          "measured": "d3afcec4f966c4a30afc4bae528633f96dd4a9a787d712fa8333b1519cbb9ac3"
+        }
+      },
+      "control_manifest": "/data/ziangli/flashinfer-moe-gather-pipeline/runtime/local/control-manifest.json",
+      "control_manifest_sha256": "672579cae07e498a9e1520e69bc8d2fc4f2b1c2fec1999396bad3f0e6584b517",
+      "cute_cache": "/data/ziangli/flashinfer-moe-gather-pipeline/cache/cute-perf",
+      "freeze_receipt": "/data/ziangli/flashinfer-moe-gather-pipeline/runtime/source-candidate-composed.json",
+      "freeze_receipt_sha256": "6d66a2220d2d1a08ca1e99fec43152e991dcb29002d772e84873c8b75b85f857",
+      "head": "82254e206a44b95d9925e4594fac936731f80d21",
+      "identity_boundary": "head denotes the verified base822 commit; label and measured file hashes identify any unstaged experiment",
+      "label": "composed-swap-full-on-82254e20",
+      "register_policy": {
+        "control": 128,
+        "epilogue": 248,
+        "gather": 128
+      },
+      "repo": "/data/ziangli/flashinfer-moe-gather-pipeline/candidate-composed",
+      "source_file": "/data/ziangli/flashinfer-moe-gather-pipeline/runs/composed-swap-full/source-candidate.json",
+      "source_sha256": {
+        "benchmarks/bench_moe_deepseek.py": "84855eed2a84d4147488144db3b08830fa696e3ce4306ec4fa8b3cbd0724585e",
+        "flashinfer/api_logging.py": "8bda6aba04be7eb5891a7fd07c88346d2282ecf2d2bf2f68787033f0e231b884",
+        "flashinfer/autotune_cache.py": "f720a6ad2cb232bdb3dd396690ea3a3cb6cc9f099642bbcae8c6d956bdecdfb7",
+        "flashinfer/autotuner/__init__.py": "ddc1ba254ca71687058e44bf05c38a4fd3dc8351db74e4ef547cda1652d779ef",
+        "flashinfer/autotuner/_graph_timing.py": "5f3be31e17501ba11ee95327176ac4a4b95eeaee7be92c2bc7795bcbd30cefe3",
+        "flashinfer/autotuner/autotuner.py": "a220569895fbcd446e7a58eb701c836afdfc213f9e14e84888e323391681e0c8",
+        "flashinfer/autotuner/initializers.py": "4c10d847cf9d4e6404ae3f88c6ddc3acf9fd993d18ff140d3f48e6e78b6c80d2",
+        "flashinfer/autotuner/protocol.py": "66cfbca5a11dcffa27e6a2baa7f97b5215713f9146be471116e864b3aab4f665",
+        "flashinfer/cute_dsl/__init__.py": "159c96b4d24dfd24bbc1ae867b4b90355ea3aa2631d3229719e494ad4f39ac81",
+        "flashinfer/cute_dsl/_mla_validation.py": "d3e4d84a36669f9babf2872e72506599fb6f1c6d1903bfb05edeb124eeba8e1b",
+        "flashinfer/cute_dsl/add_rmsnorm_fp4quant.py": "2346a003aba994339d9507b621fd13628729fd812275130511f8007f8d247427",
+        "flashinfer/cute_dsl/availability.py": "39d47171f5dc1c92d73290a5dfdc7c018da7fd2bcdee498b16547e6ea08bc024",
+        "flashinfer/cute_dsl/blockscaled_gemm.py": "001cb6c8ba211c12d5f2bfad3ad4da906ca7b99bac85d42704c861c6ec3ea4a1",
+        "flashinfer/cute_dsl/fp4_common.py": "fbea61acc84fd2826d0bf7b9f48523df23f0adb1c10a785d4d473851ad66b9d3",
+        "flashinfer/cute_dsl/gemm_allreduce_two_shot.py": "d6b8d6bc85fb18d14d23db059a758fea87b2873330730d8912633093f785b38b",
+        "flashinfer/cute_dsl/rmsnorm_fp4quant.py": "fa9df7951d4c665fee5410a3088fc2934c79147288740d87f6db7917a27fdc95",
+        "flashinfer/cute_dsl/utils.py": "df35130f8c8c867a440d7ff3392ac23b19c8628429a7b65177c80bd0410c75cf",
+        "flashinfer/fp4_quantization.py": "fb394c543cfd112ec6ceccfd8c808058f7b10ab88d9a8adda0a9cbd067c25f97",
+        "flashinfer/fused_moe/core.py": "58ac4fb451361d79e395cd241dfaae0e2fc8d61f859e221fe571aff4d65c062a",
+        "flashinfer/fused_moe/cute_dsl/__init__.py": "5f273a12ce38d5f6a8fee058ead6c0d94b2e1e5f669b289c536a636797263bf9",
+        "flashinfer/fused_moe/cute_dsl/_inputs_helper.py": "cd5b567b58bc56404b8c3417f8cf902e2edb3ac40ff024531f7ae164e25db55e",
+        "flashinfer/fused_moe/cute_dsl/b12x_moe.py": "468660164360700b95926cdecb01b9074c16ac887a73f1e49c5d7fffefe0a8f6",
+        "flashinfer/fused_moe/cute_dsl/blackwell/__init__.py": "bdef98f32952dd117ae5e0ee20e07ac2e585209c293f538e1c7dd87e545262b6",
+        "flashinfer/fused_moe/cute_dsl/blackwell/blockscaled_contiguous_gather_grouped_gemm_act_fusion.py": "4b480e4bd802804f3e3c46a4c386459ac2caaa67878c626ab0b2c28dc676ffcd",
+        "flashinfer/fused_moe/cute_dsl/blackwell/blockscaled_contiguous_grouped_gemm_finalize_fusion.py": "bb857761eef12b6dfc8d70b9ce43dc5eaa29f706bb4bca2ab572648e426e7270",
+        "flashinfer/fused_moe/cute_dsl/blackwell/custom_pipeline.py": "bf086fb43d7d3311b10b61ad7bb07f0aa0d502a9d33d500a7daf2e03eb6633a6",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_finalize.py": "2a7d7b445772d6c23d6b7f4cb2e37aceb886e46dd8dbb6998445b345ca478f95",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab.py": "4b065ab95252cd9853f1f29f690eb2862ca913758a570b916ec0dfccbc6e5c7c",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py": "788b7f58267a773f049b25216d689ab6f60649ec168e1d278e0f3ef8ae6c8e17",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_tuner.py": "e60a261387c2c1271b89b80a6d1664f1381255493bcf147292418785cb61eca8",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16.py": "67fbee21c8e955de3b923d5f10001523832c89c1cda47f8501704de1713eb280",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py": "169655a73e814687ed55e255418e8889ebb5b8d3be77d76ed79a2c119b81b883",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_utils.py": "d3afcec4f966c4a30afc4bae528633f96dd4a9a787d712fa8333b1519cbb9ac3",
+        "flashinfer/fused_moe/cute_dsl/blackwell/utils.py": "54f1449693c018d67747aea1763356ef65813947cc9b3499017b322cc1d6c9be",
+        "flashinfer/fused_moe/cute_dsl/blockscaled_contiguous_gather_grouped_gemm_act_fusion.py": "0868e43cdecad1216ec860b40e24ab18fec082c7995ecbfbadf4c2ec3a1bb020",
+        "flashinfer/fused_moe/cute_dsl/blockscaled_contiguous_grouped_gemm_finalize_fusion.py": "c2540041576f6ddccdd81aedafabcacaa43ec2c7ad7f1ee05b77ea33878f7b4e",
+        "flashinfer/fused_moe/cute_dsl/common/__init__.py": "12fe1c2a369b11eadd02daa10305b69b238a466caa5ecf4b55af2f09f176e016",
+        "flashinfer/fused_moe/cute_dsl/common/kernel_utils.py": "bb29aba364d090672535593e791772f57f19b811f6822138397dd325ec7425c5",
+        "flashinfer/fused_moe/cute_dsl/fused_moe.py": "d05dc8f9a700243bdc2b90109eba4921682ad31e51cbc9c7ee5d604379be9f4b",
+        "flashinfer/fused_moe/cute_dsl/moe_utils.py": "419a676cded8927a1993792612ab8935f556ef8214d58d4f50232b11fed2ca14",
+        "flashinfer/fused_moe/cute_dsl/sm90_contiguous_gather_grouped_gemm_act_fusion.py": "39e411955482af0cd20bdc3ebf9e8254b59adfa7c8b8e129dfb51d1d492ae711",
+        "flashinfer/fused_moe/cute_dsl/sm90_contiguous_grouped_gemm_finalize_fusion.py": "9eae49917440d492ec502aca980c6c517c349b39d0ea9817382b7b868807690c",
+        "flashinfer/fused_moe/cute_dsl/sm90_fused_moe.py": "17878acd6cd2e81192ae5233fc90520fd44b4aacec98ff05f37ae1ab2bba44a7",
+        "flashinfer/fused_moe/cute_dsl/sm90_tuner.py": "952e2c38e91f4ed3b0bfc5bf49a300e1539b2d260784f756dff705220cad836e",
+        "flashinfer/fused_moe/cute_dsl/tuner.py": "d9a4b095ba132437d06592101af96343b45c99c337b396659d80eab7109e1449",
+        "flashinfer/fused_moe/prepare.py": "b6eba3a866f7afe0bc52d55e1fc9c5fc82e835fc5e404278154c2bf2972e9d8b",
+        "flashinfer/jit/core.py": "52e45cf2e7011a426f3d4169ba34bffc81b53eea284b08d876f1589c952cb74a",
+        "flashinfer/jit/cpp_ext.py": "6cc6c732ac5b1e3e2f02d45239bf9507a6343ba97d35dc6725214770c389675f",
+        "flashinfer/jit/dsv3_optimizations.py": "6d82a88d19c0990bde6c48cd2c47e5b9d34e453e907823063daefd842f76e46b",
+        "flashinfer/jit/env.py": "8ce58446848e90cdbf524368e8681899a4cef6255873970e518f714dd4e1501f",
+        "flashinfer/jit/fp4_quantization.py": "bf57a1324f8d68dee788ce4ce58a23e1ceb6da1f74658c6635592b5c20900ae4",
+        "flashinfer/jit/fp8_quantization.py": "278f820ea4b621c313fae3706e326b588d48c5a163c2330326d2310f0f7726e8",
+        "flashinfer/jit/moe_utils.py": "8eb2187811b6257c6cc195e62edbd6c755cbfdba67608ec60bb83929c20a92c4",
+        "flashinfer/quantization/__init__.py": "8a55568609145b37c56ad4bd9e64d8d38cf50795bc6d893627c0cd53d02db109",
+        "flashinfer/quantization/fp4_quantization.py": "381d31faa7e6dfbcf7d85024bb075a8042355daf31f29ad718a954bd1d130c2f",
+        "flashinfer/quantization/fp8_quantization.py": "a83799b026af23bbb0ecc49a9a9531322ac58b2a4fea473a12447fbc41f89f74",
+        "flashinfer/quantization/kernels/__init__.py": "26f471f2c4a55d6c29c7f708a158d419e1f7b9328835fcf65e859fb9476d7d44",
+        "flashinfer/quantization/kernels/cutile/__init__.py": "96f6118d53a1445cb14735ca15ea63a8ac89a30330ba87fa4a688a5128e3cec8",
+        "flashinfer/quantization/kernels/cutile/mxfp8_grouped_quantize_cutile.py": "512ab5f1e6b5d06fa4c57aa62117fab1032a29f35764dacb199e6ec126d25699",
+        "flashinfer/quantization/kernels/cutile/per_token_group_quant_8bit_cutile.py": "6070a70a5deaeae7bf1a3520f56f261726ab022f5f86b0b6f77764637d220b4c",
+        "flashinfer/quantization/kernels/cutile/rope_quantize_fp8_cutile.py": "33f9d90baeb5da2b91543b8b9c26937f0cb56fe83b6ab45c8e45fe0e88d74a31",
+        "flashinfer/quantization/kernels/mxfp4_quantize.py": "b7eb8073517c286180b2312bf9888d9df5a9624681abe29b4c5f56008f0b2c4b",
+        "flashinfer/quantization/kernels/mxfp8_quantize.py": "129253948841a8cced637da0df14049c32b8dbdebe1ddcdcceac6853fa899d30",
+        "flashinfer/quantization/kernels/nvfp4_quantize.py": "0d86930d3e74122009ba1f87c3c9c0068b989532a239050fc5817089238eafa3",
+        "flashinfer/quantization/nvfp4_quantization_utils.py": "d52442fc6aa04b3e2dd5ebad3bbd2d8820ce437c8de2b6a7ad0e8e19960a15d6",
+        "flashinfer/quantization/packbits.py": "06828fbb1f2ed2c2bbcbd7e54e6cf8694d52a7bfeb5604135bfcfef1573427d8",
+        "flashinfer/quantization/quantization_cute_dsl_utils.py": "c4e2a0d938ce01953610a62f02a783aff82e877854cfab101dc79000c39f63c6",
+        "flashinfer/testing/__init__.py": "795d6ec725436bbd1b6260eda5651d237977e0261ab2ef85bb3b4f2f5daf6b11",
+        "flashinfer/testing/utils.py": "7b67a4c51449ddb241829fc260823397e60fd12a97bac7f73709b3b5fdeba170",
+        "flashinfer/utils.py": "5cb329e7e6cc4761b1684a9d5509af0bcc1bd818fd3b9c0f4059945b4640b72d"
+      },
+      "tracked_manifest": "/data/ziangli/flashinfer-moe-gather-pipeline/runs/composed-swap-full/candidate-tracked.json",
+      "tracked_manifest_sha256": "51e26688ee8e1e6e019abedb72ca01ea7737fd0673b39de0d80414f8ad83934b",
+      "workspace_base": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp"
+    },
+    "w4a16": {
+      "changed_from_control": {
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py": {
+          "control": "194b903854c74fc79a422ec67a0539d9f57414987c8cc0a3325e94226d642eb4",
+          "measured": "2d7e69d946ae85c255061501df5aaf7673aca468204db0646742695b7a4cbe07"
+        },
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_utils.py": {
+          "control": "d5105227bd29382a0182e5427f6d97ca04fc12c62f29dbdcc1737c7b178daf5d",
+          "measured": "d3afcec4f966c4a30afc4bae528633f96dd4a9a787d712fa8333b1519cbb9ac3"
+        }
+      },
+      "control_manifest": "/data/ziangli/flashinfer-moe-gather-pipeline/runtime/local/control-manifest.json",
+      "control_manifest_sha256": "672579cae07e498a9e1520e69bc8d2fc4f2b1c2fec1999396bad3f0e6584b517",
+      "cute_cache": "/data/ziangli/flashinfer-moe-gather-pipeline/cache/cute-perf",
+      "freeze_receipt": "/data/ziangli/flashinfer-moe-gather-pipeline/runtime/source-candidate-r2.json",
+      "freeze_receipt_sha256": "e22e9b07430b8985981a57e24146bf309b4e380019dc592c6fabf135ac9b03ed",
+      "head": "82254e206a44b95d9925e4594fac936731f80d21",
+      "identity_boundary": "head denotes the verified base822 commit; label and measured file hashes identify any unstaged experiment",
+      "label": "w4-r2-full-on-82254e20",
+      "register_policy": {
+        "control": 128,
+        "epilogue": 248,
+        "gather": 128
+      },
+      "repo": "/data/ziangli/flashinfer-moe-gather-pipeline/candidate-r2",
+      "source_file": "/data/ziangli/flashinfer-moe-gather-pipeline/runs/r2-w4-full/source-candidate.json",
+      "source_sha256": {
+        "benchmarks/bench_moe_deepseek.py": "84855eed2a84d4147488144db3b08830fa696e3ce4306ec4fa8b3cbd0724585e",
+        "flashinfer/api_logging.py": "8bda6aba04be7eb5891a7fd07c88346d2282ecf2d2bf2f68787033f0e231b884",
+        "flashinfer/autotune_cache.py": "f720a6ad2cb232bdb3dd396690ea3a3cb6cc9f099642bbcae8c6d956bdecdfb7",
+        "flashinfer/autotuner/__init__.py": "ddc1ba254ca71687058e44bf05c38a4fd3dc8351db74e4ef547cda1652d779ef",
+        "flashinfer/autotuner/_graph_timing.py": "5f3be31e17501ba11ee95327176ac4a4b95eeaee7be92c2bc7795bcbd30cefe3",
+        "flashinfer/autotuner/autotuner.py": "a220569895fbcd446e7a58eb701c836afdfc213f9e14e84888e323391681e0c8",
+        "flashinfer/autotuner/initializers.py": "4c10d847cf9d4e6404ae3f88c6ddc3acf9fd993d18ff140d3f48e6e78b6c80d2",
+        "flashinfer/autotuner/protocol.py": "66cfbca5a11dcffa27e6a2baa7f97b5215713f9146be471116e864b3aab4f665",
+        "flashinfer/cute_dsl/__init__.py": "159c96b4d24dfd24bbc1ae867b4b90355ea3aa2631d3229719e494ad4f39ac81",
+        "flashinfer/cute_dsl/_mla_validation.py": "d3e4d84a36669f9babf2872e72506599fb6f1c6d1903bfb05edeb124eeba8e1b",
+        "flashinfer/cute_dsl/add_rmsnorm_fp4quant.py": "2346a003aba994339d9507b621fd13628729fd812275130511f8007f8d247427",
+        "flashinfer/cute_dsl/availability.py": "39d47171f5dc1c92d73290a5dfdc7c018da7fd2bcdee498b16547e6ea08bc024",
+        "flashinfer/cute_dsl/blockscaled_gemm.py": "001cb6c8ba211c12d5f2bfad3ad4da906ca7b99bac85d42704c861c6ec3ea4a1",
+        "flashinfer/cute_dsl/fp4_common.py": "fbea61acc84fd2826d0bf7b9f48523df23f0adb1c10a785d4d473851ad66b9d3",
+        "flashinfer/cute_dsl/gemm_allreduce_two_shot.py": "d6b8d6bc85fb18d14d23db059a758fea87b2873330730d8912633093f785b38b",
+        "flashinfer/cute_dsl/rmsnorm_fp4quant.py": "fa9df7951d4c665fee5410a3088fc2934c79147288740d87f6db7917a27fdc95",
+        "flashinfer/cute_dsl/utils.py": "df35130f8c8c867a440d7ff3392ac23b19c8628429a7b65177c80bd0410c75cf",
+        "flashinfer/fp4_quantization.py": "fb394c543cfd112ec6ceccfd8c808058f7b10ab88d9a8adda0a9cbd067c25f97",
+        "flashinfer/fused_moe/core.py": "58ac4fb451361d79e395cd241dfaae0e2fc8d61f859e221fe571aff4d65c062a",
+        "flashinfer/fused_moe/cute_dsl/__init__.py": "5f273a12ce38d5f6a8fee058ead6c0d94b2e1e5f669b289c536a636797263bf9",
+        "flashinfer/fused_moe/cute_dsl/_inputs_helper.py": "cd5b567b58bc56404b8c3417f8cf902e2edb3ac40ff024531f7ae164e25db55e",
+        "flashinfer/fused_moe/cute_dsl/b12x_moe.py": "468660164360700b95926cdecb01b9074c16ac887a73f1e49c5d7fffefe0a8f6",
+        "flashinfer/fused_moe/cute_dsl/blackwell/__init__.py": "bdef98f32952dd117ae5e0ee20e07ac2e585209c293f538e1c7dd87e545262b6",
+        "flashinfer/fused_moe/cute_dsl/blackwell/blockscaled_contiguous_gather_grouped_gemm_act_fusion.py": "4b480e4bd802804f3e3c46a4c386459ac2caaa67878c626ab0b2c28dc676ffcd",
+        "flashinfer/fused_moe/cute_dsl/blackwell/blockscaled_contiguous_grouped_gemm_finalize_fusion.py": "bb857761eef12b6dfc8d70b9ce43dc5eaa29f706bb4bca2ab572648e426e7270",
+        "flashinfer/fused_moe/cute_dsl/blackwell/custom_pipeline.py": "bf086fb43d7d3311b10b61ad7bb07f0aa0d502a9d33d500a7daf2e03eb6633a6",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_finalize.py": "2a7d7b445772d6c23d6b7f4cb2e37aceb886e46dd8dbb6998445b345ca478f95",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab.py": "4b065ab95252cd9853f1f29f690eb2862ca913758a570b916ec0dfccbc6e5c7c",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py": "2d7e69d946ae85c255061501df5aaf7673aca468204db0646742695b7a4cbe07",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_tuner.py": "e60a261387c2c1271b89b80a6d1664f1381255493bcf147292418785cb61eca8",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16.py": "67fbee21c8e955de3b923d5f10001523832c89c1cda47f8501704de1713eb280",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py": "169655a73e814687ed55e255418e8889ebb5b8d3be77d76ed79a2c119b81b883",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_utils.py": "d3afcec4f966c4a30afc4bae528633f96dd4a9a787d712fa8333b1519cbb9ac3",
+        "flashinfer/fused_moe/cute_dsl/blackwell/utils.py": "54f1449693c018d67747aea1763356ef65813947cc9b3499017b322cc1d6c9be",
+        "flashinfer/fused_moe/cute_dsl/blockscaled_contiguous_gather_grouped_gemm_act_fusion.py": "0868e43cdecad1216ec860b40e24ab18fec082c7995ecbfbadf4c2ec3a1bb020",
+        "flashinfer/fused_moe/cute_dsl/blockscaled_contiguous_grouped_gemm_finalize_fusion.py": "c2540041576f6ddccdd81aedafabcacaa43ec2c7ad7f1ee05b77ea33878f7b4e",
+        "flashinfer/fused_moe/cute_dsl/common/__init__.py": "12fe1c2a369b11eadd02daa10305b69b238a466caa5ecf4b55af2f09f176e016",
+        "flashinfer/fused_moe/cute_dsl/common/kernel_utils.py": "bb29aba364d090672535593e791772f57f19b811f6822138397dd325ec7425c5",
+        "flashinfer/fused_moe/cute_dsl/fused_moe.py": "d05dc8f9a700243bdc2b90109eba4921682ad31e51cbc9c7ee5d604379be9f4b",
+        "flashinfer/fused_moe/cute_dsl/moe_utils.py": "419a676cded8927a1993792612ab8935f556ef8214d58d4f50232b11fed2ca14",
+        "flashinfer/fused_moe/cute_dsl/sm90_contiguous_gather_grouped_gemm_act_fusion.py": "39e411955482af0cd20bdc3ebf9e8254b59adfa7c8b8e129dfb51d1d492ae711",
+        "flashinfer/fused_moe/cute_dsl/sm90_contiguous_grouped_gemm_finalize_fusion.py": "9eae49917440d492ec502aca980c6c517c349b39d0ea9817382b7b868807690c",
+        "flashinfer/fused_moe/cute_dsl/sm90_fused_moe.py": "17878acd6cd2e81192ae5233fc90520fd44b4aacec98ff05f37ae1ab2bba44a7",
+        "flashinfer/fused_moe/cute_dsl/sm90_tuner.py": "952e2c38e91f4ed3b0bfc5bf49a300e1539b2d260784f756dff705220cad836e",
+        "flashinfer/fused_moe/cute_dsl/tuner.py": "d9a4b095ba132437d06592101af96343b45c99c337b396659d80eab7109e1449",
+        "flashinfer/fused_moe/prepare.py": "b6eba3a866f7afe0bc52d55e1fc9c5fc82e835fc5e404278154c2bf2972e9d8b",
+        "flashinfer/jit/core.py": "52e45cf2e7011a426f3d4169ba34bffc81b53eea284b08d876f1589c952cb74a",
+        "flashinfer/jit/cpp_ext.py": "6cc6c732ac5b1e3e2f02d45239bf9507a6343ba97d35dc6725214770c389675f",
+        "flashinfer/jit/dsv3_optimizations.py": "6d82a88d19c0990bde6c48cd2c47e5b9d34e453e907823063daefd842f76e46b",
+        "flashinfer/jit/env.py": "8ce58446848e90cdbf524368e8681899a4cef6255873970e518f714dd4e1501f",
+        "flashinfer/jit/fp4_quantization.py": "bf57a1324f8d68dee788ce4ce58a23e1ceb6da1f74658c6635592b5c20900ae4",
+        "flashinfer/jit/fp8_quantization.py": "278f820ea4b621c313fae3706e326b588d48c5a163c2330326d2310f0f7726e8",
+        "flashinfer/jit/moe_utils.py": "8eb2187811b6257c6cc195e62edbd6c755cbfdba67608ec60bb83929c20a92c4",
+        "flashinfer/quantization/__init__.py": "8a55568609145b37c56ad4bd9e64d8d38cf50795bc6d893627c0cd53d02db109",
+        "flashinfer/quantization/fp4_quantization.py": "381d31faa7e6dfbcf7d85024bb075a8042355daf31f29ad718a954bd1d130c2f",
+        "flashinfer/quantization/fp8_quantization.py": "a83799b026af23bbb0ecc49a9a9531322ac58b2a4fea473a12447fbc41f89f74",
+        "flashinfer/quantization/kernels/__init__.py": "26f471f2c4a55d6c29c7f708a158d419e1f7b9328835fcf65e859fb9476d7d44",
+        "flashinfer/quantization/kernels/cutile/__init__.py": "96f6118d53a1445cb14735ca15ea63a8ac89a30330ba87fa4a688a5128e3cec8",
+        "flashinfer/quantization/kernels/cutile/mxfp8_grouped_quantize_cutile.py": "512ab5f1e6b5d06fa4c57aa62117fab1032a29f35764dacb199e6ec126d25699",
+        "flashinfer/quantization/kernels/cutile/per_token_group_quant_8bit_cutile.py": "6070a70a5deaeae7bf1a3520f56f261726ab022f5f86b0b6f77764637d220b4c",
+        "flashinfer/quantization/kernels/cutile/rope_quantize_fp8_cutile.py": "33f9d90baeb5da2b91543b8b9c26937f0cb56fe83b6ab45c8e45fe0e88d74a31",
+        "flashinfer/quantization/kernels/mxfp4_quantize.py": "b7eb8073517c286180b2312bf9888d9df5a9624681abe29b4c5f56008f0b2c4b",
+        "flashinfer/quantization/kernels/mxfp8_quantize.py": "129253948841a8cced637da0df14049c32b8dbdebe1ddcdcceac6853fa899d30",
+        "flashinfer/quantization/kernels/nvfp4_quantize.py": "0d86930d3e74122009ba1f87c3c9c0068b989532a239050fc5817089238eafa3",
+        "flashinfer/quantization/nvfp4_quantization_utils.py": "d52442fc6aa04b3e2dd5ebad3bbd2d8820ce437c8de2b6a7ad0e8e19960a15d6",
+        "flashinfer/quantization/packbits.py": "06828fbb1f2ed2c2bbcbd7e54e6cf8694d52a7bfeb5604135bfcfef1573427d8",
+        "flashinfer/quantization/quantization_cute_dsl_utils.py": "c4e2a0d938ce01953610a62f02a783aff82e877854cfab101dc79000c39f63c6",
+        "flashinfer/testing/__init__.py": "795d6ec725436bbd1b6260eda5651d237977e0261ab2ef85bb3b4f2f5daf6b11",
+        "flashinfer/testing/utils.py": "7b67a4c51449ddb241829fc260823397e60fd12a97bac7f73709b3b5fdeba170",
+        "flashinfer/utils.py": "5cb329e7e6cc4761b1684a9d5509af0bcc1bd818fd3b9c0f4059945b4640b72d"
+      },
+      "tracked_manifest": "/data/ziangli/flashinfer-moe-gather-pipeline/runs/r2-w4-full/candidate-tracked.json",
+      "tracked_manifest_sha256": "18d0cb51b2cc0f63e5f9b256c95b6bf0f893f2d802b9c337eae7e42edda72556",
+      "workspace_base": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp"
+    }
+  },
+  "w4_source_reuse": {
+    "differences": {
+      "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py": [
+        "2d7e69d946ae85c255061501df5aaf7673aca468204db0646742695b7a4cbe07",
+        "788b7f58267a773f049b25216d689ab6f60649ec168e1d278e0f3ef8ae6c8e17"
+      ]
+    },
+    "boundary": "All W4 production dependencies unchanged between measured R2 and measured composed snapshots; only swap kernel differs."
+  },
+  "external": {
+    "ep": {
+      "original_csv": "harness/historical/external/ep/summary-cells.csv",
+      "original_sha256": "01bed08308cb6da4c66648535eb9699a39523c1ed8f67333b4945e002d5270fe",
+      "new_csv_sha256": "dd99ff25e52a8c8e48632e4cb7ae537114facfd5b4a62f10815e45bf6ec04d7c",
+      "baseline_fields_unchanged": true,
+      "rows": 468,
+      "displayed_negative": 27,
+      "unsupported": 52
+    },
+    "tp": {
+      "original_csv": "harness/historical/external/tp/summary-cells.csv",
+      "original_sha256": "f5be713170238a13a3f0f4c89dc16ac099ed3d75a08bd45aac6a0443e7d5d6ad",
+      "new_csv_sha256": "5f8d5d4a4fedfb02dec1f6dbc2f56fbe285071640e17221e19e651283271c536",
+      "baseline_fields_unchanged": true,
+      "rows": 468,
+      "displayed_negative": 55,
+      "unsupported": 104
+    }
+  },
+  "inputs": {
+    "evidence/composed-swap-full/1793363709386584000/data/perf-config.json": "f1bc4b78272aaa7bf1099bddd4a1ee37f620c79f9c9d324c59d3692df85e209e",
+    "evidence/composed-swap-full/1793363709386584000/fetch-receipt.json": "7407fd7ab63198fddf9cb6c917b7140945a9736870d52970f6092fc92ffd3a1c",
+    "evidence/composed-swap-full/1793363709386584000/report/summary.json": "512dfefb8f445c2849b7176b0707019e65818dfd9a891d3088e95b0722f122d0",
+    "evidence/composed-swap-full/1793363709386584000/report/cells.csv": "70597b47bb71238ec7f9e2bf16c0c3b88c2ba2fbf41e32be021f8acf23cc039e",
+    "evidence/r2-w4-full/1793362889737047000/data/perf-config.json": "657506e7d34d8d7bcd84af89bf804bd9dc55d48e9f342e0eaf0664590e997e50",
+    "evidence/r2-w4-full/1793362889737047000/fetch-receipt.json": "9d903b173c49b01bfaf460439cfa62aaa975fe6acd675bbf9f5579e2c95bf390",
+    "evidence/r2-w4-full/1793362889737047000/report/summary.json": "01e6f387ca80851357c36eb195eaa2a774a4c5c7bd25151d5d1151d4439b01fd",
+    "evidence/r2-w4-full/1793362889737047000/report/cells.csv": "818bd02f2b19f28570dc2b54f9eaba2af103feb592ead5f8da8d24803819c734"
+  },
+  "boundary": "Full heatmaps reuse historical baselines; they are not fresh same-GPU causal comparisons. Fresh compact822 CAAC evidence remains separate. Tokens1/2 preserved in rawdata but omitted from plots; all original stdout retained verbatim."
+}

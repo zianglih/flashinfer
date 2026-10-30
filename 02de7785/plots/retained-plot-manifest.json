@@ -1,0 +1,30 @@
+{
+  "script_sha256": "f4f8d7e8ab77785a3c9b8780320091a3f343d44682f66c6c46d7f210582891c2",
+  "label": "02de7785",
+  "plots": [
+    {
+      "topology": "ep",
+      "rows": 44,
+      "columns": 5,
+      "measured": 209,
+      "negative": 103,
+      "outputs": {
+        "retained-speedup-ep.png": "a18ff95bdc93bc867e6d33e1113b63befe133253a7406172a334c8594e3005e9",
+        "retained-speedup-ep.svg": "fc0ace42b887c8b9e6916dcefa707721fee331b144bdf01b3666baaa566c63e9"
+      },
+      "source_sha256": "9db72eef0ba41ea1788ad2ddd10d6dca40936c9d8c4268bec1ef29cdb374f66d"
+    },
+    {
+      "topology": "tp",
+      "rows": 44,
+      "columns": 5,
+      "measured": 187,
+      "negative": 78,
+      "outputs": {
+        "retained-speedup-tp.png": "2d2871826ae78f97247128bad52f243840f342e7752bd1b6919309b95864e2d4",
+        "retained-speedup-tp.svg": "1156d0a1b3291cbca9dd281b45b4f17c7bed7df76bee9f0e9f726db0f7912204"
+      },
+      "source_sha256": "9db72eef0ba41ea1788ad2ddd10d6dca40936c9d8c4268bec1ef29cdb374f66d"
+    }
+  ]
+}

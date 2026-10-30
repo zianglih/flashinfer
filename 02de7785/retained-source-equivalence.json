@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "retained_head": "02de7785c10847b3528340840bed40bd405d85b4",
+  "actual_measurement_base": "82254e206a44b95d9925e4594fac936731f80d21",
+  "changed_from_base": {
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py": "788b7f58267a773f049b25216d689ab6f60649ec168e1d278e0f3ef8ae6c8e17",
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_utils.py": "d3afcec4f966c4a30afc4bae528633f96dd4a9a787d712fa8333b1519cbb9ac3"
+  },
+  "full_manifest_sha256": "51e26688ee8e1e6e019abedb72ca01ea7737fd0673b39de0d80414f8ad83934b",
+  "w4_only_difference": {
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py": [
+      "2d7e69d946ae85c255061501df5aaf7673aca468204db0646742695b7a4cbe07",
+      "788b7f58267a773f049b25216d689ab6f60649ec168e1d278e0f3ef8ae6c8e17"
+    ]
+  },
+  "boundary": "Immutable measurements retain their actual base822 and experiment labels. The retained commit has exactly the two qualified changed files, whose bytes match the frozen composed snapshot; all other tracked bytes were verified against822 before and after timing. W4R2 differs only in unused swap source."
+}

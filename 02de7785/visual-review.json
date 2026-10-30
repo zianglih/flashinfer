@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "scope": "Four PNGs visually inspected at full resolution; all compact model/token groups, column labels, signed values, negative colors, N/A cells and variance markers are readable and complete.",
+  "plots": {
+    "plots/retained-speedup-ep.png": "a18ff95bdc93bc867e6d33e1113b63befe133253a7406172a334c8594e3005e9",
+    "plots/retained-speedup-tp.png": "2d2871826ae78f97247128bad52f243840f342e7752bd1b6919309b95864e2d4",
+    "plots/swap-ab-speedup-table-ep.png": "3dc060bc560e9416fffd16669650613bf25fe0fab2018fe67bab4b58e9ad4457",
+    "plots/swap-ab-speedup-table-tp.png": "b144180b0afc86787f72c3013f1535363878f96bcd1662c4e0b6277d32cdc181"
+  }
+}

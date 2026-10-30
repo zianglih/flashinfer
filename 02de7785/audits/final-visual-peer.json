@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "images": {
+    "publication/plots/retained-speedup-ep.png": "a18ff95bdc93bc867e6d33e1113b63befe133253a7406172a334c8594e3005e9",
+    "publication/plots/retained-speedup-tp.png": "2d2871826ae78f97247128bad52f243840f342e7752bd1b6919309b95864e2d4",
+    "publication/plots/swap-ab-speedup-table-ep.png": "3dc060bc560e9416fffd16669650613bf25fe0fab2018fe67bab4b58e9ad4457",
+    "publication/plots/swap-ab-speedup-table-tp.png": "b144180b0afc86787f72c3013f1535363878f96bcd1662c4e0b6277d32cdc181"
+  },
+  "review": "Inspected all four rendered PNGs through image viewer. Titles and02de7785 labels, model/topology groupings,13-token exclusion down to11 displayed rows per model, all dtype columns, signed values/asterisks, N/A gray cells, red-white-green direction, colorbars and historical baseline caveats are legible without clipping. Retained plots explicitly label historical326 timing production-equivalent822 and not a fresh paired comparison; external plots mark fused legacyMX and old-layout W4 baseline. Data values independently audited separately.",
+  "data_peer_sha256": "3eadcd4d5d4c24f7ab78d67fa525fb63ac6e10d5c9a3d9ac90bf8f18820d7cb8"
+}

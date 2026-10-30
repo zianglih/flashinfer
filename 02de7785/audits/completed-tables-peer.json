@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "retained_head": "02de7785c10847b3528340840bed40bd405d85b4",
+  "tables": 15,
+  "rows": 195,
+  "records": {
+    "fresh": 468,
+    "reused": 390,
+    "bf16": 52
+  },
+  "original_finalpass_native_suffixes_reproduced": 31,
+  "native_printer_AST_identical_to326": true,
+  "matched_lowprecision_arm_contracts": 338,
+  "records_without_full_route_identity": 0,
+  "original_stdout_files_unchanged": 62,
+  "heatmap_and_data_hashes_unchanged": true,
+  "manifest_sha256": "9506f15aad0ec954d2e5879465803e8e7f21af7e838c6f2ab26c916167ca04ec",
+  "renderer_sha256": "b3b9ead79cfd344061fc4b521fc74000fe0989e563b8ff0eb571cf4c189438f7",
+  "comments": [
+    {
+      "part": 1,
+      "label": "V3 EP8 / V41F EP4",
+      "path": "part-1.md",
+      "bytes": 19499,
+      "sha256": "a9c1bef832bf81e51a88b5557e83401554e19f6a78cf6ec324e74f2c5bbf13d9"
+    },
+    {
+      "part": 2,
+      "label": "K3 EP8 / N3U EP8",
+      "path": "part-2.md",
+      "bytes": 20417,
+      "sha256": "07ab4153333dbba29c3ac11ed16d1f2d4113cdcba4d84e8734696a8ac3115b0a"
+    },
+    {
+      "part": 3,
+      "label": "V3 TP8 / V41F TP4",
+      "path": "part-3.md",
+      "bytes": 15452,
+      "sha256": "a045ee5da8b95e98f151d54c4f55d98605f7fd08ff9dacc50de4419e78992d55"
+    },
+    {
+      "part": 4,
+      "label": "K3 TP8 / N3U TP8",
+      "path": "part-4.md",
+      "bytes": 20411,
+      "sha256": "2ee0eb2e7e63b1cb85238064dc4f81c9d7f3c838af61ad3a1cc11ffa66f99b8e"
+    }
+  ],
+  "boundary": "All858 BenchResult records copied exactly from source dictionaries, including every latency and TFLOPS value; native02de formatter replay byte-matches31 original suffixes and15 completed tables, so native ratio/winner/N/A logic is retained without parsing or reconstructing formatted cells. Current records use final fresh pass; TRT uses final historical pass.All858 records have matching full routing identity/histogram/model/topology.52BF16 records retain the older explicit timing caveat and do not claim the new strict timer guards. No GPU or remote write."
+}
