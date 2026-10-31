@@ -1,0 +1,622 @@
+{
+  "all_local_zero": true,
+  "archive_sha256": "78fb596c8f0653cb3c57aac8b45fb05570241068c8f61c34fee993ae9fabb307",
+  "boundary": "Existing numerical oracle and actual captured native images/resources replayed. Correctness-only scheduler fixtures remain isolated from production timing. No new acquisition or performance inference.",
+  "exact_calls": 7,
+  "fetch_sha256": "772a977e445cb5639e01bb039808c46e930a53730b347fda0b378f26f607e2c7",
+  "files_verified": 138,
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "native_images": 21,
+  "normal_options_and_guard_unchanged": true,
+  "passed": true,
+  "plan_sha256": "1ae16aa6982369d570bd5a653e36837304e820584aa3f2fa5333b5bc19b91b68",
+  "preflight_sha256": "96427fd900b565acc9514aefa9c3382763c00b982b23260290f7f04f4dc59a5b",
+  "receipt_sha256": "a4373667b5bddcc1bfb77116b341bffbd460eed7f056092eeb48d15ecca402ca",
+  "rows": [
+    {
+      "case": "swap-mx4x8-k8",
+      "compile_options": "",
+      "configuration": {
+        "active_ctas_per_sm": 1,
+        "bulk_stages": 0,
+        "bulk_tokens": 0,
+        "channel_tiles": 1,
+        "cta_group_size": 2,
+        "dynamic_smem_bytes": 195456,
+        "enable_pdl": true,
+        "gather_input": true,
+        "native_mma_k": 32,
+        "num_stages": 5,
+        "num_tile_info_stages": 1,
+        "output_dtype": "Float8E4M3FN",
+        "overlap_acc": false,
+        "requested_num_stages": null,
+        "route_tile": 32,
+        "scatter_output": false,
+        "sf_vec_size": 32,
+        "tile_k": 256,
+        "top_k": 2,
+        "use_clc_scheduler": false,
+        "use_fused_finalize": false
+      },
+      "cubin_sha256": "e361bfe5d2cda88f91e47c810c6ba8d2dfc5278f6e1c5f8c26ee32ecb2e41abe",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 384,
+        "registers": 168,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-mx4x8-k8",
+      "compile_options": "",
+      "configuration": {
+        "active_ctas_per_sm": 1,
+        "bulk_stages": 0,
+        "bulk_tokens": 0,
+        "channel_tiles": 1,
+        "cta_group_size": 2,
+        "dynamic_smem_bytes": 195328,
+        "enable_pdl": true,
+        "gather_input": false,
+        "native_mma_k": 32,
+        "num_stages": 5,
+        "num_tile_info_stages": 1,
+        "output_dtype": "BFloat16",
+        "overlap_acc": false,
+        "requested_num_stages": null,
+        "route_tile": 32,
+        "scatter_output": true,
+        "sf_vec_size": 32,
+        "tile_k": 256,
+        "top_k": 2,
+        "use_clc_scheduler": false,
+        "use_fused_finalize": false
+      },
+      "cubin_sha256": "02d7873d8f6adfa27285261b2fb22b461e381d9bc2f10dd4f06be7dfd805dffe",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 640,
+        "registers": 82,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-mx4x8-k8",
+      "compile_options": "",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 384,
+        "input_is_expanded": false,
+        "threads": 128,
+        "top_k": 2,
+        "vectors_per_thread": 1
+      },
+      "cubin_sha256": "7968e76c1f73565c46082a32325e86a3dbf4c3095274a6f094b97b226efa8130",
+      "kind": "_MoeFinalizeKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 1024,
+        "registers": 26,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-w4a4-relu2",
+      "compile_options": "",
+      "configuration": {
+        "active_ctas_per_sm": 1,
+        "bulk_stages": 0,
+        "bulk_tokens": 0,
+        "channel_tiles": 2,
+        "cta_group_size": 2,
+        "dynamic_smem_bytes": 189440,
+        "enable_pdl": true,
+        "gather_input": true,
+        "native_mma_k": 96,
+        "num_stages": 4,
+        "num_tile_info_stages": 1,
+        "output_dtype": "Float4E2M1FN",
+        "overlap_acc": true,
+        "requested_num_stages": null,
+        "route_tile": 128,
+        "scatter_output": false,
+        "sf_vec_size": 16,
+        "tile_k": 256,
+        "top_k": 2,
+        "use_clc_scheduler": false,
+        "use_fused_finalize": false
+      },
+      "cubin_sha256": "848bce1e32bae787d57f5c3334af3bba8411227615f77524123dde11528aeaf9",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 384,
+        "registers": 168,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-w4a4-relu2",
+      "compile_options": "",
+      "configuration": {
+        "active_ctas_per_sm": 1,
+        "bulk_stages": 2,
+        "bulk_tokens": 64,
+        "channel_tiles": 2,
+        "cta_group_size": 2,
+        "dynamic_smem_bytes": 222208,
+        "enable_pdl": true,
+        "gather_input": false,
+        "native_mma_k": 96,
+        "num_stages": 4,
+        "num_tile_info_stages": 1,
+        "output_dtype": "BFloat16",
+        "overlap_acc": false,
+        "requested_num_stages": null,
+        "route_tile": 128,
+        "scatter_output": true,
+        "sf_vec_size": 16,
+        "tile_k": 256,
+        "top_k": 2,
+        "use_clc_scheduler": false,
+        "use_fused_finalize": false
+      },
+      "cubin_sha256": "7a461ab7b6456dffdfe02926e2d2ee1f9cd1705b82fb39f21933b4e04b5a06ae",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 512,
+        "registers": 114,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-w4a4-relu2",
+      "compile_options": "",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 1024,
+        "input_is_expanded": false,
+        "threads": 128,
+        "top_k": 2,
+        "vectors_per_thread": 1
+      },
+      "cubin_sha256": "574530a5d8aa3bef4662a070c729985f446fd85764d26ecb500c6e4c8d11f7ef",
+      "kind": "_MoeFinalizeKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 1024,
+        "registers": 24,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "w4-situ-tail-2cta",
+      "compile_options": "--ptxas-options='-maxrregcount=96'",
+      "configuration": {
+        "activation_type": 3,
+        "enable_pdl": true,
+        "epi_tile_n": 32,
+        "gated": true,
+        "gather_input": true,
+        "mma_tiler": [
+          256,
+          64,
+          256
+        ],
+        "num_c_stage": 2,
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false
+      },
+      "cubin_sha256": "4b736e720a8329a187550e20bb98dd453059efeaa57213614b7f049f5cbcbf8f",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 640,
+        "registers": 96,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "w4-situ-tail-2cta",
+      "compile_options": "",
+      "configuration": {
+        "activation_type": null,
+        "enable_pdl": true,
+        "epi_tile_n": 32,
+        "gated": false,
+        "gather_input": false,
+        "mma_tiler": [
+          256,
+          64,
+          256
+        ],
+        "num_c_stage": 5,
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": false
+      },
+      "cubin_sha256": "5cabc6162b6fef11c7b11e4aa7438bddc30167614ed51b826e34859c79f95101",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 512,
+        "registers": 128,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "w4-situ-tail-2cta",
+      "compile_options": "",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 384,
+        "input_is_expanded": false,
+        "threads": 128,
+        "top_k": 2,
+        "vectors_per_thread": 1
+      },
+      "cubin_sha256": "7968e76c1f73565c46082a32325e86a3dbf4c3095274a6f094b97b226efa8130",
+      "kind": "_MoeFinalizeKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 1024,
+        "registers": 26,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "w4-relu2-tail-wide",
+      "compile_options": "--ptxas-options='-maxrregcount=96'",
+      "configuration": {
+        "activation_type": 6,
+        "enable_pdl": true,
+        "epi_tile_n": 32,
+        "gated": false,
+        "gather_input": true,
+        "mma_tiler": [
+          256,
+          256,
+          256
+        ],
+        "num_c_stage": 7,
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": true
+      },
+      "cubin_sha256": "7c04ca138b3491342527a80258468e7f789197cc5248bbe86b5b2863d83ef6f6",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 640,
+        "registers": 96,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "w4-relu2-tail-wide",
+      "compile_options": "",
+      "configuration": {
+        "activation_type": null,
+        "enable_pdl": true,
+        "epi_tile_n": 32,
+        "gated": false,
+        "gather_input": false,
+        "mma_tiler": [
+          256,
+          256,
+          256
+        ],
+        "num_c_stage": 7,
+        "use_2cta_instrs": true,
+        "use_clc_scheduler": true
+      },
+      "cubin_sha256": "7860c5f1103503deb4c5251bbe5dc1cc6deac0d0285a3192b02df084c5d5bf51",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 512,
+        "registers": 128,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "w4-relu2-tail-wide",
+      "compile_options": "",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 384,
+        "input_is_expanded": false,
+        "threads": 128,
+        "top_k": 2,
+        "vectors_per_thread": 1
+      },
+      "cubin_sha256": "7968e76c1f73565c46082a32325e86a3dbf4c3095274a6f094b97b226efa8130",
+      "kind": "_MoeFinalizeKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 1024,
+        "registers": 26,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-per-token-native-clc",
+      "compile_options": "",
+      "configuration": {
+        "active_ctas_per_sm": 1,
+        "bulk_stages": 0,
+        "bulk_tokens": 0,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "dynamic_smem_bytes": 223232,
+        "enable_pdl": true,
+        "gather_input": true,
+        "native_mma_k": 96,
+        "num_stages": 9,
+        "num_tile_info_stages": 1,
+        "output_dtype": "BFloat16",
+        "overlap_acc": false,
+        "requested_num_stages": null,
+        "route_tile": 16,
+        "scatter_output": false,
+        "sf_vec_size": 16,
+        "tile_k": 256,
+        "top_k": 2,
+        "use_clc_scheduler": true,
+        "use_fused_finalize": false
+      },
+      "cubin_sha256": "833fa53d7b171adb9eec9500d38e2e8b1ec1fed9a12d16e46cc652612bc00aa0",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 384,
+        "registers": 168,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-per-token-native-clc",
+      "compile_options": "",
+      "configuration": {
+        "active_ctas_per_sm": 1,
+        "bulk_stages": 0,
+        "bulk_tokens": 0,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "dynamic_smem_bytes": 222208,
+        "enable_pdl": true,
+        "gather_input": false,
+        "native_mma_k": 96,
+        "num_stages": 9,
+        "num_tile_info_stages": 1,
+        "output_dtype": "BFloat16",
+        "overlap_acc": false,
+        "requested_num_stages": null,
+        "route_tile": 16,
+        "scatter_output": true,
+        "sf_vec_size": 16,
+        "tile_k": 256,
+        "top_k": 2,
+        "use_clc_scheduler": true,
+        "use_fused_finalize": false
+      },
+      "cubin_sha256": "be59287ece426667d953707ddd5551e8947f303e6d7d01cf413c8cd9c3bafb84",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 640,
+        "registers": 86,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-per-token-native-clc",
+      "compile_options": "",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 256,
+        "input_is_expanded": false,
+        "threads": 128,
+        "top_k": 2,
+        "vectors_per_thread": 4
+      },
+      "cubin_sha256": "b2a16a8225a50ba9d136da7af4ab9fe87bd13020f196e1a08b805c4487776a37",
+      "kind": "_MoeFinalizeKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 1024,
+        "registers": 26,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "w4-helper-tail-1cta",
+      "compile_options": "--ptxas-options='-maxrregcount=96'",
+      "configuration": {
+        "activation_type": 3,
+        "enable_pdl": false,
+        "epi_tile_n": 16,
+        "gated": true,
+        "gather_input": true,
+        "mma_tiler": [
+          128,
+          16,
+          256
+        ],
+        "num_c_stage": 15,
+        "use_2cta_instrs": false,
+        "use_clc_scheduler": true
+      },
+      "cubin_sha256": "cd9ee6397b7328b510ccf4520f0cb962acd873d5cc61668a1e1f413c4014a525",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 640,
+        "registers": 96,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "w4-helper-tail-1cta",
+      "compile_options": "",
+      "configuration": {
+        "activation_type": null,
+        "enable_pdl": false,
+        "epi_tile_n": 16,
+        "gated": false,
+        "gather_input": false,
+        "mma_tiler": [
+          128,
+          16,
+          256
+        ],
+        "num_c_stage": 7,
+        "use_2cta_instrs": false,
+        "use_clc_scheduler": true
+      },
+      "cubin_sha256": "c14e5826a54cb87c7bbeef4721d63fec61ab0466b2c6a0fa8df6d51f217f37ae",
+      "kind": "Sm100W4A16GroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 512,
+        "registers": 128,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "w4-helper-tail-1cta",
+      "compile_options": "",
+      "configuration": {
+        "enable_pdl": false,
+        "hidden_size": 384,
+        "input_is_expanded": false,
+        "threads": 128,
+        "top_k": 2,
+        "vectors_per_thread": 1
+      },
+      "cubin_sha256": "1b6416638915935945a5c06c0a8b1ee13ffc6f9316c4f0f8f6954a4e84d4c6b5",
+      "kind": "_MoeFinalizeKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 1024,
+        "registers": 26,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-mxfp8-k8",
+      "compile_options": "",
+      "configuration": {
+        "active_ctas_per_sm": 1,
+        "bulk_stages": 0,
+        "bulk_tokens": 0,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "dynamic_smem_bytes": 203520,
+        "enable_pdl": true,
+        "gather_input": true,
+        "native_mma_k": 32,
+        "num_stages": 2,
+        "num_tile_info_stages": 1,
+        "output_dtype": "Float8E4M3FN",
+        "overlap_acc": true,
+        "requested_num_stages": null,
+        "route_tile": 256,
+        "scatter_output": false,
+        "sf_vec_size": 32,
+        "tile_k": 256,
+        "top_k": 2,
+        "use_clc_scheduler": false,
+        "use_fused_finalize": false
+      },
+      "cubin_sha256": "92bd34b36245220b5c95a54ed6701bf721ad4577b703c69fa5a51b272b5f0f0b",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 384,
+        "registers": 168,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-mxfp8-k8",
+      "compile_options": "",
+      "configuration": {
+        "active_ctas_per_sm": 1,
+        "bulk_stages": 2,
+        "bulk_tokens": 64,
+        "channel_tiles": 1,
+        "cta_group_size": 1,
+        "dynamic_smem_bytes": 134400,
+        "enable_pdl": true,
+        "gather_input": false,
+        "native_mma_k": 32,
+        "num_stages": 1,
+        "num_tile_info_stages": 1,
+        "output_dtype": "BFloat16",
+        "overlap_acc": true,
+        "requested_num_stages": null,
+        "route_tile": 256,
+        "scatter_output": true,
+        "sf_vec_size": 32,
+        "tile_k": 256,
+        "top_k": 2,
+        "use_clc_scheduler": false,
+        "use_fused_finalize": false
+      },
+      "cubin_sha256": "1d7263f003acbe866cda1cc52ab78c9a16e347e9f334e44cbe3c032b7b4c26f9",
+      "kind": "Sm100BlockScaledGroupedGemmKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 512,
+        "registers": 122,
+        "static_shared_bytes": 0
+      }
+    },
+    {
+      "case": "swap-mxfp8-k8",
+      "compile_options": "",
+      "configuration": {
+        "enable_pdl": true,
+        "hidden_size": 1024,
+        "input_is_expanded": false,
+        "threads": 128,
+        "top_k": 2,
+        "vectors_per_thread": 1
+      },
+      "cubin_sha256": "574530a5d8aa3bef4662a070c729985f446fd85764d26ecb500c6e4c8d11f7ef",
+      "kind": "_MoeFinalizeKernel",
+      "native_resources": {
+        "binary_version": 103,
+        "local_bytes": 0,
+        "max_threads": 1024,
+        "registers": 24,
+        "static_shared_bytes": 0
+      }
+    }
+  ],
+  "source_and_cache_postflight": true,
+  "source_sha256": "f8bcf3acf3d52b1f034f573f33805d9b325f33a6dcbaac84fdadef4a8413d38c"
+}

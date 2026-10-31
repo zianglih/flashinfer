@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "node": "fi-gather-pipeline-resume-1030",
+  "cluster": "c2",
+  "namespace": "ziangli",
+  "image": "nvcr.io/nvidia/pytorch:26.05-py3",
+  "runtime_path": "/data/ziangli/flashinfer-moe-gather-pipeline/runtime/recovery-paired-error/runtime.json",
+  "runtime_sha256": "ad49506cdc8f2055906ebe09b1cb9a7ad6f24fa72a8e02d3a5294dc6981eba0c",
+  "cache_path": "/data/ziangli/flashinfer-moe-gather-pipeline/experiments/sf-coordinate-cache/cache-recovery/cache-ready-current.json",
+  "cache_sha256": "ad6b3a6d3158eef0907ed535e199737ac7b96ed0b14de5b4b7b6df0351e37702",
+  "original_identity_receipt_sha256": "ababb5019d772d3b1330a5591779930810784ab0a409df0b00fad7099fea2e7d",
+  "modules": [
+    {
+      "name": "dsv3_fused_routing",
+      "library": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/dsv3_fused_routing.so",
+      "after": {
+        "library_sha256": "88e6a970897b09f48704b10c10d62f11b6a0ac3ed0f579cc0932e6b80234bf8f",
+        "ninja_sha256": "f972a604a823766b480d6ae3f805a984e32954af5e387c32070d8b3ce8a45227"
+      },
+      "noop": true
+    },
+    {
+      "name": "moe_utils",
+      "library": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/moe_utils/moe_utils.so",
+      "after": {
+        "library_sha256": "046552b86eff333ecf66e4f2782963269498af6948f9dee931c9143b6a2783db",
+        "ninja_sha256": "b476d069f734cd7b42fc2700fe615630060cf99829c5adfa9d96fb86a09a48b8"
+      },
+      "noop": true
+    },
+    {
+      "name": "fp4_quantization_103",
+      "library": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/fp4_quantization_103/fp4_quantization_103.so",
+      "after": {
+        "library_sha256": "1a776cf99de07323c37d5422cd55ea06161247cba02907b47962d02ca91313c2",
+        "ninja_sha256": "da89a4223fc4a7c8b31053531ee623bdfd9af20a684af84d15287fb90758aacf"
+      },
+      "noop": true
+    },
+    {
+      "name": "mxfp8_quantization_sm100",
+      "library": "/data/ziangli/flashinfer-w4a4-split-dynamic-n/upstream-integration-20261029/megamoe-glm5/cache/cpp/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/mxfp8_quantization_sm100/mxfp8_quantization_sm100.so",
+      "after": {
+        "library_sha256": "70a529f693431f1eafaf0aff3fd3697c8993b8843fad857a539b532d546666e8",
+        "ninja_sha256": "3b5f413ca9dc2c2c1712aec0a0a8176bc22bfb31b8ea458595bb586eb9f0a866"
+      },
+      "noop": true
+    }
+  ],
+  "boundary": "Parent explicitly authorized fresh same-source release cohort: moe_utils046552b8, other3 original; all11 signatures rerun fresh. No reuse of historical wide exact calls in current gate. Actual private-arm load/hash/no-op and fresh idle remain controller gates."
+}

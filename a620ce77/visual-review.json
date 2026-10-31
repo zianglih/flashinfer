@@ -1,0 +1,11 @@
+{
+  "passed": true,
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "plots": {
+    "plots/swap-ab-speedup-table-ep.png": "7672d6f0d2dc155aa68a50c99b3423eaf6603b3545055255d08db689767bf8ae",
+    "plots/swap-ab-speedup-table-tp.png": "a6601f7853c71028a94c241fe3c74fa1633876b5f911bec5af7fa47f80015a2e",
+    "plots/swap-ab-speedup-table-ep.svg": "319a4b624b176f19d1c65cde089835e2c7b2a1d437c8e233370e6d9c63ebe1aa",
+    "plots/swap-ab-speedup-table-tp.svg": "d749a482a0d314a21f5d7c5d3df6eca62da00275abae9691f22da85421a1129b"
+  },
+  "inspection": "Both PNGs visually inspected. Four compact model groups, all44 token rows, nine same-dtype baseline columns, correct red-white-green sign, gray unsupported cells, fused baseline marks and repeat-spread stars are readable. Tokens1/2 omitted; captions bind a620 and historical baseline reuse. SVG hashes bind the same generated figures."
+}

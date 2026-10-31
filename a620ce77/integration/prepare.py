@@ -1,0 +1,34 @@
+"""Bind the merged retained source to the existing full candidate-only AA matrix."""
+from pathlib import Path
+import copy,hashlib,importlib.util,json,shutil,subprocess
+HERE=Path(__file__).resolve().parent;P=HERE.parents[1];R=Path('/data/ziangli/flashinfer-moe-gather-pipeline');repo=P/'flashinfer'
+sha=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()
+def write(p,v):p.write_text(json.dumps(v,indent=2,sort_keys=True)+'\n')
+def git(*args):return subprocess.check_output(['git',*args],cwd=repo,text=True).strip()
+head='a620ce7790b32f7f0ae524a811417d2c6cee1152';assert git('rev-parse','HEAD')==head and not git('status','--porcelain')
+fork=git('rev-parse',head+'^2');assert fork.startswith('8bc69ee4') and not git('diff','--name-only',fork,head)
+basepath=P/'experiments/sf-coordinate-cache/qualification-extra-r1/evidence/source-control.json';base=json.loads(basepath.read_text());full={n:sha(repo/n)for n in base['source_sha256']}
+changed={n:dict(before=base['source_sha256'][n],after=v)for n,v in full.items()if v!=base['source_sha256'][n]};assert set(changed)=={'flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_utils.py'}
+assert git('diff','--name-only',base['head'],head).splitlines()==list(changed)
+assert full[next(iter(changed))]=='d5105227bd29382a0182e5427f6d97ca04fc12c62f29dbdcc1737c7b178daf5d'
+remote=R/'integration/pr7290-refresh-20261030';run=R/'runs/pr7290-retained-refresh';h=remote/'harness';screen=HERE/'screen';screen.mkdir(exist_ok=True)
+source=dict(base,head=head,label='merged-pr7290-retained-a620',repo=str(R/'candidate-pr7290-retained-a620'),source_sha256=full,workspace_base=str(R/'cache/pr7290-retained-refresh/candidate'),cute_cache=str(R/'cache/pr7290-retained-refresh/candidate/cute'),private_workspace=str(R/'cache/pr7290-retained-refresh/candidate/.cache/flashinfer/0.0.0+unknown/103a'),tracked_manifest=str(remote/'screen/candidate-tracked.json'),parent_source_file=str(R/'experiments/sf-coordinate-cache/qualification-extra-r1/source-control.json'),parent_source_file_sha256=sha(basepath),identity_boundary='Full source bytes equal merged Git tree a620; merge parents822 and8bc, tree equals8bc. Snapshot historical Git directory is not the effective-source identity. Private CuTe/cached_ops with four unchanged current046 release modules, canonical generated/cubins.')
+write(screen/'candidate-tracked.json',full);source['tracked_manifest_sha256']=sha(screen/'candidate-tracked.json');write(HERE/'source-full.json',source)
+s=importlib.util.spec_from_file_location('configure',P/'harness/configure.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+guard=dict(source,source_sha256={n:v for n,v in full.items()if m.launch_guard_file(n)},source_file=str(run/'source-candidate.json'),freeze_receipt=str(remote/'source-full.json'),freeze_receipt_sha256=sha(HERE/'source-full.json'))
+write(screen/'source-candidate.json',guard)
+previous=P/'experiments/w4-cumulative-prefill';helpers=json.loads((previous/'harness-proof.json').read_text())['helpers']
+for n,digest in helpers.items():assert sha(previous/'harness'/n)==digest;shutil.copy2(previous/'harness'/n,HERE/'harness'/n)
+write(HERE/'harness-proof.json',dict(passed=True,helpers=helpers,parent=str(previous/'harness'),all_twelve_byte_identical=True,boundary='Existing current-cohort one-line explicit CUBIN environment binding. No timer/observer/resource or test override delta.'))
+c=json.loads((previous/'screen/perf-config.json').read_text());jobs=json.loads((P/'harness/jobs-full.json').read_text());selected={}
+for name,j in jobs.items():
+ j['winner_results']=str(R/'harness/frozen-inputs'/name/'expected.json');j['winner_cache']=str(R/'harness/rebound-cache'/name)
+ expected=P/'harness/frozen-inputs'/name/'expected.json';v=json.loads(expected.read_text());assert v['complete']and v['profile_calls']==0
+ selected[name]=dict(expected_sha256=sha(expected),rows=len(v['rows']),backends=j['expected_backends'],tokens=j['tokens'])
+assert len(jobs)==31 and sum(j['expected_cells']for j in jobs.values())==468
+c.update(control_head=head,label='PR7290 merged retained full fresh AA',sources={'candidate':guard},jobs=jobs,phases=['candidate','candidate'],output=str(run/'results'),observer=str(h/'observe_benchmark.py'),register_policies={'candidate':source['register_policy']},estimator='geometric mean of two candidate phase medians; preserve both raw phase medians and arithmetic diagnostic',boundary='Fresh merged-head candidate-only AA, all468 supported rows including1/2 raw;396 retention rows.100 strict CUPTI graph samples/10 warmups, coldL2, frozen routes/tactics, no autotune. NVFP4 input quant timed. Reuse immutable historical TRT/legacy/pre-PR baselines without rerun; no test-only overrides.')
+write(screen/'perf-config.json',c);write(HERE/'selected-winners.json',selected)
+plan=dict(passed=True,head=head,parents=git('show','-s','--format=%P',head).split(),tree=git('rev-parse',head+'^{tree}'),retained_fork_head=fork,tree_equals_retained_fork=True,files=len(full),base_source_sha256=sha(basepath),exact_delta_from_c1ac=changed,source_full_sha256=sha(HERE/'source-full.json'),tracked_sha256=sha(screen/'candidate-tracked.json'),guard_sha256=sha(screen/'source-candidate.json'),config_sha256=sha(screen/'perf-config.json'),jobs=31,cells=468,retention_cells=396,samples=93600,phases=c['phases'],tokens=next(iter(jobs.values()))['tokens'],gpus=list(range(8)),helper_proof_sha256=sha(HERE/'harness-proof.json'),readiness_sha256=c['recovery_readiness_sha256'],smokes='Seven existing exact calls: W4 1/2/5; W4A4 14 Relu2 K4; per-token13 nativeCLC Swiglu K4; w4a8 2 K8; mxfp8 10 K8. Test-only scheduler fixtures never enter perf.',boundary=c['boundary'])
+write(HERE/'plan.json',plan);write(HERE/'deployment-plan.json',dict(passed=True,config_sha256=plan['config_sha256'],cells=468,samples=93600,jobs=31))
+(HERE/'PLAN.md').write_text('# PR7290 retained integration refresh\n\nMerged source `'+head+'` is tree-identical to retained fork `'+fork+'`. Full13,245-file snapshot differs from c1ac only by the requested W4 helper restoration.\n\nRun seven existing exact/native smokes, then31 frozen jobs /468 cells /two candidate passes /93,600 strict CUPTI samples on8 GPUs.100 samples and10 warmups, coldL2 CUDA graphs, NVFP4 input quant included; tokens1/2 preserved raw, excluded from retention. Historical TRT/legacy/pre-PR denominators remain unchanged. No optimization, retuning, source policies, sanitizer or new repo tests.\n\nAll12 performance helpers match the completed current046 cumulative campaign. Candidate-only private cached_ops/CuTe roots share only four release C++ modules plus canonical generated/cubin inputs. Actual merged bytes, normal native loads/no-op, source pre/post, frozen route/cache choices, loaded resources and clocks are checked.\n')
+print(json.dumps(plan,indent=2))

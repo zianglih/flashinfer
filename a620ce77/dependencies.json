@@ -1,0 +1,63 @@
+{
+  "passed": true,
+  "boundary": "Incremental fresh merged-head evidence; historical raw campaigns remain in immutable dependencies and are not copied into the new archive. No older candidate values enter the fresh468 matrix.",
+  "historical_complete_archive": {
+    "url": "https://raw.githubusercontent.com/zianglih/flashinfer/7961a1f13b620e45741fd7057a72f1f248789448/c1ac8ce7/moe-gather-pipeline-results.tar.xz",
+    "sha256": "8e78c5e0f122f06630a61f4e7b97b18358141e0f650699f683dfc9ee7e2ead31",
+    "bytes": 97169580,
+    "members": 3586,
+    "manifest_sha256": "2c9f61d3062d49c5d7eb096724363f8c0a5f4384ee6a7c1e4937320f64731b01",
+    "native_table_member": "completed-tables/manifest.json",
+    "native_table_sha256": "88b8c34bd43b1a75c70d5588378b933efaf57fa1f8a0cbcdb03c7588499de5c6",
+    "baseline_index_member": "completed-tables/baseline-index.json",
+    "baseline_index_sha256": "51ce4db4f9beac023ba3eb6c0755c585a294cddded3948875dcd8745d6db6284"
+  },
+  "original_upstream_publication": {
+    "commit": "9390a1a47d03def09be35f3b2be5be4b39f06d55",
+    "base_url": "https://raw.githubusercontent.com/zianglih/flashinfer/9390a1a47d03def09be35f3b2be5be4b39f06d55/pr7290/2026-10-30/326c4a79-cleanup",
+    "candidate_measured_head": "326c4a793085e79b64b9c7fd79e77320c220ccba",
+    "used_here": "Original historical denominator fields only; no candidate rows reused."
+  },
+  "original_glm5": {
+    "commit": "2402bcd61a7cc39f650f6b92dd1aa2293ee50518",
+    "base_url": "https://raw.githubusercontent.com/zianglih/flashinfer/2402bcd61a7cc39f650f6b92dd1aa2293ee50518/pr7290/2026-10-29/glm5-helper-4376662a",
+    "source": "4376662a paired original single-PRMT duplication",
+    "body_section_sha256": "4a6e437ef16c2409993a386a0821b1c268f6fbb0f888183a56def73346941824",
+    "boundary": "Historical section unchanged. Not the reverted byte-index helper experiment; no fresh distributed measurement."
+  },
+  "external_baseline_inputs": {
+    "ep": {
+      "project_path": "harness/historical/external/ep/summary-cells.csv",
+      "sha256": "01bed08308cb6da4c66648535eb9699a39523c1ed8f67333b4945e002d5270fe",
+      "fields_preserved": [
+        "model",
+        "tokens",
+        "column",
+        "baseline",
+        "status",
+        "baseline_ms",
+        "reason",
+        "baseline_evidence"
+      ]
+    },
+    "tp": {
+      "project_path": "harness/historical/external/tp/summary-cells.csv",
+      "sha256": "f5be713170238a13a3f0f4c89dc16ac099ed3d75a08bd45aac6a0443e7d5d6ad",
+      "fields_preserved": [
+        "model",
+        "tokens",
+        "column",
+        "baseline",
+        "status",
+        "baseline_ms",
+        "reason",
+        "baseline_evidence"
+      ]
+    }
+  },
+  "native_baseline_index": {
+    "path": "completed-tables/baseline-index.json",
+    "sha256": "51ce4db4f9beac023ba3eb6c0755c585a294cddded3948875dcd8745d6db6284",
+    "boundary": "Original structured results are read and hash-checked locally. Complete joined row objects are also preserved in the new native table manifest, so table output can be regenerated without parsing text."
+  }
+}

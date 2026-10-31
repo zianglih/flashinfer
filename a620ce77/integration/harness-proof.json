@@ -1,0 +1,20 @@
+{
+  "all_twelve_byte_identical": true,
+  "boundary": "Existing current-cohort one-line explicit CUBIN environment binding. No timer/observer/resource or test override delta.",
+  "helpers": {
+    "analyze_perf.py": "937fb03398de552678886f18b7c171b196e78d940fe31d3365ac738ef2443c5c",
+    "arm_contracts.py": "28e52529706096aa7d3823f0c622cec96090b3dd2bba2c5a6690ba66f7f78a5d",
+    "cache-import.json": "7a9be0ef63d7f5a40b32df0cdb1c3cced481357149547ccfe7db2ce13ea53b90",
+    "campaign.py": "93b6b98964ef74f2b07c836c92ab4ff96767d7758b12d5af0bc33461526909bd",
+    "guard_observer_adapter.py": "d6a14a9e07fd85408badd53d8e34f1d4094cbcf007181ec33fcbe9f2eb89004b",
+    "nested_timing.py": "25bf840414fbc99bf3d143566bb4f6406573842e300abb73922148acd57ab4e2",
+    "nvml_clock_wrapper.py": "e3f080d2461a8c2b9c558174f39cd34e157ae766b3f7943f01413a63bd3ee6cd",
+    "observe_benchmark.py": "9d2b91dfeddea4114431e1774b7fdf0e8d67be665da1ea541fdb1dc5836dc7a9",
+    "register_guard.py": "7d3cbd4fb450653ed7cb9b3df27ba81b0cde535955ff515c62235426a0568217",
+    "register_guard_w4.py": "50c57f5bf3f0ae1c4fc785b22ec5ff81e95fa31e4ffd169fcb605896e0b34a9f",
+    "run_perf.py": "a1ad7d2491e17b6e24c0137326454afe948dba1c4c4d16967ce9cb6d85f2256a",
+    "w4_resolution_observer.py": "973e128b29f600277de9f6a32f4dfbd9ce466a9104500647ced9531e16e8c882"
+  },
+  "parent": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/experiments/w4-cumulative-prefill/harness",
+  "passed": true
+}

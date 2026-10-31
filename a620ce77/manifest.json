@@ -1,0 +1,16 @@
+{
+  "passed": true,
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "assemble_sha256": "72d6ff703b9b33785ab6fbd78586768626fa6ff480421748a62787d5aacf0b02",
+  "report_sha256": "cc8aada01fb78853234cb4238844b516a64942f77b45bc5536cd7a3fc7dc4df4",
+  "summary_sha256": "f99fd03c7978ae7b10a889af336ad2f4f5b590f8d64d08460263576a0c464951",
+  "stdout_manifest_sha256": "167b72d37ee2cc029f68dd9848ff94cd2bd22f67d2328c9be5ea1f7a428618c3",
+  "inputs": [
+    {
+      "data": "evidence/pr7290-retained-refresh/1793416383526763000/data",
+      "config_sha256": "e4b33c3a53875f38c20f18fd6e9a78b27dd66b99da9360f6a62afc0e9a1fc1fb",
+      "report_sha256": "640541383115e36eabe81d80e6c688cf4218bbacaef118fee883114917ba8ae3",
+      "summary_sha256": "cac897da5df9a64c6804a1f7b24b111c1a12ad8b19c498bca466ad3981b0ebf0"
+    }
+  ]
+}

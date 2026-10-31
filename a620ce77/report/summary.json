@@ -1,0 +1,148 @@
+{
+  "passed": true,
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "fresh_candidate_cells": 468,
+  "reused_candidate_cells": 0,
+  "displayed_candidate_cells": 396,
+  "candidate_samples": 93600,
+  "jobs": 31,
+  "stdout_logs": 62,
+  "candidate_loaded_functions": 1088,
+  "recorded_default_joins": 40,
+  "clock_quartiles": 3744,
+  "missing_clock_quartiles": 1,
+  "clock_exception_quartiles": 98,
+  "max_candidate_spread_percent": 8.620823061633542,
+  "external": {
+    "ep": {
+      "original_sha256": "01bed08308cb6da4c66648535eb9699a39523c1ed8f67333b4945e002d5270fe",
+      "new_sha256": "712e365508c5aeb497c762a7e22a0db8e28c42f04d1d20ff0c4922cda9b1e4dd",
+      "rows": 468
+    },
+    "tp": {
+      "original_sha256": "f5be713170238a13a3f0f4c89dc16ac099ed3d75a08bd45aac6a0443e7d5d6ad",
+      "new_sha256": "e027b0fe9826cccd34591d0eaffc140bcc230e3652b36aa17553ceda8adc01d2",
+      "rows": 468
+    }
+  },
+  "external_groups": {
+    "ep/trtllm_w4a4": {
+      "label": "TRTLLM W4A4",
+      "cells": 44,
+      "speedup_percent": 7.861136634469211,
+      "negative": 1
+    },
+    "ep/trtllm_per_token": {
+      "label": "TRTLLM PER-TOKEN",
+      "cells": 33,
+      "speedup_percent": 8.54146756311764,
+      "negative": 2
+    },
+    "ep/trtllm_mxfp4x8": {
+      "label": "TRTLLM MXFP4x8",
+      "cells": 44,
+      "speedup_percent": 8.646128678531278,
+      "negative": 2
+    },
+    "ep/trtllm_mxfp8": {
+      "label": "TRTLLM MXFP8",
+      "cells": 33,
+      "speedup_percent": 5.351297257752846,
+      "negative": 4
+    },
+    "ep/legacy_w4a4": {
+      "label": "Non-swap W4A4",
+      "cells": 44,
+      "speedup_percent": 10.974087035817256,
+      "negative": 5
+    },
+    "ep/legacy_per_token": {
+      "label": "Non-swap PER-TOKEN",
+      "cells": 44,
+      "speedup_percent": 28.515261114479763,
+      "negative": 0
+    },
+    "ep/legacy_mxfp4x8": {
+      "label": "Non-swap MXFP4x8\u2020",
+      "cells": 33,
+      "speedup_percent": 23.68841773673262,
+      "negative": 3
+    },
+    "ep/legacy_mxfp8": {
+      "label": "Non-swap MXFP8\u2020",
+      "cells": 33,
+      "speedup_percent": 10.52434770987877,
+      "negative": 1
+    },
+    "ep/w4a16": {
+      "label": "W4A16 before PR",
+      "cells": 44,
+      "speedup_percent": 0.8459911099924083,
+      "negative": 9
+    },
+    "tp/trtllm_w4a4": {
+      "label": "TRTLLM W4A4",
+      "cells": 44,
+      "speedup_percent": 3.1792396958794966,
+      "negative": 10
+    },
+    "tp/trtllm_per_token": {
+      "label": "TRTLLM PER-TOKEN",
+      "cells": 33,
+      "speedup_percent": 4.664288724262784,
+      "negative": 7
+    },
+    "tp/trtllm_mxfp4x8": {
+      "label": "TRTLLM MXFP4x8",
+      "cells": 33,
+      "speedup_percent": 3.7623656699426924,
+      "negative": 8
+    },
+    "tp/trtllm_mxfp8": {
+      "label": "TRTLLM MXFP8",
+      "cells": 22,
+      "speedup_percent": 2.0358279766278087,
+      "negative": 4
+    },
+    "tp/legacy_w4a4": {
+      "label": "Non-swap W4A4",
+      "cells": 44,
+      "speedup_percent": 10.849470353829743,
+      "negative": 3
+    },
+    "tp/legacy_per_token": {
+      "label": "Non-swap PER-TOKEN",
+      "cells": 44,
+      "speedup_percent": 25.965624225028627,
+      "negative": 4
+    },
+    "tp/legacy_mxfp4x8": {
+      "label": "Non-swap MXFP4x8\u2020",
+      "cells": 22,
+      "speedup_percent": 8.617736236691005,
+      "negative": 6
+    },
+    "tp/legacy_mxfp8": {
+      "label": "Non-swap MXFP8\u2020",
+      "cells": 22,
+      "speedup_percent": 1.472356739794641,
+      "negative": 7
+    },
+    "tp/w4a16": {
+      "label": "W4A16 before PR",
+      "cells": 44,
+      "speedup_percent": 10.967403662338889,
+      "negative": 0
+    }
+  },
+  "inputs": [
+    {
+      "data": "evidence/pr7290-retained-refresh/1793416383526763000/data",
+      "config_sha256": "e4b33c3a53875f38c20f18fd6e9a78b27dd66b99da9360f6a62afc0e9a1fc1fb",
+      "report_sha256": "640541383115e36eabe81d80e6c688cf4218bbacaef118fee883114917ba8ae3",
+      "summary_sha256": "cac897da5df9a64c6804a1f7b24b111c1a12ad8b19c498bca466ad3981b0ebf0"
+    }
+  ],
+  "all_negative_rows_retained": true,
+  "boundary": "Fresh merged-head candidate AA only; original historical TRTLLM/non-swap/pre-PR W4 denominators unchanged. Cross-instance comparison, not fresh causal controls. Tables use final pass; plots use geometric two-pass medians."
+}

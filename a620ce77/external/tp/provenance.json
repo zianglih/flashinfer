@@ -1,0 +1,10 @@
+{
+  "complete": true,
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "baseline_fields_unchanged": true,
+  "original_csv": "harness/historical/external/tp/summary-cells.csv",
+  "original_sha256": "f5be713170238a13a3f0f4c89dc16ac099ed3d75a08bd45aac6a0443e7d5d6ad",
+  "outputs": {
+    "summary-cells.csv": "e027b0fe9826cccd34591d0eaffc140bcc230e3652b36aa17553ceda8adc01d2"
+  }
+}

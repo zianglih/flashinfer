@@ -1,0 +1,240 @@
+{
+  "passed": true,
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "exact_calls": 7,
+  "captured_kernels": 21,
+  "all_zero_local": true,
+  "compiler_options_changed": false,
+  "full_source_postflight": true,
+  "native_cache_unchanged": true,
+  "source_sha256": "f8bcf3acf3d52b1f034f573f33805d9b325f33a6dcbaac84fdadef4a8413d38c",
+  "receipt_sha256": "a4373667b5bddcc1bfb77116b341bffbd460eed7f056092eeb48d15ecca402ca",
+  "seconds": 35.466920137405396,
+  "cases": [
+    {
+      "name": "swap-mx4x8-k8",
+      "passed": true,
+      "seconds": 19.114766359329224,
+      "resources": [
+        {
+          "kind": "Sm100BlockScaledGroupedGemmKernel",
+          "registers": 168,
+          "max_threads": 384,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "Sm100BlockScaledGroupedGemmKernel",
+          "registers": 82,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "_MoeFinalizeKernel",
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      ],
+      "capture_sha256": "a2f1ebd13aceb6e7fb03242737f54927c4268b1b24fbd217698425c671156958"
+    },
+    {
+      "name": "swap-w4a4-relu2",
+      "passed": true,
+      "seconds": 19.266016006469727,
+      "resources": [
+        {
+          "kind": "Sm100BlockScaledGroupedGemmKernel",
+          "registers": 168,
+          "max_threads": 384,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "Sm100BlockScaledGroupedGemmKernel",
+          "registers": 114,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "_MoeFinalizeKernel",
+          "registers": 24,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      ],
+      "capture_sha256": "9995a5e6d8c51ce4b1335c8696de64792eb7b686c5be78e4c70b9a0ed3f21371"
+    },
+    {
+      "name": "w4-situ-tail-2cta",
+      "passed": true,
+      "seconds": 19.71333122253418,
+      "resources": [
+        {
+          "kind": "Sm100W4A16GroupedGemmKernel",
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "Sm100W4A16GroupedGemmKernel",
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "_MoeFinalizeKernel",
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      ],
+      "capture_sha256": "16ef00b0ce35352b93fc248e5041265b05bc7ab47681d66a252ce3178f4894c4"
+    },
+    {
+      "name": "w4-relu2-tail-wide",
+      "passed": true,
+      "seconds": 19.91632914543152,
+      "resources": [
+        {
+          "kind": "Sm100W4A16GroupedGemmKernel",
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "Sm100W4A16GroupedGemmKernel",
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "_MoeFinalizeKernel",
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      ],
+      "capture_sha256": "a428fdfdabbaec441d9c167a291510c63b10366e3e7069dacdb85b94322c08bd"
+    },
+    {
+      "name": "swap-per-token-native-clc",
+      "passed": true,
+      "seconds": 20.126287698745728,
+      "resources": [
+        {
+          "kind": "Sm100BlockScaledGroupedGemmKernel",
+          "registers": 168,
+          "max_threads": 384,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "Sm100BlockScaledGroupedGemmKernel",
+          "registers": 86,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "_MoeFinalizeKernel",
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      ],
+      "capture_sha256": "6c20f77ddf687406d78f830c46df5cb4aec9579abecde2b3ed7682162e37bd5c"
+    },
+    {
+      "name": "w4-helper-tail-1cta",
+      "passed": true,
+      "seconds": 20.564518928527832,
+      "resources": [
+        {
+          "kind": "Sm100W4A16GroupedGemmKernel",
+          "registers": 96,
+          "max_threads": 640,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "Sm100W4A16GroupedGemmKernel",
+          "registers": 128,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "_MoeFinalizeKernel",
+          "registers": 26,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      ],
+      "capture_sha256": "18afcbe662b3a38f613e58a89dd8fb35e2e6c77261806c4b7823107aab57a893"
+    },
+    {
+      "name": "swap-mxfp8-k8",
+      "passed": true,
+      "seconds": 21.11820673942566,
+      "resources": [
+        {
+          "kind": "Sm100BlockScaledGroupedGemmKernel",
+          "registers": 168,
+          "max_threads": 384,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "Sm100BlockScaledGroupedGemmKernel",
+          "registers": 122,
+          "max_threads": 512,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        },
+        {
+          "kind": "_MoeFinalizeKernel",
+          "registers": 24,
+          "max_threads": 1024,
+          "local_bytes": 0,
+          "static_shared_bytes": 0,
+          "binary_version": 103
+        }
+      ],
+      "capture_sha256": "46c0b2c55eed3552efe6ca028a957f2bb09a07d51ae227a994e85388d4d8f3f5"
+    }
+  ],
+  "boundary": "Seven existing zero-tolerance numerical oracles on actual merged source. Test-only small-SM/scheduler fixtures confined to these subprocesses; full performance uses unchanged production observer/timer."
+}

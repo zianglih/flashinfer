@@ -1,0 +1,60 @@
+{
+  "base_source_sha256": "f98243cf70ac76c0afb82f91dd3377b288b08e361c283e16f5f37cd2ea23a685",
+  "boundary": "Fresh merged-head candidate-only AA, all468 supported rows including1/2 raw;396 retention rows.100 strict CUPTI graph samples/10 warmups, coldL2, frozen routes/tactics, no autotune. NVFP4 input quant timed. Reuse immutable historical TRT/legacy/pre-PR baselines without rerun; no test-only overrides.",
+  "cells": 468,
+  "config_sha256": "e4b33c3a53875f38c20f18fd6e9a78b27dd66b99da9360f6a62afc0e9a1fc1fb",
+  "exact_delta_from_c1ac": {
+    "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_utils.py": {
+      "after": "d5105227bd29382a0182e5427f6d97ca04fc12c62f29dbdcc1737c7b178daf5d",
+      "before": "d3afcec4f966c4a30afc4bae528633f96dd4a9a787d712fa8333b1519cbb9ac3"
+    }
+  },
+  "files": 13245,
+  "gpus": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "guard_sha256": "f8bcf3acf3d52b1f034f573f33805d9b325f33a6dcbaac84fdadef4a8413d38c",
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "helper_proof_sha256": "0760ea7be0570b1fd2227a55667dac144c2efee9aeb828a6fafaf8bf32db656c",
+  "jobs": 31,
+  "parents": [
+    "82254e206a44b95d9925e4594fac936731f80d21",
+    "8bc69ee40cb383a88eadb4fd5ffd7bd0ff2694a4"
+  ],
+  "passed": true,
+  "phases": [
+    "candidate",
+    "candidate"
+  ],
+  "readiness_sha256": "e466ac7cea8bbdf4e4c9d60f21ae63c26569cd19cbff7805acceda4984dc2ea0",
+  "retained_fork_head": "8bc69ee40cb383a88eadb4fd5ffd7bd0ff2694a4",
+  "retention_cells": 396,
+  "samples": 93600,
+  "smokes": "Seven existing exact calls: W4 1/2/5; W4A4 14 Relu2 K4; per-token13 nativeCLC Swiglu K4; w4a8 2 K8; mxfp8 10 K8. Test-only scheduler fixtures never enter perf.",
+  "source_full_sha256": "36cc7e0be42a9b423cc2c3e0052d3249cb3fe17c92fe179503b1b43e0474bbf5",
+  "tokens": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    4096,
+    8192,
+    16384
+  ],
+  "tracked_sha256": "061004d98c10d72d20c09625462b62c81e5aba812e097b17e00c510d4b455bf8",
+  "tree": "781f85c35fc7c8dd8a6089a209106320b461e800",
+  "tree_equals_retained_fork": true
+}

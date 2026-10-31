@@ -1,0 +1,242 @@
+{
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "parents": [
+    "82254e206a44b95d9925e4594fac936731f80d21",
+    "8bc69ee40cb383a88eadb4fd5ffd7bd0ff2694a4"
+  ],
+  "tree": "781f85c35fc7c8dd8a6089a209106320b461e800",
+  "retained_tree": "781f85c35fc7c8dd8a6089a209106320b461e800",
+  "trees_equal": true,
+  "origin_main_at_read": "b8551cc9ef7852d3e1fd76193be08c686c08c178",
+  "merge_base": "002529e17b22567a071091053c6c4dc2a55e050e",
+  "files": 29,
+  "added": 9589,
+  "removed": 1803,
+  "groups": {
+    "Benchmark scripts": {
+      "added": 1109,
+      "removed": 487,
+      "paths": [
+        "benchmarks/bench_cute_dsl_moe_distributed.py",
+        "benchmarks/bench_moe_deepseek.py"
+      ]
+    },
+    "Documentation and trace template": {
+      "added": 73,
+      "removed": 37,
+      "paths": [
+        "docs/design_docs/flashinfer_moe_api.md",
+        "flashinfer/trace/templates/moe.py"
+      ]
+    },
+    "Public API, dispatch and weight preparation": {
+      "added": 382,
+      "removed": 114,
+      "paths": [
+        "flashinfer/fused_moe/__init__.py",
+        "flashinfer/fused_moe/api.py",
+        "flashinfer/fused_moe/cute_dsl/fused_moe.py",
+        "flashinfer/fused_moe/cute_dsl/tuner.py",
+        "flashinfer/fused_moe/prepare.py",
+        "flashinfer/fused_moe/runners.py"
+      ]
+    },
+    "Shared pipeline, combine, quantizer and utilities": {
+      "added": 485,
+      "removed": 200,
+      "paths": [
+        "flashinfer/fused_moe/cute_dsl/blackwell/custom_pipeline.py",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_finalize.py",
+        "flashinfer/fused_moe/cute_dsl/blackwell/utils.py",
+        "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py",
+        "flashinfer/quantization/kernels/nvfp4_quantize.py"
+      ]
+    },
+    "Swap-AB kernel, launcher and tactics": {
+      "added": 4361,
+      "removed": 0,
+      "paths": [
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab.py",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_tuner.py"
+      ]
+    },
+    "W4A16 implementation": {
+      "added": 908,
+      "removed": 853,
+      "paths": [
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16.py",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_prepare.py",
+        "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_utils.py"
+      ]
+    },
+    "Standalone sanitizer script": {
+      "added": 706,
+      "removed": 0,
+      "paths": [
+        "scripts/sanitize_cute_dsl_moe_swap_ab.py"
+      ]
+    },
+    "Tests and references": {
+      "added": 1565,
+      "removed": 112,
+      "paths": [
+        "tests/moe/test_cute_dsl_fused_moe.py",
+        "tests/moe/test_cute_dsl_mxfp8_moe.py",
+        "tests/moe/test_unified_moe.py",
+        "tests/moe/utils.py",
+        "tests/test_helpers/cute_dsl_moe_swap_ab_reference.py",
+        "tests/test_helpers/w4a16_reference.py"
+      ]
+    }
+  },
+  "entries": [
+    {
+      "path": "benchmarks/bench_cute_dsl_moe_distributed.py",
+      "added": 27,
+      "removed": 9
+    },
+    {
+      "path": "benchmarks/bench_moe_deepseek.py",
+      "added": 1082,
+      "removed": 478
+    },
+    {
+      "path": "docs/design_docs/flashinfer_moe_api.md",
+      "added": 5,
+      "removed": 2
+    },
+    {
+      "path": "flashinfer/fused_moe/__init__.py",
+      "added": 2,
+      "removed": 0
+    },
+    {
+      "path": "flashinfer/fused_moe/api.py",
+      "added": 11,
+      "removed": 0
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/custom_pipeline.py",
+      "added": 4,
+      "removed": 1
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_finalize.py",
+      "added": 71,
+      "removed": 37
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab.py",
+      "added": 630,
+      "removed": 0
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py",
+      "added": 3591,
+      "removed": 0
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_tuner.py",
+      "added": 140,
+      "removed": 0
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16.py",
+      "added": 46,
+      "removed": 31
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py",
+      "added": 854,
+      "removed": 600
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_prepare.py",
+      "added": 0,
+      "removed": 216
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_utils.py",
+      "added": 8,
+      "removed": 6
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/blackwell/utils.py",
+      "added": 79,
+      "removed": 0
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/fused_moe.py",
+      "added": 240,
+      "removed": 96
+    },
+    {
+      "path": "flashinfer/fused_moe/cute_dsl/tuner.py",
+      "added": 44,
+      "removed": 9
+    },
+    {
+      "path": "flashinfer/fused_moe/prepare.py",
+      "added": 53,
+      "removed": 1
+    },
+    {
+      "path": "flashinfer/fused_moe/runners.py",
+      "added": 32,
+      "removed": 8
+    },
+    {
+      "path": "flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py",
+      "added": 5,
+      "removed": 2
+    },
+    {
+      "path": "flashinfer/quantization/kernels/nvfp4_quantize.py",
+      "added": 326,
+      "removed": 160
+    },
+    {
+      "path": "flashinfer/trace/templates/moe.py",
+      "added": 68,
+      "removed": 35
+    },
+    {
+      "path": "scripts/sanitize_cute_dsl_moe_swap_ab.py",
+      "added": 706,
+      "removed": 0
+    },
+    {
+      "path": "tests/moe/test_cute_dsl_fused_moe.py",
+      "added": 506,
+      "removed": 88
+    },
+    {
+      "path": "tests/moe/test_cute_dsl_mxfp8_moe.py",
+      "added": 29,
+      "removed": 6
+    },
+    {
+      "path": "tests/moe/test_unified_moe.py",
+      "added": 67,
+      "removed": 7
+    },
+    {
+      "path": "tests/moe/utils.py",
+      "added": 13,
+      "removed": 5
+    },
+    {
+      "path": "tests/test_helpers/cute_dsl_moe_swap_ab_reference.py",
+      "added": 934,
+      "removed": 0
+    },
+    {
+      "path": "tests/test_helpers/w4a16_reference.py",
+      "added": 16,
+      "removed": 6
+    }
+  ],
+  "boundary": "Local read-only Git object comparison; no rebase, branch mutation, source edit or remote write."
+}
