@@ -1,0 +1,12 @@
+nvidia-cutlass-dsl[cu13]==4.8.0
+apache-tvm-ffi==0.1.14.post1
+cupti-python==13.0.1
+nvidia-cuda-cupti==13.0.85
+cuda-python==13.0.3
+cuda-bindings==13.0.3
+cuda-core==1.2.1
+cuda-pathfinder==1.4.4
+pytest==8.4.2
+nvshmem4py-cu13==0.3.1
+nvidia-nvshmem-cu13==3.6.5
+nvidia-cuda-cccl==13.0.85

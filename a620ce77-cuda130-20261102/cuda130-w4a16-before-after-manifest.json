@@ -1,0 +1,719 @@
+{
+  "preview": false,
+  "rows": 11,
+  "columns": 8,
+  "source_sha256": "dc0f950a26b8f1904a157ec87d9a3d05fa0c6e2b38c64c2e6a42e663181f05a5",
+  "script_sha256": "e7b2b58abd10d0c29dcd5589ca2f3566ab3280342e48e169c7082aade65b0ff3",
+  "outputs": {
+    "cuda130-w4a16-before-after.png": "8023467548cd9dffc2ac3521a5aee4ec0cb23b1a199e40c57ff233cb672878a9",
+    "cuda130-w4a16-before-after.svg": "693e7210af2d697bd1fbdc234db29c6a312f8b2782fefa2fea83bf850da8ac73"
+  },
+  "stars": 14,
+  "negative": 8,
+  "cells": [
+    {
+      "row": 0,
+      "column": 0,
+      "token": 4,
+      "label": "V3 EP8",
+      "value": 1.0722098881053688,
+      "star": false
+    },
+    {
+      "row": 0,
+      "column": 1,
+      "token": 4,
+      "label": "V41F EP4",
+      "value": 1.8146263571287458,
+      "star": false
+    },
+    {
+      "row": 0,
+      "column": 2,
+      "token": 4,
+      "label": "K3 EP8",
+      "value": -0.4887414036645499,
+      "star": false
+    },
+    {
+      "row": 0,
+      "column": 3,
+      "token": 4,
+      "label": "N3U EP8",
+      "value": 1.1052522561606715,
+      "star": false
+    },
+    {
+      "row": 0,
+      "column": 4,
+      "token": 4,
+      "label": "V3 TP8",
+      "value": 6.600817378114798,
+      "star": false
+    },
+    {
+      "row": 0,
+      "column": 5,
+      "token": 4,
+      "label": "V41F TP4",
+      "value": 15.0254101870275,
+      "star": false
+    },
+    {
+      "row": 0,
+      "column": 6,
+      "token": 4,
+      "label": "K3 TP8",
+      "value": 0.3664720748743244,
+      "star": false
+    },
+    {
+      "row": 0,
+      "column": 7,
+      "token": 4,
+      "label": "N3U TP8",
+      "value": 7.019993430335436,
+      "star": false
+    },
+    {
+      "row": 1,
+      "column": 0,
+      "token": 8,
+      "label": "V3 EP8",
+      "value": 5.547500434413766,
+      "star": false
+    },
+    {
+      "row": 1,
+      "column": 1,
+      "token": 8,
+      "label": "V41F EP4",
+      "value": 0.7654355358530207,
+      "star": false
+    },
+    {
+      "row": 1,
+      "column": 2,
+      "token": 8,
+      "label": "K3 EP8",
+      "value": 0.4302138238588604,
+      "star": false
+    },
+    {
+      "row": 1,
+      "column": 3,
+      "token": 8,
+      "label": "N3U EP8",
+      "value": 3.202857772553025,
+      "star": false
+    },
+    {
+      "row": 1,
+      "column": 4,
+      "token": 8,
+      "label": "V3 TP8",
+      "value": -0.8772341898528935,
+      "star": false
+    },
+    {
+      "row": 1,
+      "column": 5,
+      "token": 8,
+      "label": "V41F TP4",
+      "value": 2.2743353843812875,
+      "star": false
+    },
+    {
+      "row": 1,
+      "column": 6,
+      "token": 8,
+      "label": "K3 TP8",
+      "value": 2.200570645285982,
+      "star": false
+    },
+    {
+      "row": 1,
+      "column": 7,
+      "token": 8,
+      "label": "N3U TP8",
+      "value": 3.902090325651142,
+      "star": false
+    },
+    {
+      "row": 2,
+      "column": 0,
+      "token": 16,
+      "label": "V3 EP8",
+      "value": 0.981495425843848,
+      "star": false
+    },
+    {
+      "row": 2,
+      "column": 1,
+      "token": 16,
+      "label": "V41F EP4",
+      "value": 1.9765220301461328,
+      "star": false
+    },
+    {
+      "row": 2,
+      "column": 2,
+      "token": 16,
+      "label": "K3 EP8",
+      "value": -0.3619863706594062,
+      "star": false
+    },
+    {
+      "row": 2,
+      "column": 3,
+      "token": 16,
+      "label": "N3U EP8",
+      "value": 1.995780239281375,
+      "star": false
+    },
+    {
+      "row": 2,
+      "column": 4,
+      "token": 16,
+      "label": "V3 TP8",
+      "value": 6.759947019087664,
+      "star": false
+    },
+    {
+      "row": 2,
+      "column": 5,
+      "token": 16,
+      "label": "V41F TP4",
+      "value": 2.5399137653101755,
+      "star": false
+    },
+    {
+      "row": 2,
+      "column": 6,
+      "token": 16,
+      "label": "K3 TP8",
+      "value": 5.236909305220716,
+      "star": false
+    },
+    {
+      "row": 2,
+      "column": 7,
+      "token": 16,
+      "label": "N3U TP8",
+      "value": 2.363585429133752,
+      "star": false
+    },
+    {
+      "row": 3,
+      "column": 0,
+      "token": 32,
+      "label": "V3 EP8",
+      "value": 0.1945488305294285,
+      "star": false
+    },
+    {
+      "row": 3,
+      "column": 1,
+      "token": 32,
+      "label": "V41F EP4",
+      "value": 0.8321348246160598,
+      "star": false
+    },
+    {
+      "row": 3,
+      "column": 2,
+      "token": 32,
+      "label": "K3 EP8",
+      "value": 1.501960694917881,
+      "star": false
+    },
+    {
+      "row": 3,
+      "column": 3,
+      "token": 32,
+      "label": "N3U EP8",
+      "value": 1.1990185435494682,
+      "star": false
+    },
+    {
+      "row": 3,
+      "column": 4,
+      "token": 32,
+      "label": "V3 TP8",
+      "value": 5.243905764072965,
+      "star": false
+    },
+    {
+      "row": 3,
+      "column": 5,
+      "token": 32,
+      "label": "V41F TP4",
+      "value": 1.596552737932111,
+      "star": false
+    },
+    {
+      "row": 3,
+      "column": 6,
+      "token": 32,
+      "label": "K3 TP8",
+      "value": 4.8452217965750055,
+      "star": false
+    },
+    {
+      "row": 3,
+      "column": 7,
+      "token": 32,
+      "label": "N3U TP8",
+      "value": 5.445161447044478,
+      "star": false
+    },
+    {
+      "row": 4,
+      "column": 0,
+      "token": 64,
+      "label": "V3 EP8",
+      "value": 0.6346454963046533,
+      "star": false
+    },
+    {
+      "row": 4,
+      "column": 1,
+      "token": 64,
+      "label": "V41F EP4",
+      "value": 0.17488100401916729,
+      "star": false
+    },
+    {
+      "row": 4,
+      "column": 2,
+      "token": 64,
+      "label": "K3 EP8",
+      "value": 0.9575771104122444,
+      "star": false
+    },
+    {
+      "row": 4,
+      "column": 3,
+      "token": 64,
+      "label": "N3U EP8",
+      "value": 2.870068751360999,
+      "star": false
+    },
+    {
+      "row": 4,
+      "column": 4,
+      "token": 64,
+      "label": "V3 TP8",
+      "value": 3.987067273793521,
+      "star": false
+    },
+    {
+      "row": 4,
+      "column": 5,
+      "token": 64,
+      "label": "V41F TP4",
+      "value": 2.0511548891595455,
+      "star": false
+    },
+    {
+      "row": 4,
+      "column": 6,
+      "token": 64,
+      "label": "K3 TP8",
+      "value": 5.175363857305215,
+      "star": false
+    },
+    {
+      "row": 4,
+      "column": 7,
+      "token": 64,
+      "label": "N3U TP8",
+      "value": 5.965636323881696,
+      "star": false
+    },
+    {
+      "row": 5,
+      "column": 0,
+      "token": 128,
+      "label": "V3 EP8",
+      "value": 1.1157699723877812,
+      "star": false
+    },
+    {
+      "row": 5,
+      "column": 1,
+      "token": 128,
+      "label": "V41F EP4",
+      "value": -0.1098221995166071,
+      "star": false
+    },
+    {
+      "row": 5,
+      "column": 2,
+      "token": 128,
+      "label": "K3 EP8",
+      "value": 1.1178020322199833,
+      "star": false
+    },
+    {
+      "row": 5,
+      "column": 3,
+      "token": 128,
+      "label": "N3U EP8",
+      "value": 1.686133827014813,
+      "star": false
+    },
+    {
+      "row": 5,
+      "column": 4,
+      "token": 128,
+      "label": "V3 TP8",
+      "value": 8.795763585769434,
+      "star": false
+    },
+    {
+      "row": 5,
+      "column": 5,
+      "token": 128,
+      "label": "V41F TP4",
+      "value": 3.098903970352551,
+      "star": false
+    },
+    {
+      "row": 5,
+      "column": 6,
+      "token": 128,
+      "label": "K3 TP8",
+      "value": 6.580623268505659,
+      "star": false
+    },
+    {
+      "row": 5,
+      "column": 7,
+      "token": 128,
+      "label": "N3U TP8",
+      "value": 10.582155740177402,
+      "star": false
+    },
+    {
+      "row": 6,
+      "column": 0,
+      "token": 256,
+      "label": "V3 EP8",
+      "value": 1.3139789079483766,
+      "star": false
+    },
+    {
+      "row": 6,
+      "column": 1,
+      "token": 256,
+      "label": "V41F EP4",
+      "value": -1.3951564137585803,
+      "star": false
+    },
+    {
+      "row": 6,
+      "column": 2,
+      "token": 256,
+      "label": "K3 EP8",
+      "value": 1.277654167890141,
+      "star": false
+    },
+    {
+      "row": 6,
+      "column": 3,
+      "token": 256,
+      "label": "N3U EP8",
+      "value": 0.010382346917103824,
+      "star": false
+    },
+    {
+      "row": 6,
+      "column": 4,
+      "token": 256,
+      "label": "V3 TP8",
+      "value": 11.844867302634231,
+      "star": false
+    },
+    {
+      "row": 6,
+      "column": 5,
+      "token": 256,
+      "label": "V41F TP4",
+      "value": 5.2378687880397345,
+      "star": false
+    },
+    {
+      "row": 6,
+      "column": 6,
+      "token": 256,
+      "label": "K3 TP8",
+      "value": 9.237991504956412,
+      "star": false
+    },
+    {
+      "row": 6,
+      "column": 7,
+      "token": 256,
+      "label": "N3U TP8",
+      "value": 9.76209273344657,
+      "star": false
+    },
+    {
+      "row": 7,
+      "column": 0,
+      "token": 512,
+      "label": "V3 EP8",
+      "value": 1.1195225588349178,
+      "star": false
+    },
+    {
+      "row": 7,
+      "column": 1,
+      "token": 512,
+      "label": "V41F EP4",
+      "value": -0.21639653258116454,
+      "star": false
+    },
+    {
+      "row": 7,
+      "column": 2,
+      "token": 512,
+      "label": "K3 EP8",
+      "value": 1.2327081511284588,
+      "star": false
+    },
+    {
+      "row": 7,
+      "column": 3,
+      "token": 512,
+      "label": "N3U EP8",
+      "value": 1.1327710695486992,
+      "star": false
+    },
+    {
+      "row": 7,
+      "column": 4,
+      "token": 512,
+      "label": "V3 TP8",
+      "value": 19.05637621856804,
+      "star": false
+    },
+    {
+      "row": 7,
+      "column": 5,
+      "token": 512,
+      "label": "V41F TP4",
+      "value": 6.04781442732345,
+      "star": false
+    },
+    {
+      "row": 7,
+      "column": 6,
+      "token": 512,
+      "label": "K3 TP8",
+      "value": 12.10869167971833,
+      "star": false
+    },
+    {
+      "row": 7,
+      "column": 7,
+      "token": 512,
+      "label": "N3U TP8",
+      "value": 13.203292497707064,
+      "star": false
+    },
+    {
+      "row": 8,
+      "column": 0,
+      "token": 4096,
+      "label": "V3 EP8",
+      "value": 2.689625366332571,
+      "star": false
+    },
+    {
+      "row": 8,
+      "column": 1,
+      "token": 4096,
+      "label": "V41F EP4",
+      "value": 3.5088927957754645,
+      "star": false
+    },
+    {
+      "row": 8,
+      "column": 2,
+      "token": 4096,
+      "label": "K3 EP8",
+      "value": -0.6417213715980918,
+      "star": true
+    },
+    {
+      "row": 8,
+      "column": 3,
+      "token": 4096,
+      "label": "N3U EP8",
+      "value": 1.429477835212234,
+      "star": false
+    },
+    {
+      "row": 8,
+      "column": 4,
+      "token": 4096,
+      "label": "V3 TP8",
+      "value": 37.332590273248115,
+      "star": false
+    },
+    {
+      "row": 8,
+      "column": 5,
+      "token": 4096,
+      "label": "V41F TP4",
+      "value": 18.037977720038544,
+      "star": false
+    },
+    {
+      "row": 8,
+      "column": 6,
+      "token": 4096,
+      "label": "K3 TP8",
+      "value": 24.614552571449245,
+      "star": true
+    },
+    {
+      "row": 8,
+      "column": 7,
+      "token": 4096,
+      "label": "N3U TP8",
+      "value": 15.247784707175782,
+      "star": true
+    },
+    {
+      "row": 9,
+      "column": 0,
+      "token": 8192,
+      "label": "V3 EP8",
+      "value": 8.043280720753465,
+      "star": true
+    },
+    {
+      "row": 9,
+      "column": 1,
+      "token": 8192,
+      "label": "V41F EP4",
+      "value": 3.104030327025953,
+      "star": true
+    },
+    {
+      "row": 9,
+      "column": 2,
+      "token": 8192,
+      "label": "K3 EP8",
+      "value": -1.5318837707336441,
+      "star": true
+    },
+    {
+      "row": 9,
+      "column": 3,
+      "token": 8192,
+      "label": "N3U EP8",
+      "value": 0.9844283963420741,
+      "star": true
+    },
+    {
+      "row": 9,
+      "column": 4,
+      "token": 8192,
+      "label": "V3 TP8",
+      "value": 36.11662383262713,
+      "star": false
+    },
+    {
+      "row": 9,
+      "column": 5,
+      "token": 8192,
+      "label": "V41F TP4",
+      "value": 16.97701253210615,
+      "star": true
+    },
+    {
+      "row": 9,
+      "column": 6,
+      "token": 8192,
+      "label": "K3 TP8",
+      "value": 26.757835874594193,
+      "star": true
+    },
+    {
+      "row": 9,
+      "column": 7,
+      "token": 8192,
+      "label": "N3U TP8",
+      "value": 23.943729864112797,
+      "star": false
+    },
+    {
+      "row": 10,
+      "column": 0,
+      "token": 16384,
+      "label": "V3 EP8",
+      "value": 1.6506016393845968,
+      "star": true
+    },
+    {
+      "row": 10,
+      "column": 1,
+      "token": 16384,
+      "label": "V41F EP4",
+      "value": 2.6107420797695013,
+      "star": false
+    },
+    {
+      "row": 10,
+      "column": 2,
+      "token": 16384,
+      "label": "K3 EP8",
+      "value": 1.3614260716033666,
+      "star": true
+    },
+    {
+      "row": 10,
+      "column": 3,
+      "token": 16384,
+      "label": "N3U EP8",
+      "value": 2.3003973523288757,
+      "star": true
+    },
+    {
+      "row": 10,
+      "column": 4,
+      "token": 16384,
+      "label": "V3 TP8",
+      "value": 35.25140956947583,
+      "star": true
+    },
+    {
+      "row": 10,
+      "column": 5,
+      "token": 16384,
+      "label": "V41F TP4",
+      "value": 16.398811224309085,
+      "star": false
+    },
+    {
+      "row": 10,
+      "column": 6,
+      "token": 16384,
+      "label": "K3 TP8",
+      "value": 24.154552148765983,
+      "star": false
+    },
+    {
+      "row": 10,
+      "column": 7,
+      "token": 16384,
+      "label": "N3U TP8",
+      "value": 20.624089182530735,
+      "star": true
+    }
+  ]
+}

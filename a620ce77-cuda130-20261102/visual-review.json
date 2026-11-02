@@ -1,0 +1,10 @@
+{
+  "passed": true,
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "audit_sha256": "dc0f950a26b8f1904a157ec87d9a3d05fa0c6e2b38c64c2e6a42e663181f05a5",
+  "plots": {
+    "cuda130-w4a16-before-after.png": "8023467548cd9dffc2ac3521a5aee4ec0cb23b1a199e40c57ff233cb672878a9",
+    "cuda130-w4a16-before-after.svg": "693e7210af2d697bd1fbdc234db29c6a312f8b2782fefa2fea83bf850da8ac73"
+  },
+  "inspection": "Root visually inspected the final PNG: all 11 token rows and 8 EP/TP columns are readable and unclipped; signed labels, 14 repeat markers, EP/TP separator, prefill divider, legend and compiler caveat are visible. The SVG is bound to the same generated figure and audited data by its manifest hash. Tokens 1/2 are omitted; pending preview is excluded."
+}

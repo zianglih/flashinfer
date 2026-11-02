@@ -1,0 +1,17 @@
+{
+  "required_for_fresh_measurement_replay": false,
+  "boundary": "Context links only; no historical timing arrays enter this fresh comparison. New compact frozen choices/routes and source adapter are retained once in reproduction/.",
+  "prior_publication_root": "https://raw.githubusercontent.com/zianglih/flashinfer/8cfecaf8964ffe61dfa6864c9b5250dfe298dac2/a620ce77",
+  "prior_dependency_manifest_sha256": "56faf87eab9282170af74b5983dfa361e6cbee6ffb91110eef8b7fc609aace2a",
+  "historical_complete_archive": {
+    "url": "https://raw.githubusercontent.com/zianglih/flashinfer/7961a1f13b620e45741fd7057a72f1f248789448/c1ac8ce7/moe-gather-pipeline-results.tar.xz",
+    "sha256": "8e78c5e0f122f06630a61f4e7b97b18358141e0f650699f683dfc9ee7e2ead31",
+    "bytes": 97169580,
+    "members": 3586,
+    "manifest_sha256": "2c9f61d3062d49c5d7eb096724363f8c0a5f4384ee6a7c1e4937320f64731b01",
+    "native_table_member": "completed-tables/manifest.json",
+    "native_table_sha256": "88b8c34bd43b1a75c70d5588378b933efaf57fa1f8a0cbcdb03c7588499de5c6",
+    "baseline_index_member": "completed-tables/baseline-index.json",
+    "baseline_index_sha256": "51ce4db4f9beac023ba3eb6c0755c585a294cddded3948875dcd8745d6db6284"
+  }
+}

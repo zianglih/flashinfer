@@ -1,0 +1,35 @@
+{
+  "passed": true,
+  "timestamp_utc": "2026-11-02T17:24:00.547068+00:00",
+  "image": "nvcr.io/nvidia/pytorch:25.11-py3",
+  "devbox": "fi-w4a16-cu130-1102",
+  "source_heads": {
+    "before": "002529e17b22567a071091053c6c4dc2a55e050e",
+    "after": "a620ce7790b32f7f0ae524a811417d2c6cee1152"
+  },
+  "system_nvcc": {
+    "version": "13.0.88",
+    "path": "/usr/local/cuda-13.0/bin/nvcc",
+    "sha256": "b8e2347d9d7fcadf8812a27324d515de99d033d3e48611811ece7e66d7895f8a",
+    "version_output": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0"
+  },
+  "cutlass_dsl": {
+    "version": "4.8.0",
+    "embedded_nvvm": "13.4.59",
+    "path": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/lib/python3.12/site-packages/nvidia_cutlass_dsl/dsl_packages/cutlass/_mlir/_mlir_libs/_cutlass_ir.cu13.cpython-312-x86_64-linux-gnu.so",
+    "sha256": "f325e99ecfd4e49411d694bf7b08f3d9aa4f3e8fa1f0da9d3b456038fa4c0d32",
+    "version_strings": [
+      "Cuda compilation tools, release 13.4, V13.4.59"
+    ]
+  },
+  "generated_ptx": {
+    "available": false,
+    "reason": "CUTE_DSL_KEEP=ptx,cubin requested in separate smoke, but no PTX artifacts were found in its requested compiler-dumps tree at the recorded inspection time. No generated PTX version is claimed.",
+    "artifacts": []
+  },
+  "requested_dump_root": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/smoke/ep-v3-w4a16/compiler-dumps",
+  "runtime_receipt_sha256": "fef170ac2d938bae8961a43e02e838485f2c83a62dd43fb78e21c0a93e2db5fa",
+  "install_receipt_sha256": "5362bb8f288b434915ac0fc5e7a8e82604d1db02921306669815b4f0dd774db9",
+  "script_sha256": "52d3f1a22f9c808f9c74e219e14d8963dd997eff945d3f6493ba4b1e83445767",
+  "boundary": "CPU-only binary/hash/version verification and artifact inspection. No compilation, GPU kernel, timing or optimization change. Native toolkit and embedded CuTe compiler identities are separate; missing generated PTX is explicit and does not invalidate runtime qualification."
+}

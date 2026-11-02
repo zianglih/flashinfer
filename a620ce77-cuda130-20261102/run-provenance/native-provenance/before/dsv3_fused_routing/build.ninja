@@ -1,0 +1,82 @@
+ninja_required_version = 1.3
+name = dsv3_fused_routing
+cuda_home = /usr/local/cuda
+cxx = c++
+nvcc = $cuda_home/bin/nvcc
+cxx_launcher = 
+nvcc_launcher = 
+
+common_cflags = -DPy_LIMITED_API=0x03090000 $
+    -D_GLIBCXX_USE_CXX11_ABI=1 $
+    -I/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal $
+    -I/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal/include $
+    -I/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal/tensorrt_llm/cutlass_extensions/include $
+    -I/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal/tensorrt_llm/kernels/cutlass_kernels/include $
+    -I/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal/tensorrt_llm/kernels/cutlass_kernels $
+    -I/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/3rdparty/cccl/cub $
+    -I/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/3rdparty/cccl/libcudacxx/include $
+    -I/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/3rdparty/cccl/thrust $
+    -isystem /usr/include/python3.12 $
+    -isystem $cuda_home/include $
+    -isystem /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/lib/python3.12/site-packages/tvm_ffi/include $
+    -isystem /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/lib/python3.12/site-packages/tvm_ffi/include $
+    -isystem /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/include $
+    -isystem /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc $
+    -isystem /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/3rdparty/cutlass/include $
+    -isystem /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/3rdparty/cutlass/tools/util/include $
+    -isystem /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/3rdparty/spdlog/include
+cflags = $common_cflags $
+    -fPIC $
+    -std=c++17 $
+    -Wno-switch-bool $
+    -DNDEBUG $
+    -O3
+post_cflags =
+cuda_cflags = $common_cflags $
+    --compiler-options=-fPIC $
+    --expt-relaxed-constexpr $
+    -static-global-template-stub=false $
+    -gencode=arch=compute_103a,code=sm_103a $
+    -DFLASHINFER_ENABLE_FP8_E8M0 $
+    -DFLASHINFER_ENABLE_FP4_E2M1 $
+    -std=c++17 $
+    --threads=1 $
+    -use_fast_math $
+    -Xfatbin=-compress-all $
+    --compress-mode=size $
+    -DFLASHINFER_ENABLE_F16 $
+    -DFLASHINFER_ENABLE_BF16 $
+    -DFLASHINFER_ENABLE_FP8_E4M3 $
+    -DFLASHINFER_ENABLE_FP8_E5M2 $
+    -DNDEBUG $
+    -O3
+cuda_post_cflags =
+cuda_arch_flags = -gencode=arch=compute_103a,code=sm_103a
+ldflags = -shared $
+    -L$cuda_home/lib64 $
+    -L$cuda_home/lib64/stubs $
+    -lcudart $
+    -lcuda
+
+rule compile
+  command = $cxx_launcher $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  command = $nvcc_launcher $nvcc --generate-dependencies-with-compile -MF $out.d $cuda_cflags -c $in -o $out $cuda_post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule link
+  command = $cxx $in $ldflags -o $out
+
+build /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/fused_moe_noAuxTcKernels.cuda.o: cuda_compile /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/fused_moe/noAuxTcKernels.cu
+build /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_envUtils.o: compile /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal/cpp/common/envUtils.cpp
+build /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_logger.o: compile /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal/cpp/common/logger.cpp
+build /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_stringUtils.o: compile /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal/cpp/common/stringUtils.cpp
+build /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_tllmException.o: compile /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal/cpp/common/tllmException.cpp
+build /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_memoryUtils.cuda.o: cuda_compile /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc/nv_internal/cpp/common/memoryUtils.cu
+
+build /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/dsv3_fused_routing.so: link /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/fused_moe_noAuxTcKernels.cuda.o /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_envUtils.o /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_logger.o /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_stringUtils.o /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_tllmException.o /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/common_memoryUtils.cuda.o
+default /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/dsv3_fused_routing.so

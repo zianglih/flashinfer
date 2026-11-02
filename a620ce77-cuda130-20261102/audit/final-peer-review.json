@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "audit_sha256": "dc0f950a26b8f1904a157ec87d9a3d05fa0c6e2b38c64c2e6a42e663181f05a5",
+  "source_heads": {
+    "before": "002529e17b22567a071091053c6c4dc2a55e050e",
+    "after": "a620ce7790b32f7f0ae524a811417d2c6cee1152"
+  },
+  "fresh_cases": 104,
+  "retention_cases": 88,
+  "fresh_samples": 41600,
+  "report_manifest_sha256": "730b20076cf7cc15c5b9de9bc605d10ba8ec14dbd6a06bcb0abd7fbe272fb758",
+  "bundle_manifest_sha256": "712aa3ad3c88013c18408fc1b72f57a9a851a1bfaeb029fec9e34b20710c043e",
+  "checks": {
+    "fresh_raw_cupti_replayed": true,
+    "fixed_choices_and_routes": true,
+    "resolved_after_configs": true,
+    "independent_summary_ratios": true,
+    "all_104_table_values": true,
+    "all_88_plot_values": true,
+    "native_stdout_32_files_unchanged": true,
+    "archives_rehashed": true,
+    "measured_config_archived": true,
+    "public_text_credential_scan": true
+  },
+  "boundary": "Independent CPU-only evidence and publication audit. Root separately owns visual inspection and all public writes."
+}

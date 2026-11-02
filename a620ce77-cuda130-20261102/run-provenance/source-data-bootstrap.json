@@ -1,0 +1,22 @@
+{
+  "created": 1793638151.0762181,
+  "config_before_sha256": "51da88bdddc535b22c5608ab1fb6cc75ad23dfb696345a1110c159574f857406",
+  "config_after_sha256": "cbb23666fb568e31357e3b26b82daffe9c5907d5b2e1730d8f3a3f944e08ff64",
+  "native_data_links": {
+    "after": {
+      "flashinfer/data/csrc": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/after/csrc",
+      "flashinfer/data/include": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/after/include",
+      "flashinfer/data/cutlass": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/after/3rdparty/cutlass",
+      "flashinfer/data/cccl": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/after/3rdparty/cccl",
+      "flashinfer/data/spdlog": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/after/3rdparty/spdlog"
+    },
+    "before": {
+      "flashinfer/data/csrc": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/csrc",
+      "flashinfer/data/include": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/include",
+      "flashinfer/data/cutlass": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/3rdparty/cutlass",
+      "flashinfer/data/cccl": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/3rdparty/cccl",
+      "flashinfer/data/spdlog": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/sources/before/3rdparty/spdlog"
+    }
+  },
+  "boundary": "Packaging data path bootstrap only; symlinks reference each arm's exact Git source and pinned native dependencies. No source bytes, kernel math, tactics, or compiled artifacts changed."
+}

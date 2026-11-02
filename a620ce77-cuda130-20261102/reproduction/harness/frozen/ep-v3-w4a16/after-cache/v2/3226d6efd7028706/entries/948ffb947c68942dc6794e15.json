@@ -1,0 +1,134 @@
+{
+  "key": "('CuteDslFusedMoE::run_moe_w4a16::Swiglu::SwapAB', 'CuteDslFusedMoEW4A16Runner', ((16, 7168), (16, 8), (16, 8), (32, 4096, 3584), (32, 4, 32, 4, 112, 32), (32,), (32, 7168, 1024), (32, 4, 56, 4, 32, 32), (32,), (16, 7168)), (256, 8, 32, 0, False, torch.bfloat16, True, 3, 1.0, 0.0, 3.4028234663852886e+38, None, None, 'swap_ab'))",
+  "key_fields": {
+    "__tuple__": [
+      "CuteDslFusedMoE::run_moe_w4a16::Swiglu::SwapAB",
+      "CuteDslFusedMoEW4A16Runner",
+      {
+        "__tuple__": [
+          {
+            "__tuple__": [
+              16,
+              7168
+            ]
+          },
+          {
+            "__tuple__": [
+              16,
+              8
+            ]
+          },
+          {
+            "__tuple__": [
+              16,
+              8
+            ]
+          },
+          {
+            "__tuple__": [
+              32,
+              4096,
+              3584
+            ]
+          },
+          {
+            "__tuple__": [
+              32,
+              4,
+              32,
+              4,
+              112,
+              32
+            ]
+          },
+          {
+            "__tuple__": [
+              32
+            ]
+          },
+          {
+            "__tuple__": [
+              32,
+              7168,
+              1024
+            ]
+          },
+          {
+            "__tuple__": [
+              32,
+              4,
+              56,
+              4,
+              32,
+              32
+            ]
+          },
+          {
+            "__tuple__": [
+              32
+            ]
+          },
+          {
+            "__tuple__": [
+              16,
+              7168
+            ]
+          }
+        ]
+      },
+      {
+        "__tuple__": [
+          256,
+          8,
+          32,
+          0,
+          false,
+          {
+            "__dtype__": "bfloat16"
+          },
+          true,
+          3,
+          1.0,
+          0.0,
+          3.4028234663852886e+38,
+          null,
+          null,
+          "swap_ab"
+        ]
+      }
+    ]
+  },
+  "profiling_policy": [
+    "cuda_graph_profile_replays",
+    null,
+    "l2_cache_policy",
+    "cold"
+  ],
+  "runner": "CuteDslFusedMoEW4A16Runner",
+  "tactic": [
+    [
+      [
+        256,
+        16,
+        256
+      ],
+      [
+        2,
+        1
+      ],
+      true
+    ],
+    [
+      [
+        256,
+        16,
+        256
+      ],
+      [
+        2,
+        1
+      ],
+      true
+    ]
+  ]
+}

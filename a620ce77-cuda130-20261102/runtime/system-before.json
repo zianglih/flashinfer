@@ -1,0 +1,7 @@
+{
+  "torch": "2.10.0a0+b558c986e8.nv25.11",
+  "torch_cuda": "13.0",
+  "nvcc": "/usr/local/cuda-13.0/bin/nvcc",
+  "nvcc_sha256": "b8e2347d9d7fcadf8812a27324d515de99d033d3e48611811ece7e66d7895f8a",
+  "nvcc_version": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0"
+}

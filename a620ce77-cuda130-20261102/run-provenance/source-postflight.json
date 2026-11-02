@@ -1,0 +1,16 @@
+{
+  "campaign_sha256": "c861ede41706bdec10778b38815dcd3a70cf35b3a79c4172b3607f573a474405",
+  "sources": {
+    "after": {
+      "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+      "files": 31070,
+      "mismatches": []
+    },
+    "before": {
+      "head": "002529e17b22567a071091053c6c4dc2a55e050e",
+      "files": 31066,
+      "mismatches": []
+    }
+  },
+  "complete": true
+}

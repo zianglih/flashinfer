@@ -1,0 +1,151 @@
+{
+  "boundary": "Replay-only compact projection of historical route/winner expectations. Original run provenance and source hashes remain unchanged. No historical latency arrays enter fresh reports or this archive.",
+  "files": [
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/ep-kimi-k3-w4a16/after-expected.json",
+      "projected_sha256": "6ec8c7d2c589bc634c41d5c5820841dd3fcc99caabfc6257b6781524eb00ab3f",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/ep-kimi-k3-w4a16/after-expected.json",
+      "source_sha256": "890e9b784a82e98cf348f8c459d106a2f245d5ccfff9c919597202623e4fbbaf",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/ep-kimi-k3-w4a16/before-expected.json",
+      "projected_sha256": "9f4344aacdac1ea85a8cb76190bd521ca920a037f97a4fc08ccee152c909c4be",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/ep-kimi-k3-w4a16/before-expected.json",
+      "source_sha256": "189eeb85fa2eb72db8be34e5eca9053343e4cb3223cb7c51d8c5b3ad9d2b5357",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/ep-nemo3-ultra-w4a16/after-expected.json",
+      "projected_sha256": "cef83aebca2ba1ce8d2d94cbd738a0271f5b27295dfa9e5820d1f54f758e8af3",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/ep-nemo3-ultra-w4a16/after-expected.json",
+      "source_sha256": "837588dafaf8d4b93c3fcb009460db73ae6f3dc3f890f2cc5076aeb38ac13357",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/ep-nemo3-ultra-w4a16/before-expected.json",
+      "projected_sha256": "bee7176aa61d13d65a04d77842dc913826109c5070ebdb8425eb1dd8a09c65cb",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/ep-nemo3-ultra-w4a16/before-expected.json",
+      "source_sha256": "27fc7f17cc1f0c4f9614251278a9e0b5dcb44623832d8e132d6d605d736bfcc1",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/ep-v3-w4a16/after-expected.json",
+      "projected_sha256": "99ceaded6ce8411b6df9bd2bccace8728085c01b68c09718aae26909894822f6",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/ep-v3-w4a16/after-expected.json",
+      "source_sha256": "2cb683d50d37f3ff60280202d5db43a03ac00a32d2b84c6b231205e291b70642",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/ep-v3-w4a16/before-expected.json",
+      "projected_sha256": "24ce89de4aaa72d1933a0cde46a1c1f15c3d3676dcedd619d2f2fdaf2240c185",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/ep-v3-w4a16/before-expected.json",
+      "source_sha256": "f89951ecf46c8224703f8679a7bc87cac9de0a549def1904bfd6c98b2d758a31",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/ep-v41-flash-w4a16/after-expected.json",
+      "projected_sha256": "b695ef23669f24893f8c31126730d4ce6d7aa87b4708d102162e3aa3ed53e7ac",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/ep-v41-flash-w4a16/after-expected.json",
+      "source_sha256": "d6c4bc68bacb55f95d7f53c88fbee2823c7b59abdc1b3eba6ef5d1c8cb303a8a",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/ep-v41-flash-w4a16/before-expected.json",
+      "projected_sha256": "370deff747deb3d6a2cf7887d571e7794ff70b67641d91450b887303a64bc25e",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/ep-v41-flash-w4a16/before-expected.json",
+      "source_sha256": "7250f81b4eb149e96fcf3c48d2ba4e1ed4a0d05228eea587fef4cf3f897fa428",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/tp-kimi-k3-w4a16/after-expected.json",
+      "projected_sha256": "28fe5616083d2cc61748613b2191e7b25213ca61764126a4a8d620c99fb02d47",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/tp-kimi-k3-w4a16/after-expected.json",
+      "source_sha256": "717f96ed36e5ed1b6b44c12092912bcfe291c709d1f8aa960dbbcbbdb35033a3",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/tp-kimi-k3-w4a16/before-expected.json",
+      "projected_sha256": "ca969d771deb41aed5ee47e36bda04085d45bb9daef0e22c3f5bf1c3f0c6df59",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/tp-kimi-k3-w4a16/before-expected.json",
+      "source_sha256": "6178f3a77ceefad9a127e0c012dd212e4993d74926aa2f68cd7826698670da3d",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/tp-nemo3-ultra-w4a16/after-expected.json",
+      "projected_sha256": "b3f2ba21df35b6387afa526926af85ec864b06fbfa90374dd3b03f49ed04e952",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/tp-nemo3-ultra-w4a16/after-expected.json",
+      "source_sha256": "4f228dbd13fd30a3beef7d3794fc11da5c1ce78e1eb40446d9dac0bf6c2cc144",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/tp-nemo3-ultra-w4a16/before-expected.json",
+      "projected_sha256": "68331956ae62905613a3f97939a25b9d60e11e9cbe82a30645af4c270910770d",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/tp-nemo3-ultra-w4a16/before-expected.json",
+      "source_sha256": "398482c56295962dc936a54e9d1e5dbbae1fd1f5a0474cb599b78cdbe940003e",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/tp-v3-w4a16/after-expected.json",
+      "projected_sha256": "5bc9f2be220446fea5122d6d4c225c7258d35b4a4eea57f97809fe40499c677a",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/tp-v3-w4a16/after-expected.json",
+      "source_sha256": "6f4991ddf047c5ea1476cf323b4e697903444384c167cf48a8f18ca78cd09d3e",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/tp-v3-w4a16/before-expected.json",
+      "projected_sha256": "cb6091110c0fe4d73ece4ecd574fe7356108b0d6c13bfe53ba3da6eca8466fae",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/tp-v3-w4a16/before-expected.json",
+      "source_sha256": "17f5a5320faa082ba93bf8094e4c0903a3fdef741a605b0ffe900c0414f7e1e1",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/tp-v41-flash-w4a16/after-expected.json",
+      "projected_sha256": "41c9e2e08680858ca0be13ba2f074159f0fe69ecd75e8082925e3d27b471030f",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/tp-v41-flash-w4a16/after-expected.json",
+      "source_sha256": "b8b3160b92567a12872f2b56ec0ff0fdd42a23897c96dbc3a29a0fb7fd57941b",
+      "timing_arrays_retained": false
+    },
+    {
+      "choices_routes_and_order_preserved": true,
+      "field_projection": "complete,swap_ab,use_fused_finalize; rows[tokens,backend_labels,routing_identity]; native_diagnostic.measurements[cache_hits]",
+      "projected_path": "harness/frozen/tp-v41-flash-w4a16/before-expected.json",
+      "projected_sha256": "8064099a00c23565892b20f16a06eec164c75ad1e640cf3e02e0ed156a4b0d73",
+      "source_path": "cuda130-w4a16-20261102/harness/frozen/tp-v41-flash-w4a16/before-expected.json",
+      "source_sha256": "d74af545bd54c3c338b64a13dc4e76d32a4b619766657d31771193cc7e02c844",
+      "timing_arrays_retained": false
+    }
+  ],
+  "original_manifest_sha256": "73478da98a43e853ee84528c3438eb300d4dfc3c4bcca502392a7ee7a208c135",
+  "passed": true
+}

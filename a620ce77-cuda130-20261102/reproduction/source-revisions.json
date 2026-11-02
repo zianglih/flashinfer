@@ -1,0 +1,27 @@
+{
+  "repository": "https://github.com/zianglih/flashinfer.git",
+  "sources": {
+    "after": {
+      "benchmark_adapter_sha256": null,
+      "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+      "source_manifest_sha256": "c7b4e95e511b61af280cf1841529fba9d602bc4b0f7aa04a9a9f6fb179771068",
+      "submodules": {
+        "3rdparty/cccl": "16bd510c9b712e82b0ab6cbb630d8e29ba1f7116",
+        "3rdparty/cutlass": "b46b16d003484063bca4ed365e44095c4c6ed633",
+        "3rdparty/nixl": "b20f4d0adb95f53c4a1272915ef8d86cec304584",
+        "3rdparty/spdlog": "c3aed4b68373955e1cc94307683d44dca1515d2b"
+      }
+    },
+    "before": {
+      "benchmark_adapter_sha256": "8078d09b8be9c5a992d8904ffc59fbcdb28fd2e34324a69e4fe250ed79477eab",
+      "head": "002529e17b22567a071091053c6c4dc2a55e050e",
+      "source_manifest_sha256": "3faf90cfb291d25bb792255db8e92f06afe442f2a365177355724c98a9ca7652",
+      "submodules": {
+        "3rdparty/cccl": "16bd510c9b712e82b0ab6cbb630d8e29ba1f7116",
+        "3rdparty/cutlass": "b46b16d003484063bca4ed365e44095c4c6ed633",
+        "3rdparty/nixl": "b20f4d0adb95f53c4a1272915ef8d86cec304584",
+        "3rdparty/spdlog": "c3aed4b68373955e1cc94307683d44dca1515d2b"
+      }
+    }
+  }
+}

@@ -1,0 +1,66 @@
+
+Nemotron-3-Ultra MoE Performance Benchmark
+GPU: NVIDIA B300 SXM6 AC
+CuteDSL API: Functional
+Initial activation quantization: True
+Expert parallelism simulation: EP=8
+Routing: model sigmoid routes precomputed and shared by all backends; routing excluded from timing, TRTLLM uses routed APIs.
+CuteDSL modes: W4A4 / PER-TOKEN / W4A16; TRTLLM: NVFP4 / PER-TOKEN / BF16
+Tensor parallelism simulation: TP=1
+CUDA profiler capture: False
+CuteDSL finalize: deterministic two-stage
+TRTLLM NVFP4 / PER-TOKEN / BF16 finalize: native (unaffected by --no-fused-finalize).
+2026-11-02 17:15:06,271 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:06,271 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:09,666 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_1.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:10,128 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:10,128 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:10,397 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_2.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:10,813 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:10,813 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:11,083 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_4.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:11,427 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:11,427 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:12,728 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_8.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:13,125 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:13,125 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:13,620 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_16.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:13,946 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:13,946 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:14,220 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_32.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:14,554 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:14,554 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:15,335 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_64.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:15,705 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:15,706 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:17,106 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_128.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:17,494 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:17,495 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:18,948 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_256.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:19,375 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:19,375 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:19,609 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_512.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:20,055 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:20,055 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:21,955 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_4096.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:22,504 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:22,505 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+2026-11-02 17:15:22,883 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_8192.autotune.json (0 new, 22 from previous config)
+2026-11-02 17:15:23,666 - INFO - autotuner.py:4604 - flashinfer.jit: [Autotuner]: Loaded 22 configs from /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/cache-before.json
+2026-11-02 17:15:23,666 - INFO - autotuner.py:2275 - flashinfer.jit: [Autotuner]: Config cache hit for CuteDslFusedMoE::run_moe_w4a16::Relu2 (runner=CuteDslFusedMoEW4A16Runner, source=config file)
+[2026-11-02 17:15:23.668] [info] TRT-LLM fused MoE cooperative launch SM allocation: 140 SMs used for MoE, 8 SMs reserved for overlapping kernels (total SMs: 148)
+2026-11-02 17:15:24,079 - INFO - autotuner.py:4462 - flashinfer.jit: [Autotuner]: Saved 22 configs to /data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/results/ep-nemo3-ultra-w4a16/3-before/token_16384.autotune.json (0 new, 22 from previous config)
+backend,tokens,latency_ms,tflops
+CuteDSL W4A16,1,0.026272,4.390353
+CuteDSL W4A16,2,0.030688,7.517164
+CuteDSL W4A16,4,0.041504,11.116361
+CuteDSL W4A16,8,0.052688,17.513416
+CuteDSL W4A16,16,0.090944,20.292527
+CuteDSL W4A16,32,0.112064,32.936278
+CuteDSL W4A16,64,0.143889,51.303440
+CuteDSL W4A16,128,0.148544,99.391090
+CuteDSL W4A16,256,0.154129,191.579754
+CuteDSL W4A16,512,0.164384,359.254068
+CuteDSL W4A16,4096,0.404817,1167.060225
+CuteDSL W4A16,8192,0.753938,1253.276536
+CuteDSL W4A16,16384,1.547605,1221.102930

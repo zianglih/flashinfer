@@ -1,0 +1,161 @@
+{
+  "complete": true,
+  "started": 1793639852.155862,
+  "roles": {
+    "after": {
+      "modules": [
+        {
+          "name": "dsv3_fused_routing",
+          "ninja": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/build.ninja",
+          "ninja_sha256": "1846aeb4d59d9ab029098b6bdf2157e543c9d5610329dcd3ba2ee48c77d09ee8",
+          "libraries": {
+            "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/dsv3_fused_routing.so": "d3d3b799d481326bad2666eccd4a0fe0d6c7206fb04059f0a0bcfc3a5e76196c"
+          },
+          "dry_run_stdout": "ninja: Entering directory `/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing'\nninja: no work to do.\n",
+          "dry_run_stderr": ""
+        },
+        {
+          "name": "fp4_quantization_103",
+          "ninja": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/fp4_quantization_103/build.ninja",
+          "ninja_sha256": "04a123105f2be1f586ce303a81826fc53463e526d1a9768b06b7a7ef3bc14bfb",
+          "libraries": {
+            "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/fp4_quantization_103/fp4_quantization_103.so": "5d4c4732f0c064c20f92517b68ffbabebb3934f4a0a65c21849becf2cc20a987"
+          },
+          "dry_run_stdout": "ninja: Entering directory `/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/fp4_quantization_103'\nninja: no work to do.\n",
+          "dry_run_stderr": ""
+        },
+        {
+          "name": "moe_utils",
+          "ninja": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/moe_utils/build.ninja",
+          "ninja_sha256": "7d05a6131be012cd31343b89951e09518469b0079b26f690e2cf8fb83c1505a1",
+          "libraries": {
+            "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/moe_utils/moe_utils.so": "a7a01ed457ef89bf0b8668eefbffe0d9372dbabb4a23aeef1be22c561eadd641"
+          },
+          "dry_run_stdout": "ninja: Entering directory `/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/moe_utils'\nninja: no work to do.\n",
+          "dry_run_stderr": ""
+        }
+      ],
+      "downloaded_artifact_sha256": {
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/checksums.txt": "49bce842233a46c95ede250f9fc0dc10ca1cfb18f48ccb7b4123400d73403687",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/checksums.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmEnums.h": "7f98e312d92f24fbdddda72fa6539c667ac614e58d7ebbd3a37bd5afef97ef4d",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmEnums.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmInterface.h": "9e2b1c10cc265d2d2c66039c4dc506e3f4e5185c8e3dc8f533f2ef76cb7babf2",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmInterface.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmOptions.h": "88e81d1e04850f58f506e0a112bb2439253840e758146843b71fde504150caa1",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmOptions.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/Enums.h": "1c946127eda8a5da66520d6d5433583659135ec7b09765189adb7ba6c4f171b9",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/Enums.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/GemmGatedActOptions.h": "f6798b8426642c2b4a55fa1f75a623690b46979f110da871f1db02b17086963a",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/GemmGatedActOptions.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/GemmOptions.h": "60b5f26de86c68657eb55e09af297deaaaaa21f73d34c06d47332c1f5fc9b0a8",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/GemmOptions.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelParams.h": "529bd0c68ce51fa5797239e57cd930f87d6c832051d3754c54b167a118d04aa9",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelParams.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelParamsDecl.h": "6c32b9043f831c53410c4d89d81715eb5d55eb77c94e4ecdf0f5e0a794c00ad1",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelParamsDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelTraits.h": "fc061482bb4a845eae48f8897d239e0dd20d05a6369acab013554f1f7254b67a",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelTraits.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/TmaDescriptor.h": "d453f62c88a951f43cc012e256ed547bbd9b58f753cd8ef8ca0d623a66cb8a93",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/TmaDescriptor.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CommonUtils.h": "df88f6473302e3015f026077a9282882d4a0308e4e3cfbd839f77c68f0fd7b32",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CommonUtils.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CudaArchDecl.h": "3b212477300e65b8c0eceab533ee0086381187a31132f12ea3a64bed84d48392",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CudaArchDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CudaKernelLauncher.h": "523268d53dc4db4f6bd615a68d5b79b9e94f04287f741907473c338905523214",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CudaKernelLauncher.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h": "15ae1fca7d1bd0b85decb42b28920b8882c93da2c09669d490ca01019a574009",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/MmaDecl.h": "335573ee5ba020e94e852dcad40f7e0e21f506640c98ca316fd3c10e472771f5",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/MmaDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/SfLayoutDecl.h": "0c33699c7c40a3569a6ba87b313c1206bf1cb9293814c8d5d926c339e3bf6369",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/SfLayoutDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/SparsityDecl.h": "22eddbf8b0b4d27265d33a33a41f8724f8a8e20e27e2c2ce2c631496c9bd6bf3",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/SparsityDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "private_cpp_root": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/after",
+      "private_cute_root": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cute/after",
+      "private_cubin_root": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cubin/after"
+    },
+    "before": {
+      "modules": [
+        {
+          "name": "dsv3_fused_routing",
+          "ninja": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/build.ninja",
+          "ninja_sha256": "906e76ab2e054f8933edb17697fee1f1077bd8d21ab6fa3ef519a2a67ee560f3",
+          "libraries": {
+            "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing/dsv3_fused_routing.so": "231d0f41cb14572235be1a314be494df6c83617ad2f19701bc4c8a09086e8668"
+          },
+          "dry_run_stdout": "ninja: Entering directory `/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/dsv3_fused_routing'\nninja: no work to do.\n",
+          "dry_run_stderr": ""
+        },
+        {
+          "name": "fp4_quantization_103",
+          "ninja": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/fp4_quantization_103/build.ninja",
+          "ninja_sha256": "dd77ed6936c88cf26a542d2d4039d327c3698b160208ad436a1d04c20d2456e4",
+          "libraries": {
+            "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/fp4_quantization_103/fp4_quantization_103.so": "5810411db270e728bd62290e7f06c95ad97f825d4916f03111785f17c13bf1c3"
+          },
+          "dry_run_stdout": "ninja: Entering directory `/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/fp4_quantization_103'\nninja: no work to do.\n",
+          "dry_run_stderr": ""
+        },
+        {
+          "name": "moe_utils",
+          "ninja": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/moe_utils/build.ninja",
+          "ninja_sha256": "32ecbd58a7582f3e92651960161e1accf8e399704446c708872c8afdc890fc21",
+          "libraries": {
+            "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/moe_utils/moe_utils.so": "8d63b3e86defa6653fbdbcb2de2ecdb4d87e8007106481eb75595e34ea32d2c5"
+          },
+          "dry_run_stdout": "ninja: Entering directory `/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before/.cache/flashinfer/0.0.0+unknown/103a/cached_ops/moe_utils'\nninja: no work to do.\n",
+          "dry_run_stderr": ""
+        }
+      ],
+      "downloaded_artifact_sha256": {
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/checksums.txt": "49bce842233a46c95ede250f9fc0dc10ca1cfb18f48ccb7b4123400d73403687",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/checksums.txt.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmEnums.h": "7f98e312d92f24fbdddda72fa6539c667ac614e58d7ebbd3a37bd5afef97ef4d",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmEnums.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmInterface.h": "9e2b1c10cc265d2d2c66039c4dc506e3f4e5185c8e3dc8f533f2ef76cb7babf2",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmInterface.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmOptions.h": "88e81d1e04850f58f506e0a112bb2439253840e758146843b71fde504150caa1",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/BatchedGemmOptions.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/Enums.h": "1c946127eda8a5da66520d6d5433583659135ec7b09765189adb7ba6c4f171b9",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/Enums.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/GemmGatedActOptions.h": "f6798b8426642c2b4a55fa1f75a623690b46979f110da871f1db02b17086963a",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/GemmGatedActOptions.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/GemmOptions.h": "60b5f26de86c68657eb55e09af297deaaaaa21f73d34c06d47332c1f5fc9b0a8",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/GemmOptions.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelParams.h": "529bd0c68ce51fa5797239e57cd930f87d6c832051d3754c54b167a118d04aa9",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelParams.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelParamsDecl.h": "6c32b9043f831c53410c4d89d81715eb5d55eb77c94e4ecdf0f5e0a794c00ad1",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelParamsDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelTraits.h": "fc061482bb4a845eae48f8897d239e0dd20d05a6369acab013554f1f7254b67a",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/KernelTraits.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/TmaDescriptor.h": "d453f62c88a951f43cc012e256ed547bbd9b58f753cd8ef8ca0d623a66cb8a93",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/TmaDescriptor.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CommonUtils.h": "df88f6473302e3015f026077a9282882d4a0308e4e3cfbd839f77c68f0fd7b32",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CommonUtils.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CudaArchDecl.h": "3b212477300e65b8c0eceab533ee0086381187a31132f12ea3a64bed84d48392",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CudaArchDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CudaKernelLauncher.h": "523268d53dc4db4f6bd615a68d5b79b9e94f04287f741907473c338905523214",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/CudaKernelLauncher.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h": "15ae1fca7d1bd0b85decb42b28920b8882c93da2c09669d490ca01019a574009",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/DtypeDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/MmaDecl.h": "335573ee5ba020e94e852dcad40f7e0e21f506640c98ca316fd3c10e472771f5",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/MmaDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/SfLayoutDecl.h": "0c33699c7c40a3569a6ba87b313c1206bf1cb9293814c8d5d926c339e3bf6369",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/SfLayoutDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/SparsityDecl.h": "22eddbf8b0b4d27265d33a33a41f8724f8a8e20e27e2c2ce2c631496c9bd6bf3",
+        "8ee504560a86b6c72b8c941d3003e8fb1804b1b6/batched_gemm-fdba669-16ba8ed/include/trtllmGen_bmm_export/trtllm/gen/SparsityDecl.h.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "private_cpp_root": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cpp/before",
+      "private_cute_root": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cute/before",
+      "private_cubin_root": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/cache/cubin/before"
+    }
+  },
+  "config_sha256": "cbb23666fb568e31357e3b26b82daffe9c5907d5b2e1730d8f3a3f944e08ff64",
+  "nvcc": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+  "ptxas": "ptxas: NVIDIA (R) Ptx optimizing assembler\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:55:12_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0\n",
+  "boundary": "Read-only file hashes and Ninja dry runs after all timed phases. No compilation, kernel launches, or cache/source writes.",
+  "finished": 1793639853.3039696
+}

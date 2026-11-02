@@ -1,0 +1,200 @@
+{
+  "boundary": "Explicit fixed-choice replay across runtimes. Metadata is refreshed to permit recompilation of published tile choices; this does not establish optimal tactics on CUDA13.0.",
+  "jobs": {
+    "ep-kimi-k3-w4a16": {
+      "after_metadata": {
+        "cublas_version": "13.1.0",
+        "cuda_version": "13.0",
+        "cudnn_frontend_version": "1.15.0",
+        "cudnn_version": "91500",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.14.post1:ee79bcacf86a36c5c89e0c79dda6a5759e2e0254ade4eb8cd7f197466759db03;nvidia-cutlass-dsl-libs-base==4.8.0:d17822a92e3abc02da0b28c39d015af618cc9f14ff1aa4830ca063302ede895a;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.10.0a0+b558c986e8.nv25.11:920b26309ca8e6879d2348b7d0cc82eaf6f865f7474e8bf27dcb8a57b24f16be",
+        "flashinfer_version": "0.0.0+unknown",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "before_metadata": {
+        "cublas_version": "13.4.1",
+        "cuda_version": "13.2",
+        "cudnn_frontend_version": "1.23.0",
+        "cudnn_version": "92200",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.15.post1:b49bba16065c33caa94106d41959957b78d3145a76b4573acdfa292b0557c315;nvidia-cutlass-dsl-libs-base==4.4.2:f56a0ca254f498f41e32166363d984e09a2157268801f0f574167f8c84d65222;nvidia-cutlass-dsl-libs-base==4.8.0:3c40f1813c356469f8fa3951b9b8cba70905d8e95b2481ce7ff9e07d5ab7f33c;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.4.2:1e653ef73854e9c52d12359af1649acdfa9dcea94b87528952b8f7976302c3b5;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.12.0a0+5aff3928d8.nv26.5.50603568:53a086783243a50328b50f9fc6da9b8fbd0846ea1ff9bf8c0bd34e3390078f3a",
+        "flashinfer_version": "0.7.2",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "entries_sha256": "ebff80fa28c5f47282c06b3e053f0db45c52749df4ad2308ab50681a27023456",
+      "kind": "native",
+      "path": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/rebound/before/ep-kimi-k3-w4a16.json"
+    },
+    "ep-nemo3-ultra-w4a16": {
+      "after_metadata": {
+        "cublas_version": "13.1.0",
+        "cuda_version": "13.0",
+        "cudnn_frontend_version": "1.15.0",
+        "cudnn_version": "91500",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.14.post1:ee79bcacf86a36c5c89e0c79dda6a5759e2e0254ade4eb8cd7f197466759db03;nvidia-cutlass-dsl-libs-base==4.8.0:d17822a92e3abc02da0b28c39d015af618cc9f14ff1aa4830ca063302ede895a;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.10.0a0+b558c986e8.nv25.11:920b26309ca8e6879d2348b7d0cc82eaf6f865f7474e8bf27dcb8a57b24f16be",
+        "flashinfer_version": "0.0.0+unknown",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "before_metadata": {
+        "cublas_version": "13.4.1",
+        "cuda_version": "13.2",
+        "cudnn_frontend_version": "1.23.0",
+        "cudnn_version": "92200",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.15.post1:b49bba16065c33caa94106d41959957b78d3145a76b4573acdfa292b0557c315;nvidia-cutlass-dsl-libs-base==4.4.2:f56a0ca254f498f41e32166363d984e09a2157268801f0f574167f8c84d65222;nvidia-cutlass-dsl-libs-base==4.8.0:3c40f1813c356469f8fa3951b9b8cba70905d8e95b2481ce7ff9e07d5ab7f33c;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.4.2:1e653ef73854e9c52d12359af1649acdfa9dcea94b87528952b8f7976302c3b5;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.12.0a0+5aff3928d8.nv26.5.50603568:53a086783243a50328b50f9fc6da9b8fbd0846ea1ff9bf8c0bd34e3390078f3a",
+        "flashinfer_version": "0.7.2",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "entries_sha256": "e828f388b6de2ffa47690fe4d06671ac93a9899b205775b49adbe8e764ae5bb2",
+      "kind": "native",
+      "path": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/rebound/before/ep-nemo3-ultra-w4a16.json"
+    },
+    "ep-v3-w4a16": {
+      "after_metadata": {
+        "cublas_version": "13.1.0",
+        "cuda_version": "13.0",
+        "cudnn_frontend_version": "1.15.0",
+        "cudnn_version": "91500",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.14.post1:ee79bcacf86a36c5c89e0c79dda6a5759e2e0254ade4eb8cd7f197466759db03;nvidia-cutlass-dsl-libs-base==4.8.0:d17822a92e3abc02da0b28c39d015af618cc9f14ff1aa4830ca063302ede895a;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.10.0a0+b558c986e8.nv25.11:920b26309ca8e6879d2348b7d0cc82eaf6f865f7474e8bf27dcb8a57b24f16be",
+        "flashinfer_version": "0.0.0+unknown",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "before_metadata": {
+        "cublas_version": "13.4.1",
+        "cuda_version": "13.2",
+        "cudnn_frontend_version": "1.23.0",
+        "cudnn_version": "92200",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.15.post1:b49bba16065c33caa94106d41959957b78d3145a76b4573acdfa292b0557c315;nvidia-cutlass-dsl-libs-base==4.4.2:f56a0ca254f498f41e32166363d984e09a2157268801f0f574167f8c84d65222;nvidia-cutlass-dsl-libs-base==4.8.0:3c40f1813c356469f8fa3951b9b8cba70905d8e95b2481ce7ff9e07d5ab7f33c;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.4.2:1e653ef73854e9c52d12359af1649acdfa9dcea94b87528952b8f7976302c3b5;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.12.0a0+5aff3928d8.nv26.5.50603568:53a086783243a50328b50f9fc6da9b8fbd0846ea1ff9bf8c0bd34e3390078f3a",
+        "flashinfer_version": "0.7.2",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "entries_sha256": "3cefa90d9c9d52fdeea0c8081bba65923fb5a50207b7382c1a8bed5558293198",
+      "kind": "native",
+      "path": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/rebound/before/ep-v3-w4a16.json"
+    },
+    "ep-v41-flash-w4a16": {
+      "after_metadata": {
+        "cublas_version": "13.1.0",
+        "cuda_version": "13.0",
+        "cudnn_frontend_version": "1.15.0",
+        "cudnn_version": "91500",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.14.post1:ee79bcacf86a36c5c89e0c79dda6a5759e2e0254ade4eb8cd7f197466759db03;nvidia-cutlass-dsl-libs-base==4.8.0:d17822a92e3abc02da0b28c39d015af618cc9f14ff1aa4830ca063302ede895a;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.10.0a0+b558c986e8.nv25.11:920b26309ca8e6879d2348b7d0cc82eaf6f865f7474e8bf27dcb8a57b24f16be",
+        "flashinfer_version": "0.0.0+unknown",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "before_metadata": {
+        "cublas_version": "13.4.1",
+        "cuda_version": "13.2",
+        "cudnn_frontend_version": "1.23.0",
+        "cudnn_version": "92200",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.15.post1:b49bba16065c33caa94106d41959957b78d3145a76b4573acdfa292b0557c315;nvidia-cutlass-dsl-libs-base==4.4.2:f56a0ca254f498f41e32166363d984e09a2157268801f0f574167f8c84d65222;nvidia-cutlass-dsl-libs-base==4.8.0:3c40f1813c356469f8fa3951b9b8cba70905d8e95b2481ce7ff9e07d5ab7f33c;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.4.2:1e653ef73854e9c52d12359af1649acdfa9dcea94b87528952b8f7976302c3b5;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.12.0a0+5aff3928d8.nv26.5.50603568:53a086783243a50328b50f9fc6da9b8fbd0846ea1ff9bf8c0bd34e3390078f3a",
+        "flashinfer_version": "0.7.2",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "entries_sha256": "ba9af13cbebbe02398884951698f92ee47caa61050d6d79f868d275ca0e46843",
+      "kind": "native",
+      "path": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/rebound/before/ep-v41-flash-w4a16.json"
+    },
+    "tp-kimi-k3-w4a16": {
+      "after_metadata": {
+        "cublas_version": "13.1.0",
+        "cuda_version": "13.0",
+        "cudnn_frontend_version": "1.15.0",
+        "cudnn_version": "91500",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.14.post1:ee79bcacf86a36c5c89e0c79dda6a5759e2e0254ade4eb8cd7f197466759db03;nvidia-cutlass-dsl-libs-base==4.8.0:d17822a92e3abc02da0b28c39d015af618cc9f14ff1aa4830ca063302ede895a;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.10.0a0+b558c986e8.nv25.11:920b26309ca8e6879d2348b7d0cc82eaf6f865f7474e8bf27dcb8a57b24f16be",
+        "flashinfer_version": "0.0.0+unknown",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "before_metadata": {
+        "cublas_version": "13.4.1",
+        "cuda_version": "13.2",
+        "cudnn_frontend_version": "1.23.0",
+        "cudnn_version": "92200",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.15.post1:b49bba16065c33caa94106d41959957b78d3145a76b4573acdfa292b0557c315;nvidia-cutlass-dsl-libs-base==4.4.2:f56a0ca254f498f41e32166363d984e09a2157268801f0f574167f8c84d65222;nvidia-cutlass-dsl-libs-base==4.8.0:3c40f1813c356469f8fa3951b9b8cba70905d8e95b2481ce7ff9e07d5ab7f33c;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.4.2:1e653ef73854e9c52d12359af1649acdfa9dcea94b87528952b8f7976302c3b5;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.12.0a0+5aff3928d8.nv26.5.50603568:53a086783243a50328b50f9fc6da9b8fbd0846ea1ff9bf8c0bd34e3390078f3a",
+        "flashinfer_version": "0.7.2",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "entries_sha256": "edc85feb349d6476118b671a78fa66ac4691c06985162329b4152d7ed1aa71c5",
+      "kind": "native",
+      "path": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/rebound/before/tp-kimi-k3-w4a16.json"
+    },
+    "tp-nemo3-ultra-w4a16": {
+      "after_metadata": {
+        "cublas_version": "13.1.0",
+        "cuda_version": "13.0",
+        "cudnn_frontend_version": "1.15.0",
+        "cudnn_version": "91500",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.14.post1:ee79bcacf86a36c5c89e0c79dda6a5759e2e0254ade4eb8cd7f197466759db03;nvidia-cutlass-dsl-libs-base==4.8.0:d17822a92e3abc02da0b28c39d015af618cc9f14ff1aa4830ca063302ede895a;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.10.0a0+b558c986e8.nv25.11:920b26309ca8e6879d2348b7d0cc82eaf6f865f7474e8bf27dcb8a57b24f16be",
+        "flashinfer_version": "0.0.0+unknown",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "before_metadata": {
+        "cublas_version": "13.4.1",
+        "cuda_version": "13.2",
+        "cudnn_frontend_version": "1.23.0",
+        "cudnn_version": "92200",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.15.post1:b49bba16065c33caa94106d41959957b78d3145a76b4573acdfa292b0557c315;nvidia-cutlass-dsl-libs-base==4.4.2:f56a0ca254f498f41e32166363d984e09a2157268801f0f574167f8c84d65222;nvidia-cutlass-dsl-libs-base==4.8.0:3c40f1813c356469f8fa3951b9b8cba70905d8e95b2481ce7ff9e07d5ab7f33c;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.4.2:1e653ef73854e9c52d12359af1649acdfa9dcea94b87528952b8f7976302c3b5;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.12.0a0+5aff3928d8.nv26.5.50603568:53a086783243a50328b50f9fc6da9b8fbd0846ea1ff9bf8c0bd34e3390078f3a",
+        "flashinfer_version": "0.7.2",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "entries_sha256": "c7425a44d1edff1457f7b97524456470d8432a83b74a4f82796192bb6fa6524c",
+      "kind": "native",
+      "path": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/rebound/before/tp-nemo3-ultra-w4a16.json"
+    },
+    "tp-v3-w4a16": {
+      "after_metadata": {
+        "cublas_version": "13.1.0",
+        "cuda_version": "13.0",
+        "cudnn_frontend_version": "1.15.0",
+        "cudnn_version": "91500",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.14.post1:ee79bcacf86a36c5c89e0c79dda6a5759e2e0254ade4eb8cd7f197466759db03;nvidia-cutlass-dsl-libs-base==4.8.0:d17822a92e3abc02da0b28c39d015af618cc9f14ff1aa4830ca063302ede895a;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.10.0a0+b558c986e8.nv25.11:920b26309ca8e6879d2348b7d0cc82eaf6f865f7474e8bf27dcb8a57b24f16be",
+        "flashinfer_version": "0.0.0+unknown",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "before_metadata": {
+        "cublas_version": "13.4.1",
+        "cuda_version": "13.2",
+        "cudnn_frontend_version": "1.23.0",
+        "cudnn_version": "92200",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.15.post1:b49bba16065c33caa94106d41959957b78d3145a76b4573acdfa292b0557c315;nvidia-cutlass-dsl-libs-base==4.4.2:f56a0ca254f498f41e32166363d984e09a2157268801f0f574167f8c84d65222;nvidia-cutlass-dsl-libs-base==4.8.0:3c40f1813c356469f8fa3951b9b8cba70905d8e95b2481ce7ff9e07d5ab7f33c;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.4.2:1e653ef73854e9c52d12359af1649acdfa9dcea94b87528952b8f7976302c3b5;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.12.0a0+5aff3928d8.nv26.5.50603568:53a086783243a50328b50f9fc6da9b8fbd0846ea1ff9bf8c0bd34e3390078f3a",
+        "flashinfer_version": "0.7.2",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "entries_sha256": "b0d018ecac17a5316df4f96fb8c7c65e1390bdb297e57437a08bde05cc299b06",
+      "kind": "native",
+      "path": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/rebound/before/tp-v3-w4a16.json"
+    },
+    "tp-v41-flash-w4a16": {
+      "after_metadata": {
+        "cublas_version": "13.1.0",
+        "cuda_version": "13.0",
+        "cudnn_frontend_version": "1.15.0",
+        "cudnn_version": "91500",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.14.post1:ee79bcacf86a36c5c89e0c79dda6a5759e2e0254ade4eb8cd7f197466759db03;nvidia-cutlass-dsl-libs-base==4.8.0:d17822a92e3abc02da0b28c39d015af618cc9f14ff1aa4830ca063302ede895a;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.10.0a0+b558c986e8.nv25.11:920b26309ca8e6879d2348b7d0cc82eaf6f865f7474e8bf27dcb8a57b24f16be",
+        "flashinfer_version": "0.0.0+unknown",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "before_metadata": {
+        "cublas_version": "13.4.1",
+        "cuda_version": "13.2",
+        "cudnn_frontend_version": "1.23.0",
+        "cudnn_version": "92200",
+        "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.15.post1:b49bba16065c33caa94106d41959957b78d3145a76b4573acdfa292b0557c315;nvidia-cutlass-dsl-libs-base==4.4.2:f56a0ca254f498f41e32166363d984e09a2157268801f0f574167f8c84d65222;nvidia-cutlass-dsl-libs-base==4.8.0:3c40f1813c356469f8fa3951b9b8cba70905d8e95b2481ce7ff9e07d5ab7f33c;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.4.2:1e653ef73854e9c52d12359af1649acdfa9dcea94b87528952b8f7976302c3b5;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.12.0a0+5aff3928d8.nv26.5.50603568:53a086783243a50328b50f9fc6da9b8fbd0846ea1ff9bf8c0bd34e3390078f3a",
+        "flashinfer_version": "0.7.2",
+        "gpu": "NVIDIA B300 SXM6 AC"
+      },
+      "entries_sha256": "93797964ad1ce822011ee77b37a6f361096c1de7fed6501e1e11418e98c8bd9d",
+      "kind": "native",
+      "path": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/rebound/before/tp-v41-flash-w4a16.json"
+    }
+  },
+  "metadata": {
+    "cublas_version": "13.1.0",
+    "cuda_version": "13.0",
+    "cudnn_frontend_version": "1.15.0",
+    "cudnn_version": "91500",
+    "cutlass_dsl_version": "cpython-312;cpython-312-x86_64-linux-gnu;apache-tvm-ffi==0.1.14.post1:ee79bcacf86a36c5c89e0c79dda6a5759e2e0254ade4eb8cd7f197466759db03;nvidia-cutlass-dsl-libs-base==4.8.0:d17822a92e3abc02da0b28c39d015af618cc9f14ff1aa4830ca063302ede895a;nvidia-cutlass-dsl-libs-core==4.8.0:8ad244e2350bc8a213125ad99470b3baa05f3bee6332e662e1d4e54c74f29ad6;nvidia-cutlass-dsl-libs-cu12==4.8.0:4c20e83a56b1aa7e9e73f6799bdc61c3399deb643e1d5f1be4262baf1d21344a;nvidia-cutlass-dsl-libs-cu13==4.8.0:bb352a96ad6967897580523077bc2585901050da7f66418c395cc7faf3b90922;nvidia-cutlass-dsl==4.8.0:cd2781896fd0b2edda300bfc2e4b80f031f23d98a604bec909207e94ab1c6164;torch==2.10.0a0+b558c986e8.nv25.11:920b26309ca8e6879d2348b7d0cc82eaf6f865f7474e8bf27dcb8a57b24f16be",
+    "flashinfer_version": "0.0.0+unknown",
+    "gpu": "NVIDIA B300 SXM6 AC"
+  },
+  "no_retuning": true,
+  "role": "before"
+}

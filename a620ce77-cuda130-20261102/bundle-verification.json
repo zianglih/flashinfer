@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "before_head": "002529e17b22567a071091053c6c4dc2a55e050e",
+  "fresh_cases": 104,
+  "retention_cases": 88,
+  "fresh_samples": 41600,
+  "audit_sha256": "dc0f950a26b8f1904a157ec87d9a3d05fa0c6e2b38c64c2e6a42e663181f05a5",
+  "report_manifest_sha256": "730b20076cf7cc15c5b9de9bc605d10ba8ec14dbd6a06bcb0abd7fbe272fb758",
+  "bundle_manifest_sha256": "712aa3ad3c88013c18408fc1b72f57a9a851a1bfaeb029fec9e34b20710c043e",
+  "peer_sha256": "5fe23a7d23a3fcb55573507ecddfceb2442bcad029c2afb1cbefa98790d9760e",
+  "visual_review_sha256": "26760ec07bbfff2bd8a31c1784fb283bf9563b1f6ff827afa90b68559bc59e2d",
+  "archives": {
+    "cuda130-w4a16-raw-ep.tar.xz": "89333080b862eb42b14ad9e3c68381898aa3e81a51243f734f8fc6577c198b3b",
+    "cuda130-w4a16-raw-tp.tar.xz": "6aeb26ed1d68c1c2175a362db589b3701d9f562382873a6eb86e47530fceb9b6",
+    "cuda130-w4a16-reproduction.tar.xz": "e0e393bbcba6dcb1328f29cc15d0b92645622267fdd6a358fa527eb9559cfa56"
+  },
+  "every_archive_member_verified": true,
+  "native_stdout_logs": 32,
+  "boundary": "Read-only final guard; no public writes. Parent owns execution of the publisher."
+}

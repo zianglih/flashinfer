@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "audit_sha256": "dc0f950a26b8f1904a157ec87d9a3d05fa0c6e2b38c64c2e6a42e663181f05a5",
+  "audit": "/Users/ziangli/playground/projects/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/audits/final/audit.json",
+  "sources": {
+    "before": "002529e17b22567a071091053c6c4dc2a55e050e",
+    "after": "a620ce7790b32f7f0ae524a811417d2c6cee1152"
+  },
+  "fresh_cases": 104,
+  "retention_cases": 88,
+  "fresh_samples": 41600,
+  "script_sha256": "e7b2b58abd10d0c29dcd5589ca2f3566ab3280342e48e169c7082aade65b0ff3",
+  "raw_tables_parsed": false,
+  "outputs": {
+    "tables.md": "e3c2a34e6eb00b5137baa5f1d50fd48cfe5df73f066f520130b2ba3a1ced3da1",
+    "tables.csv": "f7b3e10dcfe87dc04fe20b353645eafac0caacde791235845cf96055a8210d4b",
+    "native-output-manifest.json": "342d5b90c47ff29c7808c8b2d9c8f2667ada5cd6e09882333ba71536216bdab8",
+    "cuda130-w4a16-before-after.png": "8023467548cd9dffc2ac3521a5aee4ec0cb23b1a199e40c57ff233cb672878a9",
+    "cuda130-w4a16-before-after.svg": "693e7210af2d697bd1fbdc234db29c6a312f8b2782fefa2fea83bf850da8ac73",
+    "cuda130-w4a16-before-after-manifest.json": "b591cdc51c6a98e6b1547a4b6f1c4b368a2c9c77b88aebb0e7482a0c0125b65b"
+  }
+}

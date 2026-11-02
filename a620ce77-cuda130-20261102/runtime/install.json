@@ -1,0 +1,31 @@
+{
+  "started": 1793636831.5047872,
+  "finished": 1793636860.9382749,
+  "hostname": "hu-wtc-5",
+  "image": "nvcr.io/nvidia/pytorch:25.11-py3",
+  "cluster": "c3",
+  "namespace": "ziangli",
+  "devbox": "fi-w4a16-cu130-1102",
+  "command": [
+    "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+    "-m",
+    "pip",
+    "install",
+    "--disable-pip-version-check",
+    "-r",
+    "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/runtime/pins.txt"
+  ],
+  "returncode": 0,
+  "pins_sha256": "bb2d71eab8bb38a72b3f3198c728b4e17b6ef01be7cfe8138a1f83c18da423a1",
+  "system_before": {
+    "torch": "2.10.0a0+b558c986e8.nv25.11",
+    "torch_cuda": "13.0",
+    "nvcc": "/usr/local/cuda-13.0/bin/nvcc",
+    "nvcc_sha256": "b8e2347d9d7fcadf8812a27324d515de99d033d3e48611811ece7e66d7895f8a",
+    "nvcc_version": "nvcc: NVIDIA (R) Cuda compiler driver\nCopyright (c) 2005-2025 NVIDIA Corporation\nBuilt on Wed_Aug_20_01:58:59_PM_PDT_2025\nCuda compilation tools, release 13.0, V13.0.88\nBuild cuda_13.0.r13.0/compiler.36424714_0"
+  },
+  "python": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+  "torch_unchanged": true,
+  "nvcc_unchanged": true,
+  "boundary": "Isolated system-site-packages venv; exact CUDA13.0 CUPTI/bindings pins. Native Torch and system NVCC preserved. No source/cache reuse or GPU benchmark launched."
+}

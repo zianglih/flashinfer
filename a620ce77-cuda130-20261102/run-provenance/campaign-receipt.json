@@ -1,0 +1,175 @@
+{
+  "complete": true,
+  "started": 1793639522.0631063,
+  "config": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/config.json",
+  "config_sha256": "cbb23666fb568e31357e3b26b82daffe9c5907d5b2e1730d8f3a3f944e08ff64",
+  "smoke": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/smoke/ep-v3-w4a16/receipt.json",
+  "jobs": [
+    {
+      "job": "ep-v3-w4a16",
+      "gpu": 0,
+      "pid": 15155,
+      "command": [
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/run_pair.py",
+        "--config",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/config.json",
+        "--job",
+        "ep-v3-w4a16",
+        "--gpu",
+        "0"
+      ],
+      "log": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/ep-v3-w4a16.launcher.log",
+      "started": 1793639522.0675344,
+      "returncode": 0,
+      "finished": 1793639722.0407653
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "gpu": 1,
+      "pid": 15156,
+      "command": [
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/run_pair.py",
+        "--config",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/config.json",
+        "--job",
+        "ep-v41-flash-w4a16",
+        "--gpu",
+        "1"
+      ],
+      "log": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/ep-v41-flash-w4a16.launcher.log",
+      "started": 1793639522.0732584,
+      "returncode": 0,
+      "finished": 1793639722.0432968
+    },
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "gpu": 2,
+      "pid": 15157,
+      "command": [
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/run_pair.py",
+        "--config",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/config.json",
+        "--job",
+        "ep-kimi-k3-w4a16",
+        "--gpu",
+        "2"
+      ],
+      "log": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/ep-kimi-k3-w4a16.launcher.log",
+      "started": 1793639522.0777433,
+      "returncode": 0,
+      "finished": 1793639769.2146516
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "gpu": 3,
+      "pid": 15158,
+      "command": [
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/run_pair.py",
+        "--config",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/config.json",
+        "--job",
+        "ep-nemo3-ultra-w4a16",
+        "--gpu",
+        "3"
+      ],
+      "log": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/ep-nemo3-ultra-w4a16.launcher.log",
+      "started": 1793639522.0815053,
+      "returncode": 0,
+      "finished": 1793639769.217474
+    },
+    {
+      "job": "tp-v3-w4a16",
+      "gpu": 4,
+      "pid": 15159,
+      "command": [
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/run_pair.py",
+        "--config",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/config.json",
+        "--job",
+        "tp-v3-w4a16",
+        "--gpu",
+        "4"
+      ],
+      "log": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/tp-v3-w4a16.launcher.log",
+      "started": 1793639522.0855126,
+      "returncode": 0,
+      "finished": 1793639769.2195892
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "gpu": 5,
+      "pid": 15160,
+      "command": [
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/run_pair.py",
+        "--config",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/config.json",
+        "--job",
+        "tp-v41-flash-w4a16",
+        "--gpu",
+        "5"
+      ],
+      "log": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/tp-v41-flash-w4a16.launcher.log",
+      "started": 1793639522.0904272,
+      "returncode": 0,
+      "finished": 1793639769.2218812
+    },
+    {
+      "job": "tp-kimi-k3-w4a16",
+      "gpu": 6,
+      "pid": 15161,
+      "command": [
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/run_pair.py",
+        "--config",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/config.json",
+        "--job",
+        "tp-kimi-k3-w4a16",
+        "--gpu",
+        "6"
+      ],
+      "log": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/tp-kimi-k3-w4a16.launcher.log",
+      "started": 1793639522.0949688,
+      "returncode": 0,
+      "finished": 1793639769.2233286
+    },
+    {
+      "job": "tp-nemo3-ultra-w4a16",
+      "gpu": 7,
+      "pid": 15162,
+      "command": [
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/venv/bin/python",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/run_pair.py",
+        "--config",
+        "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/payload/harness/config.json",
+        "--job",
+        "tp-nemo3-ultra-w4a16",
+        "--gpu",
+        "7"
+      ],
+      "log": "/data/ziangli/flashinfer-moe-gather-pipeline/cuda130-w4a16-20261102/tp-nemo3-ultra-w4a16.launcher.log",
+      "started": 1793639522.099127,
+      "returncode": 0,
+      "finished": 1793639769.2251997
+    }
+  ],
+  "all_jobs_passed": true,
+  "source_postflight": {
+    "after": {
+      "head": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+      "files": 31070,
+      "mismatches": []
+    },
+    "before": {
+      "head": "002529e17b22567a071091053c6c4dc2a55e050e",
+      "files": 31066,
+      "mismatches": []
+    }
+  },
+  "finished": 1793639850.579831
+}
