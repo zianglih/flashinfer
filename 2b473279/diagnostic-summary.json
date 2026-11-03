@@ -1,0 +1,5635 @@
+{
+  "passed": true,
+  "head": "2b4732791a3ce48bc3ae6c030a283fab73854e0e",
+  "control": "a620ce7790b32f7f0ae524a811417d2c6cee1152",
+  "cells": 12,
+  "raw_samples": 4800,
+  "phases": [
+    "candidate",
+    "control",
+    "control",
+    "candidate"
+  ],
+  "speedup_percent": 0.4179430794039707,
+  "negative_cells": 6,
+  "min_speedup_percent": -2.6359403569208295,
+  "max_speedup_percent": 4.661404910254863,
+  "clock_exception_quartiles": 35,
+  "rows": [
+    {
+      "job": "ep-kimi-k3-w4a16",
+      "tokens": 4096,
+      "backend": "CuteDSL W4A16",
+      "gpu": 2,
+      "original_speedup_percent": -6.170159204729176,
+      "speedup_percent": 1.7376465122351137,
+      "phase_us": {
+        "control": [
+          555.5245,
+          538.7080000000001
+        ],
+        "candidate": [
+          537.4125,
+          538.004
+        ]
+      },
+      "control_us": 547.0516359046923,
+      "candidate_us": 537.7081686658665,
+      "repeat_spread_percent": {
+        "control": 3.12163546856552,
+        "candidate": 0.1100644290931152
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237802,
+              "median": 237802.0,
+              "max": 237802
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237802,
+              "median": 237802.0,
+              "max": 237802
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237802,
+              "median": 237802.0,
+              "max": 237802
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 1597,
+              "median": 1597,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237802,
+              "median": 237802,
+              "max": 286372
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237493,
+              "median": 237493,
+              "max": 244686
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 244686,
+              "median": 244686,
+              "max": 244686
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 244686,
+              "median": 244686.0,
+              "max": 244686
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 244686,
+              "median": 244686,
+              "max": 244686
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236852,
+              "median": 236852,
+              "max": 236852
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236852,
+              "median": 236852.0,
+              "max": 258842
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7,
+              "4": 1
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258842,
+              "median": 258842,
+              "max": 258842
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "4": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258842,
+              "median": 258842.0,
+              "max": 258842
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "4": 8
+            },
+            "samples": 8
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236859,
+              "median": 241941.5,
+              "max": 247024
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.5,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 247024,
+              "median": 247024.0,
+              "max": 247024
+            },
+            "temperature_c": {
+              "min": 33,
+              "median": 33.0,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 247024,
+              "median": 247024.0,
+              "max": 247024
+            },
+            "temperature_c": {
+              "min": 33,
+              "median": 33.0,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 247024,
+              "median": 247024,
+              "max": 247024
+            },
+            "temperature_c": {
+              "min": 33,
+              "median": 33,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 8192,
+      "backend": "CuteDSL MXFP4x8",
+      "gpu": 4,
+      "original_speedup_percent": 0.0792838344074287,
+      "speedup_percent": -1.1944166946766033,
+      "phase_us": {
+        "control": [
+          413.65049999999997,
+          413.9705
+        ],
+        "candidate": [
+          423.827,
+          413.858
+        ]
+      },
+      "control_us": 413.8104690679659,
+      "candidate_us": 418.81283954291564,
+      "repeat_spread_percent": {
+        "control": 0.07735999352112,
+        "candidate": 2.4087972203026053
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236230,
+              "median": 236230.0,
+              "max": 236230
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36.0,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 6
+            },
+            "samples": 6
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236230,
+              "median": 236230,
+              "max": 236230
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236230,
+              "median": 236230.0,
+              "max": 236230
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36.0,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 6
+            },
+            "samples": 6
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236230,
+              "median": 236230,
+              "max": 236230
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236538,
+              "median": 236538,
+              "max": 236538
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236538,
+              "median": 236538.0,
+              "max": 236538
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 6
+            },
+            "samples": 6
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236538,
+              "median": 236538.0,
+              "max": 236538
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 6
+            },
+            "samples": 6
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236538,
+              "median": 236538,
+              "max": 236538
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236576,
+              "median": 236576,
+              "max": 236576
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236576,
+              "median": 236576.0,
+              "max": 236576
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 6
+            },
+            "samples": 6
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236576,
+              "median": 236576,
+              "max": 236576
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236576,
+              "median": 236576,
+              "max": 236576
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236882,
+              "median": 236882.0,
+              "max": 236882
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 6
+            },
+            "samples": 6
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236882,
+              "median": 236882,
+              "max": 236882
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236882,
+              "median": 236882.0,
+              "max": 236882
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 6
+            },
+            "samples": 6
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236882,
+              "median": 236882,
+              "max": 236882
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-mxfp",
+      "tokens": 8192,
+      "backend": "CuteDSL MXFP8",
+      "gpu": 4,
+      "original_speedup_percent": -2.5258870973192016,
+      "speedup_percent": 0.12225794148423841,
+      "phase_us": {
+        "control": [
+          471.139,
+          471.8745
+        ],
+        "candidate": [
+          470.563,
+          471.299
+        ]
+      },
+      "control_us": 471.50660658733085,
+      "candidate_us": 470.93085621670616,
+      "repeat_spread_percent": {
+        "control": 0.15611104153976374,
+        "candidate": 0.1564083873997646
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239540,
+              "median": 239540,
+              "max": 239540
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239540,
+              "median": 239540.0,
+              "max": 239540
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239540,
+              "median": 239540,
+              "max": 239540
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239540,
+              "median": 239540,
+              "max": 239540
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239423,
+              "median": 239423,
+              "max": 239423
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239423,
+              "median": 239423,
+              "max": 239423
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239423,
+              "median": 239423,
+              "max": 239423
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239423,
+              "median": 239423,
+              "max": 239423
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 247449,
+              "median": 247449,
+              "max": 247449
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 247449,
+              "median": 247449,
+              "max": 247449
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 247449,
+              "median": 247449,
+              "max": 247449
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 247449,
+              "median": 247449.0,
+              "max": 247449
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40.0,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238603,
+              "median": 238603,
+              "max": 238603
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238603,
+              "median": 262404,
+              "max": 262404
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 262404,
+              "median": 262404,
+              "max": 262404
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 7
+            },
+            "samples": 7
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 262404,
+              "median": 262404.0,
+              "max": 262404
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-nemo3-ultra-w4a16",
+      "tokens": 16384,
+      "backend": "CuteDSL W4A16",
+      "gpu": 6,
+      "original_speedup_percent": -5.794506616574746,
+      "speedup_percent": -0.28723648749504616,
+      "phase_us": {
+        "control": [
+          1507.477,
+          1527.8925
+        ],
+        "candidate": [
+          1531.6525,
+          1512.4524999999999
+        ]
+      },
+      "control_us": 1517.6504216131264,
+      "candidate_us": 1522.0222247905085,
+      "repeat_spread_percent": {
+        "control": 1.3542826855732937,
+        "candidate": 1.2694613549847134
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 244291,
+              "median": 244291,
+              "max": 244291
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 19
+            },
+            "samples": 19
+          },
+          {
+            "sm_mhz": {
+              "min": 1650,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 244291,
+              "median": 244291.0,
+              "max": 244291
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36.0,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 20
+            },
+            "samples": 20
+          },
+          {
+            "sm_mhz": {
+              "min": 1650,
+              "median": 1650,
+              "max": 1650
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 325650,
+              "median": 325650,
+              "max": 325650
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 21
+            },
+            "samples": 21
+          },
+          {
+            "sm_mhz": {
+              "min": 1650,
+              "median": 1650.0,
+              "max": 1650
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 325650,
+              "median": 325650.0,
+              "max": 325650
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 22
+            },
+            "samples": 22
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258399,
+              "median": 258399,
+              "max": 258399
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 19
+            },
+            "samples": 19
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258399,
+              "median": 258399,
+              "max": 258399
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 19
+            },
+            "samples": 19
+          },
+          {
+            "sm_mhz": {
+              "min": 1620,
+              "median": 1620.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258399,
+              "median": 342169.0,
+              "max": 342169
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 40.0,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 8,
+              "4": 12
+            },
+            "samples": 20
+          },
+          {
+            "sm_mhz": {
+              "min": 1620,
+              "median": 1620.0,
+              "max": 1620
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 342169,
+              "median": 342169.0,
+              "max": 342169
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40.0,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "4": 22
+            },
+            "samples": 22
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239718,
+              "median": 239718.0,
+              "max": 239718
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 18
+            },
+            "samples": 18
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239718,
+              "median": 304202.0,
+              "max": 304202
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 20
+            },
+            "samples": 20
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 304202,
+              "median": 304202.0,
+              "max": 304202
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41.0,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 22
+            },
+            "samples": 22
+          },
+          {
+            "sm_mhz": {
+              "min": 1350,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 304202,
+              "median": 304202,
+              "max": 395136
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 15,
+              "4": 6
+            },
+            "samples": 21
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 242805,
+              "median": 242805,
+              "max": 242805
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 19
+            },
+            "samples": 19
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 303626,
+              "median": 303626.0,
+              "max": 303626
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 39.0,
+              "max": 39
+            },
+            "available": true,
+            "reasons": {
+              "0": 1,
+              "4": 19
+            },
+            "samples": 20
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 303626,
+              "median": 303626,
+              "max": 303626
+            },
+            "temperature_c": {
+              "min": 39,
+              "median": 39,
+              "max": 39
+            },
+            "available": true,
+            "reasons": {
+              "4": 21
+            },
+            "samples": 21
+          },
+          {
+            "sm_mhz": {
+              "min": 1425,
+              "median": 1425.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 303626,
+              "median": 398340.0,
+              "max": 398340
+            },
+            "temperature_c": {
+              "min": 39,
+              "median": 43.0,
+              "max": 43
+            },
+            "available": true,
+            "reasons": {
+              "4": 22
+            },
+            "samples": 22
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-v3-mxfp",
+      "tokens": 16384,
+      "backend": "CuteDSL MXFP4x8",
+      "gpu": 0,
+      "original_speedup_percent": -0.4055861927911075,
+      "speedup_percent": 3.011680148431628,
+      "phase_us": {
+        "control": [
+          660.7235000000001,
+          681.827
+        ],
+        "candidate": [
+          671.571,
+          632.163
+        ]
+      },
+      "control_us": 671.1923135990907,
+      "candidate_us": 651.5691352980127,
+      "repeat_spread_percent": {
+        "control": 3.1939986999100167,
+        "candidate": 6.233835260842535
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 245079,
+              "median": 245079,
+              "max": 245079
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 245079,
+              "median": 245079.0,
+              "max": 245079
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 245079,
+              "median": 245079.0,
+              "max": 245079
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 245079,
+              "median": 245079.0,
+              "max": 245079
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237441,
+              "median": 237441,
+              "max": 249268
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 249268,
+              "median": 249268,
+              "max": 249268
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 249268,
+              "median": 249268,
+              "max": 249268
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 249268,
+              "median": 249268.0,
+              "max": 249268
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35.0,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237518,
+              "median": 237518,
+              "max": 250821
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250821,
+              "median": 250821,
+              "max": 250821
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250821,
+              "median": 250821.0,
+              "max": 250821
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250821,
+              "median": 250821,
+              "max": 250821
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238761,
+              "median": 238761,
+              "max": 238761
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238761,
+              "median": 238761,
+              "max": 238761
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238761,
+              "median": 238761.0,
+              "max": 238761
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35.0,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238761,
+              "median": 238761.0,
+              "max": 238761
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35.0,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-v3-mxfp",
+      "tokens": 16384,
+      "backend": "CuteDSL MXFP8",
+      "gpu": 0,
+      "original_speedup_percent": -2.234034413414332,
+      "speedup_percent": 4.661404910254863,
+      "phase_us": {
+        "control": [
+          767.428,
+          738.067
+        ],
+        "candidate": [
+          739.6675,
+          699.075
+        ]
+      },
+      "control_us": 752.6043327512804,
+      "candidate_us": 719.0848750756061,
+      "repeat_spread_percent": {
+        "control": 3.9780941296657435,
+        "candidate": 5.806601580660153
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239731,
+              "median": 239731.0,
+              "max": 239731
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239731,
+              "median": 239731,
+              "max": 239731
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239731,
+              "median": 292917.0,
+              "max": 292917
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 36.0,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 292917,
+              "median": 292917.0,
+              "max": 292917
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36.0,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 240418,
+              "median": 240418.0,
+              "max": 240418
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 240418,
+              "median": 240418,
+              "max": 240418
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 240418,
+              "median": 240418,
+              "max": 240418
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 1417,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 240418,
+              "median": 240418.0,
+              "max": 319351
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 240447,
+              "median": 240447.0,
+              "max": 240447
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35.0,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 240447,
+              "median": 240447,
+              "max": 240447
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 240447,
+              "median": 240447,
+              "max": 240447
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 318528,
+              "median": 318528.0,
+              "max": 318528
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 42.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238376,
+              "median": 238376.0,
+              "max": 238376
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35.0,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238376,
+              "median": 238376.0,
+              "max": 238376
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35.0,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 296771,
+              "median": 296771.0,
+              "max": 296771
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 296771,
+              "median": 296771.0,
+              "max": 296771
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-v3-w4a16",
+      "tokens": 8192,
+      "backend": "CuteDSL W4A16",
+      "gpu": 2,
+      "original_speedup_percent": -3.216554821148754,
+      "speedup_percent": 1.0381459326084919,
+      "phase_us": {
+        "control": [
+          564.4525,
+          552.7239999999999
+        ],
+        "candidate": [
+          551.492,
+          554.148
+        ]
+      },
+      "control_us": 558.5574667032927,
+      "candidate_us": 552.818404917926,
+      "repeat_spread_percent": {
+        "control": 2.121945129938285,
+        "candidate": 0.4816026343083868
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 252758,
+              "median": 252758.0,
+              "max": 252758
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 252758,
+              "median": 252758,
+              "max": 252758
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 252758,
+              "median": 252758.0,
+              "max": 252758
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 252758,
+              "median": 252758,
+              "max": 252758
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238777,
+              "median": 238777.0,
+              "max": 238777
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238777,
+              "median": 238777.0,
+              "max": 238777
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238777,
+              "median": 238777,
+              "max": 238777
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 1537,
+              "median": 1537,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238777,
+              "median": 303499,
+              "max": 303499
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 41,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236476,
+              "median": 236476.0,
+              "max": 236476
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236476,
+              "median": 236476.0,
+              "max": 236476
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236476,
+              "median": 274368,
+              "max": 274368
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 274368,
+              "median": 274368,
+              "max": 274368
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236258,
+              "median": 236258.0,
+              "max": 236258
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236258,
+              "median": 236258.0,
+              "max": 236258
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 8
+            },
+            "samples": 8
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236258,
+              "median": 236258,
+              "max": 269336
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 269336,
+              "median": 269336,
+              "max": 269336
+            },
+            "temperature_c": {
+              "min": 33,
+              "median": 33,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-v41-flash-mxfp",
+      "tokens": 16384,
+      "backend": "CuteDSL MXFP4x8",
+      "gpu": 4,
+      "original_speedup_percent": -2.735696420065914,
+      "speedup_percent": -2.6359403569208295,
+      "phase_us": {
+        "control": [
+          811.5409999999999,
+          761.797
+        ],
+        "candidate": [
+          805.5889999999999,
+          809.5409999999999
+        ]
+      },
+      "control_us": 786.2757144774345,
+      "candidate_us": 807.5625824968613,
+      "repeat_spread_percent": {
+        "control": 6.529823561920023,
+        "candidate": 0.4905727362215728
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237810,
+              "median": 237810,
+              "max": 237810
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237810,
+              "median": 237810,
+              "max": 237810
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237810,
+              "median": 237810.0,
+              "max": 237810
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36.0,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237810,
+              "median": 327858.0,
+              "max": 327858
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 46.0,
+              "max": 46
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236427,
+              "median": 236427.0,
+              "max": 236427
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236427,
+              "median": 272326.0,
+              "max": 272326
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 42.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 272326,
+              "median": 272326,
+              "max": 272326
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 272326,
+              "median": 272326,
+              "max": 272326
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237095,
+              "median": 257517,
+              "max": 257517
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 257517,
+              "median": 257517.0,
+              "max": 257517
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 257517,
+              "median": 257517,
+              "max": 257517
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 257517,
+              "median": 257517.0,
+              "max": 257517
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251823,
+              "median": 251823,
+              "max": 251823
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251823,
+              "median": 251823,
+              "max": 251823
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251823,
+              "median": 251823.0,
+              "max": 251823
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251823,
+              "median": 251823.0,
+              "max": 251823
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-v41-flash-mxfp",
+      "tokens": 16384,
+      "backend": "CuteDSL MXFP8",
+      "gpu": 4,
+      "original_speedup_percent": -3.751519779462753,
+      "speedup_percent": -2.141322884813812,
+      "phase_us": {
+        "control": [
+          905.2695,
+          945.8625000000001
+        ],
+        "candidate": [
+          959.0295,
+          932.3420000000001
+        ]
+      },
+      "control_us": 925.3434348628351,
+      "candidate_us": 945.5916042822081,
+      "repeat_spread_percent": {
+        "control": 4.484079050492706,
+        "candidate": 2.862415293958631
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237411,
+              "median": 237411.0,
+              "max": 266723
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 266723,
+              "median": 266723,
+              "max": 266723
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 266723,
+              "median": 266723.0,
+              "max": 266723
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 14
+            },
+            "samples": 14
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 266723,
+              "median": 266723.0,
+              "max": 266723
+            },
+            "temperature_c": {
+              "min": 42,
+              "median": 42.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 14
+            },
+            "samples": 14
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239876,
+              "median": 239876.0,
+              "max": 239876
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239876,
+              "median": 239876,
+              "max": 239876
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 1837,
+              "median": 1837,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239876,
+              "median": 319989,
+              "max": 319989
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 43,
+              "max": 43
+            },
+            "available": true,
+            "reasons": {
+              "0": 5,
+              "4": 8
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 1837,
+              "median": 1837,
+              "max": 1837
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 319989,
+              "median": 319989,
+              "max": 319989
+            },
+            "temperature_c": {
+              "min": 43,
+              "median": 43,
+              "max": 43
+            },
+            "available": true,
+            "reasons": {
+              "4": 15
+            },
+            "samples": 15
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251670,
+              "median": 251670.0,
+              "max": 251670
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251670,
+              "median": 251670,
+              "max": 251670
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251670,
+              "median": 251670,
+              "max": 251670
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 1365,
+              "median": 1365,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251670,
+              "median": 340685,
+              "max": 340685
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 39,
+              "max": 39
+            },
+            "available": true,
+            "reasons": {
+              "0": 15
+            },
+            "samples": 15
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237990,
+              "median": 237990.0,
+              "max": 237990
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 37.0,
+              "max": 37
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237990,
+              "median": 287785,
+              "max": 287785
+            },
+            "temperature_c": {
+              "min": 37,
+              "median": 45,
+              "max": 45
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 287785,
+              "median": 287785,
+              "max": 287785
+            },
+            "temperature_c": {
+              "min": 45,
+              "median": 45,
+              "max": 45
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 287785,
+              "median": 287785,
+              "max": 287785
+            },
+            "temperature_c": {
+              "min": 45,
+              "median": 45,
+              "max": 45
+            },
+            "available": true,
+            "reasons": {
+              "0": 15
+            },
+            "samples": 15
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "tokens": 8192,
+      "backend": "CuteDSL W4A16",
+      "gpu": 6,
+      "original_speedup_percent": -5.974951195011857,
+      "speedup_percent": -0.9695076801627955,
+      "phase_us": {
+        "control": [
+          689.4580000000001,
+          673.138
+        ],
+        "candidate": [
+          674.194,
+          701.9225
+        ]
+      },
+      "control_us": 681.249131525318,
+      "candidate_us": 687.9185547468537,
+      "repeat_spread_percent": {
+        "control": 2.424465711340029,
+        "candidate": 4.112836957908272
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237234,
+              "median": 237234.0,
+              "max": 237234
+            },
+            "temperature_c": {
+              "min": 31,
+              "median": 31.0,
+              "max": 31
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251780,
+              "median": 251780,
+              "max": 251780
+            },
+            "temperature_c": {
+              "min": 33,
+              "median": 33,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251780,
+              "median": 251780.0,
+              "max": 251780
+            },
+            "temperature_c": {
+              "min": 33,
+              "median": 33.0,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251780,
+              "median": 251780,
+              "max": 251780
+            },
+            "temperature_c": {
+              "min": 33,
+              "median": 33,
+              "max": 33
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258696,
+              "median": 258696.0,
+              "max": 258696
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258696,
+              "median": 258696.0,
+              "max": 258696
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258696,
+              "median": 258696,
+              "max": 258696
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258696,
+              "median": 258696.0,
+              "max": 258696
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250208,
+              "median": 250208.0,
+              "max": 250208
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250208,
+              "median": 250208,
+              "max": 250208
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 9
+            },
+            "samples": 9
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250208,
+              "median": 250208,
+              "max": 250208
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250208,
+              "median": 250208.0,
+              "max": 250208
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 237525,
+              "median": 250843.0,
+              "max": 250843
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250843,
+              "median": 250843.0,
+              "max": 250843
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250843,
+              "median": 250843.0,
+              "max": 250843
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34.0,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 10
+            },
+            "samples": 10
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 250843,
+              "median": 250843,
+              "max": 250843
+            },
+            "temperature_c": {
+              "min": 34,
+              "median": 34,
+              "max": 34
+            },
+            "available": true,
+            "reasons": {
+              "0": 11
+            },
+            "samples": 11
+          }
+        ]
+      }
+    },
+    {
+      "job": "ep-v41-flash-w4a16",
+      "tokens": 16384,
+      "backend": "CuteDSL W4A16",
+      "gpu": 6,
+      "original_speedup_percent": -3.957027016320225,
+      "speedup_percent": -0.48145242592713133,
+      "phase_us": {
+        "control": [
+          1518.3890000000001,
+          1507.429
+        ],
+        "candidate": [
+          1539.6039999999998,
+          1501.0765
+        ]
+      },
+      "control_us": 1512.899075246264,
+      "candidate_us": 1520.2182026623677,
+      "repeat_spread_percent": {
+        "control": 0.7270657523505308,
+        "candidate": 2.566657995112176
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251007,
+              "median": 251007.0,
+              "max": 251007
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 18
+            },
+            "samples": 18
+          },
+          {
+            "sm_mhz": {
+              "min": 1335,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 251007,
+              "median": 251007,
+              "max": 251007
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 19
+            },
+            "samples": 19
+          },
+          {
+            "sm_mhz": {
+              "min": 1335,
+              "median": 1335,
+              "max": 1335
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 349783,
+              "median": 349783,
+              "max": 349783
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "0": 1,
+              "4": 20
+            },
+            "samples": 21
+          },
+          {
+            "sm_mhz": {
+              "min": 1335,
+              "median": 1335,
+              "max": 1335
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 349783,
+              "median": 349783,
+              "max": 349783
+            },
+            "temperature_c": {
+              "min": 41,
+              "median": 41,
+              "max": 41
+            },
+            "available": true,
+            "reasons": {
+              "4": 21
+            },
+            "samples": 21
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 246440,
+              "median": 246440,
+              "max": 246440
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 17
+            },
+            "samples": 17
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 246440,
+              "median": 330253,
+              "max": 330253
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 40,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "0": 9,
+              "4": 10
+            },
+            "samples": 19
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 330253,
+              "median": 330253.0,
+              "max": 330253
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40.0,
+              "max": 40
+            },
+            "available": true,
+            "reasons": {
+              "4": 22
+            },
+            "samples": 22
+          },
+          {
+            "sm_mhz": {
+              "min": 1245,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 330253,
+              "median": 330253,
+              "max": 420525
+            },
+            "temperature_c": {
+              "min": 40,
+              "median": 40,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "4": 21
+            },
+            "samples": 21
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 243500,
+              "median": 243500.0,
+              "max": 243500
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 18
+            },
+            "samples": 18
+          },
+          {
+            "sm_mhz": {
+              "min": 1837,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 243500,
+              "median": 243500.0,
+              "max": 309595
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 20
+            },
+            "samples": 20
+          },
+          {
+            "sm_mhz": {
+              "min": 1837,
+              "median": 1837.0,
+              "max": 1837
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 309595,
+              "median": 309595.0,
+              "max": 309595
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 20
+            },
+            "samples": 20
+          },
+          {
+            "sm_mhz": {
+              "min": 1200,
+              "median": 1837.0,
+              "max": 1837
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 309595,
+              "median": 309595.0,
+              "max": 309595
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 22
+            },
+            "samples": 22
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 238934,
+              "median": 238934,
+              "max": 296018
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 17
+            },
+            "samples": 17
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 296018,
+              "median": 296018.0,
+              "max": 296018
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32.0,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 20
+            },
+            "samples": 20
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 296018,
+              "median": 296018,
+              "max": 296018
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 32,
+              "max": 32
+            },
+            "available": true,
+            "reasons": {
+              "0": 21
+            },
+            "samples": 21
+          },
+          {
+            "sm_mhz": {
+              "min": 1305,
+              "median": 1305.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 296018,
+              "median": 388994.0,
+              "max": 388994
+            },
+            "temperature_c": {
+              "min": 32,
+              "median": 42.0,
+              "max": 42
+            },
+            "available": true,
+            "reasons": {
+              "0": 9,
+              "4": 11
+            },
+            "samples": 20
+          }
+        ]
+      }
+    },
+    {
+      "job": "tp-v41-flash-w4a16",
+      "tokens": 8192,
+      "backend": "CuteDSL W4A16",
+      "gpu": 5,
+      "original_speedup_percent": -2.537593301053853,
+      "speedup_percent": 2.4146093614647812,
+      "phase_us": {
+        "control": [
+          993.557,
+          962.597
+        ],
+        "candidate": [
+          946.693,
+          963.173
+        ]
+      },
+      "control_us": 977.9544915429348,
+      "candidate_us": 954.8974483623882,
+      "repeat_spread_percent": {
+        "control": 3.2162992404921376,
+        "candidate": 1.7407966468538483
+      },
+      "clocks": {
+        "0-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239490,
+              "median": 239490.0,
+              "max": 239490
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35.0,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239490,
+              "median": 239490,
+              "max": 301119
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 44
+            },
+            "available": true,
+            "reasons": {
+              "0": 12,
+              "4": 1
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 301119,
+              "median": 301119.0,
+              "max": 301119
+            },
+            "temperature_c": {
+              "min": 44,
+              "median": 44.0,
+              "max": 44
+            },
+            "available": true,
+            "reasons": {
+              "4": 14
+            },
+            "samples": 14
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 301119,
+              "median": 301119.0,
+              "max": 301119
+            },
+            "temperature_c": {
+              "min": 44,
+              "median": 44.0,
+              "max": 44
+            },
+            "available": true,
+            "reasons": {
+              "4": 14
+            },
+            "samples": 14
+          }
+        ],
+        "1-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239698,
+              "median": 239698.0,
+              "max": 239698
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35.0,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 12
+            },
+            "samples": 12
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239698,
+              "median": 239698,
+              "max": 239698
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 35,
+              "max": 35
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 1777,
+              "median": 1777.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 239698,
+              "median": 320351.0,
+              "max": 320351
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 36.0,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 14
+            },
+            "samples": 14
+          },
+          {
+            "sm_mhz": {
+              "min": 1777,
+              "median": 1777,
+              "max": 1777
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 320351,
+              "median": 320351,
+              "max": 320351
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 15
+            },
+            "samples": 15
+          }
+        ],
+        "2-control": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 236537,
+              "median": 253347,
+              "max": 253347
+            },
+            "temperature_c": {
+              "min": 35,
+              "median": 38,
+              "max": 38
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 253347,
+              "median": 253347,
+              "max": 253347
+            },
+            "temperature_c": {
+              "min": 38,
+              "median": 38,
+              "max": 38
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 253347,
+              "median": 253347,
+              "max": 253347
+            },
+            "temperature_c": {
+              "min": 38,
+              "median": 38,
+              "max": 38
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 1455,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 253347,
+              "median": 253347.0,
+              "max": 253347
+            },
+            "temperature_c": {
+              "min": 38,
+              "median": 38.0,
+              "max": 38
+            },
+            "available": true,
+            "reasons": {
+              "0": 14
+            },
+            "samples": 14
+          }
+        ],
+        "3-candidate": [
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258616,
+              "median": 258616,
+              "max": 258616
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258616,
+              "median": 258616,
+              "max": 258616
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 13
+            },
+            "samples": 13
+          },
+          {
+            "sm_mhz": {
+              "min": 2032,
+              "median": 2032.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258616,
+              "median": 258616.0,
+              "max": 258616
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36.0,
+              "max": 36
+            },
+            "available": true,
+            "reasons": {
+              "0": 14
+            },
+            "samples": 14
+          },
+          {
+            "sm_mhz": {
+              "min": 1447,
+              "median": 1447.0,
+              "max": 2032
+            },
+            "memory_mhz": {
+              "min": 3996,
+              "median": 3996.0,
+              "max": 3996
+            },
+            "power_mw": {
+              "min": 258616,
+              "median": 258616.0,
+              "max": 349303
+            },
+            "temperature_c": {
+              "min": 36,
+              "median": 36.0,
+              "max": 45
+            },
+            "available": true,
+            "reasons": {
+              "0": 9,
+              "4": 5
+            },
+            "samples": 14
+          }
+        ]
+      }
+    }
+  ],
+  "plan_sha256": "3a6c3ea10284a4fcfa64b0a66c2ec6d3a485badc674c7dd7c1c19c70717b3666",
+  "receipt_sha256": "37f8adc175d36613cc64b4f57653add9958ca60fc98e5e91181c4e8c740b341f",
+  "source_postflight": {
+    "candidate": {
+      "files": 34759,
+      "manifest_sha256": "17c448a2feb6f1d4109d4037cdb322f082e941f1f60e9fd76976337e260df3c4"
+    },
+    "control": {
+      "files": 31070,
+      "manifest_sha256": "9a0d762fc74f0fed5cdd9168e0441f0f72906cc4ff069ce32770e19a3d079c0d"
+    }
+  },
+  "boundary": "Separate predeclared diagnostic only; serial originalGPUs and stockclocks/power with reversedACCA order. Every originalmain and repeat sample retained. No original publication value replaced; no source/compiler changes."
+}

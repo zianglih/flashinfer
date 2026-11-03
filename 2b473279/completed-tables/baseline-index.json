@@ -1,0 +1,310 @@
+{
+  "passed": true,
+  "candidate_measured_head": "326c4a793085e79b64b9c7fd79e77320c220ccba",
+  "selection": "Final saved pass only: last baseline_evidence path (a2 for EP, c2-trtllm for TP). Do not use geometric baseline_ms for native final-pass table replay. Current heatmap aggregation remains unchanged.",
+  "schema": "JSON rows[].tokens; rows[].results[] has backend,tokens,latency_ms,tflops. Use only listed TRTLLM backends. Keep recorded values unchanged.",
+  "tokens": [
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    64,
+    128,
+    256,
+    512,
+    4096,
+    8192,
+    16384
+  ],
+  "groups": [
+    {
+      "topology": "ep",
+      "model": "v3",
+      "family": "nvfp4",
+      "source": "optimization-20261027/retained-rerun/evidence/runs/v3/nvfp4/a2/results.json",
+      "backends": [
+        "TRTLLM NVFP4",
+        "TRTLLM PER-TOKEN"
+      ],
+      "bf16_source": "scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v3/nvfp4/nvfp4/observed/results.json",
+      "missing_reason": "",
+      "source_sha256": "d0001383a80fd382356686b82cd1a805bc8ceef57a8497fa4719736f8351e30f",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "bf16_source_sha256": "0fdb6b5a4478b662c9473d51cb31d1394164f10e86ecea39049f191c571d1cac",
+      "bf16_measured_head": "f7182d5c871b367f4641d6d7e2098254d63147e3",
+      "bf16_receipt": "scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v3/nvfp4/receipt.json",
+      "bf16_timing_boundary": "Older single saved pass:100 raw native samples; original stdout reports CUDA Graph/CUPTI enabled and stderr has no fallback warning. Older observer has no per-measurement timer/event_fallback_forbidden field; do not label it as the newer strict-guard campaign.",
+      "unavailable_backends": {}
+    },
+    {
+      "topology": "ep",
+      "model": "v3",
+      "family": "mxfp",
+      "source": "optimization-20261027/retained-rerun/evidence/runs/v3/mxfp/a2/results.json",
+      "backends": [
+        "TRTLLM MXFP4x8",
+        "TRTLLM MXFP8"
+      ],
+      "bf16_source": "scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v3/mxfp/mxfp/observed/results.json",
+      "missing_reason": "",
+      "source_sha256": "024defb38e7b865b30f0e11952b49daa3dc4e9c6ddc336c4e12d4efe6d129e34",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "bf16_source_sha256": "12d47631d4ceea6c0b241797f3c799adc00d65a83d837bd3ac59e3cd2cdc989b",
+      "bf16_measured_head": "f7182d5c871b367f4641d6d7e2098254d63147e3",
+      "bf16_receipt": "scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v3/mxfp/receipt.json",
+      "bf16_timing_boundary": "Older single saved pass:100 raw native samples; original stdout reports CUDA Graph/CUPTI enabled and stderr has no fallback warning. Older observer has no per-measurement timer/event_fallback_forbidden field; do not label it as the newer strict-guard campaign.",
+      "unavailable_backends": {}
+    },
+    {
+      "topology": "ep",
+      "model": "v41-flash",
+      "family": "nvfp4",
+      "source": "optimization-20261027/retained-rerun/evidence/runs/v41-flash/nvfp4/a2/results.json",
+      "backends": [
+        "TRTLLM NVFP4",
+        "TRTLLM PER-TOKEN"
+      ],
+      "bf16_source": "scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v41-flash/nvfp4/nvfp4/observed/results.json",
+      "missing_reason": "",
+      "source_sha256": "2be0a30673eb44cb3db75ed6b785cd18baa443537fdb9f9b10a99ca1fd618896",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "bf16_source_sha256": "99f498b23e2cf68099000024138d4128803a2ebdf70bed1b49b071bd051a5e68",
+      "bf16_measured_head": "f7182d5c871b367f4641d6d7e2098254d63147e3",
+      "bf16_receipt": "scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v41-flash/nvfp4/receipt.json",
+      "bf16_timing_boundary": "Older single saved pass:100 raw native samples; original stdout reports CUDA Graph/CUPTI enabled and stderr has no fallback warning. Older observer has no per-measurement timer/event_fallback_forbidden field; do not label it as the newer strict-guard campaign.",
+      "unavailable_backends": {}
+    },
+    {
+      "topology": "ep",
+      "model": "v41-flash",
+      "family": "mxfp",
+      "source": "optimization-20261027/retained-rerun/evidence/runs/v41-flash/mxfp/a2/results.json",
+      "backends": [
+        "TRTLLM MXFP4x8",
+        "TRTLLM MXFP8"
+      ],
+      "bf16_source": "scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v41-flash/mxfp/mxfp/observed/results.json",
+      "missing_reason": "",
+      "source_sha256": "e49cf998824e71a3eba356e19944e40fcfce2022cbd3b2d5674d7e04d86e8d75",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "bf16_source_sha256": "ba2076ac6ffd65c200d0b92c9a4523c9b5621ef531d0cf7f18a5169f23294c16",
+      "bf16_measured_head": "f7182d5c871b367f4641d6d7e2098254d63147e3",
+      "bf16_receipt": "scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v41-flash/mxfp/receipt.json",
+      "bf16_timing_boundary": "Older single saved pass:100 raw native samples; original stdout reports CUDA Graph/CUPTI enabled and stderr has no fallback warning. Older observer has no per-measurement timer/event_fallback_forbidden field; do not label it as the newer strict-guard campaign.",
+      "unavailable_backends": {}
+    },
+    {
+      "topology": "ep",
+      "model": "kimi-k3",
+      "family": "nvfp4",
+      "source": "optimization-20261027/retained-rerun/evidence/runs/kimi-k3/nvfp4/a2/results.json",
+      "backends": [
+        "TRTLLM NVFP4"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM PER-TOKEN: Baseline does not support SiTU; TRTLLM BF16: Unsupported: original TRTLLM BF16 benchmark has no SiTU kernel.",
+      "source_sha256": "5db4b09af7fcc3144de72659e09cbd03cb49b689fd15a7ee49223ae8c4ba57a2",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM PER-TOKEN": "Baseline does not support SiTU",
+        "TRTLLM BF16": "Unsupported: original TRTLLM BF16 benchmark has no SiTU kernel."
+      }
+    },
+    {
+      "topology": "ep",
+      "model": "kimi-k3",
+      "family": "mxfp",
+      "source": "optimization-20261027/retained-rerun/evidence/runs/kimi-k3/mxfp/a2/results.json",
+      "backends": [
+        "TRTLLM MXFP4x8"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM MXFP8: Baseline does not support SiTU; TRTLLM BF16: Unsupported: original TRTLLM BF16 benchmark has no SiTU kernel.",
+      "source_sha256": "fd85bf3264c6fa74d14f80e7f59705484826af4e9fcb82c44a40cd52f2118bed",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM MXFP8": "Baseline does not support SiTU",
+        "TRTLLM BF16": "Unsupported: original TRTLLM BF16 benchmark has no SiTU kernel."
+      }
+    },
+    {
+      "topology": "ep",
+      "model": "nemo3-ultra",
+      "family": "nvfp4",
+      "source": "optimization-20261027/retained-rerun/evidence/runs/nemo3-ultra/nvfp4/a2/results.json",
+      "backends": [
+        "TRTLLM NVFP4",
+        "TRTLLM PER-TOKEN"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM BF16: Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model.",
+      "source_sha256": "48a49e4d81600e4c530bfb69a095b68aa0e896166f630940dcbf55916ed22433",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM BF16": "Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model."
+      }
+    },
+    {
+      "topology": "ep",
+      "model": "nemo3-ultra",
+      "family": "mxfp",
+      "source": "optimization-20261027/retained-rerun/evidence/runs/nemo3-ultra/mxfp/a2/results.json",
+      "backends": [
+        "TRTLLM MXFP4x8",
+        "TRTLLM MXFP8"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM BF16: Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model.",
+      "source_sha256": "b68ee8c52aabfc24ccd85f272871381798fc739709c9521bc0136106ca2460dd",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM BF16": "Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model."
+      }
+    },
+    {
+      "topology": "tp",
+      "model": "v3",
+      "family": "nvfp4",
+      "source": "optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/v3/nvfp4/c2-trtllm/results.json",
+      "backends": [
+        "TRTLLM NVFP4",
+        "TRTLLM PER-TOKEN"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM BF16: Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model.",
+      "source_sha256": "912fc8fbc243876a09edbf1018ce210f965c3226a721bacc2c8892e58f4fe800",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM BF16": "Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model."
+      }
+    },
+    {
+      "topology": "tp",
+      "model": "v3",
+      "family": "mxfp",
+      "source": "optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/v3/mxfp/c2-trtllm/results.json",
+      "backends": [
+        "TRTLLM MXFP4x8",
+        "TRTLLM MXFP8"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM BF16: Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model.",
+      "source_sha256": "a44512c960dd58b4f8f0a691b140af47cdfcfc9335a61b3ec9096824ff7069c5",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM BF16": "Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model."
+      }
+    },
+    {
+      "topology": "tp",
+      "model": "v41-flash",
+      "family": "nvfp4",
+      "source": "optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/v41-flash/nvfp4/c2-trtllm/results.json",
+      "backends": [
+        "TRTLLM NVFP4",
+        "TRTLLM PER-TOKEN"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM BF16: Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model.",
+      "source_sha256": "49d67ac0ecf77ed1f7f9080005b2c8e292ca90aa94fdc05d1ff53a8823fa5a2d",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM BF16": "Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model."
+      }
+    },
+    {
+      "topology": "tp",
+      "model": "v41-flash",
+      "family": "mxfp",
+      "source": null,
+      "backends": [],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM MXFP4x8: TP4 logical intermediate576 is unsupported by both external MX weight-preparation paths (alignment128).; TRTLLM MXFP8: TP4 logical intermediate576 is unsupported by both external MX weight-preparation paths (alignment128).; TRTLLM BF16: Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model.",
+      "unavailable_backends": {
+        "TRTLLM MXFP4x8": "TP4 logical intermediate576 is unsupported by both external MX weight-preparation paths (alignment128).",
+        "TRTLLM MXFP8": "TP4 logical intermediate576 is unsupported by both external MX weight-preparation paths (alignment128).",
+        "TRTLLM BF16": "Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model."
+      }
+    },
+    {
+      "topology": "tp",
+      "model": "kimi-k3",
+      "family": "nvfp4",
+      "source": "optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/kimi-k3/nvfp4/c2-trtllm/results.json",
+      "backends": [
+        "TRTLLM NVFP4"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM PER-TOKEN: TRTLLM per-token has no SiTU kernel.; TRTLLM BF16: Unsupported: original TRTLLM BF16 benchmark has no SiTU kernel.",
+      "source_sha256": "456cc8ead11f2509621c7393b99b5f65170df0f9a5113a460e563403f2f04c4a",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM PER-TOKEN": "TRTLLM per-token has no SiTU kernel.",
+        "TRTLLM BF16": "Unsupported: original TRTLLM BF16 benchmark has no SiTU kernel."
+      }
+    },
+    {
+      "topology": "tp",
+      "model": "kimi-k3",
+      "family": "mxfp",
+      "source": "optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/kimi-k3/mxfp/c2-trtllm/results.json",
+      "backends": [
+        "TRTLLM MXFP4x8"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM MXFP8: Neither external MXFP8 backend supports SiTU; candidate benchmark skipped.; TRTLLM BF16: Unsupported: original TRTLLM BF16 benchmark has no SiTU kernel.",
+      "source_sha256": "fbaadc4d916c3785fcf47710d799759e6a8af924049e1f8d85da62fe59f8cb5d",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM MXFP8": "Neither external MXFP8 backend supports SiTU; candidate benchmark skipped.",
+        "TRTLLM BF16": "Unsupported: original TRTLLM BF16 benchmark has no SiTU kernel."
+      }
+    },
+    {
+      "topology": "tp",
+      "model": "nemo3-ultra",
+      "family": "nvfp4",
+      "source": "optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/nemo3-ultra/nvfp4/c2-trtllm/results.json",
+      "backends": [
+        "TRTLLM NVFP4",
+        "TRTLLM PER-TOKEN"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM BF16: Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model.",
+      "source_sha256": "8d30531e9f6bd04c8248fd1ba5d63b53f3b44907583927b4b8b21db202c8ad29",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM BF16": "Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model."
+      }
+    },
+    {
+      "topology": "tp",
+      "model": "nemo3-ultra",
+      "family": "mxfp",
+      "source": "optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/nemo3-ultra/mxfp/c2-trtllm/results.json",
+      "backends": [
+        "TRTLLM MXFP4x8",
+        "TRTLLM MXFP8"
+      ],
+      "bf16_source": null,
+      "missing_reason": "TRTLLM BF16: Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model.",
+      "source_sha256": "bb8076b492d1179e4c002ac5f1100488c9cd87fee613936cffeb95239f60375b",
+      "compatibility": "All13 route identities/histograms, model topology, initial-quant inclusion and per-arm quantization contracts match fresh326 candidate records; TRT native finalize is unchanged by candidate unfused-finalize choice.",
+      "unavailable_backends": {
+        "TRTLLM BF16": "Not measured in the reusable baseline campaigns; no compatible saved structured BF16 result found for this topology/model."
+      }
+    }
+  ],
+  "coverage": {
+    "low_precision_groups": 15,
+    "low_precision_backend_token_cells": 338,
+    "bf16_family_groups": 4,
+    "bf16_family_token_cells": 52
+  },
+  "bf16_search_boundary": "Project-wide search of119 structured results.json/result.json files mentioning TRTLLM BF16 found74 actual BF16-result files, all V3 EP8 or V41F EP4; no TP or N3U structured BF16 measurements found. K3 was explicitly unsupported. Selected latest complete source-bound final-public-f7182d5c records for those four family groups.",
+  "historical_cross_instance": true,
+  "rerun": false,
+  "changed_source_or_raw_evidence": false
+}

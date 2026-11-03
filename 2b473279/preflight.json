@@ -1,0 +1,51 @@
+{
+  "passed": true,
+  "head": "2b4732791a3ce48bc3ae6c030a283fab73854e0e",
+  "benchmark_unchanged_from_retained": true,
+  "benchmark_sha256": "84855eed2a84d4147488144db3b08830fa696e3ce4306ec4fa8b3cbd0724585e",
+  "baseline_index_sha256": "51ce4db4f9beac023ba3eb6c0755c585a294cddded3948875dcd8745d6db6284",
+  "historical_source_files": {
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261027/retained-rerun/evidence/runs/v3/nvfp4/a2/results.json": "d0001383a80fd382356686b82cd1a805bc8ceef57a8497fa4719736f8351e30f",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v3/nvfp4/nvfp4/observed/results.json": "0fdb6b5a4478b662c9473d51cb31d1394164f10e86ecea39049f191c571d1cac",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261027/retained-rerun/evidence/runs/v3/mxfp/a2/results.json": "024defb38e7b865b30f0e11952b49daa3dc4e9c6ddc336c4e12d4efe6d129e34",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v3/mxfp/mxfp/observed/results.json": "12d47631d4ceea6c0b241797f3c799adc00d65a83d837bd3ac59e3cd2cdc989b",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261027/retained-rerun/evidence/runs/v41-flash/nvfp4/a2/results.json": "2be0a30673eb44cb3db75ed6b785cd18baa443537fdb9f9b10a99ca1fd618896",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v41-flash/nvfp4/nvfp4/observed/results.json": "99f498b23e2cf68099000024138d4128803a2ebdf70bed1b49b071bd051a5e68",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261027/retained-rerun/evidence/runs/v41-flash/mxfp/a2/results.json": "e49cf998824e71a3eba356e19944e40fcfce2022cbd3b2d5674d7e04d86e8d75",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/scripts/perf_round_20261027/public-refresh/final-public-f7182d5c/evidence/tables/v41-flash/mxfp/mxfp/observed/results.json": "ba2076ac6ffd65c200d0b92c9a4523c9b5621ef531d0cf7f18a5169f23294c16",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261027/retained-rerun/evidence/runs/kimi-k3/nvfp4/a2/results.json": "5db4b09af7fcc3144de72659e09cbd03cb49b689fd15a7ee49223ae8c4ba57a2",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261027/retained-rerun/evidence/runs/kimi-k3/mxfp/a2/results.json": "fd85bf3264c6fa74d14f80e7f59705484826af4e9fcb82c44a40cd52f2118bed",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261027/retained-rerun/evidence/runs/nemo3-ultra/nvfp4/a2/results.json": "48a49e4d81600e4c530bfb69a095b68aa0e896166f630940dcbf55916ed22433",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261027/retained-rerun/evidence/runs/nemo3-ultra/mxfp/a2/results.json": "b68ee8c52aabfc24ccd85f272871381798fc739709c9521bc0136106ca2460dd",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/v3/nvfp4/c2-trtllm/results.json": "912fc8fbc243876a09edbf1018ce210f965c3226a721bacc2c8892e58f4fe800",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/v3/mxfp/c2-trtllm/results.json": "a44512c960dd58b4f8f0a691b140af47cdfcfc9335a61b3ec9096824ff7069c5",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/v41-flash/nvfp4/c2-trtllm/results.json": "49d67ac0ecf77ed1f7f9080005b2c8e292ca90aa94fdc05d1ff53a8823fa5a2d",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/kimi-k3/nvfp4/c2-trtllm/results.json": "456cc8ead11f2509621c7393b99b5f65170df0f9a5113a460e563403f2f04c4a",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/kimi-k3/mxfp/c2-trtllm/results.json": "fbaadc4d916c3785fcf47710d799759e6a8af924049e1f8d85da62fe59f8cb5d",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/nemo3-ultra/nvfp4/c2-trtllm/results.json": "8d30531e9f6bd04c8248fd1ba5d63b53f3b44907583927b4b8b21db202c8ad29",
+    "/Users/ziangli/playground/projects/flashinfer-w4a4-split-dynamic-n/optimization-20261028/tp-ep-post-sanitizer/evidence/runs/tp/nemo3-ultra/mxfp/c2-trtllm/results.json": "bb8076b492d1179e4c002ac5f1100488c9cd87fee613936cffeb95239f60375b"
+  },
+  "external_baseline_sha256": {
+    "ep": "01bed08308cb6da4c66648535eb9699a39523c1ed8f67333b4945e002d5270fe",
+    "tp": "f5be713170238a13a3f0f4c89dc16ac099ed3d75a08bd45aac6a0443e7d5d6ad"
+  },
+  "prior_completed_tables_reproduced": [
+    "ep-v3-nvfp4.txt",
+    "ep-v3-mxfp.txt",
+    "ep-v41-flash-nvfp4.txt",
+    "ep-v41-flash-mxfp.txt",
+    "ep-kimi-k3-nvfp4.txt",
+    "ep-kimi-k3-mxfp.txt",
+    "ep-nemo3-ultra-nvfp4.txt",
+    "ep-nemo3-ultra-mxfp.txt",
+    "tp-v3-nvfp4.txt",
+    "tp-v3-mxfp.txt",
+    "tp-v41-flash-nvfp4.txt",
+    "tp-kimi-k3-nvfp4.txt",
+    "tp-kimi-k3-mxfp.txt",
+    "tp-nemo3-ultra-nvfp4.txt",
+    "tp-nemo3-ultra-mxfp.txt"
+  ],
+  "fresh_campaign_verified": false,
+  "boundary": "Preparation only: historical baseline files and unchanged native table printer verified. Fresh source, timing, caches, routes, clocks and plots require completed CAAC evidence."
+}

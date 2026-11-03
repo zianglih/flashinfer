@@ -1,0 +1,20 @@
+{
+  "passed": true,
+  "head": "2b4732791a3ce48bc3ae6c030a283fab73854e0e",
+  "assemble_sha256": "a1713bffd5d789d8f41da0a0b41d2377d1258168114d3eb1882b2c11bdf833bd",
+  "report_sha256": "9d258527fa15943a7a2a5cfa4f4737da9165b44330ec27ef331ef42547efe4d2",
+  "summary_sha256": "1152bcd73d85c5437f0fea08a7cb0229af484f8d61b6b25b3563a8903b9abea8",
+  "stdout_manifest_sha256": "5720cf11ddccead4662dede45cf0397cbe45d9630884a42ee59acc90fa763a1b",
+  "inputs": [
+    {
+      "data": "integration/pr7290-refresh-20261102/fetched/1793691596500669000/data",
+      "config_sha256": "bc103652ef8d054d96e24c696630e0b8bc7040aa8d2c4f5a4abced298dbc311c",
+      "report_sha256": "4f069754f1d558009846a96941c54aca5dcc18c70f1f51f28ded77419f7649aa",
+      "summary_sha256": "6f1e26aad280d7413781eca232da4dabd6ea5996643d3cce30ef6b5e2eef9465",
+      "candidate_phases": [
+        "1-candidate",
+        "2-candidate"
+      ]
+    }
+  ]
+}

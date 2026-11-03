@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "head": "2b4732791a3ce48bc3ae6c030a283fab73854e0e",
+  "roots": [
+    {
+      "data": "integration/pr7290-refresh-20261102/fetched/1793691596500669000/data",
+      "config_sha256": "bc103652ef8d054d96e24c696630e0b8bc7040aa8d2c4f5a4abced298dbc311c",
+      "report_sha256": "4f069754f1d558009846a96941c54aca5dcc18c70f1f51f28ded77419f7649aa",
+      "summary_sha256": "6f1e26aad280d7413781eca232da4dabd6ea5996643d3cce30ef6b5e2eef9465",
+      "candidate_phases": [
+        "1-candidate",
+        "2-candidate"
+      ]
+    }
+  ],
+  "jobs": [
+    "ep-kimi-k3-mxfp",
+    "ep-kimi-k3-per-token",
+    "ep-kimi-k3-w4a16",
+    "ep-kimi-k3-w4a4",
+    "ep-nemo3-ultra-mxfp",
+    "ep-nemo3-ultra-per-token",
+    "ep-nemo3-ultra-w4a16",
+    "ep-nemo3-ultra-w4a4",
+    "ep-v3-mxfp",
+    "ep-v3-per-token",
+    "ep-v3-w4a16",
+    "ep-v3-w4a4",
+    "ep-v41-flash-mxfp",
+    "ep-v41-flash-per-token",
+    "ep-v41-flash-w4a16",
+    "ep-v41-flash-w4a4",
+    "tp-kimi-k3-mxfp",
+    "tp-kimi-k3-per-token",
+    "tp-kimi-k3-w4a16",
+    "tp-kimi-k3-w4a4",
+    "tp-nemo3-ultra-mxfp",
+    "tp-nemo3-ultra-per-token",
+    "tp-nemo3-ultra-w4a16",
+    "tp-nemo3-ultra-w4a4",
+    "tp-v3-mxfp",
+    "tp-v3-per-token",
+    "tp-v3-w4a16",
+    "tp-v3-w4a4",
+    "tp-v41-flash-per-token",
+    "tp-v41-flash-w4a16",
+    "tp-v41-flash-w4a4"
+  ],
+  "fresh_cells": 468
+}
