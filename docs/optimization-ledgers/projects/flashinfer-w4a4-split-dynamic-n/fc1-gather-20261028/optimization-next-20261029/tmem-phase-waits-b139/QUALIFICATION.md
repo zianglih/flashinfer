@@ -1,0 +1,11 @@
+R2 preserves the original serial TMEM transpose helper and callers, adding exactly seven completion calls: an initial and final load completion, three store-phase completions, and two intermediate load completions. Removing only these calls makes the full module AST identical to b139. Scoped precommit passed without changing the source.
+
+Frozen measured kernel: b357ecfd2ced8ae5029e95c0d2f23211b5ef909938279f083cdf25a6180494a9 on b13963b0. Both active local reviews were subsequently composed onto retained77391e28; see active-review-composition.json. Remote qualification and performance sources remain immutable on b139, and no composed performance is claimed.
+
+Qualification passed: eight paired compile-only cases(16 kernels per arm), then39 existing exact cases with76 matched prelaunch resource checks against the prior source-equivalent b139 capture. All registers are unchanged and no new local-memory instruction appears. Two inherited synthetic MX FC1 cases retain STACK168 and21LDL/21STL each; the other74 compiled kernels are local-free. The candidate emitted-operation audit passes all16 initial kernels and maps243 static PTX store waits to243 SASS fences.
+
+Comparing completion-correct R2 with completion-correct paired R1,14/16 initial SwiGLU PTX files are identical; only the two paired per-token FC1 files differ. Across the expanded39-case gate,62/76 PTX files are identical, including all37FC2 files. The14 differing FC1 files cover paired gated per-token and non-gated/ReLU2 callers. All resources match. R1 halves static store-completion fences in the sampled paired helper bodies(3vs6 narrow,24vs48 wide).
+
+The approved16-cell CAAC screen uses R2 as control and R1 as candidate, with positive percentages meaning pairing is faster. It does not compare omitted waits against required waits. All original R1-vs-b139 data remain preserved separately.
+
+Evidence: exact-evidence.tar.gz SHA256 1f952f046999bb2ddc4fb2a11a5e8b2b2561645a80b5930ecdf392015e519a1b(401 files); codegen-evidence.tar.gz SHA25664fce6e39182e9e91e086bf5c131f4956361b4d21a6752f783c25308fc14be4e(181 files). Replay audit_exact.py and audit_emitted_order.py. See paired-vs-serial-codegen.json and paired-vs-serial-exact-codegen.json for the exact scope of code identity.

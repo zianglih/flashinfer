@@ -1,0 +1,23 @@
+# Unequal raw/SF and B depths: implementation review
+
+Read-only review while candidate 002 is frozen. No production edits, imports, compilation or GPU work. Geometry accounting is in [RAW_B_RESOURCE_PLAN.md](RAW_B_RESOURCE_PLAN.md); line references below use the live candidate 002 kernel, whose mainloop and fitter are unchanged from retained `968380de`.
+
+The change is feasible without a new pipeline algorithm or public knob. A/raw and B already have separate producers, consumers, barriers and state. Equality exists in their configured depths and the shared layout helper interface, not in a correctness dependency between their ring indices.
+
+| Binding in `flashinfer/fused_moe/cute_dsl/blackwell/moe_w4a16_kernel.py` | Minimal change |
+| --- | --- |
+| Fitter return/unpack, lines 239–256 and 2481–2510 | Preserve paired-depth fit and all current C/D/ACC choices. Return a separate B depth equal to that paired depth; add one raw/SF slot only when fused-finalize residual capacity covers its current conservative payload and 16 barrier bytes. |
+| Layout construction, lines 274–308 | A and both SF views use raw depth; B uses B depth. The current DSL helper accepts only one shared load depth. Its saved installed body is simply three `make_smem_layout_a/a/b` calls, so call those established helpers directly with separate counts. No dependency modification or copied device loop is required. |
+| B full/empty arrays, lines 776–780 | Bind both arrays to B depth. A/raw arrays continue using raw depth. |
+| B pipeline creation, line 931 | Bind its own `num_stages`; transaction bytes and multicast/consumer groups are unchanged. |
+| B producer/consumer state, lines 1394–1396 and 1673–1675 | Bind both states to B depth. The A loader/transform states retain raw depth. |
+
+The A loader addresses A and SF with its raw index (1508–1521). The transform consumes that index and produces decoded A using an independent decoded index (476–550). MMA separately addresses decoded A with `trans2mma_consumer_state.index` and B with `b_load2mma_consumer_state.index` (1697–1728). Both logical K counts advance once per MMA tile, but their physical indices need not agree. Each work resets only logical counts; index/phase survives across work boundaries. Existing producer tails drain each ring separately (1442, 1545, 1635). No cross-ring index comparison or common phase reset needs replacing. Tile-info publication, PDL activation readiness, expert order and sentinel draining are unaffected.
+
+There is an existing in-repository pattern: the imported BF16 Mega kernel uses separate `num_a_stage`/`num_b_stage`, direct A/B layout helpers and a one-slot residual-budget increment (`flashinfer/moe_ep/kernel_src/cutedsl_megamoe/src/moe_bf16_glu/kernel_bf16_glu_fc12.py:382–408,486–505`). That is read-only precedent, not code to modify. The dense W4A16 sibling still shares its load depth and is not an already implemented unequal-ring reference.
+
+The conservative plan permits an extra raw/SF slot only for fused M128/N16, M128/N128 and M256/N32. Actual selected tactics in the completed [top-k repeat](logs/candidate-topk-repeat-ep8-fused.json), using each row's saved cache, place T8/16/32/64/128/256 in these families: six of the eleven retention rows. T512 and larger selected families are ineligible; no ordinary or gated selected kernel changes under this bounded residual rule. The recorded selected T128 FC2 allocation is 191552 dynamic shared bytes; a changed kernel's actual allocation must still be measured rather than inferred from the conservative budget.
+
+This is credible as a later bounded trial, after the smaller raw-release reorder. It adds configuration bindings rather than control-flow machinery, but free storage alone is not evidence of a bottleneck. M128/N16 currently has raw/B depth7 and decoded depth3; adding raw slot8 can let the weight loader get further ahead through the eight K256 tiles of I2048, while decoded and activation capacities remain unchanged. It can also add barrier initialization/drain work and memory pressure. The existing profile does not isolate raw-ring backpressure from decoded/MMA/activation waits. Keep conservative SF charging and C/D/ACC depths fixed; changing those would repeat the separate scale-accounting/common-stage experiments rather than answer this question.
+
+Historical limits: the old split ledger's scale-accounting trials at lines 669 and 1567 were rejected. The earlier independent SF-depth increase was retained before raw/SF merging (line 681), so it supports considering unequal ownership but does not establish the same gain for a much larger merged raw/SF slot. No latency, allocation or correctness result is claimed for unequal rings here.

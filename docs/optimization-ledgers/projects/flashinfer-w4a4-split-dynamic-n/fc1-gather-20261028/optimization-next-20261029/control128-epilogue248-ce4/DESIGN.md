@@ -1,0 +1,11 @@
+# Single fixed register transfer, ce4
+
+The retained gathered FC1 uses 120 control, 128 gather and 256 epilogue registers per thread. This isolated candidate transfers eight registers from epilogue to control: 128/128/248. Both sum to 504, so 128 threads per role require 64,512 registers, exactly the existing 384-thread ×168-register initial allocation. All values satisfy the eight-register setmax granularity. FC2, scheduling, stages, layouts, operations and public/tactic interfaces are unchanged.
+
+The prior role analysis found the synthetic M512/N128/K8 MX control/MMA path storing and reloading twenty 64-bit descriptor pairs (160 stack bytes), while epilogue/gather remained spill-free. More control GPRs may shorten that local-memory traffic, but uniform-register pressure is a separate constraint; no claim that this transfer must eliminate it. Current assigned epilogue register endpoints are well below248, but assigned numbering is not peak simultaneous liveness and is not a compiler guarantee.
+
+`flashinfer-control128-review` is an independent ce4 clone with only two unstaged constant changes. `source-proof.json` binds all514 files and the exact patch. No additional quota values will be swept.
+
+The compile-only matrix reuses all41 existing qualification cases. Its own pytest hook intercepts the owned FC1 callable with a no-op and stops immediately after owned FC2 compilation; standalone FC1 cases stop after compile. It therefore collects the same80 owned signatures without executing their kernels or numeric comparisons. Standard input setup/quantization kernels may run. Two additional source-paired public benchmark captures bind the current frozen winner and routing: N3U EP8 T16384 MXFP8 (N256, ReLU²), and K3 EP8 T16384 per-token SiTU. Tactic search is forbidden.
+
+Both source arms use the same compiler options and explicit artifact dumps. The candidate guard requires no increase of REG/STACK/LOCAL or local load/store sites, unchanged shared allocation, the exact proposed register policy, and unchanged FC2 policy. The actual initial168-register/384-thread allocation and role-specific SASS are inspected. Any failed guard stops before any owned MoE launch; this experiment does not authorize correctness tests or timing yet.

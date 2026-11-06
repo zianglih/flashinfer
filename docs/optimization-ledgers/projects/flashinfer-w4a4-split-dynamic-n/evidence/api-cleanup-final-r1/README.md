@@ -1,0 +1,3 @@
+# API cleanup final benchmark campaign
+
+Clean candidate2b7fb105, byte-identical to validated patch18dde9d0 onadf. Paired cleanadf control C1, candidate A1 full public tables, candidate A2 CuTe-only, closing cleanadf C2. Exact13-token native AUTO methodology is preserved, including1/2 excluded from retention. V3NV/GPU2, MX/GPU4; V41NV/GPU3,MX/GPU7. Extra V3mixed A1/A2 onGPU6 matches original controls. Originala65 and prior recorded results are never rerun. No persistent CuTe compiler artifact reuse is claimed; currentcute.compile bypasses disk cache. No stored AUTO selections are loaded. Frozen experiment source copy remains unstaged for review; benchmark uses the clean retained commit.

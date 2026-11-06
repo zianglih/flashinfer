@@ -1,0 +1,18 @@
+# Retained native controls for the MMA readiness probe
+
+Use the completed FC1-release candidate captures below as controls. Exact paths, hashes, full descriptors/configs and loaded source identities are in [saved-native-baselines.json](saved-native-baselines.json), SHA `eb831751750759d1d2289755fb16644834c6c5dbc40f99b893f67a95905ff792`. No control was recompiled or validator rerun.
+
+| Geometry | Capture directory under profiles/ | result.json SHA | SASS SHA | Cubin SHA |
+|---|---|---|---|---|
+| m256n64c2 | `fc1-post-scratch-release-raw5-fixed8-m256n64c2-001` | `bb63f97c31dcc1c78d7d6bde52eb45406ec1a77b48801731e8c1a02ea5be73c4` | `d22bf3d86367f8aac9ace85595a4316ded04e1961c35cd5c03900fed8c020f25` | `769af9720795137bc78174184fd0d042d44d905be540645ac600218d85b61972` |
+| m256n128c2 | `fc1-post-scratch-release-raw5-fixed8-m256n128c2-001` | `9ef3379ccec0c832ae943b2c88898695bd47b2347a8c4c7e328e293e5096287b` | `b3f5c6744826f6a2cc42014429f12e4dcc70c51c016318f8c973a6224f3322f2` | `2879478e444565872a972e3ca20a202c3c44e1a25ffe4ef4c4ea87abc32b9d0a` |
+
+Both captures use H7168/I2048, E256, top8, EP8/rank0, 512 tokens/rank, M256/K256/C2, two-CTA MMA, atomic_counter, force_static_sched=True, group_hint512, flag4, epi_flag_batch[2,4], epi_warps and explicit scheduler2. Compilation uses maxrregcount96 and max_active_clusters74. These are 640-thread/five-WG kernels with the two decode groups; the saved review reports REG96, stack/local0 and 16 MMA instructions.
+
+Actual fitted stages are N64 B3/raw5/decoded3/S2 and N128 B3/raw4/decoded2/S2. Both retain ACC2. The raw5 name denotes the ceiling, not N128 fitted allocation. Native fake descriptors use BF16 x[512,7168], int64 IDs[512,8], FP32 weights[512,8], packed/scale/alpha expert tensors and BF16 output[512,8,7168]. All layouts except the fixed-size private byte workspace are dynamic; only its geometry-dependent byte size differs between descriptor sets (642153216 N64 /679924480 N128), with a common 4196624-byte symmetric workspace. Full element types, extents, stride expressions and static-layout flags remain in the original result and copied JSON.
+
+Loaded source pins are kernel7e16537e, epilogue943f0832, frontend6e44da24 and dynamic_mainloopaac315c4. The actual loader attests DSL4.7.1 with native extensionbb367e30 and shared-class identity. The unchanged source-before/source-after snapshot is checkout2fe because the original compile helper overlaid epilogue943f from its package; do not mislabel this as a whole-checkout96c or publishedd891 capture.
+
+The retained d891 manifest equals the capture checkout map except the overlaid epilogue and the later backend/staging/test additions. The four actual loaded Mega source hashes match d891 exactly, and shared scheduler/transformer sources are unchanged in the saved maps. The BF16 input stager is a separate launch and is not part of this compiled Mega object. This association supports matched source/config/descriptor comparison, not a claim that the old full checkout or binary cache equals the present one.
+
+Prior detailed review: [FC1 release native review](../../profiles/fc1-post-scratch-release-raw5-fixed8-independent-review-001.md), SHA `5b7280b2e4a08aa9051d52d84e341d873e482b75832276aee1da54097784d119`. Its older S2/epilogue1131 reference columns are historical context; select the current candidate binaries listed here, with epilogue943f. Do not substitute older alpha/S3/four-WG captures. Candidate3238 should preserve these descriptors/configs and change only the private kernel source. Native placement/code quality and subsequent numerical evidence remain separate.

@@ -1,0 +1,7 @@
+# Additive history and current-TP qualification note
+
+The original feasibility README remains the then-current wide-EP assessment. A later retained2b8 TP-only metrics refresh now finds MIO8.37%, so the wide-EP2.00% result must not close this hypothesis across all shapes. Its full source-bound evidence is `profiling/n3u-tp-w4a4-16k/retained-2b8/`. One current TP SourceCounters pass is authorized and underway; candidate GPU work remains held until that profiler releases its GPU.
+
+The earlier `scripts/sf_cache_experiment/README.md` is specifically **SFB4-byte cp.async L2 prefetch hints**, not Gather4 payload hints. Its frozen7829fc source, C1B200 DeepSeekT16384/M256N256C2 experiment compared CuTe control, inline-PTX no hint, and64/128/256B L2 prefetch. Every candidate was neutral or slower (FC1 control323.505us versus323.808–324.065us hints; FC2 control180.689us versus180.7845–180.864us). Predicate/zero fill/barriers were unchanged. Keep that hint-only lead closed; the sf_priority README's Gather4 characterization is inaccurate.
+
+The current hypothesis changes which adjacent lanes copy consecutive SF K-words, with unchanged4-byte instructions and canonical destination layout. It does not add a prefetch hint, and its expected tradeoff remains fewer source-sector requests versus shared-bank contention and extra persistent offsets. Prior cache-hint neutrality neither proves nor disproves this distinct mapping. No prefetch-only rerun is proposed.

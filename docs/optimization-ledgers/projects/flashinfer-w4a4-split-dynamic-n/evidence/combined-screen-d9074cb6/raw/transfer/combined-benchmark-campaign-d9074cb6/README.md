@@ -1,0 +1,124 @@
+# Primary candidate campaign readiness
+
+The next candidate is not yet selected or deployed. Do not execute these commands
+until the root agent confirms its full commit SHA, GPU0/GPU1 availability, and
+completion of the baseline native-JIT epoch. Candidate source stays frozen for
+all primary measurements. No source deployment or reset is performed here.
+
+Existing valid B1 evidence is reused:
+
+- NVFP4 W4A4, per-tensor activations, GPU0: `results/baseline-r1.json`.
+- Homogeneous MXFP8 E4M3, GPU1: `results/mxfp8-unfused-baseline-r1.json`.
+- MXFP4 weights × MXFP8 E4M3 activations, GPU1:
+  `results/mxfp4-unfused-baseline-r1.json`.
+
+All runs use deterministic unfused finalize, native AUTO, EP8/TP1, H7168/I2048,
+256 global/32 local experts, top-k8, seed42, and native 10-warmup/100-sample
+cold-L2 CUDA-graph CUPTI medians. Initial activation/weight quantization and
+inter-GPU communication are excluded. The exact token grid is
+`1,2,4,8,16,32,64,128,256,512,4096,8192,16384`; only 1 and 2 are excluded from
+retention. Decode is 4–512 and prefill is 4096/8192/16384. Failed checkpoint
+screens are diagnostic evidence and do not replace retained A1.
+
+## Candidate screening commands
+
+Execute on `fi-w4a4-dyn-n-1024` in c1, namespace ziangli, pinned image
+`nvcr.io/nvidia/pytorch:26.05-py3`. First complete candidate native-JIT loading
+serially before starting a concurrent mode. Use fresh processes per mode. The
+shell refuses existing JSON/log/cache evidence rather than truncating it.
+
+```bash
+set -euo pipefail
+project=/workspace/flashinfer-w4a4-split-dynamic-n
+candidate_sha=REPLACE_WITH_ROOT_CONFIRMED_40_CHARACTER_SHA
+label=${candidate_sha:0:8}
+cd "$project/candidate"
+test ${#candidate_sha} -eq 40
+test "$(git rev-parse HEAD)" = "$candidate_sha"
+git diff --exit-code HEAD -- flashinfer include csrc benchmarks tests
+export OMP_NUM_THREADS=1 PYTHONUNBUFFERED=1
+export TRTLLM_ENABLE_PDL=1 FLASHINFER_DIST_AWARE_AUTOTUNE=0
+export FLASHINFER_AUTOTUNER_LOAD_FROM_FILE=0
+for task_recipe_name in ${!FLASHINFER_NVFP4_4OVER6@}; do unset "$task_recipe_name"; done
+```
+
+GPU0, original frozen NVFP4 helper SHA
+`c9678f2386ac4a843f12b33ee17bbbf4a5cafdc827ab1df40d3d0f9d9285a4d1`:
+
+```bash
+nvfp4_out="$project/results/nvfp4-candidate-screen-$label"
+! compgen -G "$nvfp4_out.*" >/dev/null
+set -o noclobber
+CUDA_VISIBLE_DEVICES=0 "$project/.venv/bin/python" "$project/scripts/run_split_benchmark.py" \
+  --repo "$project/candidate" --expected-head "$candidate_sha" \
+  --image nvcr.io/nvidia/pytorch:26.05-py3 \
+  --tokens 1,2,4,8,16,32,64,128,256,512,4096,8192,16384 \
+  --output "$nvfp4_out.json" > "$nvfp4_out.log" 2>&1
+```
+
+GPU1, sequential modes, original v2 frozen helper SHA
+`989076c16165a2a6370e6246975aac80dcd80032c156ff55b5b44ff115c36a08`:
+
+```bash
+frozen_tools="$project/results/unfused-baseline-epoch-v2-tools"
+for weight_format in mxfp8 mxfp4; do
+  mode_out="$project/results/$weight_format-unfused-candidate-screen-$label"
+  ! compgen -G "$mode_out.*" >/dev/null
+  set -o noclobber
+  CUDA_VISIBLE_DEVICES=1 "$project/.venv/bin/python" "$frozen_tools/run_split_benchmark.py" \
+    --repo "$project/candidate" --expected-head "$candidate_sha" \
+    --image nvcr.io/nvidia/pytorch:26.05-py3 \
+    --weight-format "$weight_format" --gated-group-size 16 \
+    --tokens 1,2,4,8,16,32,64,128,256,512,4096,8192,16384 \
+    --output "$mode_out.json" > "$mode_out.log" 2>&1
+done
+```
+
+The command manifest, complete raw logs/JSONs, all 13 AUTO caches and SHA hashes,
+GPU UUID/process snapshots, exact tested commit, source hashes, and environment
+must be archived before any source changes. Native in-memory bucket reuse is
+preserved, caches are saved as evidence only, and CUPTI fallback is fatal.
+
+## Optional bounded large-token diagnostic
+
+After root deploys the committed candidate and releases GPU0, a first T16384
+NVFP4 probe can use the same frozen native measurement helper without repeating
+B1. This is diagnostic only: an isolated T16384 process has a different AUTO
+bucket history from the full 13-token sweep and must not be retained as A1.
+The source/env setup above still applies. Keep this distinct prefix:
+
+```bash
+diagnostic_out="$project/results/nvfp4-candidate-diagnostic-t16384-$label"
+! compgen -G "$diagnostic_out.*" >/dev/null
+set -o noclobber
+CUDA_VISIBLE_DEVICES=0 "$project/.venv/bin/python" "$project/scripts/run_split_benchmark.py" \
+  --repo "$project/candidate" --expected-head "$candidate_sha" \
+  --image nvcr.io/nvidia/pytorch:26.05-py3 --tokens 16384 \
+  --output "$diagnostic_out.json" > "$diagnostic_out.log" 2>&1
+```
+
+Do not start other candidate native imports until the first import/JIT build
+completes. The existing baseline native phase diagnostic already completed;
+the shared native-JIT epoch is baseline until this candidate probe starts.
+
+## Retained candidate follow-up
+
+If root retains a complete full-grid A1, reuse that exact data and its B1; run
+fresh candidate A2, then fresh baseline B2 per mode. Use source epochs to avoid
+concurrent native-JIT rebuilds: candidate A2 for all modes completes before the
+baseline B2 epoch begins. No B1 or A1 rerun is needed. Existing campaign tools in
+`scripts/post-layout/w4a4` and `scripts/unfused-blockscaled` support both
+`--reuse-baseline-r1` and `--reuse-candidate-r1` and strict provenance validation;
+root must coordinate their epoch boundaries if used concurrently.
+
+Per-token paired ratio is `sqrt(B1 * B2 / (A1 * A2))`. Report the full 13-row table;
+compute decode/prefill/overall geometric means from retention tokens only.
+Phase diagnostics and fixed-tactic minima are not primary retention results.
+
+## Static readiness checks
+
+`python3 scripts/unfused-blockscaled/check_saved_protocol.py` and
+`python3 scripts/post-layout/check_saved_protocol.py` passed before the pending
+integration was committed. They check all 7 saved modes, exact retention groups,
+changed-timing rejection, preparation-only source normalization, and invalid
+layout rejection. Re-run the preparation audit after the final candidate commit.

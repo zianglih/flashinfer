@@ -1,0 +1,11 @@
+# R3 operation-eligibility decision (source only)
+
+R2 produced37 negative affected cells. All28 decode cases have an existing FC2 epilogue with `bulk_tokens=0`; compact indexing has no TMA operation to enable, so every additional allocation, prefix scan, index publication and combine lookup is unnecessary. The other9 negative cells are prefill with a64-row slab and real full slabs. None is an all-partial case;59–94% of their local rows use complete slabs. Thus static operation eligibility addresses the decode cost without a token/model/dtype performance exception; it does not hide the remaining prefill losses.
+
+R3 extracts the existing `bulk_output_bytes` eligibility expression into one shared class helper. Constructor and public-wrapper layout selection use that single decision. When it returns0, the high-level core leaves compact offsets/dense indices absent, uses the original expanded FC2 rows, and leaves combine’s index path absent. No new tactic or API option is added. For eligible plans, R2’s compact full/tail behavior remains unchanged.
+
+The public wrapper always selects operand stages automatically (`num_stages=None`). A source-extracted arithmetic audit of252 supported geometry/format/K/CLC configurations proves that every eligible automatic plan reserves a nonzero slab; zero-byte plans have zero bulk tokens. The same arithmetic matched all64 captured native FC2 gate geometries, including explicit32-row/one-stage fallback. Shared memory capacity232448B is read from the installed CuTe `SMEM_CAPACITY_MAP` for sm_100/sm_103.
+
+Eight **explicit forced-depth** diagnostic geometries can have nonzero byte eligibility but no bulk slab, because the user-requested operand ring leaves only1536–2816B. Those configurations are not selected by the public wrapper. Their current valid fallback behavior remains untouched; no new rejection, threshold or public option is introduced. Full records: `planner-eligibility.json`. Per-cell route counts and complete-slab fractions: `eligibility.csv`/`eligibility.json`.
+
+R2 is immutable. The R3 candidate must prove restored no-bulk GEMM instructions are identical to retained2cfb06afd where possible, retain output/metadata exactness for eligible plans, then run all4 model shapes under EP and TP with unchanged frozen winners. No performance projection is substituted for measured results.

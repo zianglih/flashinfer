@@ -1,0 +1,13 @@
+# SFB multicast follow-up: already measured and rejected
+
+The requested hardware-group optimization is the exact mechanism in `scripts/perf_round_20261027/mainloop/`. Frozen patch `c9854f44` on `2995bfda` replaces both CTAs' identical full SFB requests with one CTA0-issued mask-3 multicast, preserving both local buffers and group2 S2T copies. It passed 128 exact replay comparisons per source, 64 core pairs, short-K/tail checks and unchanged resource/barrier accounting. The independent 48-cell, 19,200-sample CAAC screen measured 0.998345× overall, 1.000234× decode and 0.996460× prefill. Generated code grew. `disposition.md` explicitly rejects it and another timing campaign without a new reason.
+
+## Current protocol compatibility (source-only inference)
+
+A leader-issued multicast can preserve the current sole-announcer protocol. PTX multicast copies to the same shared offset in every masked destination; with group2, each destination's completion is redirected to the selected parity CTA. Thus mask3 and leader barrier still contribute **two local SFB byte counts**, not one, to the existing full barrier. This matches CUTLASS `references/cutlass/include/cute/arch/copy_sm100_tma.hpp:281` and the [PTX copy/completion contract](https://docs.nvidia.com/cuda/parallel-thread-execution/#data-movement-and-conversion-instructions-cp-async-bulk-tensor).
+
+The weight warp would remain the sole full-barrier arrival and continue announcing the entire two-CTA W+A byte total. The activation leader still waits on its local empty phase before issuing; the previous group2 MMA release covers reads of both local SFB buffers, so this phase protects both destinations even if the follower producer has not resumed. Follower B payload still keeps its own empty wait. Early multicast completion before the weight announcement remains within the already-proved signed pending-byte subset bound; the pending arrival prevents premature phase completion. Neither local SFB storage nor its S2T copy can be removed.
+
+Existing FlashInfer Blackwell legacy TMA paths already use `sfb_full_mcast_mask` with `cute.copy`, and the local CUTLASS 3D helper uses `.shared::cluster`, the 16-bit multicast mask and even-CTA barrier mapping. Those generic helpers can partition work across both CTAs; this full-duplicate payload permits one issuer. No product source is changed by this audit.
+
+The newer producer specialization and single-announcer ownership do not change this byte/lifetime proof, but no fresh generated-code evidence establishes that they remove the earlier multicast admission/issue overhead. Do not restart this rejected experiment merely because it is semantically compatible. No patch or GPU work is proposed.

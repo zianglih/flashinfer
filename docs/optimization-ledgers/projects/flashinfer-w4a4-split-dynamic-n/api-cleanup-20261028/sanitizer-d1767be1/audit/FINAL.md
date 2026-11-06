@@ -1,0 +1,9 @@
+# Sanitizer final audit
+
+- Source: `d1767be1f42fdc371f90db4fb06598299ea32845`; all347 pinned files match. Two C3 devboxes,16 distinct B300 GPUs, `nvcr.io/nvidia/pytorch:26.05-py3` / CUDA13.2.
+- Result:150 passed,0 failed/skipped;15 memcheck,15 synccheck,120 racecheck. All15 mode/token catalogs have the complete eight-shard racecheck union.101 cases ran on the primary and49 on the secondary with disjoint ownership.
+- Coverage:W4A4, per-token NVFP4, MXFP8, MXFP4x8, W4A16 at1/8/1024tokens; GLM5 H6144/I2048/E256/top8, emulatedEP8, random/skewed routing, eager and graph replay, O3, unfused swap-AB BF16.320 valid tactics per blockscaled catalog and23 per W4A16 catalog.
+- Executions:11,727 tactic visits across tools/shards;23,454 eager distribution/tactic checks and46,908 graph replays. All strict sanitizer summaries and owned kernel headers/compile receipts checked; zero warnings/errors.
+- Evidence:`remote-audit.json` SHA `ad819c95a41626468f0b6d88b50dfb369e1171d344aa748bb050e65cbd54c318`; local core archive SHA `eabb9459a4fd51af20611af23af05f897c37563f3377d63e65894bec540878f0`,1,351 files verified.600 final PTX files remain persistent with paths/hashes recorded in the local archive manifest.
+- Boundaries:memory/synchronization validation, not numerical accuracy or real distributed communication. Excludes legacy/non-swap, fused/atomic finalize, NVFP4 4over6/strict quantization, other shapes/activation functions and unfiltered external helpers. This is SM103 execution; SM100 execution remains untested here.
+- Instrumentation:tracked memcheck disables `--check-tensor-ops` and requests `-g-tmem-access-check` for each owned GEMM compile. Cubin/SASS guards were not independently inspected. Compiler receipts retain each specialization's options/entry/hash; reused PTX dump filenames mean only final retained dumps are checked byte-for-byte.

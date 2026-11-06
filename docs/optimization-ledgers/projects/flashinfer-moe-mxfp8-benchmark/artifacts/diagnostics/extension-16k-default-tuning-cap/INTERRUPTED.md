@@ -1,0 +1,1 @@
+Initial extension was stopped during the first 8192-token row after a source audit found that the TRTLLM default tuning limit is 8192. No results from this incomplete batch are used. The benchmark will explicitly enlarge its tuning limit for 16384 tokens and rerun the complete extension on that committed source. Live JIT caches were retained.

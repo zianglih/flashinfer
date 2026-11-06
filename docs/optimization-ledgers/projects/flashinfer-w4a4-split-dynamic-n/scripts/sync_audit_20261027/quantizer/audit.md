@@ -1,0 +1,5 @@
+# Per-token quantizer synchronization audit
+
+Base: 9334cb34. Candidate removes only the two-pass fallback barrier after per-token-scale publication. `block_reduce` publishes per-warp maxima, executes a CTA barrier, reads all maxima into registers and finishes a warp reduction. The subsequent quantization uses only those registers and independent input/output blocks; no thread reads the just-written per-token scale. The unconditional loop-end CTA barrier remains, preventing the next row from overwriting reduction scratch before every reader finishes. The register-resident path already follows this exact barrier contract. PDL wait/publication, invalid/padded rows and end-of-loop barrier remain unchanged.
+
+The three representative models normally select the register-resident path, so no end-to-end speedup is claimed from this fallback cleanup. Validate fallback inputs directly with BF16/FP16, PDL off/on, row-loop reuse and bit-identical before/after outputs. No new repository test file is needed.

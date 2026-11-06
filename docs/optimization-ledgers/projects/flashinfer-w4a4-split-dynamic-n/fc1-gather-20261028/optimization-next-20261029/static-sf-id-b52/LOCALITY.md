@@ -1,0 +1,9 @@
+# Static SF selector locality qualification
+
+Source `31cf291e` changes only descriptor byte IDs, with the same algebraic proof as the earlier 6be trial. All26 initial captured kernels have fewer non-NOP instructions: FC1−13..−93, FC2−12..−138. All originally zero-local cases stay zero-local. Geometry, SMEM, register-role quotas, MMA order and release boundaries stay fixed.
+
+The two inherited M512/N128/K8 MX stress captures still spill. STACK128→80, static LDL16→38 and STL16→11 must not be summarized as a blanket resource improvement. In the actual K512/stageK256/two-stage work-tile loop, MMA local loads/stores fall16/6→10/2 (124/44→72/16bytes per active lane). Six common-state loads are introduced elsewhere in role loops; weighting the two-CTA warp ownership gives48 rather than16 fastpath local-load instructions per worktile, versus2 rather than6 local stores.15 out-of-line slow-poll loops also reload the spilled shared-base value. All local instructions are unpredicated within their role. Startup stores, fastpath loops and unbounded retry loops are distinguished in `peer-liveness-audit.json`; there is no universal dynamic-traffic win or counter-based speedup claim.
+
+For narrow MXFP8 FC2, REG80→82 rounds physical registers/CTA20480→22528 and register-only residency3→2. Both use195328B dynamicSMEM plus1024B reserved, so actual SMEM-limited residency remains1CTA/SM. This is a real allocation increase, explicitly accepted only for a source/binary-qualified experimental gate after complete resource review, not an unchanged allocation claim. CPU calculation uses the unmodified CUDA13.2 occupancy header and current-device attributes saved in the pointer experiment.
+
+Full80 compile-only qualification precedes exact41. Original static resource failures remain recorded; all old zero-local signatures must stay zero-local. No numerical run or benchmark is yet admitted by this note.

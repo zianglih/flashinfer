@@ -1,0 +1,11 @@
+# W4A16 static K-tail port
+
+One production file changes from clean fd72759b. The producer TMA, dequantization, shared-memory/TMEM rings, scheduler and tactics remain unchanged. The MMA consumer has a rolled full-stage loop followed by a compile-time final-stage extent. Each acquired stage still performs exactly one wait/release on both transformed-weight and activation pipelines, and advances both states once. Valid K16 updates retain their order. The full section preserves explicit `unroll=1`.
+
+The gate compares the unchanged shared bit-exact W4A16 oracle, including both old gate/up64 and swap-AB gate/up16 layouts. Direct GEMMs exercise multiple partial K extents, one/two CTA, forced static/CLC scheduling, PDL off/on, positive/negative zero, exact cancellation, alpha ±0, and adjacent unused expert/activation NaN poison. Inactive output tiles retain a canary. Graph replays vary expert order and tail row count. Local-only forced-static emitter diagnostics were attempted without adding a production tactic; the unchanged control fails CuTe IR verification, so those three diagnostics are excluded.
+
+Instruction opportunity for existing TP FC2 K256 tactics: V3 K256 stays16 K16 updates; V41F K576 uses36 rather than48; K3 K384 uses24 rather than32; N3U K640 uses40 rather than48. These are instruction counts, not latency predictions. EP and TP FC1 reductions are aligned; generated aligned code must be compared before retention.
+
+Previously ported and deliberately unchanged: shared prepare (including scale-free constant folding), elected metadata publication, M/K specialization, SM-budget cache key, one-stage CLC scheduler, leader-only MMA role, and compile-time PDL guards. Weight/scales already share transaction readiness. Transformed weight and activation rings have different depths/users, so merging them is not part of this change. W4 already writes routed contiguous FC2 rows; blockscaled compact-output ownership is not a mechanical port.
+
+Performance is delegated to the existing 32-cell fixed-winner CAAC harness under `../w4a16-recent-ports/` only after exact/codegen qualification and parent authorization. No retuning, tactic expansion, reference edit, sanitizer run, or public source mutation is included in this gate.

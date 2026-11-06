@@ -1,0 +1,17 @@
+# SF lane coalescing: bounded qualification
+
+The immutable control is retained `2b8eb9d8`; the candidate changes only the swap kernel to `86836355`. The main checkout stays clean. This run performs no performance measurements, retuning, sanitizer, W4 execution, production helper changes, or new repository tests.
+
+The existing functional bit-exact helper supplies the same oracle, SM103 MMA-plan observer and supported public tactic tuple. The only numerical-helper extension forwards K steps 4 or 8 through that existing tuple. The first two pairs are narrow NVFP4 (G4) and MXFP8 N256/K8 (G2); both must pass before the remaining nine pairs. `plan.json` records the exact existing case indices and predicted gather geometry.
+
+Coverage is G1/G2/G4, W1/W2/W4/W8, route N16/N32/N128/N256, one/two CTA, static/native CLC, PDL on/off, partial rows and partial K. NVFP4, per-token NVFP4, MXFP4×MXFP8 and MXFP8 are included. N256/K8 is covered in NVFP4, per-token and MXFP8. Full-K cases expose lane-predicate lowering; G1 controls should preserve the old native mapping. CLC claims require the captured actual kernel field, not the requested selector.
+
+Each control/candidate pair captures the returned PTX and actual loaded ELF, decoded SASS and driver resources. Existing quota and zero-LOCAL guards remain. A candidate comparison stops before launch on register growth, decreased maximum thread capacity, changed static SMEM/binary target, or changed actual geometry/residency/compiler options. Preserve any such result for parent review; do not weaken the guard. Full tracked source inventories are checked once before/after the campaign, and the bound relevant subset is checked in every process. Persistent release libraries must remain unchanged and Ninja must report no work.
+
+Native review must distinguish static counts from executed work. Inspect gathered SF `cp.async` lowering, metadata-map LDG growth, full-K channel predicates, offset/register lifetime, and shared-bank addressing. The new row grouping may reduce sector requests while increasing per-thread state or shared-memory issue cost; zero spills alone is insufficient. FC2 stays ordinary TMA and should remain native-equivalent where compiler identity permits.
+
+The separate held performance proposal is 23 original supported jobs/28 arms × tokens 32 and 16384: 56 paired CAAC cells and 22,400 native CUPTI samples, including all four models and EP/TP. It uses the unchanged public unfused/quant-included contract, frozen routes/tactics, 100 samples/10 warmups, CUDA Graph replay and cold L2. No performance launch is authorized until the parent reviews this exact/native gate. Unsupported V41F TP MX and K3 MXFP8 arms are not added; W4 is unaffected and excluded.
+
+The initial deployment froze the source successfully but stopped before preflight/compilation/GPU because it referenced an absent runtime receipt path. `launch.json` preserves that failure. `launch-r1.json` changes only the path to the unchanged recovery receipt; all source/helper bytes and native cache settings are identical.
+
+The first controller completed both control calls, then stopped on rolling utilization telemetry (1% immediately after its own exited process, 0MiB/no PID) before either candidate launched. `receipt.json` remains unchanged. `run-r1.py` reuses those exact control artifacts and waits briefly for the same zero-util/no-PID/≤16MiB idle condition. It writes `receipt-r1.json`; the numerical/native helpers and all source/compiler/cache settings are unchanged.

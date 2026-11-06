@@ -1,0 +1,5 @@
+# Retained6c full EP/TP refresh
+
+Fresh candidate A-A at6c6515f2f804af420661d95e4595b5663d7f92d1 for all31 existing jobs /468cells /62phases /93,600 strict CUPTI samples. GPUs5/7 run disjoint jobs, both phase repetitions for each job on one physicalGPU. Existing13-token list includes1/2 for collection, hidden in publication. Frozen existing native tactics/routes/cache; no tuning or external baseline rerun. Historical baselines remain clearly labeled; this is not a new same-GPU paired comparison.
+
+Same observers/driver as composed-followups-full, unchanged public unfused API, input quant included for NVFP4 family,10warmups/100strictCUPTI cold-L2 CUDAgraph samples, persistent CuTe/native C++ caches, no instrumentation compile flags, all source/resource/cache/routing guards and2ms observationalNVML. W4iKET markers compile off bydefault. Actual remoteGitHEAD1b0 is distinguished from all514 guarded files verified byte-equivalent to retained6c. Candidate frozen regardless of later experiments/commits. No sanitizer or clock changes. No GitHub writes by this task.

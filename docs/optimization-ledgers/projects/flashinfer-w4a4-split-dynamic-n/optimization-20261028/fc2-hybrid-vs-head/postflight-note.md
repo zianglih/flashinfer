@@ -1,0 +1,1 @@
+The initial CPU-only runtime inventory omitted the benchmark PYTHONPATH and could not locate cupti-python metadata. The corrected inventory uses the same source and python-deps paths as every completed timing phase. No benchmark phase failed or was rerun for this inventory correction.

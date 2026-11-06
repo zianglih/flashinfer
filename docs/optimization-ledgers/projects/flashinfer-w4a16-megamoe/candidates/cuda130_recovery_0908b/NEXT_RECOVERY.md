@@ -1,0 +1,27 @@
+# Recovery after the second CUDA13.0 box disappeared
+
+Status: **request held by root** until the CUDA13.2 retained source is selected. No new box, source upload or environment change has been requested by this plan.
+
+`fi-w4a16-mega-cu130-0908b` last passed the complete e2d88 result/source/native audit and idle check at2026-09-08T16:01:22.651260UTC. The first later pre-static-FC2 read-only command failed with devbox-not-found. Repeated SSH, explicit `h list -c c2 -n infra` and `h diagnose` find no devbox/pods. The default list still contains the CUDA13.2 ziangli box. No lifecycle reason is available; do not call this preemption, expiry or a kernel failure. Raw evidence is `logs/cu130-recovery0908b-missing-before-static-001*`.
+
+All required completed C1 and e2d88 numerical, full13, source/native, actual-resource and live-library evidence is local. Source28a was never uploaded or launched. The static-FC2 fallback adapter in `provenance512_static_fc2_release/` is reviewed and has45 passing CPU tests, but its saved completed-owner JSON cannot establish that remote caches survived.
+
+## Verified image and preserved setup
+
+The live NGC catalog lists26.08-py3 as latest overall. The current [NVIDIA release matrix](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-26-08.html#nvidia-pytorch-container-versions) identifies25.11 as the newest release with CUDA13.0.2.006;25.12 uses13.1.0.36 and newer releases use13.1 or later. The intended explicit image remains **`nvcr.io/nvidia/pytorch:25.11-py3`**. [25.11 release notes](https://docs.nvidia.com/deeplearning/frameworks/pytorch-release-notes/rel-25-11.html) and the [NGC catalog](https://catalog.ngc.nvidia.com/orgs/nvidia/-/containers/pytorch/-/tags) were re-read after this loss. Recheck immediately before any actual request; this is a dated selection, not a moving tag or current GPU proof.
+
+Reuse the successful, immutable recovery recipe by making a new recovery folder/copy with fresh output names: `setup.sh`, `image_guard.py`, `requirements-global.txt`, `requirements-fallback.txt`, `expected-environment.json`, `verify_environment.py`, and `candidates/w4a16_cuda130/create_torchrun.py`. Keep all old scripts and evidence. The setup presently asserts clean195946 C1, so a different retained bundle requires a narrow reviewed source assertion and full manifest, not silently running against dirty local source.
+
+Expected runtime remains image Torch2.10.0a0+b558c986e8.nv25.11 / CUDA13.0, nvcc13.0.88; isolated DSL4.7.1 base/core/cu12-only selects native12.9 and boolean gateFalse. Preserve image Torch and CUDA runtime. Recheck Python CUPTI API function pointers to the pinned wheel while retaining both image and wheel maps. Check actual NVSHMEM3.4.5/NCCL2.28.8/cudart13.0.96 and all native hashes; installed wheel versions are separate. Differences must be reported before GPU baseline claims.
+
+## Staged recovery plan, only after root resumes it
+
+1. Select a new descriptive box name and save the current `remote_cuda130.py` before retargeting. Verify `command -v h` is `/usr/local/bin/h`, use the effort's HAI cwd, explicit image, `--bare` and no size. Request ziangli first, then infra if unavailable; do not use hell unless both are unavailable. Do not modify the CUDA13.2 transport.
+2. Record actual hostname/GPU UUIDs/driver/image and whether the workspace or any cache exists. A reused host name or cached saved JSON does not establish surviving files. Clone published195946 with exact submodules, then apply only the root-selected retained bundle with full source identity. No automatic dirty-local sync.
+3. Reconstruct the pinned fallback venv from saved requirements without replacing image Torch/runtime. Save fresh before/after image guards, package metadata, actual native loader/compiler identity, interpreter/torchrun hash, real CUPTI binding proof and loaded-library hashes. Fresh reports get new run names; old preflight files are historical.
+4. Choose the minimal valid native-cache admission after the retained source is known. The existing static512 adapter is deliberately **cache-reuse only** and requires its exact completed C1 owner. If those caches are absent, do not point it at the old JSON or relax that check. Either run a new C1 baseline/owner when that comparison is required, or prepare a distinct fresh-cache retained-source runner using the established source and actual512 resource guards. This choice is deferred to avoid spending another full C1 build before retention.
+5. For the retained source, require fresh actual REG128 resource admission before any512 Mega launch, all original eight public geometry/EP suites and all16 lifecycle EP1/EP2 gates, then the unchanged fixed→auto100CUPTI full13. Preserve every tolerance, resource/native/source/timer gate. Capture warm all8 worker libraries; fetch completed stages and arms promptly. No profiling or experimental compilation overlaps timing.
+
+The mechanical static-FC2 sibling's source declaration remains useful if28a is retained: relative to C1 it admits exactly frontend/kernel/communication/epilogue; relative to e2d88 only epilogue604935 changes. Any changed cache-owner identity on a newly provisioned node must live in a new strict sibling and be backed by new execution, without rewriting this frozen preparation.
+
+The subsequent compiler question and its distinct numerical/cache/provenance requirements are in `NEXT_COMPILER_CONTROL.md`. No compiler comparison is a prerequisite to preserving the already completed real12.9 fallback results.

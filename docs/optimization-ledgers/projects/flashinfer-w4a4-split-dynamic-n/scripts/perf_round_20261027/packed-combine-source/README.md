@@ -1,0 +1,11 @@
+# Packed combine instruction cleanup
+
+Active unstaged candidate: `flashinfer-packed-combine-20261027`, retained base `2995bfda8338ca6ae623fbc2657d44e35e665627`. Only the Blackwell deterministic combine changes; existing launch geometry, alignment, validity masking, PDL publication and arithmetic order remain unchanged.
+
+This revisits the archived raw-pair experiment under the user's current instruction-sanity retention criterion. The previous B200 experiment passed 102 exact cases and native-route checks and cut arithmetic/conversion instructions, but was rejected because isolated combine timing improved only about 0.1–0.2%. Those historical results are not fresh B300 measurements. `control-equivalence.json` proves that the current retained combine differs from that prior control only in its docstring. The previous helper transformation is reused and formatted; the original useful comments are preserved.
+
+The candidate loads the same 128-bit BF16 vectors as four raw pairs, expands each pair with shift/mask instructions, and uses non-FTZ packed FP32 multiply/FMA. Original slot zero still multiplies separately to preserve signed zero, and later valid slots accumulate in order. Output converts through packed BF16 round-to-nearest. No memory-alignment strengthening, 256-bit replacement, dtype-specific policy or tuning axis is added. The shared W4A16 combine uses the same implementation; its arithmetic contract is preserved.
+
+The fresh B300 gate checks the existing 98-case direct matrix including all BF16 encodings, signed zeros, NaNs/infinities, masked/poisoned routes, rounding boundaries, PDL, 16-byte-only alignment and expanded/permuted layouts. It records actual PTX/SASS/resources for each compiled specialization. Scope remains a local optimization harness; no new upstream test file is added. Timing and retention decisions follow these checks and will be recorded separately.
+
+The caller audit confirms that this Blackwell finalizer is used by SM100/SM103 split W4A16 and blockscaled MoE (plus the same-architecture Cake W4A16 adapter). Hopper imports the separate `moe_utils.moe_unpermute`; no Hopper arithmetic is changed. Current body benchmarks must retain their existing source attribution until a fresh final sweep.

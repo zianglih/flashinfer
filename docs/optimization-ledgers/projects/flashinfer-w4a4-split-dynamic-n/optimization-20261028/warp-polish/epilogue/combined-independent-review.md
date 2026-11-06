@@ -1,0 +1,11 @@
+# Independent composed-candidate review
+
+Reviewed `combined/source-local.json`, kernel `b45b218b7bece21cf8c967bf88dc0dbfec32a5ebbb7472ac871e8e84ae8a2328`, patch `25fc36a44d2d77c964d9e05affac9a17f18f99a9dd199f9aca015cc73ae62f6b`. `verify_combined.py` independently verifies source identity, single-file scope, exact leader MMA body after removing repeated rank guards, unchanged `next_work` and scatter arithmetic, and byte-identical final join/deallocation. No blocking source issue found.
+
+- Tile-info pipeline is CTA-local: weight + activation + four epilogue warps consume 192 arrivals in each CTA, and leader MMA adds 32. Therefore one-CTA and two-CTA leader quorum is 224, follower quorum 192. The scheduler is the separate one-thread publisher. Raw CLC response consumer count remains 32 times CTA group size; both scheduler warps still fetch/release response data.
+- Leader MMA initialization and work are unchanged after lifting its rank predicate; follower performs no MMA or tile-info consumer work. Operand stage releases remain after both channel-tile MMAs; accumulator commit/tail remain. No operand or accumulator barrier lifetime was removed.
+- With PDL prefetch, activation/epilogue retain the initial payload wait, weight retains its exit wait, and both MMA and scheduler warps now wait after role dispatch, including idle follower MMA. All reach the unchanged 256-thread final join before TMEM release/free. Without prefetch all roles keep the initial wait.
+- `enable_pdl` compile-time guards remove wait/trigger primitives only for disabled PDL. The supplied AST specialization proof keeps PDL-enabled behavior identical; this is source evidence, not substituted compiler/runtime evidence. Ancestor release still precedes startup or producer-exit signaling.
+- SFB TMA uses the existing activation cache policy; its descriptor, coordinates, bytes, mbarrier, CTA-group instruction and transfer ordering are unchanged. The helper has exactly one kernel call site, which now supplies the policy explicitly.
+
+No public API, legacy, W4A16, Rubin, tactics, launch geometry, storage planner, algebra, license or documentation changes occur in this candidate. Runtime/codegen gates and full retention campaign are tracked by root.

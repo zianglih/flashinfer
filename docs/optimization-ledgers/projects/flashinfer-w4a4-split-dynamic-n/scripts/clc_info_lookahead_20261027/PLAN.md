@@ -1,0 +1,5 @@
+# Metadata accumulator capacity plus one operand slot
+
+Separate from frozen acc_stages candidate5920de4f. This candidate derives metadata depth as acc_stages+1 in both constructor and shared-memory accounting. It permits one additional future operand tile beyond accumulator storage. Single-accumulator partial-TMEM-window paths therefore receive depth2; two full accumulator buffers receive depth3. This is an experiment, not an assumption that more work reservation is better. Preserve one-tile CLC mapping, acquire-before-cancel, PDL and explicit internal depth overrides.
+
+The first acc_stages screen improved K3 published N128 by4.1%standard /3.5%per-token. It leaves native N256 partial-window path at depth1. This provides specific reason to evaluate the separate +1 policy. Current source-paired64-replay gate must pass before timing; depth3 validates non-power-of-two phase/index wrapping. Independent pure-host accounting review should apply the formula consistently. No new upstream tests or shape/dtype rules.

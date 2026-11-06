@@ -1,0 +1,9 @@
+# Compile-time MMA scale-byte IDs
+
+Candidate based on retained6be changes only `_blockscaled_dynamic_mma`: derive the two equal scale byte selectors as `(start // tiled_mma.op.sf_vec_size) % 4`. No API, tactics, quotas, barrier, schedule, address, arithmetic or MMA count changes.
+
+Both scale matrices begin on word-addressed TMEM columns. CUTLASS `tmem_ptr<T>::operator+` rotates byte offsets into the unused high address bits; its hardware active address mask is0x007F01FF (`include/cute/pointer.hpp:273–325`). The blockscaled descriptor extracts those high two bits (`mma_sm100_desc.hpp:634–635`). The SF subword position is therefore the relative K scale index modulo4, independent of the runtime allocator address. This is the same byte selector defined by NVIDIA PTX9.2 section9.7.16.10.7: https://docs.nvidia.com/cuda/archive/13.2.2/parallel-thread-execution/index.html#tcgen05-mma-scale-factor-a-id
+
+For K96, the existing SFB layout keeps the inner four-scale stride1; the dynamic K and N bank strides move entire four-scale words. `sf_k_stride = sf_word_stride * (1 + wide_sf)` can change which word contains a scale but cannot change its byte position. Channel-tile SFA offsets also start at whole TMEM words. Mixed K96/K64 tails retain the existing static `start` progression; the formula is evaluated before `start += width`.
+
+The captured M512/N128/K8 MXFP4x8 control precomputes16 dynamic SF-ID combinations and16 runtime-N descriptor values before the persistent loop. Its21 local stores/loads include both S2T and MMA descriptor spills. The candidate may shorten live state, but spill elimination is not assumed. The proof script checks all65,536 legal base addresses against each of16 captured descriptor pairs, plus mixed-width/stride/bank cases. Paired CUBIN capture must establish resource and instruction changes before any timing. Broad existing exact tests must cover SF16/SF32, K96 partialK, bothCTA groups, dynamicN128/129 and current wide winners.

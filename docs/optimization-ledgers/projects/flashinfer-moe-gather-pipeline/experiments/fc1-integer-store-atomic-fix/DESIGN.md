@@ -1,0 +1,13 @@
+# Integer-carried nongated FC1 stores
+
+The candidate joins each lane's already-converted adjacent16-channel halves as UInt32 SSA words, then performs one32-channel payload copy. Conversion/SF arithmetic is unchanged. Output count and copy width are derived from element widths at compile time; no new API, tactic, shape gate, synchronization, or register policy is introduced. FP4 uses a16-byte payload store and FP8 a32-byte store. BF16 per-token FC1 retains two32-byte stores.
+
+The shared store helper preserves direct integer copy so packed FP4 values never become a mutable joined FP4 tensor. Existing fused-finalize atomics recast the carrier and target back to the output dtype inside their existing branch. This explicitly covers Float32 FC2 as well as the half-precision cases. The ordinary BF16/FP16 FC2 branch and gated output geometry remain unchanged.
+
+The simpler unconditional output-dtype recast was attempted as immutable sourcecdb2f9c5. Its isolated probe was exact/LOCAL0, but the first full W4A4 FC1 generated LOCAL272; the resource guard stopped before launch. That revision is rejected. No resource guard or compiler option was weakened. Its full source/evidence remains under `../fc1-integer-store-final/`.
+
+Current source482b636a is43added/19removed lines. This generic carrier/count handling adds source complexity, so retention requires actual performance benefit as well as instruction reduction. Static checks and existing shape/alignment proof pass. Qualification compares immutable02de control plus only this swap source; the local checkout is bumped tobf072, whose two retained W4/Mega changes are unrelated to swap execution. Timing must bind that equivalence explicitly, not rewrite historical manifest labels.
+
+Initiald2aaa unfused qualification passed12 exact calls and all native resource guards. FC1 W4A4 payload stores16×64→8×128, MX16×128→8×256, SF stores unchanged; gatedFC1 and every captured FC2/finalizer cubin were byte-identical. Per-token BF16 remains16×256 stores. Final482b full qualification and direct FP32 atomic cases are separate evidence and remain the timing gate.
+
+Final482b gate passed:16 selected successful calls and20 native pairs; allLOCAL0. All unfused register/resource fields remain unchanged. GatedFC1, ordinaryBF16FC2 and finalizer raw images match control. The directFP32 fused boundary is numerically exact for the analytic fixture; oneCTA registers129→129 and twoCTA122→125, bothLOCAL0. This is compatibility qualification, not a fused performance or general exactness claim. The subsequent32-cell paired screen determines whether the generic carrier handling earns retention.

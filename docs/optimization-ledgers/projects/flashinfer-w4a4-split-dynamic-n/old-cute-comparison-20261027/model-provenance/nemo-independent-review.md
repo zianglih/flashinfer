@@ -1,0 +1,12 @@
+# Independent Nemo benchmark review
+
+No source/contract blocker found in frozen `benchmark-nemo.py` (`8078d09b`). No source edits or additional GPU work.
+
+- The pinned NVIDIA config and Transformers implementation agree on routed latent width 2048, intermediate 5120, 512 experts, top-22, non-gated ReLU2, and normalized selected sigmoid scores scaled by 5. EP8 gives 64 local experts. FC1 is `[E,5120,2048]`; FC2 is `[E,2048,5120]`. The benchmark excludes latent projections, router GEMM, RMSNorm, shared experts, and communication, as its header says.
+- The single routing group makes group filtering vacuous. Shared routing uses bias only for selection and gathers un-biased sigmoid values, then normalizes/scales them. The stable lower-ID tie rule is an explicit synthetic-benchmark policy; it is not a claim about HF topk tie order or checkpoint routing values.
+- Both CuTe public paths receive `activation_type=6`. Source-native public weight preparation receives `ReLU2()` and bypasses gated interleave. TRT BF16/MX preparation also receives that activation. The retained TRT NV branch uses the existing nongated weight-row permutation, matching public preparation. No current layout utility is copied into the old source.
+- Existing model configurations, measured closure, routing functions, per-token quantization context, table layout and row/footer dispatch are unchanged. The earlier CPU fixture receipt covers all existing table dispatch and input-shape preservation; this audit independently checked frozen hashes and unchanged ASTs.
+- ReLU2 has a supported source path for all requested native arms. CUTLASS alone is explicitly skipped for that preset. Execution failures remain visible. Old K3 MX is excluded by the source-specific campaign contract because its SiTU path is unsupported; the common model skip function must not be broadened to suppress it for current CuTe.
+- Comparison attribution remains old NV unfused / old MX native fused versus current unfused. Old MX finalization has different rounding and reduction order, so these are native backend timings, not an isolated mainloop-only or bit-exact cross-source comparison.
+
+The GPU packing proof separately validates the existing three models' current NV payloads/SFs byte-for-byte after switching from manual to public preparation. It does not claim GPU Nemo execution. Runtime Nemo admission and source/route/tactic receipts remain necessary before reporting its measurements.

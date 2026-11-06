@@ -1,0 +1,39 @@
+# FC1 first16 native review on e359
+
+The saved N128 pair passes the native quality gate for a numerical and performance trial. It implements the intended partial packed load and FC1 predecode without BF16 packet gathers, spills, duplicated conversion, or premature TMEM stores. It also adds real packed-word moves and scale extraction work; this is not evidence of a speedup.
+
+Capture: `profiles/fc1-first16-e359-m256n128c2-001`. The completed-pair receipt, both owner records, postflight idle/group records, source overlays, result/resource files and native binaries are hashed in `n128-evidence.json`. The owner records are byte-identical; both compilations returned zero, compiled exactly once, and recorded zero compiled launches, device allocations and collective initializations. The recorded process groups have no remaining members.
+
+The control is source e359 with utility `357908…`, shared transformer `b473a1…` and private kernel `2d53b2…`; the candidate changes only the shared transformer to `eb7a13…` and the private kernel to `a1e1cb…`. This uses the actual completed control-only owner admitted by the current cohort, not a fabricated completed auto sweep. The native compiler is the pinned direct compiler `bb367e30…`. Both use the same fake descriptors, H7168/I2048, global experts256, top8, EP8/rank0,512 tokens/rank, M256/N128/K256, physical C2, flag4 and epilogue return.
+
+| Native property | Control | FC1 first16 |
+|---|---:|---:|
+| Threads / initial registers | 640 /96 | 640 /96 |
+| Stack / local bytes | 0 /0 | 0 /0 |
+| Whole-kernel instructions | 5856 | 5864 |
+| FC1 raw-ready through final TMEM store | 223 | 234 |
+| FC2 equivalent region | 227 | 227 |
+| MMA instructions / broadcast instructions | 16 /4 | 16 /4 |
+| FC1 packed LDS.128 / SF LDS | 4 /2 | 4 /2 |
+| FC1 E2M1 / E4M3 conversions | 64 /8 | 64 /8 |
+| FC1 BF16 multiply / fused arithmetic | 32 /32 | 32 /32 |
+| FC1 STTM.x8 | 8 | 8 |
+
+The dynamic register redistribution remains control80, decode80, epilogue176 and dispatch64; both decode WGs and the61440-register CTA pool are unchanged. The fake-descriptor resource report's1024 static shared bytes do not describe the public serving launch's dynamic shared allocation.
+
+## Decisive FC1 order and liveness
+
+- Raw-ready TRYWAIT is at `0x6480`. A single packed `LDS.128` at `0x64d0` loads the first32 FP4 values. The two existing full-fragment SF LDS operations remain. Eight E2M1 unpack instructions, one E4M3 unpack, four BF16 fused operations and four BF16 multiplies finish the first16 scaled values in `R4–R11` by `0x6760`.
+- The decoded-stage TRYWAIT is at `0x67c0`. Its slow path at `0x15920–0x15970` writes only general register `R0` and predicate `P0`, loops at `0x15930`, and returns at `0x67e0`. It preserves `R4–R11`, the remaining first32 packed words in `R23/R27`, and the still-needed SF state. No fast-path instruction rewrites `R4–R11` before their first direct store.
+- The remaining three packed `LDS.128` instructions are after acquire at `0x6820`, `0x6890` and `0x68d0`. The next raw-ready probe is at `0x6af0`, after all three. An independent integer raw-counter increment is scheduled at `0x6870`; the source advance/probe order is preserved, but it would be inaccurate to say every counter instruction follows every load in native code.
+- The first `STTM.x8` at `0x6b10` directly consumes `R4–R11`. The remaining first-fragment x16 conversion begins after acquire. The final store at `0x7310` is followed by the async-view fence at `0x7320`, the original elected raw-stage release at `0x7340`, and decoded-stage publication at `0x7350`. No TMEM write precedes acquire. Generated PTX retains sixteen total `tcgen05.st…x8` and two `tcgen05.wait::st` operations, matching the control.
+
+## Extra work and unchanged FC2 boundary
+
+All seven new `IMAD.MOV.U32` instructions copy packed FP4 words directly produced by an LDS.128: four near `0x6570–0x65d0` and three near `0x6f80–0x6ff0`. The recorded last-definition trace establishes that these are not BF16 packet gathers. They are nevertheless additional instructions and register-allocation work.
+
+The FC1 region has seven extra PRMT instructions and two extra LOP3 instructions. Fifteen candidate PRMT operations implement SF extraction/packing, versus eight in the control; the remaining PRMT in each arm belongs to raw-stage release address preparation. The candidate replaces the bulk packed-scale shift path with repeated per-byte helper views. The opcode deltas, locations and full source-correlated FC1 body are saved for a separate bounded source refinement; none is changed by this review.
+
+FC2's227-instruction body is identical after branch-label renaming and the explicit uniform-register mapping candidate `{15:16,16:17,17:18,18:19}` to control. Its native PCs shift by `0xc0`; arithmetic, loads, stores, waits and publication remain unchanged. This is stronger than equal histograms, but not a claim that the complete binary is identical.
+
+The evidence was generated by AST-slicing only the existing native audit's pure `parse`, `region` and `phase` functions. That historical script was not imported or executed at module scope. No remote, compiler, GPU, production-source or frozen-input operation was performed for this review. N64 and runtime validation remain separate gates.

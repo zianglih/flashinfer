@@ -1,0 +1,11 @@
+# Paired-transpose source review
+
+The frozen f5260ba7 candidate preserves source/destination rectangles and each fragment’s copy atoms/permutations. The actual-AST proof covers last-writer identity for one and two fragments. CuTe make_rmem_tensor delegates shapes to make_layout; its default compact-left stride makes (16,fragments) use (1,16), so each [None,fragment] view is a contiguous 16-register slice. All R2 source reads occur before either cross-alias destination write. Activation/scaling, final-release placement and output packing remain unchanged.
+
+The first paired per-token compiled capture is hash-verified in first-pair/MANIFEST.json. Both control and candidate PTX contain one final wait::ld and zero wait::st. Thus the compiler did not insert explicit intermediate PTX completion operations. This is an inherited ordering qualification, not evidence of a newly observed runtime failure.
+
+The official PTX 13.2.2 memory model does not make ST→LD and read→overwriting-store pairs implicitly ordered. Register dependencies alone are insufficient to establish general TMEM memory ordering. Require explicit completion at scratch phase boundaries, including initial-load completion before R1 overwrite and final-load completion before any next scratch use. The cross-fragment R2 overwrite requires both source reads complete. Do not infer formal safety from source order, Rubin similarity, or current scoreboard scheduling.
+
+Suggested simple contract: helper-entry wait::ld; R1 store completion; R2 load completion; R2 store completion; R3 load completion; R3 store completion; helper-final wait::ld. The final wait protects callers even when release_acc is false. Existing caller release fences may remain while isolating this experiment; inspect whether compilation coalesces any redundant waits. No source changes were made by this review.
+
+References: local references/cutlass/python/CuTeDSL/cutlass/cute/tensor.py:946 and core.py:3689; FlashInfer Rubin block_scaled_swap_ab_fc12_epilogue.py:710. Official memory-model boundary: https://docs.nvidia.com/cuda/archive/13.2.2/parallel-thread-execution/index.html#tcgen05-memory-consistency-model (sections 9.7.16.6.4.2 and 9.7.16.6.4.5).

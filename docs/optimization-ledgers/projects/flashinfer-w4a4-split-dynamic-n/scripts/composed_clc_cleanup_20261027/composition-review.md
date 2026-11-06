@@ -1,0 +1,17 @@
+# Retained composition review
+
+The measured candidate is the composition of normalization hoisting, scheduler startup-PDL wait relocation, and local metadata-tail removal against the saved4e155c30 control. It is not an isolated tail-removal experiment. The final pushed commit is9b4721b08057d0a488c1f0236467acb75c48cd00; the parent's commit receipt proves its entire tree matches the frozen f5e7bdc8 plus4f41cc0c patch tested here. The all-CLC public tuning policy is not included.
+
+## Dependency and lifetime review
+
+- Normalization remains loaded by epilogue readers after their existing startup payload dependency wait. The value is invariant across experts and scheduled tiles, so moving its load outside the persistent tile loop changes neither the arithmetic expression nor its dependency boundary.
+- Only the CLC scheduler warp can defer the startup dependency wait, and only under the existing `prefetch_weights_before_wait` publication contract. This is the same contract that already permits pre-wait routing reads for weight prefetch. Activation, scale and epilogue payload readers retain their startup wait. The scheduler also skips the startup dependent-trigger branch that requires payload readiness.
+- The scheduler still acquires local metadata space before requesting a new cancellation, publishes the current tile, waits for the independent CLC response, and releases that response. This composition does not reorder cancellation requests or deepen either queue.
+- After consuming the last CLC response and publishing terminal metadata, the leader retains `clc_pipe.producer_tail(clc_producer)`, which protects cluster response lifetime across both CTA ranks. Every scheduler warp that used the prefetch contract then executes its deferred `griddepcontrol_wait()` **before the final whole-CTA named barrier**. The wait is relocated, not removed; the final join and TMEM teardown cannot run ahead of the prerequisite grid.
+- The local metadata producer-tail wait is redundant with that final CTA join. Every nonscheduler role must consume and release terminal metadata before it can leave its work loop and reach the join. The scheduler publishes no more local metadata after terminal. FIFO consumption also covers older metadata slots. The unchanged response tail separately protects the remote cluster lifetime; a local CTA join alone would not replace it.
+
+## Evidence and boundaries
+
+The candidate alone ran40 changing-route/data graph replays, comparing exact output/input/routing hashes against the saved control without rerunning it. Both phases explicitly used CLC in this diagnostic; coverage includes PDL on/off, all blockscaled formats, per-token NVFP4, empty/reactivated routes, one/two CTA, N16/128/256, M512 and inline/overlap epilogues. All20 core pairs retain identical registers, storage and pipeline geometry, with zero spills. The composition removes5–9 static SASS instructions per core,154 total, while PDL-enabled variants gain one ACQBULK site for the delayed scheduler wait. These are exact/codegen results, not whole-chain latency measurements, sanitizer coverage, or a full correctness cross-product.
+
+The frozen raw artifacts and manifest were not changed by this documentation correction. Only derived validator/report boundary text and this review were updated. All12,906 tracked regular files and87 dependency hashes were verified before and after the GPU gate;4gitlink entries and the Git tree were recorded. See`validation.json`,`summary.json`,and`commit-receipt.json` for the machine-readable evidence.

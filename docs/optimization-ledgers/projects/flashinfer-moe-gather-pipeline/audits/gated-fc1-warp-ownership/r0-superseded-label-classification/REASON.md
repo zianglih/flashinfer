@@ -1,0 +1,1 @@
+Superseded CPU-only audit: operation text ::Situ:: was incorrectly treated as nongated. Actual cache-key activation enum is Swiglu with SiTU parameters. Do not use these counts. Corrected parent files parse the actual enum and preserve the profile data unchanged.

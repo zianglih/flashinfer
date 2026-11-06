@@ -1,0 +1,1 @@
+These four configs were prepared but never launched. Parent required an isolated mutable C++ cache before any second-node GPU work; node-parallel-r1 supersedes them with cpp-parallel-node. Original records remain unchanged.

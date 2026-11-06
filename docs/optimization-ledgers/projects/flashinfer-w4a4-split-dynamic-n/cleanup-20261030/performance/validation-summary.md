@@ -1,0 +1,4 @@
+- **Accuracy:** 128 candidate cases passed: 36 focused exact smokes and 92 existing tests. The frozen cleanup bytes match measured `326c4a79`; 16 paired control cases also passed.
+- **Compilation:** all 48 paired native kernels have identical raw cubins, normalized PTX, SASS including instruction encoding/control words, and resource attributes. Scoped pre-commit passed.
+- **Utilities:** 63 CPU benchmark-format checks passed. The sanitizer-only `f173414b` follow-up passed 15 checks against the actual CuTe DSL 4.8 option parser.
+- **Sanitizer:** 150 cases collected; sanitizer execution was skipped.

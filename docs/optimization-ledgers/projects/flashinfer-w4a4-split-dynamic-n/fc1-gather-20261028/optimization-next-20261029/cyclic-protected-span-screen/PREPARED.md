@@ -1,0 +1,1 @@
+Frozen-winner11-cell CAAC screen prepared, not launched. It includes the previous six expanded-span regressions, two prior-policy controls, N3U TP16K per-token, K3 EP8K W4A4, and V3 TP8K MXFP4x8. Gate/source/codegen qualification must pass first. No AUTO or new tactics. GPU assignments pending.

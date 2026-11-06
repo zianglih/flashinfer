@@ -1,0 +1,13 @@
+# V3 TP8 MXFP8 16K pipeline attribution
+
+Source: frozen `82254e206a44b95d9925e4594fac936731f80d21` control. Reuse the current compact CAAC control's native CUPTI activities, frozen winner, routes and resource capture. The profile is for attribution, not an additional retention result. GPU6 is reserved for a later bounded NCU pass after qualification; no NCU launch yet.
+
+Workload: `benchmarks/bench_moe_deepseek.py --functional-api --model v3 --ep 1 --tp 8 --quant-family mxfp --backends cute-dsl-mxfp8 --num-tokens 16384 --swap-ab --no-fused-finalize --no-autotune`, with the campaign's unchanged cache, warmup10,100 CUPTI CUDA-Graph samples, cold L2. Configuration: H7168, TP-local I256,256 local experts, top-k8.
+
+Expected native evidence: `runs/r1-compact/results/tp-v3-mxfp/0-control/results.json` contains both MX modes; select only the MXFP8 T16384 measurement by its recorded backend and token identity, not position alone. Check full source, route, tactic and compiler-resource receipts. Recover100 iteration boundaries and attribute duration, interval-union extension and overlap; summing raw overlapping durations is not E2E time.
+
+Structural boundary: old non-swap MXFP8 uses fused finalize when the unfused path is unavailable. The current measured path explicitly uses unfused FC2 and then combine. At TP8 every top-k route is local. Live FC2 BF16 payload is `16384 * 8 * 7168 * 2 = 1,879,048,192` bytes (1.75 GiB) written and the same live payload read by combine:3.5 GiB logical extra intermediate traffic, before cache effects. The final BF16 output is another224 MiB and is not itself unique to the unfused implementation. Scratch allocation can include extra padding; use the captured actual allocation separately. These are logical byte counts, not measured HBM transactions or a claim that all of the latency gap is bandwidth-bound.
+
+Source anchors: benchmark model configuration at `benchmarks/bench_moe_deepseek.py:103-113`; FC2 allocation/output contract at `blackwell/moe_swap_ab.py:543-574`; finalizer route loop and guarded payload loads at `blackwell/moe_finalize.py:162-181`. Current metadata, FC1 activation gather, FC2 MMA and output, and combine must be attributed separately before proposing a gather-pipeline change.
+
+Bounded NCU, if warranted: profile one warm frozen-winner FC1 or FC2 launch after cache setup, preserving kernel options. Prefer a small explicit metric set covering launch resources, achieved SM activity, tensor use, DRAM/L2 bytes and source-level stall samples. Keep profiler-replay data separate from native CUPTI timing. No new autotune axis, policy branch or source modification.

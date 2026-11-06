@@ -1,0 +1,21 @@
+# Scatter4 rolled uniform issue
+
+R4 changes only the r3 row-group loop to `cutlass.range(tokens // 16, unroll=1)`, removes the unused `blk_copy` import, and applies Ruff formatting. It keeps the same fixed trip count, full-warp broadcasts before elected issue, once-per-slab commit, sentinels, two64-channel halves, layout, capacity/stages, four epilogue warps, and all synchronization. The exact source delta is in `delta-from-r3.patch`; final source8d8af271 is frozen before qualification. The earlier fef1 draft hash was never deployed or executed.
+
+R3 removed arbitration but hoisted all four groups' operands, increasing uniform/GPR live ranges and spilling uniform registers into GPRs. Its64-cell screen did not justify retention. R4 requires zero implicit lane-arbitration backedges, no added uniform-to-GPR spill burden versus cb35, zero local-memory/stack spills, and shorter code/register lifetimes before the same source-paired exact gate and CAAC screen. Uniform-register spill/fill already exists in cb35; it is reported separately from local-memory spilling. No shape/dtype/tactic/padding/stage changes. Control remains cb35; sole-announcer is excluded from this causal trial.
+
+## Qualification and active timing
+
+The six-config gate passed 96 candidate/control output-byte comparisons (96 executions per source), with unchanged launch, operand and epilogue geometry. All selected bulk paths were64 rows/two stages, so a separate supported-constructor gate is being run for the natural32-row/one-stage storage fallback. This is a runtime qualification boundary, not an added production tactic or planner branch.
+
+All24 FC2 variants have zero implicit arbitration backedges, zero R2UR.OR sites and zero local-memory/stack spills. Aggregate register counts are2619 versus2686 in cb35, code text650496 versus616320 bytes, and uniform spill/fill pairs184 versus200. Config5 static PDL-off is an explicit exception:38 pairs versus37 in cb35. R3 had3862 registers,782976 text bytes and803 uniform spill/fill pairs. Initial strict-zero and per-variant-spill checker predicates rejected baseline-existing spills and this+1 exception; no kernel correctness failure occurred. Final codegen receipts quantify these exceptions rather than hiding them.
+
+Main gate archive: `gate-evidence.tar.gz`, 3505585 bytes, SHA256 `1019b51175b867d58a6786f13eff4872dbcf664a051b9a67c09fc4472b6e381a`.
+
+The64-cell public-chain CAAC completed on GPUs0/2/3/4 (PIDs825086–825089), using cb35 as control and frozen R4 source8d8af271. It uses the same native winners/routes,4/64/4096/16384 tokens,100 cold-L2 CUPTI samples and unchanged observer. Sole-announcer remains excluded. Independent verification passed all64 cells,48 processes and25,600 CUPTI samples. Primary overall change is+0.0043%, decode+0.0109%, prefill−0.0024%; model means are V3+0.190%, V41F+0.154%, K3−0.134%, N3U−0.193%. This is neutral and does not justify95 inserted/26 deleted source lines, descriptor/metadata complexity and5.55% aggregate code-text growth. R4 and the entire scatter4 family are rejected; no further variants are planned. Full verified performance artifacts are in `../../scheduler/caac-audit/scatter4-r4/verified/`.
+
+The separate actual bulk32 constructor gate completed64 cb35 BF16 control replays, covering all four modes, static/CLC and PDLoff/on. R4 candidate qualification had only just started when the neutral performance decision was finalized. Its exclusively owned process group828287 was cleanly stopped with SIGTERM and GPU1 verified idle. The bulk32 candidate full-chain qualification remains incomplete and must not be represented as passed. See `bulk32/` for the explicit boundary and partial receipts. No sanitizer was run. No native cache was deleted.
+
+The local review clone was audited before handoff for removal: exactly one owned modified kernel, no untracked files, source SHA8d8af271 byte-identical to the archived gate source. No active edits remain. Source/patch receipts, useful helpers, raw data and proof notes remain in the durable project artifacts.
+
+The final stopped receipt captured16 successful R4 candidate bulk32 comparisons for config0 (NVFP4 BF16, static/CLC, PDLoff/on, all four route cases). Configs1–3 were not completed; the complete all-format bulk32 gate remains unqualified.

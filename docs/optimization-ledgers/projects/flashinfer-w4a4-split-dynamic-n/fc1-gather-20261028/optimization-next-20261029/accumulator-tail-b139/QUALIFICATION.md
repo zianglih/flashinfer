@@ -1,0 +1,11 @@
+# Swap terminal accumulator-tail removal
+
+Base b13963b0, candidate kernel dca375bbf01d0fe5fb0c7b8c091e932f2189735c94d4d08b59fa82ea4c6999c1. The only production change deletes acc_pipe.producer_tail(producer). All operand drains, final CTA-wide join, allocator two-CTA rendezvous, W4 code and public/tactic contracts remain unchanged. Actual CuTe4.8 lifetime proof is in ../accumulator-tail-audit-b139/README.md.
+
+Both arms passed39 exact cases, with76 matched executable codegen captures per arm. Guarded before launch: no increase in registers, stack, local bytes or LDL/STL sites; unchanged shared bytes and register quotas. Every captured kernel removes exactly one terminal PTX mbarrier wait site while MMA/TMA issue counts remain unchanged.74 kernels lose2–22 non-NOP instructions. Two N256/K8 one-CTA MX kernels gain7 instructions due to extra uniform register transfers; no new local storage. Two pre-existing synthetic M512/K8 spills improve STACK168→160 bytes and21→20 LDL/STL site pairs. These are codegen facts, not speedup claims.
+
+Additional local-only diagnostics passed4 cases per arm (static/CLC ×1/2CTA), each checking exact active/empty/partial routing eagerly and five graph replays through active→empty→partial→active→empty. The fixed2-SM grid exercises persistent reuse; all graph captures satisfy matched resource guards. Existing bit-exact oracle and public API reused; no repository test added.
+
+Main archive: ae5c4bf602ec6302595968cd1ee3c4d66add21a8d3c820aa3c01e416c73023c1 (785 verified files). Supplemental graph archive: dac0a441088fc05050ba2054a69ecdd101c98e8ed185829f10beeb092c3c2d1b (113 verified files). Full manifests, receipts, source snapshots, PTX/SASS/CUBIN and raw outputs remain local.
+
+Approved screening list is frozen in ../accumulator-tail-screen/plan.json:24 cells, all4models EP/TP,6 per affected format, tokens8/512/16384,9CLC and15ordinary scheduler choices. Same physical GPU per CAAC job, frozen native winners/routes,100 strict CUPTI samples per phase,10 warmups,cold-L2 CUDA graphs,input quantizer included forNVFP4,stock-clock NVML telemetry. No retuning or historical baseline rerun. Timing evidence is pending; do not infer retention from qualification alone.

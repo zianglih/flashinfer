@@ -1,0 +1,15 @@
+# W4 shared-output ring index
+
+Retained control2b8, W4 source5e61. R0 source42cbc replaces the otherwise-unused monotonic output-write counter with its bounded residue: initial0, each actual TMA output `(slot+1)%stages`. It removes2 source lines. The original PipelineTmaStore counter, both commit/acquire sequences, all shared-store/read fences, accumulator release timing, SIMT tails and fused-finalize behavior are unchanged. There is no new state, interface, tactic or shape rule.
+
+`source_audit.py` proves exact inverse source equality and3,359,232 transitions over depths1–64, with gated-TMA/nongated-TMA/no-TMA events. Tile/expert transitions do not reset the slot. The proof assumes the original signed count has not overflowed; the bounded representation also avoids that otherwise-invalid long-run count growth.
+
+The current seven-stage native gated epilogue contains a signed division-by7 sequence. R0 first asks the compiler to infer the bound from the residue recurrence. If it cannot, an explicit bounded wrap is the only separately frozen alternative authorized by root; no shape-specific optimization is planned. Compare both power-of-two and irregular native stage counts before any timing decision.
+
+History: the rejected475 W4 modulo experiment changed gather-warp IDs, not this output slot (old project's `fc1-gather-20261028/full-20261029/w4a16-gather-ledger.md`). No matching output-ring trial was found in the July W4 optimization ledger, October split ledger, gathered-W4 closed leads or current audits. Rubin regular grouped MoE inherits the monotonic count; PipelineState.advance is an existing bounded-index example.
+
+Qualification uses the existing public API/zero-tolerance W4 helper and native returned-library capture, six explicit N16–256 geometries on recoveryGPU3, with native options/resource guards preserved. The actual `num_c_stage` is recorded rather than assumed from N. No sanitizer or performance measurements. The initial remote-preflight missing-path error and stale49 guard assertion occurred before GPU kernel compilation/launch and remain preserved under qualification; qualification-r1 fixes those harness references only.
+
+R0 completed12 exact calls and18 native pairs, depths2/3/4/5/7/14/15, unchanged resources/zero LOCAL; the modulus remains and native counts vary only−2…+1. `r0-native-summary.json` preserves the result. Explicit-wrap sourceb4f80b0a replaces the two recurrence expressions with increment/equality/reset, for7+/5− total versus2b8. It reuses the same counter state. Candidate-only exact/native qualification reuses the six source-identical controls; no timing has been authorized.
+
+Explicit-wrap qualification completed: six fresh candidate exact calls paired with six immutable retained controls; eighteen native pairs, unchanged resources and zero LOCAL. All twelve GEMM images remove1–4 non-NOP instructions, including stage2/4. The six finalizers are raw-identical. See `qualification-summary.json` and `wrap-native-summary.json`. GPU3 is idle after source postflight. The eight-job104-cell CAAC replay is held for root review; no timing has started.

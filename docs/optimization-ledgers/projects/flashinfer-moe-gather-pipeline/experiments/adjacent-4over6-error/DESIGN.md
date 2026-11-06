@@ -1,0 +1,7 @@
+# Adjacent independent error terms
+
+Sole existing-helper change on retained c1ac: pack adjacent RN subtraction/square, then perform the original two scalar RN error additions. MSE and MAE symbolic graphs match and replacing this helper restores the entire module AST. Signature, callers, strict path, quantization/max/selection chain unchanged. Source679c86cd,12+/11−; scoped hooks pass. This differs from rejected cross-candidate packed accumulation5f232629.
+
+Root reviewed and authorized the exact patch before GPU work. Reuse three existing pairs (BF16K640 precise-base MSE256 error-fast; FP16K1536 MAE448 error-fast; FP16K80 strict control) with unchanged masks, zero-live/partial/group/padded rows and four graph replays per call. GPU3 only, private per-arm quantizer caches; unchanged four release C++ modules shared after no-op/hash verification. Native guard requires no additional local storage, no register increase or occupancy-capacity loss; strict image must remain identical.
+
+Only if native/exact passes, replay the already captured N3U TP16K FC1 payload in a fresh CAAC100/10/cold-L2/CUPTI one-quantizer graph, activePDL preserved and no FC2. Fresh control phases, source-bound normal cache loads. No42-cell campaign or source policy rescue. Native/compiler scheduling and special-value behavior remain device-qualification boundaries; symbolic graphs do not promise NaN payload identity.

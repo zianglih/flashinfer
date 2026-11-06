@@ -1,0 +1,5 @@
+# Skip scale stores outside dynamic MMA N
+
+Control374ed4c0. Gathered FC1 only: skip SF copy instructions for logical rows beyond round_up(valid,8*CTA_group_size), the same N encoded in MMA. Both CTAs use the full global rounded N. For issued copies retain src_size zero-fill when row>=valid or channel>=K, preserving padded-MMA rows and K tails. All128 copy-completion arrivals, the Gather4 byte arrival, relay publication, stage reuse, S2T scale layout, TMA payload and FC2 remain unchanged. No new tactic or model/dtype policy.
+
+Use CuTe conditional copy first; confirm SASS predicates the copy instruction instead of merely choosing src_size0 or adding divergent branches. Existing exact cases cover dynamic N, one/two CTAs, K96 tails, MX modes, per-token and M512 channel reuse. Before timing, explicitly verify untouched FC2 codegen, zero local storage, and all completion counts. Additional replay must change live N across reused phases with stale scale scratch before trusting the dead-row argument. Experimental changes remain unstaged.

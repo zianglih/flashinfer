@@ -1,0 +1,11 @@
+# Narrow two-CTA tactic exposure proposal (unapplied)
+
+`get_blackwell_gemm1_valid_tactics` and `get_blackwell_gemm2_valid_tactics` currently suppress M256 for route N16/32/64. The prepared patch offers M128 and M256 uniformly across the existing five route capacities, with the existing M512/N128 FC1 reuse tactic left intact. No dtype/model/token threshold is introduced. Actual problem admission remains in the kernel's existing `can_implement`, invoked for both phases by `CuteDslMoERunner.get_valid_tactics`.
+
+The pair list grows from 13 to 22: three extra FC1/FC2 pairings for each narrow N. Existing tactics and their relative order are unchanged. Distinct phase kernels grow from 15 to21 (+40% possible compilation), while full-chain tactic profiles grow by69%. This iteration cost must be weighed against measured wins; no new tactic has been enabled yet.
+
+CLC is currently not a tactic field. The host FC1 call requests it only for one-CTA geometry; FC2 requests static scheduling. The private launcher already has generic work-capacity, SM-reservation and CUDA grid-Y bounds. After forced group2 CLC correctness coverage, the minimal independent policy experiment is FC1's direct `use_clc_scheduler=True`, leaving those generic launcher bounds to determine applicability. That change should be measured separately from geometry expansion. It requires neither a public API extension nor repurposing the existing raster field. FC2 scheduling should likewise remain a separate direct behavior experiment rather than be implicitly coupled to cluster size.
+
+`probe_narrow_clc.py` requests the existing private scheduler for both phases only in a diagnostic harness. It uses96 local experts so allocated work exceeds the device's cluster capacity, compares one/two-CTA combinations on identical inputs, and asserts actual compiled group2 CLC+prefetch in both phases. It includes PDL on/off, empty work, partial routes and per-token scaling. It does not claim to instrument whether a particular live tile was obtained by cancellation. All actual payload/SF/memory synchronization remains the frozen library implementation.
+
+Kernel runtime gates are pending replacement-devbox availability. Neither the tactic proposal nor the CLC policy proposal is applied to production or the shared review.

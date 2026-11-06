@@ -1,0 +1,15 @@
+# Dedicated epilogue invariant norm cleanup
+
+Accepted for integration as a small sanity cleanup, with no end-to-end speedup claim. Move the optional norm scalar outside the existing dedicated epilogue tile loop. The inline epilogue and expert alpha load stay unchanged; there are no new knobs, tuning axes, dtype/model cases, or metadata-depth changes.
+
+The measured source is `b85eff41` plus patch `9ca20e96…`; the control uses the same frozen six-field all-CLC diagnostic policy (`97cf417d…`). The active local copy is now based on `4e155c30`. Integrate only `retained-kernel.patch` (SHA256 `457cc483698852e76d02236df67bb98a5cd37828497aad122c7d0c7624356da0`); it excludes diagnostic tuner/test changes. Old source receipts and remote copies remain frozen.
+
+- **Correctness/resources:** 64 exact source-paired graph replays and 16 core pairs cover four formats, one/two CTA, N16/N128, PDL on/off, inline/dedicated roles and changing/empty routing. Registers, SMEM, TMEM and stage policies match; no local memory or spill sites. See `validation.json`.
+- **Actual instruction removal:** the norm-present dedicated epilogue loads norm before the initial metadata wait, outside its tile-loop backedge. This removes a dynamic scalar LDG and constant-pointer load for subsequent tiles. See `norm-sass-proof.md`; a lower static load-site count is not claimed.
+- **Timing:** six CAAC sequences across V3 EP8, V41 EP4 and K3 EP8, four formats, tokens 32/128/4096/16384, plus unchanged W4A16 controls. Public benchmark, identical saved native all-CLC tactics, 10 warmup/100 cold-L2 CUPTI CUDA-graph samples, input quantization included for NV, fused finalize disabled. Sources, route hashes and tactic hits validate. All 60 points, 240 measurements and 24,000 raw samples are retained.
+- **Result:** affected 48-point geometric mean **0.999961×**. Per backend: W4A4 1.000342×, per-token 0.999819×, MXFP8 1.000017×, MXFP4x8 0.999668×. These are neutral, not a performance gain claim.
+- **Extrema:** K3 MXFP4x8 at 16384 is 0.985524× (1264.078→1282.646 µs; forward/reverse 0.985437/0.985611). V3 MXFP4x8 at 16384 is 1.020991× (732.251→717.196 µs; 1.019767/1.022246). W4A16 control extrema span 0.994528–1.032200×. See every point in `timing-summary.md` and the source-pinned raw receipts in `timing-results`.
+- **Negative-point follow-up:** V41 MXFP8, V41 MXFP4x8 and K3 MXFP4x8 at 16384 produce byte-identical FC1/FC2 PTX, CUBIN and SASS between source arms; resources also match. These are six fresh diagnostic kernel pairs, not captures of the earlier timing processes. This establishes no changed GEMM binary in those diagnostics, not identical original runtime state. See `mx-codegen-validation.json`.
+- **Boundary:** no native AUTO re-search, TRT comparison, new upstream tests, broad suite or sanitizer run. The local base bump is static-checked; the parent owns final composition checks, commit and publication.
+
+`retention-receipt.json` pins sources, helper/result hashes, exact extrema, and GPU2 release. The kernel-only patch remains unstaged in the independent local copy until integration.

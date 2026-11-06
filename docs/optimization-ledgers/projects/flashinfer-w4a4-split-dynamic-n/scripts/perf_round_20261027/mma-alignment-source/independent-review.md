@@ -1,0 +1,11 @@
+# Hardware MMA-N alignment: independent review
+
+The source change is appropriate for the existing blockscaled instruction kinds. [PTX ISA 9.2 Table 39](https://docs.nvidia.com/cuda/archive/13.2.2/parallel-thread-execution/index.html#tcgen05-mma-shapes) permits dense N multiples of 8 for one CTA and 16 for two CTAs for `mxf4nvf4`, `mxf4`, and `mxf8f6f4`. The formula `8 * cta_group` directly represents that hardware requirement, with no new tactic or workload condition.
+
+The change affects only the runtime instruction descriptor. Physical allocation, transport, scale publication and epilogue extent are unchanged. Active token columns remain a prefix; the epilogue transpose preserves token identity, its scale reductions combine channels for the same token, and stores are guarded by the valid-token bound. Columns newly omitted from the MMA cannot contribute to an active token's result. Zero-token handling is unchanged.
+
+The independently checked base and static artifacts contain 96 exact replay comparisons, 48 core pairs and 18 PrepareRouted pairs, with 589 artifact hashes verified. All 16 two-CTA core pairs and every PrepareRouted pair have identical encoded SASS. Each one-CTA core changes two immediate values: the scaled rounding bias changes from `0x3c000` to `0x1c000` (15 to 7 before the descriptor shift), and the mask retains descriptor bit 17, permitting an N quantum of 8. Every instruction address, opcode, instruction order, scheduling control word and register/shared/stack/local resource count is unchanged. No synchronization or memory instruction is added; there are no local-memory spills.
+
+One static per-token FC1/PDL-off core additionally exchanges descriptor register pairs UR16:17 and UR18:19 across 17 rows. All four registers are unconditionally redefined before the first descriptor use, every subsequent use obeys the same permutation, and no use follows the last descriptor access at `0x3db0`. Earlier unrelated uses remain unchanged. The complete all-use mapping and exact rows are recorded in the JSON receipt; this is not strict encoding identity.
+
+`review_codegen.py` reproduces the artifact/source/codegen checks without running kernels. `independent-gate-review.json` records full gate completion and admission to the model screen. Timing is separate; narrower masked-column arithmetic is proven, not an end-to-end speedup.

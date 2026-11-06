@@ -1,0 +1,3 @@
+# Separate synthetic spill diagnostic
+
+Two existing exact geometries: MXFP4x8 and MXFP8; tokens129, H=I=512, E=top-k=2, SwiGLU, dense deterministic routes, M512/N128/K8/2CTA/static bothFCs. Publicunfused swapAB; inputquantization/setup excluded. C-A-A-C on one GPU per geometry,10warmups/100strictCUPTI/coldL2graphs, same2msread-onlyNVMLwrapper. Fixedseed42 and exacttactic, allinput/outputbytes compared acrossphases. Normalcache/compilerflags. Loadeddriverregister/local/sharedattrs mustmatch prior exactcaptures; only theseFC1s expectcontrol128B/candidate80Blocal. FC2 mustremainzero-local. No comparisonis addedto56nativeaggregate; no inference aboutmodelKlength.

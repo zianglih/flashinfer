@@ -1,0 +1,39 @@
+# Compile-time partial-K and SM103 K96 experiment
+
+Base: `d1767be1f42fdc371f90db4fb06598299ea32845`. Active, unstaged review checkout: `flashinfer-tp-k-tail-review`; its Git common directory is inside the project-owned canonical clone. No canonical source change, GPU execution, or retention claim yet.
+
+## Scope
+
+The V41F TP4 MX public API gap is excluded under the user's updated instruction: both old CuTe and TRTLLM reject logical I576. No logical padding, weight-preparation API change, model branch, or baseline adapter is needed for that shape. The experiment targets supported reductions whose final operand stage contains unused native MMA atoms, then separately evaluates SM103 FP4 K96 within the same stage ownership.
+
+## First patch: peel the final native MMA stage
+
+Reduction size is already a compile-time wrapper argument and part of the host compile cache key. TMA stages, SMEM/SF layouts, expected byte counts, producer loops and zero filling already handle a short final stage. Current MMA executes every atom in that stage, including zero-filled atoms. The prior rejected `scripts/mma_k_tail_experiment` inserted runtime per-instruction predicates; this patch must not repeat that mechanism.
+
+Compile two sections only when K is not divisible by the stage width: a rolled loop over full stages and a single compile-time tail stage. Pass a compile-time native-atom count to the existing dynamic-N MMA emitter. Its Python unrolled loop generates only the required atom sites. Derive native K from stage width divided by fragment atom count; do not hardcode a dtype/model dimension in the peeling policy. Aligned K emits the existing single rolled loop, with the same number of MMA sites.
+
+The tail still acquires exactly one full operand stage, copies the same SFA/SFB allocation into TMEM, releases exactly that acquired stage once, and advances the existing state once. Both channel tiles finish before the shared release. Both static and CLC scheduling retain identical metadata consumers and phase advancement; the follower CTA remains excluded from the MMA role. Accumulation initializes on the first actual atom, including a reduction shorter than one stage. No accumulator/operand barrier or quorum is added or removed.
+
+Static proof: enumerate admitted positive K, all existing stage widths and native atoms; concatenated emitted intervals cover `[0,K)` exactly for currently aligned public reductions and never exceed the already zero-filled stage for a more general tail. Stage acquisition/release count remains `ceil(K/stage_K)`. The full loop contains no tail predicate. Runtime exactness still needs a gate because deleting additions of zero may expose hardware rounding or signed-zero behavior; algebra alone is not a bit-exact proof.
+
+Touched source for the first patch: only `flashinfer/fused_moe/cute_dsl/blackwell/moe_swap_ab_kernel.py`, at `_blockscaled_dynamic_mma` and the MMA role's K-stage loop. All public APIs, admission, tactic list, weight preparation, W4A16 and legacy/Rubin code remain unchanged.
+
+## Second patch: K96 without cross-stage ownership
+
+Primary references: official [PTX descriptor and absolute-address rules](https://docs.nvidia.com/cuda/parallel-thread-execution/#tcgen05-leading-dimension-byte-offset-absolute-address), [CUTLASS tcgen05 operation source](https://github.com/NVIDIA/cutlass/blob/main/python/CuTeDSL/cutlass/cute/nvgpu/tcgen05/mma.py), and repository `flashinfer/gemm/kernels/dense_blockscaled_gemm_sm103.py`. Archived exact source/probes are in `scripts/sm103_k96_audit/`.
+
+K96 is an SM103 FP4×FP4 instruction capability, not an MXFP8 or mixed FP4×FP8 option. Its descriptor sets bit31. It consumes six SF16 entries or three SF32 entries; current public SF layout can remain unchanged with a single-scale TMEM iteration view, as the previous isolated probes established. Absolute-LBO descriptors require K-major operands, 128-byte swizzle with 16-byte atomicity, base offset zero, and properly aligned start/next-buffer addresses. Verify those conditions against current allocations before enabling it.
+
+Current swap-AB operands are only128B-aligned. The repository SM103 dense implementation instead sets `buffer_align_bytes=1024` (line502) and accounts for1024 metadata/alignment bytes (line2111). A general K96 path must likewise guarantee operand-start1024B alignment and include actual padding in the compile-time storage calculation. For current FP4 K256/K512 stages, both A and B payload sizes are multiples of1024 even at minimum allocatedN32/twoCTA, so aligning the first operand also preserves every stage's repeating swizzle boundary. This is an architectural requirement; it is not grounds for a model-specific eligibility branch. The existing128B metadata/scratch planner cannot simply be left unchanged while increasing a struct alignment.
+
+Previous experiments forced K768 stages or linked three K256 stages and both regressed. Avoid their wide-stage/extra-scale-bank policy: retain current capacity-derived stage sizes and barriers. Within each acquired K256/K512 stage, select a compile-time sequence of K96 and K64 instructions that covers its valid reduction with minimal instruction count. Since public FP4 reduction alignment is64, a simple exact decomposition can use pairs of K96 for each192-value span, followed by K64 atoms for the remainder (0/64/128). A K256 stage then uses96+96+64 (three instructions instead of four); K512 uses four96+two64 (six instead of eight). No instruction crosses an operand-ring stage boundary. The peeled final stage applies the same compile-time decomposition to its valid extent.
+
+Absolute-LBO permits a K96 instruction crossing a128-byte SMEM segment within the same acquired stage; it does not permit reading an unacquired next pipeline slot. Keep the existing scale copies and scale lifetime. The raw SMEM descriptor and scale address for each instruction are selected at compile time; dynamic N and existing accumulation order remain explicit. K96 changes native accumulation grouping, so exact-reference compatibility must be measured before adopting it. Do not claim existing numerical contract automatically survives.
+
+Likely additional touched paths for the second patch: private host launcher `blackwell/moe_swap_ab.py` to derive and cache a hardware capability flag; the same kernel file to emit mixed K96/K64 instruction sequences using current SMEM tensors. No public argument or autotune axis is required. An SM103/FP4 capability check is justified by ISA support; no shape/dimension threshold is justified. First preserve the tail-only patch separately, then evaluate K96 composition after its exact/codegen gate.
+
+The current test oracle explicitly truncates NV accumulation after each K64 update (`tests/test_helpers/cute_dsl_moe_swap_ab_reference.py:33–39,138`). Earlier K96 random comparisons do not prove that instruction grouping preserves this contract. If the hardware differs on a targeted adversarial gate, extend the existing oracle with the actual compile-time instruction-update sequence while retaining zero-tolerance assertions; do not duplicate the backend reference or loosen tolerances. No reference change has been made in the tail-only candidate.
+
+## Gates after sanitizer
+
+Use the existing exact replay/codegen harness, extended only with the source-bound partial-K cases: one/two CTA, M512 channel reuse, all supported data modes, static/CLC, PDL off/on, short/aligned/partial K and repeated pipeline phases. Inspect aligned-specialization codegen, tail instruction counts, lack of per-MMA tail predicates, SF addresses, stack/local and uniform-register spills, resources and stage counts. K96 additionally needs descriptor/base-offset and numerical checks on actual SM103. Only then use same-source frozen-tactic CUPTI CAAC over supported TP/EP model families. Keep tests/measurements outside active sanitizer work.

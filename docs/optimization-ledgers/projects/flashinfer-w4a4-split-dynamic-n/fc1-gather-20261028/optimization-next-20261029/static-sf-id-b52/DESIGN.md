@@ -1,0 +1,7 @@
+# Compile-time scale-byte selectors, current register budget
+
+This deliberately revisits `../static-sf-id-6be/r1`; it is not a new mechanism. That revision stopped at a strict static local-instruction guard and had no numerical or performance run. Current b52 has a retained control-register budget of128 instead of120. We will record complete paired code generation before deciding whether execution is justified, including any increased common-state local traffic. Smaller stack alone is insufficient.
+
+Only `_blockscaled_dynamic_mma` changes: relative K and scale-vector width determine both byte selectors at compile time. TMEM base and bank offsets are whole words. A/B operand descriptors, runtime N, mixed K96/K64 tails, MMA accumulation order, synchronization, roles, layout and tactics are unchanged. The existing exhaustive address proof in the older experiment applies to this identical formula; the exact current patch and all514 source files are bound in source-proof.json.
+
+First qualification: the same12 existing compile cases/22 captures plus2 native cases/4 captures used by the prior issue-order audit, reusing the actual b52 source-matched baseline captures. No owned MoE kernel launches. Geometry and register-role requirements remain mandatory; all local-resource differences are recorded, including failures of the original strict criterion. Further exact/benchmark gates require a source-bound decision, without shape exceptions or additional tactics.

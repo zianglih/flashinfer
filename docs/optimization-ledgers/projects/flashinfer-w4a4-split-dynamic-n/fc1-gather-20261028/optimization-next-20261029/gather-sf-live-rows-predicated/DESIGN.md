@@ -1,0 +1,1 @@
+Control374ed4c0; same live-row contract as r0. Replace divergent CuTe copy condition with directly predicated cp.async, preserving independent instruction issue and ignore-source predicates. No TMA, arrival count, phase, layout or FC2 change. PTX reference https://docs.nvidia.com/cuda/parallel-thread-execution/index.html#data-movement-and-conversion-instructions-cp-async

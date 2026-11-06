@@ -1,0 +1,12 @@
+# Retain: paired W4A16 SiTU arithmetic
+
+Retain exact source `5e61d04544524410b273b8e49ee2b8f6d9e20266c22346aba06ab3743c2c4e1d` on base `49c91adf`. The review copy remains unstaged for the parent to commit. The patch adds 23 lines and removes 36: no new state, branch policy, public argument, tactic axis, or oracle change.
+
+- **Reason:** replace duplicated scalar arithmetic with existing paired RN helpers while preserving the Python-beta reciprocal and separate RN multiply/subtract, scalar FTZ EX2/RCP, and per-lane ordering. Native captures show real instruction removal, unchanged registers and zero local memory. The source is smaller and more direct.
+- **Exact/native evidence:** 12 zero-tolerance calls and 18 native pairs passed, including both layouts, one/two CTA, static/CLC, PDL off/on, gate-only and gate+linear SiTU, and non-FP32-exact beta values. Fourteen unaffected pairs are raw-identical. Additional actual EP16/32 winning signatures remove 24/48 non-NOP instructions at 96 registers; their four FC2/finalizer pairs are raw-identical. Local epilogue scheduling changes remain explicit.
+- **Primary performance:** all 26 K3 EP8/TP8 W4A16 cells are measured with frozen routes/tactics and strict native CUPTI C–A–A–C. Excluding 1/2 tokens, the geomean is +0.275%; all nine negative retention cells remain. Prefill +1.103% has clock/repeat variation and is not claimed as a dependable speedup.
+- **Separate diagnostic:** the six-cell A–C–C–A repeat does not reproduce tight EP16/32 losses (+0.007%/+0.097%). EP128 remains −0.101%, tracking routing rather than FC1. Preserve both campaigns; do not substitute repeated rows into the primary table.
+- **Scope:** refresh the 26 K3 W4A16 cells from the primary candidate phase medians. Reuse 442 rows from the current publication: all 364 swap rows have unchanged source; 78 non-SiTU W4 rows select unchanged compile-time graphs. Representative non-SiTU native identities support this source proof; this is not a claim that all 442 signatures were recompiled.
+- **Boundaries:** no direct exceptional-NaN payload device test, sanitizer, retuning, or new policy. All raw samples, negatives, clock anomalies, and the one missing primary telemetry quartile are retained.
+
+`retention.json` pins the decision and evidence. `source-reuse-proof.json` lists every affected identity and hashes all 442 existing row dictionaries so later publication can preserve their baseline, measured-source and evidence fields exactly. No publication artifact or main source has been changed by this receipt.

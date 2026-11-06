@@ -1,0 +1,11 @@
+# Retention qualification
+
+Parent accepted the static possible-copy participant policy for composition. It counts only the SF owner threads that can issue copies for the compile-time physical route tile; the byte-arrival, SF/payload work, pipeline phases and PDL contract remain unchanged. This is a single generic geometry policy, with no model/dtype rule or new tactic.
+
+K3 TP8 MXFP4x8 improves +0.640% in the original screen and +0.670% in the predeclared repeat. Preserve N3U EP8 NVFP4 −0.401% original / −0.051% repeat and all other rows. No broad gain or instruction-count improvement is claimed: narrow compiled variants add 4–13 instructions and 1–4 branch/reconvergence sites. V3 EP16K MXFP8 is −4.271% original / −0.795% repeat, while both exact native FC1/FC2 binaries are byte-identical. Those negative timings remain unresolved end-to-end variation, without a clock explanation.
+
+Measured source: kernel `abec6f9ba4cbb3a26f7e88f6cbcdccf7268815245f68a6e7c7211b0e47bc5fcd`, based on retained77391. Single patch: `retained-r0.patch`. Qualification is 41 exact cases per arm with80 matched captures, no new resource growth; two inherited MX STACK160 cases remain explicitly recorded. Timed native kernels all have LOCAL_BYTES0. Original12 and repeat3 CAAC rows remain separate, independently audited.
+
+The local review remains frozen and unstaged until the parent's paired-six/ternary commits are pushed. After that, compose this single patch and run the candidate41 exact cases with unchanged qualification helpers and immutable7739 control captures, validating source/resource bindings. No new baseline timing or repeat is requested. The final full table will measure the retained composition separately.
+
+Final disposition: composed on b8ccad2 and qualified with41 fresh exact cases/80 resource-matched captures, then retained in `ce4a7d8c2836c0f8a871ebf5cfe87633172360d8`. All514 timed/composed source files match the committed tree. The active SF review was retired; immutable remote source and all evidence/helpers remain. Final full-table refresh is separate from the isolated measurements above. See `../gather-sf-arrivals-composed/QUALIFICATION.md`, `retained-source-equivalence.json` and `retirement-proof.json`.

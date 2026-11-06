@@ -1,0 +1,1 @@
+Root reviewed the completed91-row first screen and explicitly authorized A2 → T2 → C2 with unchanged immutable campaign, source, observer and GPU contracts. No further benchmark variants are authorized. Preserve all rows and report paired ratios, drift and tactic changes. Root owns retention, push and PR decisions.
