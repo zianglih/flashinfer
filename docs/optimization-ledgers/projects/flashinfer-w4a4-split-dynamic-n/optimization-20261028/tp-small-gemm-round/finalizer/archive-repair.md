@@ -1,0 +1,1 @@
+Archive v1 preserved all raw outputs but its index reused the probe source manifest.json name, so archive verification correctly stopped at that key. V2 keeps the original probe manifest.json and puts the archive index at archive-manifest.json. No GPU run or source was repeated or altered.

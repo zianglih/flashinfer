@@ -1,0 +1,7 @@
+The first frozen elected-owner candidate does not compile. No performance claim or retention decision is valid for this source.
+
+- Control: retained kernel `9b4721b08057d0a488c1f0236467acb75c48cd00`, 64 exact graph replays and 32 core compilations completed across GPUs 6/7. Both FC phases, PDL on/off, four formats, and actual one-/two-CTA geometry are represented. Completed controls remain reusable with the identical probe and inputs.
+- Candidate: device-only patch `5da2bd3f6217a3b72d17fedadaf61214279e632c6f84135657070fbe1ccb2c5e`. Both shards failed at their first core compilation; zero candidate replays/artifacts. Drivers exited normally after their child returned 1; there was no GPU hang.
+- Diagnostic: `compile-diagnostic-v2` repeats config0 using the same source/probe and a projection of its completed control reference. `CUTE_DSL_SHOW_STACKTRACE=1` reports a non-dominating `scf.yield` operand0, a `!cute.memref<i32, smem, align<8>, "(4,1):(1,4)">` produced in a child region. The stack ends at FC1 CuTe `build_module` verification. A scheduler object escaping the elected region is a hypothesis, not yet a confirmed cause.
+- Initial `compile-diagnostic` attempt omitted the probe's required candidate reference and stopped at argument validation. Its evidence is separate; it did not compile or run a kernel.
+- Immutable source receipts, logs, controls, PTX/cubins/SASS, and diagnostics are collected in `evidence-v1/`, verified against `artifact-manifest.json` (159 files). No source was edited during this gate.

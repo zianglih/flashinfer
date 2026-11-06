@@ -1,0 +1,5 @@
+# Independent producer-side protocol review
+
+No source-level blocker was found in terminal-ticket peeling. The valid-work loop retains each routed ticket's metadata acquire, leader-only cancellation request, metadata publication, response wait/read/release, and all state advances in their original order. Valid-but-unrouted padding tickets still request and consume the next ticket but never occupy the metadata ring. The single terminal publication retains the same `(-1, 0, 0)` payload, elected issuer, acquire/commit/advance, and IKET range as the original last loop iteration, including when the initial ticket is invalid. Both CTAs publish their own terminal metadata and consume every CLC response; only rank zero issues requests and drains the producer tail, as before.
+
+The final CTA join remains after the scheduler branch, so terminal metadata consumers still finish before shared/TMEM teardown. Metadata storage, quorum, ring capacity, phase progression, and all ordinary scheduling are unchanged. The CPU trace checks model these event-order facts, but do not establish GPU codegen or hardware performance; the paired GPU gate remains required.

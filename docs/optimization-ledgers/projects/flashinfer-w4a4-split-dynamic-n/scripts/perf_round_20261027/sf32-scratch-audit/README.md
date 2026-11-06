@@ -1,0 +1,15 @@
+# SF32 exchange lifetime audit (read-only)
+
+Source: `f7182d5c`, `flashinfer/fused_moe/cute_dsl/blackwell/blockscaled_contiguous_grouped_gemm_finalize_fusion.py`. No source edit or GPU experiment is proposed as retained here.
+
+The current `_gated_sf32_absmax` (540–550) uses 128 FP32 scratch values (512 bytes). All four epilogue warps store their local maxima, join NamedBarrier 6, read the adjacent warp's maxima, and join again before reusing the single slot. The prior scheduler audit already identified two-slot scratch as a possible direction (`scripts/sync_audit_20261027/scheduler/README.md:59`), but the searched audit/round notes contain no implemented trial. The recent epilogue-overlap experiment kept this exchange unchanged.
+
+Two slots can remove the second barrier with the following invariant: exchange `i` writes slot `i % 2`; its publication barrier follows each thread's reads from exchange `i - 1`. Before exchange `i + 1` can overwrite the slot used by `i - 1`, every participant has passed that intermediate publication barrier, so all prior reads have finished. The first two writes need no reuse wait. The final exchange needs no extra drain if no later code reuses the scratch before the existing final CTA join.
+
+A global exchange counter is required if this protocol spans helper calls. Increment it only when the 128-thread exchange actually runs, and preserve it across channel tiles, persistent work tiles, forward/reverse overlap order, and skipped empty route slabs. `token_start // 32` parity is insufficient: partial routes can end after an odd number of slabs, and later channel/work tiles reset token_start. All 128 threads enter the exchange before output-channel masking, including an inactive channel-tail CTA; its local exchange remains valid. Both the inline-producer epilogue (2797–2835) and dedicated epilogue loop (2848–2955) need the same state contract.
+
+The minimum complete implementation would carry one Int32 phase through `run`/`run_overlapping_fc1` and their token-group/directional helpers, then back to the persistent loop. Phase xor and an extra address offset replace one block barrier per actual exchange. Reserve 1,024 bytes rather than 512 for this geometry in both `_operand_stage_capacity` and the final `_epilogue_storage` allocation; updating only the struct would invalidate stage admission. Whether the extra 512 bytes removes an operand stage or changes register allocation must be counted before a GPU trial.
+
+A smaller alternative retains a drain at each epilogue-helper boundary and alternates slots only inside that bounded call. It avoids persistent phase plumbing, but saves nothing for one-slab decode and needs a boundary drain for each channel call; forward/reverse overlap needs the same careful bounded sequencing. This is a tradeoff to review, not an equivalent full removal.
+
+Recommendation: the two-slot protocol is feasible, but do not patch it merely by deleting the reuse barrier or using token parity. First compare the required phase plumbing and planner cost with the saved exchange count. No current performance claim or new tuning axis is justified.

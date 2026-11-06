@@ -1,0 +1,3 @@
+# Full candidate refresh
+
+Two fresh candidate passes per public-API workload, all13 token counts, strict CUPTI cold-L2 CUDA graphs,10 warmups/100 samples, frozen winners and routes. Each job runs on the same GPU as its retained61c2 measurement. The prior campaign candidate passes1/2 are the retained baseline, separately from that campaign's old61249 control passes0/3. Source manifests prove the reused baseline is byte-identical61c2. Saved TRTLLM/non-swap/W4-before baselines are reused. The independent four-token screens use fresh C-A-A-C; this full refresh explicitly reuses baseline measurements. Tokens1/2 remain excluded from displayed/retention aggregates.

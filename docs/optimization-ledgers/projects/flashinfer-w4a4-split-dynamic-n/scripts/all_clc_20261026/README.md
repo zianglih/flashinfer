@@ -1,0 +1,5 @@
+# All-CLC policy iteration
+
+User target: CLC for both FC1/FC2 across every Blackwell block-scaled format, with static scheduling as the comparison control. This candidate reduces native AUTO enumeration from720 to180 raw tactics by fixing both existing scheduler fields toTrue. Geometry and K-depth choices stay intact; explicit legacy tactic decoding and physical launch/budget fallback contracts are unchanged. No new kernel or dtype/shape dispatch policy.
+
+A is the published7f4e1703-equivalent final guard source, with its validated final native selections (MX caches from the byte-identical executed paths at c69d7034). B performs fresh all-CLC native AUTO. Same public script, ABBA,10warmups/100cold-L2 CUDA-graph CUPTI samples, NV input quantization included. All4affected formats includingper-token; W4A16 remains incidental control. Bounded points4/32/64/128/512/4096/16384; noTRTtiming rerun. Full final tables follow retained kernel changes. Native C++ caches are reused on persistent Weka only after identity checks, with separate DSL namespace.

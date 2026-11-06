@@ -1,0 +1,7 @@
+# Additional bot-review followups
+
+Native 7717228f and HashInfer e0f6b4c are pushed. They replay the identical validation changes originally tested on f3a3e714/8b1539f, after excluding the unpromoted FC1 kernel trial. They reject non-CUDA W4A16 forward inputs before staging. Native also scopes NCU communicator/nonempty-rank checks to executable EP MegaMoE cases and extends the existing invalid-input test with one CPU-device row. No kernel or measured GPU path changed.
+
+Scoped pre-commit and an independent source review pass. Actual extracted forward validation using CPU Torch reproduces prior acceptance and current rejection; six executable profile guards pass. The full native validation file passed on clean f3a3e714:40 passed,1 skipped because deep_gemm is absent. A single idle GPU was visible for FlashInfer package import; this validates host/API behavior, not kernel numerics or performance. The process exited and that GPU returned idle. An earlier CUDA-hidden attempt stopped at an unrelated mandatory device-properties import; its trace is preserved. Existing frozen benchmark and sanitizer sources are unchanged.
+
+The separate staging-cache finding was audited without changes: the launch key covers all six pointer/shape/stride tuples plus stream and the specialization key includes device/hidden/top-k/ID dtype. A changed descriptor key rebuilds views; exact address reuse preserves the descriptor contract. No stale-address launch bug was demonstrated. See ../staging-cache-lifecycle-audit/REVIEW.md for remaining lifetime-retention considerations.

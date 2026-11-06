@@ -1,0 +1,3 @@
+# Small-N K4/four-stage dual-residency follow-up
+
+Independent unstaged98fd clone; only existingoneCTA smallN K8 branch changes toK4/four stages,2xSM grid,min_blocks2 and supported early TMEM allocation permit release. All arithmetic/publictactics/preparation/TMA unchanged; EVICT_FIRST weight hint retained despiteK4. Prior K8/two-stage axis is archived at evidence/small-n-occupancy-98fd (negative fullchain, demonstrated1.88/1.93CTA residency). Initial gateNV T32/N16 only: compiledSMEM/TMEM/regs/local, exactFC1/SF/FC2/fullbytes, thenABAB10/100coldL2graphCUPTI. NoNCU unlessgain; no broader policy/otherformatclaim.

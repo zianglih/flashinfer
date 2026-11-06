@@ -1,0 +1,11 @@
+# Read-only scheduler startup-PDL review
+
+Reviewed current retained b85eff41 source and the proposed owner-specific wait movement. No source changes made here.
+
+The proposed deferral is safe under the existing `prefetch_weights_before_wait` caller contract and CLC scheduling: the scheduler reads only `num_tiles`, `expert_idx`, `mn_limit` and CLC response state. All routing arrays are created by `moe_sort` before the prerequisite activation path. The existing startup release/signal chain already republishes this ancestor metadata for startup weight prefetch. The new scheduler work adds reads of `mn_limit`, from the same completed routing producer; it does not read activation payload, output scales, alpha or norm.
+
+Keep the entire ordinary startup wait plus ancestor-release/launch-dependent block in immediate-wait roles. In particular, the private `pdl_signal_at="startup", publish_routing_before_signal=False` variant otherwise signals from every warp and must not let the deferred scheduler republish or trigger before its dependency wait. The normal FC1 publication owner remains warp0 after its dependency wait; FC2's producer-exit owner remains unchanged. Every deferred scheduler thread should still perform griddepcontrol_wait after metadata and CLC tails, before the shared final CTA barrier.
+
+No new queue dependency cycle appears: a scheduler may fill metadata then wait for consumers which are still waiting on the predecessor, but predecessor completion is independent of metadata queue progress. After the predecessor finishes, consumers advance; terminal release and all-stage producer_tail drain normally. Both CTA ranks must use the same scheduler deferral rule; cluster CLC response acquire, multicast, consumer release and tail remain unchanged. Existing pre-branch TMEM/barrier setup completes before divergence.
+
+Focused gate boundaries: two-CTA clusters; zero local routes and padded cancellations; non-empty work beyond resident clusters; repeated changing routes; PDL off; prefetch false; static scheduler; private startup signal with and without explicit routing publication. Inspect actual generated PDL wait position and ensure no delayed-thread startup trigger survives in SASS. This is an implementation review, not performance evidence; actual candidate source and gate are owned by root.

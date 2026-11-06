@@ -1,0 +1,15 @@
+# Preserve the CLC route coordinate in tile metadata
+
+Independent unstaged source `../../flashinfer-clc-route-metadata-20261027`, based on `b85eff41a6c30687a93e95455a3f68ff77d14ac5`. This candidate is separate from terminal-wait removal and changes only the shared blockscaled GEMM core.
+
+The CLC scheduler already owns the route coordinate before flattening it into `next_tile`. Producer and dedicated epilogue roles then divide the flattened tile by `total_m_tiles` to recover that coordinate. Publish the route in the existing fourth metadata word, return it from `next_work`, and use it directly. The channel coordinate is `tile - route * total_m_tiles`. The flattened tile remains unchanged for loop termination and initial-weight-prefetch matching. Static scheduling keeps computing its route from the tile; no new tactic, public flag, model/dtype threshold or launch policy is introduced.
+
+Storage already reserves four Int32 words per metadata stage. The new field is written by the same elected owner before the existing release arrival and read before each consumer releases that stage. Invalid work publishes route zero alongside the existing tile=-1/empty metadata. The MMAs do not need the route under CLC; unused returned metadata remains eligible for compiler elimination. No ring depth, full/empty count, phase, CLC cancellation, PDL signal, or ownership transfer changes.
+
+Existing single-owner metadata codegen gives a concrete target. For config0 FC1, the consumer metadata already lowers to `LDS.128` at 0x0b70 and 0x32b0, yet the recovered route requires `IMAD.HI.U32 ...0x38e38e39` at 0x0cb0, a shift at 0x0ce0 and channel-remainder UIMAD at 0x0d10 (`total_m_tiles=36`). Wider metadata slots that are only eight-byte aligned currently use LDS.64+LDS; no new alignment promise is made. The candidate must demonstrate net instruction reduction without spills or extra resource pressure; the source change alone does not establish this.
+
+The existing paired-source changing-route/data replay and codegen gate will run after the isolated terminal-wait gate, against the same frozen b85 control. Reusing that completed control is valid only when source, helper, config and output hashes match exactly. No existing benchmark data is rerun, and no performance claim is made until independent timing is authorized.
+
+## Isolated gate result
+
+All 40 paired changing-route/data replays and 20 core pairs passed, including PDL off/on and empty-reactivated routes. The completed clean b85 control was reused with identical helper/config/source hashes. Pipeline storage, stages and UMMA commits are unchanged; no local spills. However, this unannotated variant is not retained: net 99 more static SASS instructions, and wide FC2 uses up to 10 more registers as uniform arithmetic/branches become divergent forms. The intended FC1 multiply-high/shift removal is real but insufficient. See `validation.json`, `decision.json`, and the hashed raw `results/` collection. No timing was run. A separate uniform-route variant tests an explicit warp-uniform contract without altering this frozen source.

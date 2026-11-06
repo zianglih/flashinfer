@@ -1,0 +1,247 @@
+# NVFP4 scale-load SASS excerpts
+
+Instruction offsets refer to the full sibling `.sass` files. Context retains branches and address calculation.
+
+## control-0def601d token-32/fc1-n32-m128
+
+```sass
+...
+/*2300*/ UIADD3 UR12, UPT, UPT, UR46, UR5, URZ;
+/*2310*/ ULEA UR7, UR6, UR41, 0x3;
+/*2320*/ SHF.L.U32 R7, R71, 0x1f, RZ;
+/*2330*/ IMAD.HI.U32 R61, R4, 0x38e38e39, RZ;
+/*2340*/ ISETP.GE.AND P0, PT, R64, 0x1, PT;
+/*2350*/ SHF.R.U32.HI R60, RZ, 0x3, R61;
+/*2360*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P1, [UR7+0x80], R7;
+/*2370*/ @!P1 BRA 0x5750;
+/*2380*/ IMAD R63, R60, -0x24, R4;
+/*2390*/ SHF.L.U32 R70, R72, 0x1f, RZ;
+/*23a0*/ @!P0 BRA 0x34b0;
+/*23b0*/ R2UR UR8, R68;
+/*23c0*/ LDC.64 R46, c[0x0][0x5b8];
+...
+/*2400*/ IMAD.U32 R63, R63, 0x80, R62;
+/*2410*/ LEA.HI.X.SX32 R53, R5, R75, 0x2, P0;
+/*2420*/ LEA.HI.SX32 R0, R63, UR4, 0x1f;
+/*2430*/ LDTM.16dp64bit.x16 R20, tmem[UR5];
+/*2440*/ LDTM.16dp64bit.x16 R4, tmem[UR5+0x100000];
+/*2450*/ ISETP.GT.AND P0, PT, R0, 0x8ff, PT;
+/*2460*/ LDG.E R52, desc[UR8][R52.64];
+/*2470*/ ISETP.GE.OR P0, PT, R3, R64, P0;
+/*2480*/ @!UPT UIADD3 URZ, UPT, UPT, URZ, URZ, URZ;
+/*2490*/ @!P0 R2UR UR10, R68;
+/*24a0*/ @!P0 IMAD R65, R60, 0x20, R3;
+/*24b0*/ @!P0 R2UR UR11, R69;
+/*24c0*/ FMUL2 R4, R4.F32x2.HI_LO, R52.reuse.F32;
+/*24d0*/ LDG.E R73, desc[UR8][R46.64];
+/*24e0*/ FMUL2 R6, R6.F32x2.HI_LO, R52.reuse.F32;
+/*24f0*/ @!P0 R2UR UR8, R68;
+/*2500*/ FMUL2 R40, R8.F32x2.HI_LO, R52.reuse.F32;
+/*2510*/ FMNMX.NAN R4, R4, 10, PT;
+/*2520*/ FMUL2 R12, R12.F32x2.HI_LO, R52.reuse.F32;
+/*2530*/ FMNMX.NAN R5, R5, 10, PT;
+```
+
+## epilogue-prefetch token-32/fc1-n32-m128
+
+```sass
+...
+/*21c0*/ ISETP.GT.U32.AND P0, PT, R2, 0xff, PT;
+/*21d0*/ @P0 BRA 0x35f0;
+/*21e0*/ LDC.64 R70, c[0x0][0x5b8];
+/*21f0*/ R2UR UR4, R68;
+/*2200*/ R2UR UR5, R69;
+/*2210*/ SHF.L.U32 R5, RZ, 0x1f, RZ;
+/*2220*/ LDG.E R70, desc[UR4][R70.64];
+/*2230*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P0, [UR41+0xa8], R5;
+/*2240*/ @!P0 BRA 0x5710;
+/*2250*/ LDS.64 R4, [UR41+0xb8];
+/*2260*/ LDS R64, [UR41+0xc0];
+/*2270*/ SYNCS.ARRIVE.TRANS64.A1T0 RZ, [UR41+0xb0], RZ;
+/*2280*/ ISETP.GE.AND P0, PT, R4, RZ, PT;
+...
+/*2390*/ LEA R52, P0, R5, R74, 0x2;
+/*23a0*/ SHF.L.U32 R0, R71, 0x1f, RZ;
+/*23b0*/ LEA.HI.X.SX32 R53, R5, R75, 0x2, P0;
+/*23c0*/ SHF.R.U32.HI R60, RZ, 0x3, R61;
+/*23d0*/ ISETP.GE.AND P0, PT, R64, 0x1, PT;
+/*23e0*/ SHF.L.U32 R73, R72, 0x1f, RZ;
+/*23f0*/ LDG.E R52, desc[UR8][R52.64];
+/*2400*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P1, [UR7+0x80], R0;
+/*2410*/ IMAD R63, R60, -0x24, R4;
+/*2420*/ @!P1 BRA 0x5770;
+/*2430*/ @!P0 BRA 0x34d0;
+/*2440*/ LEA R63, R63, R62, 0x7;
+/*2450*/ ULEA UR5, UR6, UR12, 0x5;
+/*2460*/ LEA.HI.SX32 R0, R63, UR4, 0x1f;
+```
+
+## control-0def601d token-32/fc2-n32-m128
+
+```sass
+...
+/*4210*/ R2UR UR7, R7;
+/*4220*/ LDG.E R0, desc[UR8][R4.64];
+/*4230*/ ULEA UR8, UR11, UR17, 0x3;
+/*4240*/ IMAD.U32 R12, RZ, RZ, UR6;
+/*4250*/ IMAD.U32 R13, RZ, RZ, UR7;
+/*4260*/ LDG.E R7, desc[UR12][R12.64];
+/*4270*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P1, [UR8+0x80], R6;
+/*4280*/ VIADD R0, R0, -UR5;
+/*4290*/ ISETP.GT.AND P0, PT, R0, R3, PT;
+/*42a0*/ @!UPT UIADD3 URZ, UPT, UPT, URZ, URZ, URZ;
+/*42b0*/ @P0 LDC.64 R10, c[0x0][0x5a8];
+/*42c0*/ @!P1 BRA 0x6ce0;
+/*42d0*/ @P0 R2UR UR6, R76;
+...
+/*4380*/ R2UR UR7, R77.reuse;
+/*4390*/ UIMAD UR4, UR4, -0x28, UR14;
+/*43a0*/ UIADD3 UR4, UPT, UPT, UR4, UR15, URZ;
+/*43b0*/ LDTM.16dp64bit.x16 R20, tmem[UR5];
+/*43c0*/ LDTM.16dp64bit.x16 R44, tmem[UR5+0x100000];
+/*43d0*/ ULEA UR4, UR4, UR10, 0x7;
+/*43e0*/ LDG.E R86, desc[UR6][R86.64];
+/*43f0*/ UISETP.GT.AND UP0, UPT, UR4, 0x13ef, UPT;
+/*4400*/ PLOP3.LUT P1, PT, PT, PT, UP0, 0x80, 0x8;
+/*4410*/ UISETP.GT.AND UP0, UPT, UR4, 0x13ff, UPT;
+/*4420*/ ISETP.LE.OR P1, PT, R0.reuse, R3.reuse, P1;
+/*4430*/ PLOP3.LUT P0, PT, PT, PT, UP0, 0x80, 0x8;
+/*4440*/ ISETP.LE.OR P0, PT, R0, R3, P0;
+```
+
+## epilogue-prefetch token-32/fc2-n32-m128
+
+```sass
+...
+/*4250*/ ULEA UR8, UR11, UR13, 0x3;
+/*4260*/ VIADD R0, R0, -UR5;
+/*4270*/ LEA R86, P0, R7.reuse, R88, 0x2;
+/*4280*/ LEA.HI.X.SX32 R87, R7, R89, 0x2, P0;
+/*4290*/ IMAD.U32 R7, RZ, RZ, UR5;
+/*42a0*/ ISETP.GT.AND P0, PT, R0, R3, PT;
+/*42b0*/ LDG.E R86, desc[UR6][R86.64];
+/*42c0*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P1, [UR8+0x80], R6;
+/*42d0*/ @P0 LDC.64 R8, c[0x0][0x5a8];
+/*42e0*/ @!P1 BRA 0x6cc0;
+/*42f0*/ @P0 R2UR UR6, R76;
+/*4300*/ @P0 R2UR UR7, R77;
+/*4310*/ LOP3.LUT R78, R7, 0x1f, R2, 0xf8, !PT;
+/*4320*/ @P0 IMAD.WIDE.U32 R8, R78, 0x4, R8;
+```
+
+## control-0def601d token-4096/fc1-n128-m256
+
+```sass
+...
+/*2890*/ @!UP0 UIADD3 UR18, UPT, UPT, UR4, URZ, URZ;
+/*28a0*/ UIADD3 UR17, UPT, UPT, UR45, UR8, URZ;
+/*28b0*/ USHF.L.U32 UR18, UR18, 0x1, URZ;
+/*28c0*/ ULEA UR15, UR16, UR46, 0x3;
+/*28d0*/ SHF.L.U32 R2, R76, 0x1f, RZ;
+/*28e0*/ LDC.64 R8, c[0x0][0x630];
+/*28f0*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P0, [UR15+0x80], R2;
+/*2900*/ LDC.64 R6, c[0x0][0x638];
+/*2910*/ @!P0 BRA 0x5e30;
+/*2920*/ R2UR UR8, R74.reuse;
+/*2930*/ IMAD.WIDE R8, R5, 0x4, R8;
+/*2940*/ R2UR UR9, R75.reuse;
+/*2950*/ R2UR UR10, R74;
+/*2960*/ R2UR UR11, R75;
+/*2970*/ R2UR UR4, R69;
+/*2980*/ LDG.E R72, desc[UR8][R8.64];
+/*2990*/ LDG.E R73, desc[UR10][R6.64];
+/*29a0*/ IMAD.HI.U32 R62, R4, 0x38e38e39, RZ;
+/*29b0*/ ULEA UR13, UR16, UR17, 0x7;
+/*29c0*/ SHF.R.U32.HI R62, RZ, 0x2, R62;
+/*29d0*/ IMAD R2, R62.reuse, -0x12, R4;
+/*29e0*/ IMAD.SHL.U32 R62, R62, 0x80, RZ;
+/*29f0*/ LEA R2, R2, UR4, 0x1;
+```
+
+## epilogue-prefetch token-4096/fc1-n128-m256
+
+```sass
+...
+/*2700*/ ISETP.GT.U32.AND P0, PT, R3, 0xff, PT;
+/*2710*/ @P0 BRA 0x3d70;
+/*2720*/ LDC.64 R4, c[0x0][0x638];
+/*2730*/ R2UR UR4, R74;
+/*2740*/ R2UR UR5, R75;
+/*2750*/ SHF.L.U32 R2, RZ, 0x1f, RZ;
+/*2760*/ LDG.E R77, desc[UR4][R4.64];
+/*2770*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P0, [UR46+0xa8], R2;
+/*2780*/ @!P0 BRA 0x5dd0;
+/*2790*/ LDS.64 R4, [UR46+0xb8];
+/*27a0*/ LDS R60, [UR46+0xc0];
+/*27b0*/ SYNCS.ARRIVE.TRANS64.A1T0 RZ, [UR46+0xb0], RZ;
+/*27c0*/ ISETP.GE.AND P0, PT, R4, RZ, PT;
+...
+/*2910*/ R2UR UR8, R74;
+/*2920*/ R2UR UR9, R75;
+/*2930*/ ULEA UR15, UR16, UR46, 0x3;
+/*2940*/ SHF.L.U32 R0, R73, 0x1f, RZ;
+/*2950*/ R2UR UR4, R69;
+/*2960*/ IMAD.WIDE R6, R5, 0x4, R6;
+/*2970*/ LDG.E R72, desc[UR8][R6.64];
+/*2980*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P0, [UR15+0x80], R0;
+/*2990*/ IMAD.HI.U32 R62, R4, 0x38e38e39, RZ;
+/*29a0*/ SHF.R.U32.HI R62, RZ, 0x2, R62;
+/*29b0*/ IMAD R2, R62, -0x12, R4;
+/*29c0*/ LEA R2, R2, UR4, 0x1;
+/*29d0*/ IMAD.SHL.U32 R2, R2, 0x80, RZ;
+/*29e0*/ LEA.HI.SX32 R2, R2, UR5, 0x1f;
+```
+
+## control-0def601d token-4096/fc2-n128-m256
+
+```sass
+...
+/*56f0*/ IMAD.U32 R13, RZ, RZ, UR11;
+/*5700*/ IMAD.U32 R5, RZ, RZ, UR7;
+/*5710*/ ULEA UR4, UR6, UR15, 0x1;
+/*5720*/ LDG.E R7, desc[UR12][R12.64];
+/*5730*/ USHF.L.U32 UR4, UR4, 0x7, URZ;
+/*5740*/ LDG.E R64, desc[UR8][R4.64];
+/*5750*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P1, [UR16+0xc0], R0;
+/*5760*/ LEA R10, P0, R7, R92, 0x2;
+/*5770*/ VIADD R64, R64, -UR5;
+/*5780*/ @!P1 BRA 0x8010;
+/*5790*/ LEA.HI.X.SX32 R11, R7, R93, 0x2, P0;
+/*57a0*/ UISETP.GT.AND UP0, UPT, UR4, 0x13ff, UPT;
+/*57b0*/ VIMNMX R70, PT, PT, R64, 0x80, PT;
+...
+/*58b0*/ @P4 VIADD R6, R69, UR5;
+/*58c0*/ @!P3 R2UR UR12, R72.reuse;
+/*58d0*/ @!P3 R2UR UR13, R73.reuse;
+/*58e0*/ @!P2 R2UR UR10, R72.reuse;
+/*58f0*/ @!P2 R2UR UR11, R73.reuse;
+/*5900*/ @!P1 R2UR UR8, R72;
+/*5910*/ LDG.E R86, desc[UR18][R10.64];
+/*5920*/ @!P1 R2UR UR9, R73.reuse;
+/*5930*/ @P4 R2UR UR7, R73;
+/*5940*/ LEA.HI.X.SX32 R0, R0, RZ, 0x1, P0;
+/*5950*/ LEA R4, P0, R5.reuse, UR24, 0x2;
+/*5960*/ LEA.HI.X R5, R5, UR25, R0, 0x2, P0;
+/*5970*/ @P4 IMAD.WIDE R8, R6, 0x4, R8;
+```
+
+## epilogue-prefetch token-4096/fc2-n128-m256
+
+```sass
+...
+/*56f0*/ IMAD.U32 R65, RZ, RZ, UR7;
+/*5700*/ R2UR UR7, R73;
+/*5710*/ LDG.E R64, desc[UR8][R64.64];
+/*5720*/ VIADD R64, R64, -UR5;
+/*5730*/ LEA R8, P0, R5.reuse, R92, 0x2;
+/*5740*/ LEA.HI.X.SX32 R9, R5, R93, 0x2, P0;
+/*5750*/ LDG.E R86, desc[UR6][R8.64];
+/*5760*/ UIMAD UR6, UR4, -0x14, UR14;
+/*5770*/ SYNCS.PHASECHK.TRANS64.TRYWAIT P0, [UR16+0xc0], R0;
+/*5780*/ ULEA UR4, UR6, UR15, 0x1;
+/*5790*/ USHF.L.U32 UR4, UR4, 0x7, URZ;
+/*57a0*/ @!P0 BRA 0x7ff0;
+/*57b0*/ VIMNMX R70, PT, PT, R64, 0x80, PT;
+/*57c0*/ UISETP.GT.AND UP0, UPT, UR4, 0x13ff, UPT;
+/*57d0*/ BRA.U UP0, 0x6800;
+```

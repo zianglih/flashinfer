@@ -1,0 +1,9 @@
+# Held full-cluster M capture sequence
+
+Local preparation only. `capture_split_topk.py` adds `--m` (default256) and uses it solely for the existing compile argument and result geometry. Other defaults, pointer descriptors, launch geometry and compile/export protocol are unchanged. Original helper20b6bb23 is preserved as `capture_split_topk-v1.py`; updated helper is4a3dc1e6.
+
+After root releases exact source/tests: verify existing node/source/idle, apply released narrow patch over committed968380de-equivalent remote bytes, stage the updated helper, then bind/materialize `run_native_full_m_candidate002.sh.template`. Run one fresh process for each `fused2/ordinary0 × M256/M288`, under `native/candidate002-full-m-<case>-m<M>`. Precreate DSL/cache directories, keep PTX+cubin, and disassemble saved cubins with existing tools. No kernel callable is invoked. No baseline recapture is planned.
+
+Compare against saved `native/candidate-topk-fused2` and `native/candidate-topk-ordinary0` captures. M was dynamically represented in those controls; partialM288 should retain the unaligned native path. Check actual emitted instruction/encoding identity for that path, aligned-path bound removal, descriptors, resources and runtime-M semantics. Keep native claims separate from later numerical tests.
+
+Existing test execution uses explicit pytest nodes followed by `-k w4a16`, collect-only count verification, then the same selected nodes in one process. Prior selection was24 route-boundary +2 EP8functional +12 graph=38. The released test patch may change the exact selected count; bind only after its actual collection. Preserve original tolerance/oracle and do not reinstall pytest or regenerate the environment. Existing full14 normal-auto driver remains exact3d0cc984; future control is whole candidate-topk-repeat0fa87eb8, if authorized after native/tests.

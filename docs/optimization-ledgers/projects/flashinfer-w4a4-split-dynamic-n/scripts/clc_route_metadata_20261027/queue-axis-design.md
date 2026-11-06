@@ -1,0 +1,13 @@
+# Read-only all-CLC metadata queue design review
+
+Reviewed the uncommitted clean-policy clone at b85; no queue implementation was edited by this agent. Root owns implementation.
+
+Use a fifth internal pair `(fc1_info_stages, fc2_info_stages)` after geometry and K depths. Each choice is exactly integer1 or None; None resolves at compile time to `acc_stages + 1`. The native space is180 geometry/K combinations ×4 phase queue pairs =720 raw tactics. Legacy three/four-field entries default to `(1,1)`. Reject bools explicitly because True compares equal to1. Reject the extra field for Rubin. Keep the unshipped v5 namespace for the final all-CLC format and do not reinterpret published v4 boolean scheduler fields. W4A8 prefix/JSON canonicalization can reuse the existing recursive tuple conversion and candidate-prefix check.
+
+Private plumbing: `_extract_tactic_params` -> runner forward -> `_cute_dsl_fused_moe_impl` or wrapper `_forward_with_tactic` -> `_moe_core_impl` -> the two private blockscaled split implementations -> `_run_blockscaled_gemm`. The latter already includes metadata depth in its compiled-core key and constructor call. Public wrappers and localized Rubin call paths need no parameter changes; W4A16 remains separate.
+
+Resolve None after accumulator storage is known. Apply the identical rule in `_pipeline_metadata_bytes` so automatic K-depth selection, operand-stage fitting and actual scheduler storage share the same byte calculation. Deeper queue adds `32 * acc_stages` metadata bytes over depth1 before slab alignment. No shape/dtype policy is needed. Existing can_implement only checks minimum one-slot nonoverlap/non-CLC feasibility; constructor/resource planning is authoritative for the requested queue and overlap. Test metadata budget with explicit resolved depth and None equivalence, plus capacity-boundary stage fitting.
+
+The existing CLC work-grid/SM-budget fallback remains relevant: fewer allocated work clusters than resident capacity, explicit reduced SM budget, or unsupported grid-Y geometry uses the static launch. Canonicalize unused metadata depth to1 after this fallback and before the compile key to avoid duplicate static compiled kernels. Source-requested all-CLC versus effective bounded static launch must remain distinct in diagnostics.
+
+Upper bound per existing dtype/output/per-token/PDL semantic signature:30 additional FC1 cores and30 FC2 cores versus one queue choice; independent phase pairings share their individual core cache entries. Other axes do not multiply merely because the pair has four combinations. Update stale tuner module docs and the `_is_rubin_tactic` positional helper if `_split_moe_tactic` return shape changes.

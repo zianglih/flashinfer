@@ -1,0 +1,9 @@
+# Retained gated W4 FC1 shared-store diagnosis
+
+Source: retained2b8eb9d8, exact13245-file immutable candidate-w4-paired-situ snapshot already qualified as the output-ring control. W4 kernel5e61; no ring/clamp or optimization change. GPU0 on fi-gather-pipeline-recovery-1030, C2/ziangli, subject fresh idle and release-cache no-op/hash guards. The original persistent C++ and source-specific CuTe caches remain in use.
+
+One frozen V41F TP4 W4A16 point at4096tokens, native selected M256/N128/K256,2CTA, original route/histogram. Two100-sample CUPTI cold-L2 CUDA-graph passes with10warmups via the unchanged performance helpers establish E2E/components/clocks. These are retained-only diagnostics, not a new external baseline comparison.
+
+Then one FC1 NCU metric pass and one SourceCounters pass, application replay, stock clocks/cache, no source/iKET edit. Actual returned ELF/PTX/SASS and loaded-driver resources are captured; native fixed choices/routes and resolved FC geometry joined to the driver handles. Three extra counters describe shared-store wavefronts, bank conflicts and dynamic shared-store instructions. The installed NCU does not expose a separate shared-store request metric; it is not requested. NCU runtime/overlap is diagnostic and never replaces native CUPTI timing. FC2 is captured by the same public call but not NCU-profiled.
+
+Closest history: old b52 `w4-output-acquire-iket-b52/RESULTS.md` includes V41F TP4/4096, but its nested output-acquire scope is near32ns and excludes the preceding writer publication join. It does not measure shared bank/wavefront cost. Current N3U W4 NCU is nongated and cannot answer this ownership question. No matching retained2b8 gated native NCU profile was found in the bounded current profile/audit inventory. No implementation proposed before this diagnosis.

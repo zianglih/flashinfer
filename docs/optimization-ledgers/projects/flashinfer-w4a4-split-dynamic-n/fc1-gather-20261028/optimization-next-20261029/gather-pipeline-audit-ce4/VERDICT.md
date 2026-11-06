@@ -1,0 +1,17 @@
+# Gather-pipeline dependency audit on ce4
+
+One distinct compile-first hypothesis remains: delay W4's decoded-output acquire until immediately before its decoded store. No source edit or GPU experiment was made for this lead.
+
+`moe_w4a16_kernel.py::_transform_tile` waits for raw A at744, acquires decoded A at760, loads/scales/decodes into registers at774–804, then first touches decoded output through `store_transformed_a` at813. Raw input and decoded output are distinct resources. Moving only the acquire plus its trace range below register decode would overlap that work with the prior MMA's decoded-slot lifetime. Keep the cached decoded peek, raw lookahead, raw release after decoded store/fence, both pipeline states and every ring depth unchanged. This is not the rejected early raw-release or decoded-peek-removal experiment.
+
+The generated-code warning is concrete. Frozen ce4 K3EP4K FC1 capture `w4a16-independent-stages/codegen-evidence/captures/ep-kimi-k3-w4a16-4096-control/resources/126783-000.sass` issues `STTM.x8` at0x2e80 while later F2FP decode follows at0x2e90 onward, again at0x3020 before more decode and at0x3190. The compiler currently shortens decoded-value lifetime by interleaving stores. A late wait would inhibit that interleaving, potentially increasing the full decoded register footprint under the96-register transform budget. There is no evidence yet that the exposed overlap would outweigh this cost. Any follow-up must first compile paired native signatures and compare per-role liveness/local sites, without changing register budgets to rescue it.
+
+CUTLASS `examples/python/CuTeDSL/cute/blackwell/kernel/mixed_input_gemm/{mixed_input_gemm,grouped_mixed_input_gemm,grouped_mixed_input_gemm_acc_scale}.py` also acquires decoded output before conversion; the latter at1269/1369. Its explicit two-buffer conversion differs from the current one-stage register pipeline, so it does not prove a drop-in improvement. History searched `CLOSED_LEADS.md`, `w4a16-raw-release-{6be,r2}`, `w4a16-decoded-acquire-b139`, and targeted Markdown for acquire/decode ordering. No identical delayed-acquire trial was found.
+
+Other inspected paths do not justify another small edit:
+
+- Swap FC1's gather-local completion/relay/final publication bridges cp.async scale writes, TMA activation payload, and group-2 remote readers. The retained CTA-local scope already removes unnecessary group-1 cluster work; the group-2 publication fences remain required. Moving SFB publication into another warp would need new TMEM lifetime/order state, not just deleting a wait.
+- Rubin MegaMoE has independent input rings but uses already-reorganized activation scales and a160-thread rendezvous shared by the scale owner and four Gather4 warps. Its SF TMA layout is not the public linear-scale contract here. Current scalar SF transport cannot adopt it without the previously rejected layout/ownership complexity.
+- Rubin CuTe's separate SF-copy/transform/relay groups and Blackwell MegaMoE's split-MMA wait choices corroborate dependency separation, but their role/resource contracts differ. The current plain MMA wait, four producer arrivals, route cache and tail logic already include the useful simpler variants tested in this effort.
+
+No generic barrier deletion or new gather-stage policy was established by this review. The delayed decoded acquire is a new scheduling hypothesis with a specific register-lifetime risk, not a performance claim or authorization to widen the search.

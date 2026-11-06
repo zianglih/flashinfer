@@ -1,0 +1,11 @@
+# Paired transpose with six internal waits
+
+- Source: retained `77391e28d12a01e371196e76e56d4b46ace122df` plus unstaged paired helper, kernel SHA256 `3326ba09b3139824ac26e657a4fdbe89bccf1ab3e9230468ab13e4fa93cc756c`.
+- Contract: six helper waits protect scratch memory hazards. Every original caller release and terminal completion wait is preserved. Register users rely only on the documented true-register-dependency rule. Source proof and independent peer lifetime review pass.
+- Scoped pre-commit and `git diff --check` pass; no formatting mutation.
+- Fresh paired codegen: 8 representative cases / 16 FC1+FC2 kernels per arm, all four modes, narrow two-CTA and wide one-CTA. No register increase or new local memory; all prelaunch register-pool guards pass. SASS non-NOP changes +3..+59 instructions, no new branches. The added store completion fences account for the required formal ordering; no timing improvement is inferred.
+- PTX order audit: all16 candidate kernels pass the conservative generic-TMEM hazard scan. 216 store waits correspond to216 SASS `FENCE.VIEW.ASYNC.T` instructions. Source model covers both one- and two-fragment rectangles, including middle-phase cross-aliasing.
+- Existing39-case numerical gate and76 matched per-compilation resources: all passed; no register increases or new local-memory sites. Baseline is the prior qualified source-equivalent7739 accumulator-tail candidate with identical helpers/inputs/runtime. The two existing synthetic M512/K8 MX FC1 captures retain STACK160 and20 LDL/20 STL sites in both arms; the remaining74 captures are spill-free. This is no-new-spill-growth qualification, not an all-spill-free claim.
+- The authorized16-cell CAAC is running on GPUs4/5. It uses the same frozen native winners/routes, strict100 CUPTI samples/phase, input quantizer for NVFP4 modes and geometric phase-median metric. It measures completion-contract cost versus7739; the earlier stable pairing advantage versus serial-fixed remains separately source-bound.
+
+The seven-wait paired/serial measurements and three-cell repeat remain immutable. The serial local review was retired after snapshot/hash/patch verification; the paired review is the sole active transpose candidate.

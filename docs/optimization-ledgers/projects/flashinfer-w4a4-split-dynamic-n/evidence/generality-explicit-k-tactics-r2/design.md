@@ -1,0 +1,9 @@
+# Explicit-K overlap fallback and planner cleanup
+
+R1's constructor derives that N256/K8 NVFP4 has 96 scale-factor columns and cannot use the epilogue's 64-column early-release overlap. Its later launch setup incorrectly re-enabled overlap from bulk-output geometry alone. R2 retains the constructor's derived eligibility in `can_overlap_accumulators` and requires it for bulk overlap. This selects the existing single disjoint accumulator rather than excluding a valid K tactic. The defensive overlap/scale assertion remains.
+
+The host-only cleanup moves the identical one-stage scratch reservation into `_operand_stage_capacity`, uses `_k_stage_capacity` for both legacy/default and explicit-K minimum-fit admission, and leaves malformed MX outer-tactic validation solely in the existing parser. Actual SDK layout size checks, explicit stage overrides, and final scratch selection remain.
+
+CPU validation compares 5,400 complete planning outcomes and 1,080 admission decisions against frozen R1: all are identical. Evaluation of the actual launch overlap expression changes exactly four previously invalid N256/K8 cases (two logical M geometries, two FP4 SF16 storage types); 1,004 valid configurations retain their overlap decision. The four changed cases use one accumulator stage and fit within 512 TMEM columns. The full existing pure-CPU parser, JSON roundtrip, private/public forwarding and signature checks pass. These checks use byte-layout stubs; the separate GPU replay gate remains necessary.
+
+Scoped pre-commit passes. The total remaining repository diff drops from 686 additions/187 deletions to 673 additions/189 deletions. No public signature, benchmark, input, timer, numerical expression or device-kernel body changed in this follow-up. The launch-time overlap choice deliberately changes generated specialization for the four repaired cases. Frozen R1 source/results remain diagnostic only; R2 is the retention candidate.

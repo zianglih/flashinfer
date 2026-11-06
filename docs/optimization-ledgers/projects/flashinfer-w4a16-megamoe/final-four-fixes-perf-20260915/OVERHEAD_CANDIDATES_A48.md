@@ -1,0 +1,39 @@
+# Conditional overhead candidates on a48
+
+Read-only refresh of `proxy-ordering-20260915/tmem-waits/FENCE_PLACEMENT_AUDIT.md`, checked against native `a48e5706c2a7775b0b698aa8eccb4e124b02118c`. No patch, compilation or GPU launch is proposed before the fresh four-fix A1/B1/B2/A2 result. Inspect every individual row, including 1/2/4 tokens; the 8–8192 aggregate must not hide a repeatable row regression. A numerically invalid before row cannot establish a clean performance regression.
+
+All source pointers below are relative to `flashinfer/moe_ep/cute_dsl/megamoe/nvfp4_w4a16/` at this exact commit. The earlier audit's relevant FC1/transpose bodies are unchanged; the only later change to these two files is the corrected FC2 warp-row slice in `epilogue.py:308–312`. The scheduler fix is confined to `custom_ext.py:108–128` and does not alter these ownership edges.
+
+| Priority | Minimal candidate | Current proof and invariant retained | Distinguishing measurement |
+|---|---|---|---|
+| 1 | Remove only the early FC1 load-wait at `epilogue.py:511–513`; retain centralized R1 wait at `tmem_epilogue.py:204–213`. | Gate/up loads at `epilogue.py:501–510` are followed solely by register alpha/clamp/SwiGLU and register permutation before unconditional `r1_store()` at `:533`. `_swiglu_act` at `:370–393` is register arithmetic. Both compile-time halves retain R1's wait immediately before overlapping scratch stores. In-bound store guards occur later. Final accumulator-release waits at `:462`/`:545` remain. | First verify emitted O3 PTX/SASS actually loses one wait per half, rather than a compiler-coalesced no-op. Compare affected rows and both A/B orders with the same selected tactic; inspect FC1 epilogue span if timing warrants a profile. No new knob or branch is needed. |
+| 2 | Batch FC2 transpose rounds for the two disjoint column halves, with one common wait per round. | Corrected `epilogue.py:308–312` assigns each warp its own 32-row band. `tmem_epilogue.py:529–536` uses bases separated by 32 columns. Each transpose's initial 16×32 view and later 32×16 views (`:150–156`) stay inside its half; their address sets are disjoint. Prepare both register inputs, issue both R1 stores then wait, both R2 loads then wait, both R2 stores then wait, and likewise R3; preserve final R4-load completion before stage release. No scratch ownership changes. | Twelve source-level round waits could become six per 64-token subtile, but this is a larger scheduling change. Require exact copied values and retained guardrail checks; inspect actual epilogue registers, spills and occupancy, plus FC2 span and end-to-end rows. `-maxrregcount=96` is the initial allocation; `megamoe_kernel.py:1326` increases the epilogue warpgroup to144. The five-warpgroup CTA pool is128×(144+80+64+96+96)=61,440 registers. There is no borrowable4,096-register headroom: prior `w4a16_optimization_experiments.md:454–476` records a real USETMAXREG deadlock when epilogue176 requested65,536 from the initial640×96=61,440 CTA pool; `:758` records that initial97–104 rounds to66,560 and cannot fit. Keep epilogue144. Raising it would require a proven same-pool rebalance, such as decoder donation previously removed, which is not proposed here. A saved wait is not useful if doubled live fragments spill. |
+| 3 | Schedule each writer's existing global proxy fence before the existing epilogue rendezvous. | Current order is stores → next work-record consume → 128-thread rendezvous at `epilogue.py:158` → phase-specific fence (`:348`, dispatch FC2 `:200`) → done publication. Candidate order is each writer's stores → its appropriate fence → existing rendezvous → publication. FC2 direct epilogue return still needs no dispatch fence. Keep all writers, batch flush/phase-change/exit paths and final `flag_tracker.fire()` ordering. | Same fence count: only placement can improve overlap. Compare identical tactics and fence/barrier wait spans if there is a real regression. Dispatch-only impact should distinguish FC2 from FC1; global end-to-end latency remains the decision metric. |
+
+PTX 9.3 explicitly preserves true register dependencies from `tcgen05.ld` but does not grant memory ordering from those dependencies. Its `tcgen05.wait::ld/st` completes prior operations of the issuing thread and requires uniform warp participation. Thus the FC1 candidate preserves the memory overwrite boundary, and batching is legal only while every dependent round still waits for both halves. A CTA rendezvous alone cannot replace completion waits. [PTX register dependencies](https://docs.nvidia.com/cuda/archive/13.3.0/parallel-thread-execution/index.html#tcgen05-memory-consistency-model), [PTX wait semantics](https://docs.nvidia.com/cuda/archive/13.3.0/parallel-thread-execution/index.html#tcgen05-instructions-tcgen05-wait).
+
+Global proxy ordering is a separate obligation from TMEM completion. Each writer must order its generic stores before consumers' async reads; a representative lane's fence is insufficient without a separate proof. [PTX proxy-fence semantics](https://docs.nvidia.com/cuda/archive/13.3.0/parallel-thread-execution/index.html#parallel-synchronization-and-communication-instructions-membar).
+
+Do not remove the R1→R2, R2→R3 or R3→R4 store waits, the overlapping load→store waits, final accumulator-release waits, decode-store completion, corrected warp-row addresses, or elected scheduler publication. Scheduler acquire/fence/commit/advance still run on all 32 producer lanes; producer32/consumer480 barrier participation is not an overhead candidate. Batched release flags rotate lane ownership (`kernel_src/cutedsl_megamoe/src/src/flag_batch.py:69–81,111–119`), so delaying fences until an arbitrary elected publisher or removing per-tile fences needs a new proof and is lower priority.
+
+If a row regresses consistently in both forward/reverse pairs beyond observed within-arm drift, try candidate 1 alone first on a new source identity. Preserve the complete a48 baseline and all raw rows. Rerun strict output/fixture gates and native correctness plus relevant guarded coverage before promoting any placement change. Reassess only the regressed rows initially; a successful candidate still needs the complete 14-row sweep. Tactic changes and compilation scheduling are potential confounders; do not attribute either to wait cost without matched-tactic evidence. No performance improvement is claimed by this source analysis.
+
+Existing codegen cross-check: the collected HashInfer scheduler-fixed guarded
+EP4 artifact `rank0/compile013/kernel.ptx` contains two load waits at lines3670
+and3791 with only register work between them; the next TMEM operation is the
+scratch store at3801. The second half repeats this at3885/4005, before4015.
+This confirms the duplicate survives DSL-to-PTX lowering in this artifact.
+Its SASS includes TMEM sanitizer instrumentation, so it does not establish
+ordinary O3 instruction overhead or the code produced for a performance
+winner. Retain the fresh native caches for that comparison if a regression
+is confirmed. Evidence root is the sibling HashInfer project's
+`scheduler-publication-20260915/guarded-evidence/collected/20260916T005302Z-1687754e44c6488587b9a45fddd979ff/evidence/guarded-ep4/codegen/`.
+
+A further owned-code candidate is fencing at actual delayed publication, with
+all128 writers participating and the shared tracker's threshold/phase logic
+unchanged. This could reduce fence frequency for the existing (2,4) batches,
+but needs a small type-preserving tracker subclass and generated-code review.
+The simpler earlier-placement candidate changes no fence count. See
+[the independent batch-publication audit](FLAG_BATCH_PROXY_FENCE_AUDIT.md)
+for the ordering argument, flush cases and rejected shortcuts. No patch or
+performance result is implied by this additional source review.

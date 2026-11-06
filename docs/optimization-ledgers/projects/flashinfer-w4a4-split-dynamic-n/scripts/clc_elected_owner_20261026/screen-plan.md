@@ -1,0 +1,17 @@
+# Bounded CLC-only performance screen
+
+Run only after the independent protocol review and exact/codegen gate pass. This is a fixed-tactic diagnostic isolating scheduler ownership, not a replacement for the native AUTO shared-flag comparison or final retention evidence.
+
+**Sources:** fresh timing of clean retained `9b4721b0` versus the same base plus elected-owner device patch `5da2bd3f`. Both retain the full six-field host parser. Every affected call must use explicit `(True, True)` CLC flags; no enum changes, forced queue depths, or new tuning axis.
+
+**Fixed selections:** reuse the already completed native all-CLC `1-B` winner cache for each model/family at `/data/ziangli/flashinfer-w4a4-split-dynamic-n/c3-20261026/all-clc-native-20261026/<model>/<family>/1-B/token_16384.autotune.json`. Those cumulative caches contain the earlier tokens. Reuse only selections and route identities, never their old latency measurements. Verify cache hits and unchanged six-field tactics in every timed invocation; a missing key is a failed screen, not permission to retune or fall back.
+
+**48 affected points:** V3 EP8, V4.1-Flash EP4, Kimi K3 EP8 × standard NVFP4, per-token NVFP4, MXFP4x8, MXFP8 × tokens `32,128,4096,16384`. This matches the previous request-overlap diagnostic's decode/prefill screen and keeps scheduler-pressure coverage. Standard public model routing/activation applies. Incidental W4A16 observations are unchanged controls and excluded from the affected aggregate.
+
+**Public timing contract:** `benchmarks/bench_moe_deepseek.py`, PDL enabled, `--no-fused-finalize --warmup 10 --iters 100 --no-autotune --cache <native-cache>`. NV selector `cutedsl,cute-dsl-per-token` with `--include-activation-quant`; MX selector `cute-dsl-mxfp8,cute-dsl-w4a8` with prequantized input. Preserve the default per-token recipe. Public timing must produce 100 raw cold-L2 CUDA-graph CUPTI samples per point. No TRT rerun is needed for this source-paired kernel experiment.
+
+**Sequence:** four fresh processes in control/candidate/candidate/control order per model/family, same GPU for all four arms. Two exclusive GPUs can run NV and MX shards concurrently; do not share a GPU with native AUTO or other work. GPU IDs are assigned only after a live availability check. Reuse verified persistent native C++ compilation artifacts; keep DSL compilation namespaces source-private. Adapt the existing `clc_request_overlap_20261027/full_screen` runner/observer by changing only source/output bindings and labels; its source/cache/routing/100-sample checks already implement the desired protocol.
+
+**Inspect before expanding:** source/caches unchanged, identical routing and actual tactics, paired per-point medians, control-return drift, instruction/register differences from the gate, per-model/format decode and prefill ratios. Aggregate speedups cannot hide a recurring model or dtype loss. A materially slower decode pattern is a rejection signal. A smaller instruction/barrier implementation with neutral timing can meet the user's sanity objective if resources and correctness stay sound. Slight prefill regression can be accepted when justified by decode gains; no unconditional numeric threshold is invented here.
+
+A promising result can proceed to the established full token grid `1,2,4,8,16,32,64,128,256,512,4096,8192,16384`, with 1/2 measured but excluded from retention. Reuse any source-matched completed rows rather than rerunning them. The shared FC1/FC2 scheduler-flag campaign remains independent and must not be relabeled as this device experiment.

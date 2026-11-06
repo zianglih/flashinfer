@@ -1,0 +1,3 @@
+# Early TMA descriptor prefetch
+
+Single epilogue warp prefetches all present TMA descriptors at kernel entry, before barrier/TMEM initialization and the PDL wait. Descriptor data is generated before launch and independent of previous-kernel payload. Existing W4A16 kernel lines1133–1138 uses the same cpasync.prefetch_descriptor API/epilogue-owner pattern; Hopper and Rubin grouped kernels do likewise. No new buffer, stage, tactic, synchronization or dtype/shape policy. Applies to both FC1 and regular-TMA FC2 where descriptor exists. Current source is unstaged in flashinfer-fc1-gather-prefetch-review. AST and diff checks pass; GPU measurement pending.

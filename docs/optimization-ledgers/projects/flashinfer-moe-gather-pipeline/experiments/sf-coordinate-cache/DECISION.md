@@ -1,0 +1,7 @@
+# Rejected: SF coordinate cache composition15d6
+
+The complete single56-cell CAAC screen is neutral overall (−0.014834%), with33 negatives, T32−0.128760% and T16384+0.099222%. N3U TP W4A4 T16384 regresses4.687648% with both candidate phases slower than both controls, repeat spreads0.0212/0.0026% and all16 normal-clock quartiles. Added coordinate shared reads and dataflow are not justified by this result. No retention, commit, push, publication, timing repeat or narrowed rescue.
+
+The [owner result](PERFORMANCE_RESULTS.md), [full raw report](../../evidence/sf-coordinate-cache-screen/1793411008505163000/report/table.md), every negative and all56 clock-exception quartiles are preserved unchanged. The [independent raw peer](../../audits/sf-coordinate-cache-data-peer.json) verifies22,400 spans/224 medians/896 clock quartiles/448 resource records. All112 stage pairs retain registers/stages/driver CTA capacity and LOCAL0;34 FC1 pairs add128–1024 shared bytes. Earlier setup failures and accepted046552b8 cohort transition remain explicit.
+
+This additive decision supersedes only the pending-retention status in the already sealed owner result/closure. [performance-rejection.json](performance-rejection.json) pins their unchanged hashes. A separate bounded paired FC1 NCU plan may investigate why N3U EP gains while TP loses; profiler results will not replace or rescue this primary screen. Source snapshots, private caches and all helpers remain available for that diagnostic.

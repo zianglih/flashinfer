@@ -1,0 +1,13 @@
+# Swap paired SiTU
+
+The local candidate is frozen on `49c91adf47d30fc2049c76cbaf34d0ccf3291434` in `flashinfer-swap-paired-situ-review`, branch `codex/swap-paired-situ`. Only `moe_swap_ab_kernel.py` changes, unstaged, with one private `_scaled_tanh_pair` and the existing SiTU branch. The source SHA is `b47bf19b7a573d485e60559f6f65be043ae00ca0d98d9a6e610db8ff9560f62c` (+53/−13). No public argument, runtime policy, batching, layout, stage, synchronization, PDL, quantization or oracle change is made.
+
+The helper pairs adjacent existing channel registers. It preserves swap's reciprocal of the rounded FP32 beta, separate RN multiplication by −2 and log2(e), scalar EX2/RCP with FTZ, and fused RN `2 * inverse - 1`. The original gate pair remains live for its separate sigmoid. Linear saturation, when enabled, uses the same helper; final multiplication association stays `up * (bounded_gate * sigmoid(gate))`. This intentionally does not use W4's different reciprocal or separate multiply/subtract contract.
+
+`source_audit.py` executes the actual candidate `_activate`/helper with symbolic lanes and compares them to the actual retained reference SiTU branch and inline PTX helpers. It checks 66,000 lane graphs over 2,061 betas and 4,125 gate/linear combinations, including disabled linear saturation and distinct 4/25 and 3.1/25.1 beta pairs. Restoring only the SiTU body and two removed imports, then removing the helper, recovers the full base module AST. Existing pipeline, non-SiTU, FC2 and finalizer source paths are unchanged. Scoped pre-commit and `git diff --check` passed.
+
+The graph proof assumes the documented packed RN wrappers and scalar SFU lowering; it is not device execution or a universal NaN-payload proof. Native qualification must verify both exponent products, FMA RN rather than multiply/subtract, scalar SFU modifiers/counts, exact finite-output results, registers/local memory/occupancy, and unaffected native images. Packed register constraints may change moves, live ranges and scheduling. An arithmetic issue-count reduction alone does not justify this source growth.
+
+History and ISA notes remain in `audits/swap-paired-situ-plan.md` and `audits/paired-activation-math/README.md`. No exact prior swap pair-helper trial was found in that bounded search. W4's separate experiment does not establish swap's numerical or performance behavior.
+
+Current status: CPU source/graph and scoped hooks passed; independent source peer is pending. Root reviewed the frozen diff and conditionally authorized bounded exact/native qualification after that peer pass. No candidate GPU call or performance timing has run.

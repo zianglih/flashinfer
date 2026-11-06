@@ -1,0 +1,1 @@
+8×NVIDIA B300 SXM6 AC on C2; `nvcr.io/nvidia/pytorch:26.05-py3`; CUDA 13.2, driver 595.91.07, installed PyTorch `2.12.0a0+5aff3928d8.nv26.5.50603568`, CuTe DSL 4.8.0 and CUPTI Python 13.2.0. Native compilation caches are retained.

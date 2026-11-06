@@ -1,0 +1,7 @@
+# Private W4 scale-byte handoff
+
+The R2 `byte_index` argument is a compile-time Python integer passed between the two conversion helpers in `moe_w4a16_utils.py`; it does not travel through a public API, wrapper, tactic, kernel constructor, or runtime tensor interface. The sole direct caller already has the static scale index. Supplying it to the existing inline-PTX decoder lets the PRMT immediate select the original packed byte directly.
+
+This is a small, direct description of the operation, not another policy flag. Removing the argument would either restore the unnecessary right shifts or duplicate the decoder/assembly construction. The scalar/two-scale branch passes zero and keeps its original extraction operations; its FC2 executables remain byte-identical in the split qualification. The packed 32-bit branch removes six SHF instructions in each representative native MegaMoE specialization, with unchanged registers/stack/local memory. No extra runtime state or branches are introduced.
+
+The additional handoff is justified by instruction removal even though split and GLM5 end-to-end measurements are effectively neutral. It should remain private and compile-time. No additional abstraction, cache key axis, public option, or shape-specific policy is needed. The one-line doc clarification correctly states which byte of a packed scale word is consumed; the remaining original documentation and PTX stay intact.

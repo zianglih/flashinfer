@@ -1,0 +1,9 @@
+# Retained9037 full refresh
+
+- Source: `9037f6d46fcb45eac04be04c182104336c8b1e7c`; all514 measured Python source files checked against canonical Git blobs. The independent remote clone has actual shallow Git HEAD `1b0f1f69acbb7e20055d5aaf76cc29c840779304` plus an exact materialized patch; this is recorded separately from the verified logical source commit.
+- Fresh scope:31 jobs,468 candidate cells,2 A-A phases per job,93,600 strict CUPTI cold-L2 graph samples. All swap-AB and W4A16 cells are fresh. Existing d35/TRTLLM/non-swap baselines remain immutable historical scoreboard inputs; this is not a new same-GPU paired baseline comparison.
+- Workloads: V3 EP8/TP8, V41F EP4/TP4, K3 EP8/TP8, N3U EP8/TP8; supported NVFP4 W4A4/per-token/W4A16 and MXFP4x8/MXFP8 arms. Tokens1,2,4,8,16,32,64,128,256,512,4096,8192,16384. Tokens1/2 measured but excluded from tables/retention aggregates. Unsupported K3 MXFP8 and V41F TP MX remain N/A.
+- Source/tactic policy: existing frozen native winners, including recorded default sentinel choices; no autotuning, new axes, best-of selection, or baseline rerun. Route/cache/runner/tactic/source hashes and loaded-function resource guards unchanged from retained6c-full.
+- Timing:10 warmups and100 strict CUPTI samples per cell/phase, cold-L2 CUDA graphs; input quantization included for NVFP4, W4A16 takes BF16 directly. Geometric mean of the two phase medians supplies each candidate value. Read-only2ms NVML telemetry, stock clocks and power limits unchanged.
+- Resources: C3 B300 devbox fi-gather-opt-1029; GPUs3/4/5/6/7, both phases of each job on one GPU. Persistent native/CuTe compilation caches retained. Existing image nvcr.io/nvidia/pytorch:26.05-py3 / CUDA13.2.1 / CuTeDSL4.8.0 / driver595.91.07.
+- Publication: local report/body/plots only. Preserve all negative rows, repetition spreads and unavailable NVML windows. No sanitizer. Parent owns GitHub publication.

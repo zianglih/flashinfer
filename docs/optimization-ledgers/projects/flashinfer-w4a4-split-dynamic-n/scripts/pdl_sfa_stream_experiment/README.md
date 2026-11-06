@@ -1,0 +1,14 @@
+# Full-prefetch SFA streaming experiment
+
+Local source: `flashinfer-pdl-sfa-stream-review`; unstaged, based on frozen integrated public PDL source `a92c766d...` (now byte-equivalent to retained `24c48b9f...`). The full source receipt is `evidence/pdl-sfa-stream-r1/source.json`, patch `b73a9abeef6f3b6d23e5f6173b0cda2f68beeb56555e50f40d5c58164827bab3`. No production edits.
+
+- The direct private compile-time `weight_scale_cache_policy` is keyed and forwarded to the shared kernel. FC2 host selects FIRST only for `prefetch_weights_before_wait && cluster==(1,1) && k_steps==8`, where the weight payload already uses FIRST. FC1, default-false standalone callers, wide tactics, activation payload/SFB, output stores and combine stay unchanged.
+- New causal context: full-capacity FC2 A/SFA prefetch can overlap live FC1 input/output. This streams SFA at the same priority as A rather than widening the previously rejected A-FIRST geometry policy.
+- Scoped pre-commit passes. The source-extracted admission truth table covers eight combinations. The 72 changing-data full-chain replay gate covers all three formats, N16/N128, zero/local routes, K2304 tail, and one/two-CTA paths with the real public PDL flags. Controls change only private cache policy, never PDL readiness/publication flags.
+- Named NV narrow PTX changes only nine SFA cache-policy immediate constants (four startup + five steady K instructions); every other line is byte-identical. Proof and raw PTX are in the source evidence directory. No new repository tests or broad sanitizer run.
+
+`launch_fixed.py` stages fixed N16/M128 both-GEMM caches for T4/32/128/512 from actual same-host native cache keys and runs C1-A1-A2-C2 on GPU2 (V41 EP4) and GPU3 (V3 EP8), sequential NV then MX per GPU. The unmodified native observer preserves public benchmark medians, route hashes/histograms and post-run cache choices. Actual public complete-chain wiring is used, without monkeypatches. Timing remains 10 warmups / 100 cold-L2 CUDA-graph CUPTI iterations, PDL on, no DA, initial activation quantization excluded, per-token off, unfused finalize. Source-specific private CuTe caches, same B300 host/runtime and per-format GPU identity are recorded. This is a fixed-tactic screen, not native AUTO retention.
+
+The initial launch hit the platform argument limit before remote program execution. Its failed transport is preserved; `retry_launch_transport.py` uploaded the exact recorded program in checked bounded chunks. No measurement was rerun.
+
+Results: `evidence/pdl-sfa-stream-r1-fixed/{summary.json,summary.md,raw}`. Four-point geomeans NV / MX8 / mixed are V3 **1.005269 / 1.003018 / 1.003769x**, V41 **1.003648 / 1.002448 / 1.005592x**. All 18 affected T32/T128/T512 points improve in both repeats. T4 is near-flat/mixed except V3 NV (+0.29%). W4A16 is an unaffected noise observation. Retention requires later both-model native AUTO evidence.

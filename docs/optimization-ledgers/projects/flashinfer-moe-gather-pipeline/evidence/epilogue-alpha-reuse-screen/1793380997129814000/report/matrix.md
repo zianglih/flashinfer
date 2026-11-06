@@ -1,0 +1,30 @@
+| Model | EP/TP | Mode | 32 | 4096 |
+|---|---|---|---:|---:|
+| kimi-k3 | EP8 | CuteDSL MXFP4x8 | -0.058% | -0.002% |
+| kimi-k3 | EP8 | CuteDSL PER-TOKEN | -0.044% | -0.335% |
+| kimi-k3 | EP8 | CuteDSL W4A4 | +0.018% | +0.090% |
+| kimi-k3 | TP8 | CuteDSL MXFP4x8 | +0.005% | +0.019% |
+| kimi-k3 | TP8 | CuteDSL PER-TOKEN | -0.094% | -1.065% |
+| kimi-k3 | TP8 | CuteDSL W4A4 | +0.080% | +0.969% |
+| nemo3-ultra | EP8 | CuteDSL MXFP4x8 | +0.040% | +0.051% |
+| nemo3-ultra | EP8 | CuteDSL MXFP8 | +0.010% | +0.109% |
+| nemo3-ultra | EP8 | CuteDSL PER-TOKEN | -0.000% | -0.017% |
+| nemo3-ultra | EP8 | CuteDSL W4A4 | -0.062% | +0.059% |
+| nemo3-ultra | TP8 | CuteDSL MXFP4x8 | +0.018% | +0.013% |
+| nemo3-ultra | TP8 | CuteDSL MXFP8 | -0.052% | +0.065% |
+| nemo3-ultra | TP8 | CuteDSL PER-TOKEN | -0.052% | -0.016% |
+| nemo3-ultra | TP8 | CuteDSL W4A4 | -0.145% | -0.093% |
+| v3 | EP8 | CuteDSL MXFP4x8 | -0.075% | +0.272% |
+| v3 | EP8 | CuteDSL MXFP8 | +0.073% | -0.035% |
+| v3 | EP8 | CuteDSL PER-TOKEN | +0.106% | -0.026% |
+| v3 | EP8 | CuteDSL W4A4 | -0.032% | -0.138% |
+| v3 | TP8 | CuteDSL MXFP4x8 | +0.365% | +0.000% |
+| v3 | TP8 | CuteDSL MXFP8 | +0.038% | +0.005% |
+| v3 | TP8 | CuteDSL PER-TOKEN | -0.028% | +0.014% |
+| v3 | TP8 | CuteDSL W4A4 | -0.030% | -0.068% |
+| v41-flash | EP4 | CuteDSL MXFP4x8 | +0.054% | +0.261% |
+| v41-flash | EP4 | CuteDSL MXFP8 | -0.019% | -0.060% |
+| v41-flash | EP4 | CuteDSL PER-TOKEN | -0.006% | -0.156% |
+| v41-flash | EP4 | CuteDSL W4A4 | +0.044% | +0.073% |
+| v41-flash | TP4 | CuteDSL PER-TOKEN | +0.061% | +0.224% |
+| v41-flash | TP4 | CuteDSL W4A4 | +0.029% | +0.181% |

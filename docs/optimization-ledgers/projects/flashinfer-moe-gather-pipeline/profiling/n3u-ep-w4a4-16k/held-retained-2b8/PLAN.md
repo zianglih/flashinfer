@@ -1,0 +1,14 @@
+# Held N3U EP8 16K FC1 diagnostic
+
+Status: prepared on the CPU only; no deployment, GPU reservation, or profiling run. Wait for the existing-space retune on recovery GPU0 to finish and for the parent to select which geometry to profile. `config.json` currently pins the **previous frozen** choice, not the pending retune result.
+
+- Source: retained `2b8eb9d8`; exact immutable `candidate-w4-paired-situ` snapshot, swap kernel `482b636a`. All13,245 files bind to the same qualified source manifest. No production edits.
+- Workload: N3U EP8/TP1,16,384 tokens, W4A4, included initial quantization, unfused deterministic finalize. Route hashes and full tactic come from the existing immutable expected/cache records.
+- Previous frozen choice: route tile128; FC1M512/N128/C2, FC2M256/N128/C2; existing `[4,4]` K-step controls; static scheduler. Native MMA-K and partial-K instruction counts remain derived by the kernel. The gathered input path has a dedicated warpgroup. This differs from the earlier TP8 M128/C1 profile.
+- Prior native200-sample analysis is in `../native-components.json`: FC1 about288µs, FC2 extension189µs, combine extension54µs of559µs total. These are interval observations from the prior native campaign, not a new causal attribution.
+- Reuse: `profile_pc_entry.py`, `register_guard.py`, and `analyze_pc.py` are byte-identical to the proven N3U TP MX4x8 diagnostic helpers. The runner changes source/workload/GPU bindings, includes input quantization, and adds explicit hold guards. Actual compiler args/options are forwarded unchanged; loaded ELF/PTX/SASS and CUDA resource queries are captured, with LOCAL0 enforced.
+- First collect only the established metrics: tensor/DRAM/L2 utilization, issue activity and stalls, kernel duration, registers, shared memory. Application replay starts at the existing public benchmark profiler boundary with one FC1 launch. No autotuning, compiler flags, route regeneration, kernel instrumentation, or timer changes.
+- NCU modifies execution/overlap. Its durations will remain diagnostic; they will not replace native CUPTI retention measurements. Capture SourceCounters/actual PC mapping only if the first metrics and parent review justify it.
+- Before any launch: fresh managed-CLI node/GPU identity and idle check, all-source preflight, recovery receipt/actual four C++ ELF and Ninja hash/no-op preflight, immutable cache and route/tactic checks. Repeat source/cache checks afterward. GPU3 is provisional only.
+
+The runner requires `N3U_EP_PROFILE_APPROVED=1`; PC mode separately requires `N3U_EP_PROFILE_PC_APPROVED=1`. Those guards are not authorization by themselves. They must only be set after the parent releases the diagnostic. If the new search chooses a different tactic, preserve this old-choice setup and reseal the intended source-bound expected/cache inputs before profiling it.

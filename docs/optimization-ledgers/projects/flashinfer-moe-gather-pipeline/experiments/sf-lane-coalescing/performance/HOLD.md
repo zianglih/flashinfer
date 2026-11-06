@@ -1,0 +1,5 @@
+The `86836355` screen remains unlaunched. Wide MXFP8 qualification allocated 64 bytes of native local memory (43 LDL / 15 STL) versus zero in control, so its resource gate failed before FC1 launch. No performance conclusion or candidate numerical failure is implied.
+
+Keep `plan.json`, `screen/perf-config.json`, the immutable qualification sources and all preparation receipts unchanged. Root is considering source-only bookkeeping feasibility; any revised source would require a new qualification and source-bound config.
+
+For a future approved preparation, use the existing current passive resource guard from `experiments/epilogue-alpha-reuse/performance/harness/register_guard.py` (SHA prefix `9965e540`) rather than this historical 56-cell template's `7d3cbd4f` guard. The current guard adds recorded dynamic shared memory, occupancy/stage fields and the established residency check. The other eleven helper files already match. This note does not modify or relax either guard, and no timing has used the older prepared copy.

@@ -1,0 +1,35 @@
+# FC1 first-x16 predecode on the scale-u16 source
+
+This is an unapplied, two-file source proposal against exact source `20ae8493dc0374efb67c6695fda4bb8f424b6be868bd27101fb2312238b1ad4f`. It extends the existing private first16 mechanism to FC1. It does not establish a completed runtime owner, numerical result or speedup. There was no remote access, CuTe/native compilation, GPU execution or production edit.
+
+The private kernel changes only its FC1 `_transform_tile` call to pass the existing compile-time `predecode_first_block=True`. FC1 still requests fragment128; FC2 still requests32. The existing setup continues to clamp the requested fragment to its coalesced leading extent. Five warp groups, exactly two decode groups with their existing80-register caps, all stage depths/fitting, MMA and gate/up layouts, epilogues and both token-return protocols are unchanged. The utility decoder remains exact `35790888…`; the alpha/register candidates are separate.
+
+The shared helper now views one x16 block within existing32/64/128-value fragments. The selected first fragment uses the original full copy when its extent is32. For a larger fragment it uses two `flat_divide(..., make_layout(32))` views into the existing SMEM source and packed RMEM target, copying only chunk0 before the decoded-stage acquire. It decodes only block0 into the existing BF16 output subview. Inside the original idx loop, selected idx0 copies its remaining32-sized chunks after acquire and before the unchanged final-fragment raw-state advance/probe, then calls the original x16 arithmetic for blocks1 through `fragment_size/16-1`. Later fragments retain the original whole-fragment decoder. No new RMEM allocation, BF16 staging buffer, semantic gather, runtime policy branch, public knob or role sharing is introduced.
+
+## Ownership and lifetime
+
+- The raw-ready consumer wait still precedes every packed/SF read. The original whole-stage compact SF copy is retained. For the first fragment, source block `b` selects logical packed values `[16*b,16*b+16)`, SF byte `b`, and the same16 BF16 output positions. One scale byte is passed through the already-supported Uint8 view; it is not incorrectly reinterpreted as a32-bit tensor.
+- FC1's packed and SF layouts still undergo the same existing gate32/up32 to gate16/up16 row composition before partitioning. These new views act within those paired, per-thread fragments. They do not change row permutation, scale ownership, thread/group ownership, global alpha or activation arithmetic.
+- Only the first32 packed values (16 bytes) are loaded early. After the first16 decode, the remaining16 packed values occupy two existing packed U32 positions; the sixteen decoded BF16 values occupy eight pair-register payloads in the existing output tensor. The original scale containers remain live. This avoids preloading all128 packed values or decoding all128 outputs before acquisition. Actual register assignment and pointer/view liveness remain compiler questions.
+- The decoded-stage acquire still precedes every TMEM store. Remaining idx0 loads complete before the existing raw-state advance/probe. When idx0 is the last fragment, that probe still precedes the remaining seven x16 decodes for fragment128; it has not been delayed by chunk-by-chunk decoding. When there are later fragments, their copy/decode path and last-fragment probe remain original.
+- The saved raw state is still cloned before mutation. Collective TMEM store, TMEM-store fence, raw consumer release, decoded producer commit/advance/probe and producer tail remain in the original order. The raw ring cannot be reused while any of its reads are outstanding. All prologue work stays inside the existing K loop, so zero-K/sentinel/idle behavior acquires no new path.
+- The two new packed views exist only in the compile-time larger-fragment branch. The later reference to them is reachable only for the same selected idx0/larger specialization. With predecode false, the first copy branch is selected and its elif is not evaluated; no undefined `fragment_size` or view crosses into that path. The partial views use no dynamic-region object merge.
+
+## Source evidence and native gates
+
+`validate_source.py` uses Python ASTs only. It verifies the two frozen source hashes, unchanged utility dependency and patch application. Restoring the two existing shared methods gives the original whole-module AST; removing the one FC1 keyword gives the original private-kernel AST. Default shared transforms are AST-identical after resolving false at32/64/128. Current FC2 true/32 transforms and its block helper are AST-identical after constexpr resolution. Twelve bounded source-operation cases (three extents, four fragment counts) preserve packed-value and x16 conversion coverage plus pipeline-call order, with exactly one packed32 chunk and one x16 decode before acquire. These are logical operation proofs, not CuTe layout execution or native scheduling evidence.
+
+A later matched native gate must check:
+
+1. Actual source/destination `flat_divide` shapes for supported M/cluster families, including the FC1 row-composed source. The first logical packed32 copy should lower to one LDS.128 per thread; the remaining copies should retain total packed bytes and coalescing. Do not accept fragmented scalar loads or a speculative full128 preload as equivalent code quality.
+2. First16 is fully scaled to BF16 before the actual blocking decoded-stage wait, with all sixteen values live across its slow path. The rest of the first fragment is loaded after acquisition. No TMEM store precedes acquire. Verify actual raw advance/probe, final TMEM-store fence, raw release and decoded commit ordering.
+3. No duplicate first decode, extra packed/SF reads, extra scale conversions, BF16 packet-gather moves, new local loads/stores, MMA/CFG cloning or register-pool regression. The existing128 output tensor and collective store must retain their established layout. Calling x16 primitives individually can change SF extraction and scheduling even when arithmetic counts agree; only generated code can settle that cost.
+4. Preserve FC2/default generated behavior as far as whole-kernel scheduling permits; source constexpr equivalence alone does not prove binary identity. Both return modes and all curated geometries still require later numerical/native validation before any timing or retention claim.
+
+The earlier source/history audit is `candidates/w4a16_fc1_first16_source_audit/README.md`. It found no isolated FC1 first-x16 or cap32 result that resolves this question. This proposal keeps fragment128 and differs from rejected full packed preloads, whole-fragment decode-before-acquire and inter-work-tile lookahead. The existing raw2/current profiles do not by themselves predict a gain here.
+
+```bash
+python3 -B candidates/w4a16_fc1_first16_predecode_20ae/validate_source.py
+```
+
+The final source proof is `source-proof-004.json`; earlier source proofs are retained. Ruff and formatting checks pass. This folder intentionally contains no compile cohort, runtime adapter or launch command.

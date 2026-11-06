@@ -1,0 +1,9 @@
+# Actual-source compiler review
+
+Frozen source `5112a25e` passes the paired gate against clean `9b4721b0`: 64 CLC and 24 static exact replays per source, 44 compiled core pairs. Registers, storage, pipeline geometry and UMMA counts are unchanged, with no local-memory or stack spills. The independent review verified all 352 PTX, cubin, SASS and resource artifact hashes.
+
+Before the first TMEM allocation operation, the 44 variants lose 295 static instruction sites: 181 non-NOP instructions and 114 startup NOPs. The non-NOP reduction comprises 38 initialization fences, 38 branches, 30 UMOV, 24 UIADD3, 48 USHF and 3 R2UR instructions. Thirty variants remove non-NOP startup work; fourteen remove only startup NOPs. CLC variants account for 240 removed startup sites, and static variants for 55. Trailing alignment padding grows by seven sites, so complete disassemblies shrink by 288 sites. These are summed static counts, not measured dynamic instruction totals.
+
+After the first TMEM allocation operation, all 44 variants retain the same opcode sequence. Thirty-seven also have identical normalized operand streams after relocating control-flow addresses. The other seven only change uniform-register allocation: the altered barrier pointers retain the same base-plus-offset definitions, MXFP8 descriptor pairs and commit addresses trace to matching renamed definitions, and the config6 temporary has the same value. There is no added steady-state instruction or branch. This does not claim identical encoded scheduling controls.
+
+This supports the change as a small startup instruction cleanup, subject to neutral end-to-end timing. It is independent of the unretained TMEM experiments. Reproduction and detailed counts are in `gate/actual-source-startup-codegen.json` and the source-bound artifacts under `gate/evidence/`.

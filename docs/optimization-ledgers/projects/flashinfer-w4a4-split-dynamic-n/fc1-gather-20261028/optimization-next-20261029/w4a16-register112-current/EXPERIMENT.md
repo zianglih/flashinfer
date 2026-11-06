@@ -1,0 +1,11 @@
+# W4A16 register transfer from epilogue to dequantization
+
+Frozen retained base: `374ed4c07ee3a8c30a30026018a96d8f613ac4b5`. Local review: `flashinfer-w4a16-register-review`, one unstaged W4 kernel delta. Remote control is the immutable source-equivalent `composed-followups-full/flashinfer` (its Git parent is1b0 plus a source-bound patch). All514 measured files are verified; the only candidate difference is `moe_w4a16_kernel.py`.
+
+Allocation: epilogue112, control80, two dequantization groups112 each, gather64. The five groups retain61,440 registers, matching640threads at96 initial registers. Control donates2,048 registers and gather donates4,096; epilogue receives2,048 and both dequantization groups receive4,096 total. Each role executes its setmax instruction before role-local setup, with the original nonreconverging branches and unchanged barrier order.
+
+Motivation: the preceding128-dequant/gather32 probe increased gather address work by42–43 instructions. This version keeps gather64; N128 codegen on f63 has unchanged gather and epilogue instruction counts, zero local storage, and only three added dequant startup instructions. The dequant instruction schedule changes (higher register peak, later first STTM); that is a performance hypothesis, not an assumed gain. Earlier144-epilogue/112-dequant/32-gather evidence does not isolate this tradeoff.
+
+Gate:33 existing W4 tests (route boundaries, old layout, weight updates, activation variants and padded finalization); capture all owned kernels and reject local storage. No sanitizer. If the gate passes, source-paired C-A-A-C at K3 EP8 4096/8192 and V3 TP8 8/4096. Frozen existing native winners and routes;10 warmups,100 strict CUPTI graph/cold-L2 samples; no tuning, no new tactic axis. Read-only2ms NVML telemetry and raw samples retained; no clock changes. GPU5/7 only.
+
+All measurement guards are unchanged except source-bound register targets for this candidate. The guard checks the actual executable's launch reservation/local storage and the corresponding source hash before timing. Exact-test capture uses `no_cache`/PTX/CUBIN; performance capture uses normal source-keyed persistent caches and unchanged compiler options.

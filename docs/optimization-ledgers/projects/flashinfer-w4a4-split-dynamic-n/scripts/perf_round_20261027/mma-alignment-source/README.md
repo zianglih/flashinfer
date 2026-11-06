@@ -1,0 +1,9 @@
+# Hardware-aligned dynamic MMA N
+
+Current source stays unstaged in `flashinfer-mma-alignment-20261027`, base2995. Replace unconditional N16 rounding with `8 * cta_group`: oneCTA uses hardware N8 alignment; twoCTA retains N16. No model/dtype/shape profitability branch or new tactic axis. Allocation, TMA transport, scale publication, epilogue and numerical arithmetic stay unchanged.
+
+[PTX ISA9.2 Table39](https://docs.nvidia.com/cuda/archive/13.2.2/parallel-thread-execution/index.html#tcgen05-mma-shapes) specifies N steps8 for oneCTA and16 for twoCTA for all three used blockscaled kinds: mxf4nvf4, mxf4 and mxf8f6f4. The CPU proof covers every liveN0..256 for bothgroups and verifies the only executable change is descriptor alignment. This reduces unnecessary masked-column MMA work; it does not reduce weight traffic, issue count or the allocated epilogue extent.
+
+The prior descriptor-only B200 V3NVFP4 trial at98fd was numerically exact and timing-neutral (four whole-chain ratios1.000004/1.000954/1.002535/.999228), and was dropped for no consistent latency gain. It did not cover the current B300/MX/K3 contracts. The current user explicitly accepts redundant-work elimination as a retention criterion, so this compact formula is reconsidered on current source without reopening old primary benchmark data. No new speedup claim yet.
+
+Gate before timing: paired current-source public replays across four formats, one/twoCTA, PDL on/off, changed/skewed/empty/reactivated routes; inspect actual descriptor immediates, unchanged twoCTA code/resources, no added spills or synchronization. Include static cases for affected oneCTA execution. Preserve current layout/scale rounding and mask reads; exact active output and intermediate checks are the gate, with rigorous sanitizer campaigns deferred. Same48point CAAC public fixed-tactic methodology as the roundREADME.

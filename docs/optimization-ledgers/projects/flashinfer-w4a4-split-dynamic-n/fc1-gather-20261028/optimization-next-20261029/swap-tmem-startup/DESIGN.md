@@ -1,0 +1,9 @@
+# Role-scoped TMEM startup rendezvous
+
+Based on retained6c6515f2. Swap-AB only, both FC1 gather and FC2 regular TMA. W4 unchanged. Follow Rubin blockscaled gather kernel: its allocator is the first epilogue warp; only TMEM reader/writer roles participate in allocation publication.
+
+Our allocator moves from weight warp0 to first epilogue warp4. Retrieval barrier3 has160 threads: MMA warp2 plus epilogue warps4-7, in each CTA. Rank1 MMA participates even when only rank0 issues group2 MMA, keeping one fixed role policy. Weight/activation relay/scheduler/gather never load the TMEM pointer. The pointer is retrieved inside MMA/epilogue scopes and again by allocatorwarp4 only after the unchanged full CTA final join. All threads still execute allocate's bookkeeping; the library elects only allocatorwarp4 for the hardware operation. Two-CTA deallocation uses the same matching allocator and unchanged peer barrier.
+
+Barrier initialization remains globally published before any role can touch pipelines. The existing two-CTA cluster fence/arrive/wait stays intact. For one CTA, add sync_threads because the previous all-CTA TMEM barrier also supplied initialization publication; narrowing it without this fence would race. This adds one startup CTA barrier and reduces the allocation rendezvous to only dependent roles; it is a latency-hiding experiment, not an unconditional instruction-count win. No stage/quota/layout/tactic/PDL thresholds change. Weight prefetch remains independent of ancestor payload and may proceed while epilogue allocates TMEM.
+
+Reference: flashinfer Rubin blockscaled_contiguous_gather_grouped_gemm_swiglu_fusion.py:420,1559,1729,2539,2906; CUTLASS TmemAllocator wait_for_alloc/retrieve_ptr semantics. Validate both1/2CTA,CLC/static,all4formats,Ktails,multiwave with existing23-case/44-capture helper. Zero-LOCAL resource gate and strict frozen-winner CAAC required before retention. GPU4 only.

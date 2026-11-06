@@ -1,0 +1,19 @@
+# Gather optimization round, 2026-10-29
+
+Control: fork PR8 `fb66a27e`; original upstream head `d35fcfda` remains the full benchmark reference. Active candidate source copies are separate and unstaged. CUPTI screening uses frozen routes and tactics, same-GPU C-A-A-C, 100 samples per phase, cold L2, and persistent native compilation caches.
+
+| Experiment | Status |
+|---|---|
+| Payload before SF copies | Rejected: affected mean -0.178%; stable N3U EP W4A4 4K -2.017%. Seven exact tests passed. Rejected source copy removed; see `../full-20261029/payload-first/RESULTS.md`. |
+| Independent SFA copy ordering | Universal ordering passed 15 exact checks and is neutral (+0.098%). Superseded duplicate source copy removed. Included in composition; see `../full-20261029/sfa-overlap/universal-copy-order/RESULTS.md`. |
+| Descriptor prefetch | Rejected: mean -0.058%, stable V3 TP MXFP4x8 16K -2.101%. Seven exact tests passed. Rejected source copy removed; see `prefetch/RESULTS.md`. |
+| Control register budget112 | Removes captured N3U spills. Mean +0.286%; N3U EP W4A4 4K/16K +3.117%/+4.619%, but V3 TP MXFP4x8 16K -2.584%. Budget120 produces identical instructions except its quota, so not pursued. |
+| Live-row Gather4 | Decode +1.195%, overall neutral, stable N3U EP 4K -6.834%. Rejected: generated-code audit found184 extra instructions/16 branches without extra spills; PTX predication added still more branches. Source copy removed; evidence retained. See `live-rows/RESULTS.md`. |
+| Composition | Control112 plus universal SF order, +17/-9 lines. Full15-job/468-cell EP/TP validation passed against fb66 with fixed winners: EP+0.239%, TP+0.076%, broadly neutral; all430 gathered-kernel observations have zero local bytes. Retuned follow-up paused pending the metadata candidate. Source: `flashinfer-fc1-gather-composed-review`. |
+| W4A16 five-warpgroup gather | Staged cp.async passed31 exact cases but regressed every EP prefill cell, so is not selected. Direct TMA Gather4 passed32 exact cases and improved all16 prefill cells in the32-cell screen. Last WG gathers; FC2 remains four WGs. Cleanup, broader activation checks, fixed register-budget audit and decode tuning are in progress. See `../full-20261029/w4a16-tma-gather/` and `w4a16-comparison/`. |
+| Lane-owned payload row metadata | Retained as c0c0bc41 after15 exact cases and full468-cell source-bound rerun; all430 FC1 runtime observations report zero local bytes. The isolated44-cell screen versus112 was+0.510% overall/+1.038% prefill. Four lane-owned mapping loads/divisions and unconditional shuffles replace full-vector/tail-scalar branches. N3U4K captured instructions7448→6784, branches166→149, R2UR563→383; no spills. |
+| W4A16 single B-stage arrival |33 existing exact cases passed; four warp issuers share one transaction-accounting owner. Same-GPU32-cell screen being launched after harness setup corrections; see `w4a16-single-arrival/`. |
+| Existing tactic retune | No new tactics or source changes. N3U EP W4A4 4K/16K +15.906%/+21.863%; V3 EP16K +6.694%; V41F EP16K +10.258%. N3U TP improvements are smaller. See `../full-20261029/retune/RESULTS*.md`. |
+| N3U EP16K iKET | Completed source-paired d35/fb66 first-two-cluster diagnostic. Mainloop/epilogue waiting dominates startup. Trace timings are not retention data. See `iket-n3u-ep/README.md`. |
+
+The complete published PR8 benchmark and heatmaps now describe c0c0bc41 with reused d35 controls; current publication/receipt is in `composed-metadata/publication/`. Original fb66 evidence remains in `../full-20261029/`. Saved TRTLLM/non-swap baselines are historical same-hardware evidence, not paired GPU causality. Control112 + universal SF order is retained and pushed as7106faf3. Metadata composition is retained and published; bounded native prefill retuning (84cells, unchanged tactic space) is running separately. W4A16 remains unstaged.

@@ -1,0 +1,9 @@
+# Vectorized inactive SF clearing
+
+Isolate aligned 1/2/4-byte SF zero stores with the original retained CTA width/grid policy. R1 paired-width is rejected after sparse decode and precise-recipe regressions; R2 only partly recovered decode and regressed N3U TP16K. This candidate removes the 7 host-width lines. No new dtype/model/tactic branch, synchronization, register budget or quantization arithmetic. The compile-time gcd of padded row SF columns selects a safe store width. Existing canonical layouts have contiguous aligned 4-byte SF atoms; linear layout uses 1/2/4-byte row alignment.
+
+Local base6c6515f2, remote controlled pair22ffe662; the only intervening retained change is W4 gather issue order. Remote source hashes freeze all514 files. Source-identity will be verified again before any composition or retention. Persistent C++/CuTe caches remain intact. GPU6 exact/layout/codegen qualification precedes GPU0 same-protocol performance.
+
+The first recast_ptr version lost the proven pointer alignment and emitted four STG.E.U8 stores. This revision uses the existing make_ptr(... assumed_align=zero_bytes) pattern with the same proven addresses. Capture actual 8/16/32-bit SASS stores before any performance decision. No measured scalarized-store timing is evidence for this aligned revision.
+
+Qualification completed:80existing tests,64direct cases/256graph replays/4routed cases,18hole-layout/90graph cases passed. Additional source-paired 13captures include8 actual initial-linear ABI cases (all output hashes match) and5 store-width codegen cases. Although the latter full-SF hashes happened to match, their undefined SF suffix is outside the valid contract, so use them only for codegen; numerical hole proof is the separately scoped18-case gate. Corrected future helper saved as initial_codegen_defined.py; no extra rerun necessary to claim existing correctly scoped hole coverage.

@@ -1,0 +1,5 @@
+# Derive logical padded rows in the kernel
+
+R5 adds one general cleanup to frozen aligned-word-clearR4: use the existing compile-time SF geometry to derive padded_M from logical M for both host-known and device-produced counts. The prior calculation ran only when valid_rows existed; otherwise independently passed M/padded_M prevented the compiler from eliminating impossible padding for linear SF rows. Move the existing calculation outside that conditional and remove padded_M only from the internal device-kernel argument list. Host __call__ and launch num_blocks fallback remain compatible. All supported public callers already compute this exact geometry: routed SF groups first, then128x4,8x4,linear. No newmodel/dtype/tactic policy or quantization arithmetic.
+
+Goal: eliminate redundant loop validity work and the initial-linear branch which changed register allocation inR4 (V3K7168/128threads grew32Bstack). R4 source/timings remain frozen separately. R5 must independently pass exact dynamic-count/routed-hole tests and actual initial-linear resources. Zero-row/routed bounds stay after PDLwait; noancestorpublication change.

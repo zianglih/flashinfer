@@ -1,0 +1,15 @@
+# W4 role-scoped TMEM allocation rendezvous
+
+Base retained6c6515f2. New independent local review flashinfer-w4a16-tmem-wait-review; changes remain unstaged. GPU3 only. No sanitizer, quota change, new tactic, native retune or clock modification.
+
+Pointer audit: only epilogue warps0–3, MMAwarp4, and transform warps8–15 call retrieve_ptr or access TMEM. This is128+32+256=416 threads per CTA, in FC1 and FC2. Weightwarp6, regular activationwarp7, schedulerwarp5, and optional Gather4warps16–19 neither retrieve the shared allocation pointer nor issue TMEM accesses. Transform receives the pointer even when its selected A source is shared, so all transform warps remain conservative participants.
+
+The named barrier count becomes32*(len(epilogue)+1+num_transform_warps). wait_for_alloc moves to the three existing role branches immediately before retrieve_ptr; no new runtime role predicate. The MMA rendezvous is outside is_leader_cta and before its work loop, so the nonleader CTA also contributes all32 lanes even for empty work. Epilogue128 and DQ256 likewise rendezvous before work-dependent control flow. All CTAs therefore supply exactly416 arrivals. No early-return path precedes these waits.
+
+Installed CuTeDSL4.8 allocator source was checked live. wait_for_alloc is precisely barrier_for_retrieve.arrive_and_wait; retrieve_ptr reads the shared holding slot. allocate remains at its original position and still executes tcgen05 allocation only in epiwarp0. Thus the allocator warp remains included in the416-thread release/acquire publication rendezvous. All pointer reads remain dominated by that rendezvous.
+
+The full-CTA/cluster pipeline_init_wait is unchanged, including one-CTA pipeline publication. Constructor/deallocation barrier initialization, stage counts, arrivals/expected bytes, PDL dependency/signal positions, MMA/transform completion protocols, epilogue128 final join, permit relinquish and paired-CTA deallocation remain unchanged. The final users still release their pipeline dependencies before epilogue frees memory. No allocation/free ownership change.
+
+The independent TMA and scheduler warps can now progress after pipeline initialization without waiting for unrelated TMEM allocation users. The existing role-control WG donation occurs before MMA waits; epilogue allocation increase may await register donation, but control/gather donors no longer wait for epilogue's TMEM rendezvous, avoiding a new circular wait. Gather FC1640-thread launch retains80control/64gather/144epi/96DQ quotas; regular FC2512-thread launch retains80control/176epi/128DQ.
+
+Qualification: source/codegen proof first, representative N16/N128/N192 zero-local checks, then33 existing exact W4 cases covering static/CLC, one/twoCTA, padded boundaries and multiple activations. Paired C-A-A-C keeps frozen winners/routes, strict100 CUPTI cold-L2 graph samples and read-only NVML. Same retained6c control/source514-file proof as prior experiment; actual remote Git1b0 is distinguished from logical6c source identity.

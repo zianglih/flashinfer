@@ -1,0 +1,9 @@
+# Skip a terminal output drain when no TMA was issued
+
+Base: retained `61c2c367009340ca0ed218511ed9382512860f1b`. Independent depth-one clone `flashinfer-fc2-drain-review`; source changes remain unstaged. The remote control is the existing FC2-hybrid snapshot: its Git base is 61249 plus retained changes, but all 348 tracked source hashes exactly match committed 61c2. Both bindings are recorded, rather than relabeling its Git HEAD.
+
+Only the final `wait_group(0, read=True)` and 128-thread epilogue join are guarded by `valid_tokens >= bulk_tokens`. The sole TMA issue/commit branch already requires `(group+1)*bulk_tokens <= valid_tokens`. Therefore a tile below one slab issues no TMA. Its retained SIMT tail uses TMEM and registers, with no output shared-memory use. Every preceding call that issued TMA still drains before returning, so no prior read can survive into a tail-only call. Full/slab-plus-tail tiles retain the drain, all publication/reuse waits, accumulator releases, CLC metadata protocol, and final CTA join.
+
+This is distinct from rejected deferred-drain experiments: no outstanding operation is deferred or allowed across calls. It is also independent of rejected native scalar tail ownership and FC1 payload TMA. The only added runtime predicate is uniform across the local epilogue warpgroup and describes whether asynchronous work exists.
+
+Qualification uses the existing public-wrapper exact graph/codegen harness on GPU 6 only, including static/CLC, PDL off/on, one/two CTA, all four input formats, reverse accumulator overlap, empty/reactivated routing and 16/32/64-boundary rows. Source files and helper versions are frozen before launch; persistent native caches are reused. No autotuning, sanitizer, or benchmark baseline rerun. Performance is not established by this gate.

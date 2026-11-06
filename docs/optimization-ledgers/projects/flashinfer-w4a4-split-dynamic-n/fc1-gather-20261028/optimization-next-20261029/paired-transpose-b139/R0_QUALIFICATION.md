@@ -1,0 +1,7 @@
+R0 is frozen at b13963b0 plus paired-transpose kernel f5260ba779b7b42cdc87a2bf1ddd287ae07c22d674e69bcbee618d0e6f03d80b. The complete 514-file source manifests are in codegen-evidence/config.json. No owned MoE kernel was launched: the driver returned a no-op for compiled FC1 and stopped after compiling FC2. Prepare and quantizer input construction was allowed to execute.
+
+All eight cases per arm compiled, covering four formats at narrow two-CTA and wide one-CTA geometries. All 16 source/resource-guarded kernel pairs retained the same register counts and zero STACK/LOCAL. Eight FC2 and six non-per-token FC1 PTX files are byte-identical. The two paired per-token FC1 PTX files change instruction ordering without changing static instruction or branch counts. Some unchanged PTX has non-identical CUBIN bytes from allocation/metadata differences; PTX identity does not imply every CUBIN is identical.
+
+Exact execution and performance are explicitly held. The paired per-token PTX has no intermediate tcgen05.wait::st and only the existing terminal wait::ld. Region ownership and issue order alone do not prove completion of asynchronous TMEM loads/stores. Parent and peer are reviewing explicit phase waits before any numerical qualification.
+
+Archive: codegen-evidence.tar.gz, SHA256 f888317bc78136b3e18406e1648a36236095c70aded14fcac0574f82691048ec, 181 hash-verified files. Full comparison: codegen-analysis.json. First paired PTX/SASS: codegen-evidence/codegen/{control,candidate}/capture/004-fc1.{ptx,sass}.

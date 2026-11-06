@@ -1,0 +1,21 @@
+# Candidate 2: hoist mixed B-TMA selection
+
+`hoist-b-tma.patch` is an unapplied experiment against candidate 1. It changes only `flashinfer/moe_ep/cute_dsl/megamoe/bf16_nvfp4/megamoe_kernel.py`. The candidate-1 file SHA256 when generated was `cd947d453f3c9ebfc3df8e51feac190805e690a2462233e56dbb817e04b4efc6`; patch SHA256 is `d886c9cc1326d24386ae193c820e02b78717c14da2277f8c727bad8f428f51b6`.
+
+The established pattern is Rubin `kernel_src/sm107/next_cutedsl_megamoe/src/sources/kernel_src/rubin/inference/mega/block_scaled_swap_ab_fc12_mainloop.py::run_tma_b`: select each FC executable atom and compute multicast masks/partition coordinates before the persistent work loop, then bind issue-specific fields inside the K loop. Candidate 1 instead selects the FC atom and computes the mixed mask/partition coordinate on every `_activation_task` call.
+
+The patch moves cluster-invariant selection into the activation warp before its persistent loop. It retains the existing public SM100 helper shim and does not change vendored sources. The preferred/fallback descriptor pair, `is_fallback_cluster` predicate, Int32-normalized fallback mask `& 0b11`, fallback partition-coordinate multiplier 2, and activation L2 policy `0x14F0000000000000` are identical. Every TMA issue still rebinds the current pipeline-state barrier immediately before `cute.copy`. The initial barrier used while materializing executable atoms is overwritten before the first issue. Work-dependent expert/token indexing, dynamic-N offsets, preferred-descriptor partitioning, smem layout, transaction bytes, pipeline acquire/commit/advance, MMA, dequantization, epilogue, and scheduler remain unchanged. Uniform2/uniform4 compile-time paths continue to use their original non-executable `cute.copy` path.
+
+This is a measured experiment, not an assumed improvement. Hoisting both FC atoms can lengthen descriptor register lifetimes, and idle clusters now execute the setup even if their first work record is invalid. Compiler loop-invariant motion might already remove some candidate-1 work. Compare generated register/spill counts as well as latency. Registration timing and the fixed fallback-group protocol are deliberately untouched.
+
+Validation before applying: Python AST parse and Ruff format/check on the proposed source passed; `git apply --check ../experiments/hoist-b-tma.patch` passed. Candidate-1 source remained unchanged. There has been no CUDA compilation, correctness run, or timing of this patch.
+
+## Current measurement sequence
+
+The user explicitly superseded the earlier fixed-tactic proposal: **all benchmarking uses AUTO sweeps**. No fixed-screen helper or queue was written. Rigorous correctness and sanitizer matrices are deferred until performance gains justify them; only the minimal candidate-1 compile/smoke gate precedes iteration.
+
+1. Compare baseline AUTO16 with candidate-1 AUTO28 on GLM5 EP8 at global T32 and T4096. AUTO28 retains every existing uniform2 tactic and appends 12 mixed4+2 M256 choices across N32/N64/N128, group hints 512/1024, and both return modes. Uniform4 is not added to AUTO. Use the existing native CUPTI/cold-L2/graph/per-iteration-rank-MAX harness, unchanged input/routing fixtures, and serial fresh processes.
+2. Reuse the existing correctly keyed baseline cache root for both library arms to avoid rebuilding unchanged C++ quantization/routing. Record source/config hashes, effective cache policy, and each rank's selected tactic. Report AUTO16-to-AUTO28 as a catalog expansion comparison rather than an isolated fixed-tactic implementation speedup.
+3. Only after candidate-1 AUTO results are recorded, apply this patch and compare candidate2 AUTO28 versus candidate1 AUTO28 with the same catalog and token points. Selected tactics can change; retain those receipts when interpreting timings. Do not edit source while capture owns the lock. Keep raw samples and transients.
+
+For GLM5 (`hidden=6144`, intermediate=2048, EP8, 256 experts), one token tile has 16 FC1 and 24 FC2 logical channel work IDs under cluster2, versus 8 and 12 under cluster4. `group_hint` counts FC1 logical work IDs, not SMs, tokens, or physical fallback clusters. Do not infer a universal cluster4 winner from a larger-token throughput win: retain fixed2 as an eligible small-token choice.
